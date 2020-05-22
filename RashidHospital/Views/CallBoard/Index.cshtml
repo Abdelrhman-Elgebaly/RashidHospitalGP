@@ -1,0 +1,255 @@
+﻿@model IEnumerable<RashidHospital.Models.CallBoardVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<section class="content-header">
+    <h1>Manage today CallBoard</h1>   
+</section>
+<section class="content-header">
+    @Html.ActionLink(
+    "View All CallBoard",                                                  // linkText
+    "IndexAll",                                    // actionName
+    "CallBoard")
+</section>
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+          
+            <div class="box">
+               
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Medical Id</th>
+                                <th>Diagnose</th>
+                                <th>Unit</th>
+                                <th>Clinic</th>
+                                <th>Time of Call</th>
+                                <th>Calls Count</th>
+                                <th>Signature</th>
+                                <th class="text-center" width="110px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.IsDeleted == true)
+                                {
+                                    <tr style='color:red;text-decoration:line-through'>
+                                        @if (item.Done == true)
+                                        {
+                                            <td class="adjustContent" style="color:red;font-weight:bold;">@item.PatientName</td>
+
+                                        }
+                                        else if (item.LastCallTime != null)
+                                        {
+                                            <td class="adjustContent" style="color:forestgreen;font-weight:bold;">@item.PatientName</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="adjustContent">@item.PatientName</td>
+
+                                        }
+                                        <td class="adjustContent">@item.PatientMedicalId</td>
+                                        <td class="adjustContent">@item.Diagnose</td>
+                                        <td class="adjustContent">@item.PatientUnit</td>
+                                        <td class="adjustContent">@item.ClinicName</td>
+                                        <td class="adjustContent">@item.CallTime</td>
+                                        <td class="adjustContent">@item.CallsNo</td>
+                                        <td class="adjustContent">@item.DoctorName</td>
+                                        <td class="adjustContent text-center">
+                                          
+                                                <a class="btn btn-danger banBtn adjust-actions" title="Call" onclick="OpenCallModal(@item.Id)">
+                                                    <i class="fa fa-flash"></i>
+                                                </a>
+                                            <a class="btn btn-success adjust-actions" title="OpenFile" href="/Patient/View?patientID=@item.PatientId">
+                                                <i class="fa fa-male"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr >
+                                        @if (item.Done == true)
+                                        {
+                                            <td class="adjustContent" style="color:red;font-weight:bold;">@item.PatientName</td>
+
+                                        }
+                                        else if (item.LastCallTime != null)
+                                        {
+                                            <td class="adjustContent" style="color:forestgreen;font-weight:bold;">@item.PatientName</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="adjustContent">@item.PatientName</td>
+
+                                        }
+                                        <td class="adjustContent">@item.PatientMedicalId</td>
+                                        <td class="adjustContent">@item.Diagnose</td>
+                                        <td class="adjustContent">@item.PatientUnit</td>
+                                        <td class="adjustContent">@item.ClinicName</td>
+                                        <td class="adjustContent">@item.CallTime</td>
+                                        <td class="adjustContent">@item.CallsNo</td>
+                                        <td class="adjustContent">@item.DoctorName</td>
+                                        <td class="adjustContent text-center">
+                                              <a class="btn btn-danger banBtn adjust-actions" title="Call" onclick="OpenCallModal(@item.Id)">
+                                                    <i class="fa fa-flash"></i>
+                                                </a>
+                                            
+                                            <a class="btn btn-success adjust-actions" title="OpenFile" href="/Patient/View?patientID=@item.PatientId&CallBoard=@item.Id">
+                                                <i class="fa fa-male"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Deactivate Modal-->
+<div class="modal" id="CallModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Call this Patient? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!--attnedModal-->
+<div class="modal" id="SkipModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to skip this Patient ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="attnedBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+    <script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		$('#example1').DataTable({
+		    "paging": true,
+		    "lengthChange": false,
+		    "searching": true,
+		    "order": [[0, "desc"]],
+		    "info": true,
+		    "autoWidth": false,
+		    "scrollX": true,
+		});
+		function OpenCallModal(AccountId) {
+		    $("#AccountId").val(AccountId);
+		    $("#CallModal").modal("show");
+		}
+        
+		function OpenSkipModal(AccountId) {
+		    $("#AccountId").val(AccountId);
+		    $("#SkipModal").modal("show");
+		}
+
+		$("#DeactivateBtn").click(function () {
+		    var AccountId = $("#AccountId").val();
+		    $("#ErrorMsg").html("");
+		    $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+		    $.ajax({
+		        type: "Post",
+		        url: "@Url.Action("CallPatient", "CallBoard")",
+		        cache: false,
+		        data: { CallBoardId: AccountId },
+		    dataType: "json",
+		    success: function (result) {
+		        if (result == 1) {
+		            $("#CallModal").modal("hide");
+		            location.reload();
+
+		        }
+		        else if (result == 6) {
+		            $("#ErrorMsg").html("An error occurred, please try again ");
+		            $("#DeactivateBtn").attr("disabled", false).text('Yes');
+		        }
+		    },
+		    })
+		});
+        //attnedBtn
+        $("#attnedBtn").click(function () {
+            var AccountId = $("#AccountId").val();
+            $("#ErrorMsg").html("");
+            $("#attnedBtn").attr("disabled", true).text('Loading...');
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("SkipCallBoard", "CallBoard")",
+                cache: false,
+                data: { CallBoardId: AccountId },
+                 dataType: "json",
+                 success: function (result) {
+                if (result == 1) {
+                    $("#SkipModal").modal("hide");
+                    location.reload();
+
+                }
+                else if (result == 6) {
+                    $("#ErrorMsg").html("An error occurred, please try again ");
+                    $("#attnedBtn").attr("disabled", false).text('Yes');
+                }
+            },
+            })
+        });
+    </script>
+}

@@ -1,0 +1,90 @@
+﻿@model RashidHospital.Models.PatientVM
+
+@{
+    ViewBag.Title = "RequestsandResults";
+}
+<div class="container">
+    <h2>Requests Results</h2>
+    <div class="modal-body">
+        <a class="btn btn-success adjust-actions" title="History" onclick="openModal(@Model.Id)">
+            Patient History
+        </a>
+        <a class="btn btn-success adjust-actions" title="Visits" onclick="openRecordsModal(@Model.Id)">
+            Patient Visit
+        </a>
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openViewModal(@Model.Id)">
+            Patient Profile
+        </a>
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@Model.Id)">
+            Appointment
+        </a>
+
+    </div>
+    <hr />
+    <div class="modal-body">
+        <a class="btn btn-success adjust-actions" title="Lab Results" onclick="openResultModal(@Model.Id)">
+            Lab Results
+        </a>
+        <a class="btn btn-success adjust-actions" title="Lab Requsts" onclick="openReqestModal(@Model.Id)">
+            Lab Requests
+        </a>
+        <a class="btn btn-success adjust-actions" title="RadiologyRequest" onclick="openRadiologyRequestModal(@Model.Id)">
+            Radiology Requests
+        </a>
+        <a class="btn btn-success adjust-actions" title="RadiologyResults" onclick="openRadiologyResultModal(@Model.Id)">
+            Radiology Results
+        </a>
+        <a class="btn btn-success adjust-actions" title="Pathology" onclick="openPathologyModal(@Model.Id)">
+            Pathology
+        </a>
+       
+        <hr>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+<script>
+    function openReqestModal(patientID){
+        window.location.href ='/LabRequest/Index?PatientId='+patientID;
+    }
+    function openResultModal(patientID){
+        window.location.href ='/LabResualt/Index?patientID='+patientID;
+    }
+
+    function openRadiologyResultModal(patientID){
+        window.location.href ='/RadiologyResult/Index?patientID='+patientID;
+    }
+    function openRadiologyRequestModal(patientID){
+        window.location.href ='/RadiologyRequest/Index?patientID='+patientID;
+    }
+    function openPathologyModal(patientID){
+        window.location.href ='/Pathology/Index?patientID='+patientID;
+
+    }
+    function openViewModal(patientID){
+        window.location.href ='/Patient/View?patientID='+patientID;
+
+    }
+    function openAppointmentModal(patientID){
+        window.location.href ='/Appointment/Create?PatientId='+patientID;
+    
+    }
+    function openModal(patientID){
+        window.location.href ='/MedicalCondition/index?patientID='+patientID;
+    }
+
+    function openViewModal(patientID){
+        window.location.href ='/Patient/View?patientID='+patientID;
+
+    }
+    function openRecordsModal(patientID){
+        window.location.href ='/MedicalRecord/index?patientID='+patientID;
+    }
+    function openAppointmentModal(patientID){
+        window.location.href ='/Appointment/Create?PatientId='+patientID;
+    
+    }
+    
+</script>
+    }

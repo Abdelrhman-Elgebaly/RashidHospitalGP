@@ -1,0 +1,119 @@
+﻿@model IEnumerable<RashidHospital.Models.RegisterViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<section class="content-header">
+    <h1>Manage Users</h1>
+</section>
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-header">
+                        <h3 class="box-title">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+</h3>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th class="text-center" width="110px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="adjustContent">@item.FirstName @item.SecondName @item.ThirdName</td>
+                                    <td class="adjustContent">@item.Email</td>
+                                    <td class="adjustContent">@item.PhoneNumber</td>
+                                    <td class="adjustContent text-center">
+                                       
+                                            <a class="btn btn-success adjust-actions" title="Edit" onclick="openEditModal(@item.stringId)">
+         <i class="fa fa-edit"></i>
+     </a>
+  @*  <a class="btn btn-info adjust-actions Deactive-@item.AccountId" title="View" onclick="openViewEmpModal(@item.AccountId)">
+        <i class="fa fa-eye"></i>
+    </a>
+    <a class="btn btn-danger banBtn adjust-actions Deactive-@item.AccountId" title="Deactivate" onclick="OpenDeactivateModal(@item.AccountId)">
+        <i class="fa fa-ban"></i>
+    </a>*@
+                                       
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Edit Modal-->
+<div class="modal fade" id="EditUserModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit User</h4>
+            </div>
+            <div id="EditUserBody"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+   <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+    <script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		$('#example1').DataTable({
+		    "paging": true,
+			"lengthChange": false,
+			"scrollX": true,
+		    "columnDefs": [
+             { "searchable": false, "targets": 3 }
+            ]
+		});
+
+		function openEditModal(UserID) {
+		    $.ajax({
+		        type: "GET",
+		        url: "@Url.Action("_EditUsers", "Account")",
+		        cache: false,
+		        data: { UserID: UserID },
+		    success: function (result) {
+		        if (result.IsRedirect) {
+		            window.location.href = result.RedirectUrl;
+		        }
+		        else {
+		            $("#EditUserBody").html(result.Content);
+		            $("#EditUserModel").modal("show")
+		        }
+		    },
+		    error: function (result) {
+		        window.location.href = '@Url.Action("Error404", "Home")';
+		    },
+			})
+		}
+    </script>
+}

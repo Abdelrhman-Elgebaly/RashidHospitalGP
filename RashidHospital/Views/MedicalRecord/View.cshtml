@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "View";
+}
+
+@model RashidHospital.Models.MedicalRecordVM
+<link href="~/Content/build/css/intlTelInput.min.css" rel="stylesheet" />
+
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+
+    .form-control {
+        margin-bottom: 3px !important;
+    }
+</style>
+<form method="post" id="editEmpForm">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.PatientID)
+    @Html.HiddenFor(model => model.ClinicId)
+    @Html.HiddenFor(model => model.DoctorID)
+
+    <div class="modal-body">
+        <div class="callout callout-success">
+            <b>Patient:</b> <span>@ViewBag.PatientInfo</span>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("Clinic Id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ClinicId", new SelectList(ViewBag.ClinicDDL, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @disabled = "disabled" })
+                 
+                </div>
+            </div>
+          
+            <div class="form-group">
+                @Html.LabelFor(model => model.Complain, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Complain, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Note", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Diagnose, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recommendation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Recommendation, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+            @Html.LabelFor(model => model.Flag, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.Flag, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        </div>
+      
+    </div>
+    
+</form>
+

@@ -1,0 +1,206 @@
+﻿@model IEnumerable<RashidHospital.Models.AppointmentVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/fixedHeader.dataTables.min.css" rel="stylesheet" />
+<style>
+    thead input {
+        width: 100%;
+    }
+</style>
+<section class="content-header">
+    <h1>
+    @Html.ActionLink(
+    "View Today Appointment",                                                  // linkText
+    "Index",                                    // actionName
+    "Appointment")
+        </h1>
+</section>
+
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="box-header">
+        <h3 class="box-title">@Html.ActionLink("Add New Appointment", "CreateNew", "Appointment")</h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Medical Id</th>
+                                <th>Diagnose</th>
+                                <th>Unit</th>
+                                <th>Clinic</th>
+                                <th>Date</th>
+                                <th>Signature</th>
+
+                                <th class="text-center" width="110px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.IsDeleted == true)
+                                {
+                                    <tr style='color:red;text-decoration:line-through'>
+                                        <td class="adjustContent">@item.PatientName</td>
+                                        <td class="adjustContent">@item.PatientMedicalId</td>
+                                        <td class="adjustContent">@item.Diagnose</td>
+                                        <td class="adjustContent">@item.PatientUnit</td>
+                                        <td class="adjustContent">@item.ClinicName</td>
+                                        <td class="adjustContent">@item.AppointmentDate.ToString("dd/MM/yyyy")</td>
+                                        <td class="adjustContent">@item.DoctorName</td>
+
+                                        <td class="adjustContent text-center">
+                                            
+
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr >
+                                        <td class="adjustContent">@item.PatientName</td>
+                                        <td class="adjustContent">@item.PatientMedicalId</td>
+                                        <td class="adjustContent">@item.Diagnose</td>
+                                        <td class="adjustContent">@item.PatientUnit</td>
+                                        <td class="adjustContent">@item.ClinicName</td>
+                                        <td class="adjustContent">@item.AppointmentDate.ToString("dd/MM/yyyy")</td>
+                                        <td class="adjustContent">@item.DoctorName</td>
+
+                                        <td class="adjustContent text-center">
+                                            <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenDeleteModal(@item.Id)">
+                                                <i class="fa fa-ban"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!--Deactivate Modal-->
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Delete this Appointment? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.fixedHeader.min.js"></script>
+
+
+    <script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+		
+
+		function OpenDeleteModal(AccountId) {
+		    $("#AccountId").val(AccountId);
+		    $("#deactivateModal").modal("show");
+		}
+
+		$("#DeactivateBtn").click(function () {
+		    var AccountId = $("#AccountId").val();
+		    $("#ErrorMsg").html("");
+		    $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+		    $.ajax({
+		        type: "Post",
+		        url: "@Url.Action("DeleteAppointment", "Appointment")",
+		        cache: false,
+		        data: { appointmentId: AccountId },
+		    dataType: "json",
+		    success: function (result) {
+		        if (result == 1) {
+		            $("#deactivateModal").modal("hide");
+		            location.reload();
+
+		        }
+		        else if (result == 6) {
+		            $("#ErrorMsg").html("An error occurred, please try again ");
+		            $("#DeactivateBtn").attr("disabled", false).text('Yes');
+		        }
+		    },
+		    })
+		});
+      
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#example1 thead tr').clone(true).appendTo('#example1 thead');
+            $('#example1 thead tr:eq(1) th').each(function (i) {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+                $('input', this).on('keyup change', function () {
+                    if (table.column(i).search() !== this.value) {
+                        table
+                            .column(i)
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+
+            var table = $('#example1').DataTable({
+                    "orderCellsTop": true,
+                    "fixedHeader": true,
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "scrollX": true,
+                    "orderCellsTop": true,
+                    "fixedHeader": true
+            });
+        });
+    </script>
+}

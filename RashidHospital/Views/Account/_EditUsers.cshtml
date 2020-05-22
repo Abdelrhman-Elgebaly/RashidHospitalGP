@@ -1,0 +1,95 @@
+﻿
+@model RashidHospital.Models.RegisterViewModel
+<link href="~/Content/build/css/intlTelInput.min.css" rel="stylesheet" />
+
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+
+    .form-control {
+        margin-bottom: 3px !important;
+    }
+</style>
+<form method="post" id="editEmpForm">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.CreatedDate)
+
+    <div class="modal-body">
+        <div class="callout callout-success">
+            <b>User:</b> <span>@Model.FirstName</span>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SecondName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SecondName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.SecondName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ThirdName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ThirdName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.ThirdName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.IsActive, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default" id="btnSubmit">Save changes</button>
+
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+
+
+        </div>
+    </div>
+
+</form>
+<script>
+
+	$("#editEmpForm").submit(function (e) {
+		e.preventDefault();
+			$("#btnSubmit").attr("disabled", true).text('Loading...');
+			$.ajax({
+				type: "Post",
+				url: "@Url.Action("EditUser", "Account")",
+				cache: false,
+				data: $("#editEmpForm").serialize(),
+				success: function (result) {
+					if (result == "Success") {
+					    $("#EditUserModel").modal("hide");
+						location.reload();
+					}
+					else if (result == "Error500") {
+						window.location.href = '@Url.Action("Error500", "Home")';
+					}
+
+				},
+			})
+
+	});
+
+
+</script>

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<RashidHospital.Models.OrderDetailVM>
+
+@{
+    ViewBag.Title = "index";
+}
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<section class="content-header">
+    <h1>@ViewBag.PatientInfo</h1>
+</section>
+
+<section class="content">
+    
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+               
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Lab Request</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="adjustContent">@item.TypeValue</td>
+                                    
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+  
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+<script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		$('#example1').DataTable({
+		    "paging": true,
+		    "lengthChange": false,
+		    "searching": true,
+		    "ordering": true,
+		    "info": true,
+		    "autoWidth": false,
+		    "scrollX": true,
+		});
+
+
+</script>
+}

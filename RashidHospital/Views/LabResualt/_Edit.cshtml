@@ -1,0 +1,67 @@
+﻿
+@model RashidHospital.Models.LabResualtVM
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+@using (Html.BeginForm("EditLab", "LabResualt", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.Hidden("PatientId",Model.PatientId)
+    @Html.Hidden("DoctorId", Model.DoctorId)
+    @Html.Hidden("Id", Model.Id)
+    @Html.Hidden("ResualtDate", Model.ResualtDate)
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+
+        <div class="callout callout-success">
+            <b>Patient:</b> <span>@ViewBag.PatientInfo</span>
+        </div>
+        <h5> @Html.ValidationSummary("", new { @class = "text-danger" })</h5>
+        <hr />
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("Test Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("LabType", new SelectList(ViewBag.LabTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.LabType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Result", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Unit, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-12">
+                    <button type="submit" value="Create" class="btn btn-default" >Edit</button>
+                    <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "LabResualt",new { @PatientId = Model.PatientId})'" />
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+   <link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+
+    <script>
+        $(".select2").select2({
+        tags: true
+    });
+    </script>
+}

@@ -1,0 +1,87 @@
+﻿
+<aside class="main-sidebar">
+    <section class="sidebar">
+        @if (HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+         <ul class="sidebar-menu" data-widget="tree">
+            <li class="active treeview menu-open">
+                <a href="#">
+                    <i class="fa fa-dashboard Company"></i> <span>Quick Menu</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu" style="display: block;">
+                        @if (User.IsInAnyRoles( "Admin" ))
+                        {
+                            <li class="Detail">
+                                <a href="@Url.Action("Index", "Clinics")">
+                                    <i class="fa fa-building-o"></i>
+                                    <span>Clinics</span>
+                                </a>
+                            </li>
+                            <li class="Detail">
+                                <a href="@Url.Action("Index", "PatientUnit")">
+                                    <i class="fa fa-black-tie"></i>
+                                    <span>Patient Unit / Consultant</span>
+                                </a>
+                            </li>
+                            <li class="Detail">
+                                <a href="@Url.Action("Index", "Diagnose")">
+                                    <i class="fa fa-address-card"></i>
+                                    <span>Diagnosis</span>
+                                </a>
+                            </li>
+                            <li class="Detail">
+                                <a href="@Url.Action("Index", "Account")">
+                                    <i class="fa fa-user-circle-o"></i>
+                                    <span>Users </span>
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInAnyRoles("physiatrist"))
+                        {
+                            <li class="Detail">
+                                <a href="@Url.Action("Index", "Patient")">
+                                    <i class="fa fa-address-book-o"></i>
+                                    <span>Patients</span>
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInAnyRoles("Doctor","Residents","Admin","Assistant","Consultant", "Nurses", "physician", "Employee"))
+                        {
+                            <li class="Detail">
+                                <a href="@Url.Action("Index", "Patient")">
+                                    <i class="fa fa-address-book-o"></i>
+                                    <span>Patients</span>
+                                </a>
+                            </li>
+
+                            <li class="Detail">
+                                <a href="@Url.Action("Index", "Appointment","Nurses")">
+                                    <i class="fa fa-calendar-check-o"></i>
+                                    <span>Appointment </span>
+                                </a>
+                            </li>
+
+                        }
+                        @if (User.IsInAnyRoles("Employee","Nurses" , "Admin", "physician"))
+                        {
+                            <li class="Detail">
+                                <a href="@Url.Action("Index", "CallBoard")">
+                                    <i class="fa fa-microphone"></i>
+                                    <span>CallBoard </span>
+                                </a>
+                            </li>
+                        }
+                    
+                 
+                 
+                </ul>
+                
+            </li>
+       
+        </ul>
+        }
+    </section>
+</aside>

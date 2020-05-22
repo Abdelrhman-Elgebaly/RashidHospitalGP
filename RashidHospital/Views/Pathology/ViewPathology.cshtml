@@ -1,0 +1,329 @@
+﻿@model RashidHospital.Models.PathologyVM
+@using RashidHospital.Models;
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+</style>
+
+@using (Html.BeginForm("View", "Pathology", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.PatientId)
+    @Html.HiddenFor(model => model.Id)
+
+<div class="modal-body">
+    <h4>
+        @ViewBag.PatientInfo
+
+    </h4>
+    <hr />
+    <div class="box-body">
+        <div class="form-group">
+            @Html.Label("Procedure Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProcedureType, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.pT, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.pT, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.pN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.pN, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.pM, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.pM, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Histology", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumorHistologyName, new { htmlAttributes = new { @class = "form-control" } })
+                
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Grade", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerGradeName, new { htmlAttributes = new { @class = "form-control" } })
+                
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Size", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerSize, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerNumber, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tumor Focality", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumorFocalityName, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor LVI", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerLVI, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor PNI", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerPNI, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Margin", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumorMarginsName, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lymphnode Type Of Surgery", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LymphnodeTypeOfsurgery, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lymphnode Positive LN", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LymphnodePositiveLN, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lymphnode Total LN", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LymphnodeTotalLN, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lymphnode ECE", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LymphnodeECE, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <button type="submit" value="Create" class="btn btn-default" style="float:right;">Edit</button>
+
+                <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "Pathology",new { @patientID = (int)ViewBag.PatientId})'" />
+                <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <hr />
+    <div class="box-body">
+
+        <div class="form-group">
+            @Html.Label("Test", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Type", new SelectList(ViewBag.IHCType, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @Id = "Type" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Result", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBox("Result", new { htmlAttributes = new { @class = "form-control", @name = "Result", @Id = "Result" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Note", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("Value", new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" id="addIHC" value="Create" class="btn btn-default" style="float:right;">Create IHC</button>
+            </div>
+        </div>
+        <div id="Ihc"></div>
+    </div>
+
+
+        @if (Session[Model.PatientId.ToString()] != null)
+        {
+            <table id="Ihc" style="width:100%;border: 1px solid black;">
+              
+                    <tr>
+                        <th>Test</th>
+                        <th>Result</th>
+                        <th>Note</th>
+                    </tr>
+
+                    @foreach (var ihsc in (List<IHCVM>)Session[Model.PatientId.ToString()])
+                    {
+                        <tr>
+                            <td>@ihsc.TypeName</td>
+                            <td>@ihsc.Result</td>
+                            <td>@ihsc.Value</td>
+                            <td>
+                                <a class="btn btn-danger banbtn adjust-actions" title="delete" onclick="opendeletemodal(@ihsc.Id)">
+                                    <i class="fa fa-ban"></i>
+                                </a>
+                            </td>
+
+
+                        </tr>
+
+                    }
+            </table>
+        }
+
+</div>
+}
+<!--Deactivate Modal-->
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Delete this ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+   <link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+
+<script>
+        $(".select2").select2({
+        tags: true
+    });
+</script>
+    <script>
+
+        function OpenDeleteModal(AccountId) {
+            $("#AccountId").val(AccountId);
+            $("#deactivateModal").modal("show");
+        }
+        $("#DeactivateBtn").click(function () {
+            var AccountId = $("#AccountId").val();
+            $("#ErrorMsg").html("");
+            $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("DeleteIHC", "Pathology")",
+                cache: false,
+            data: { IHCId: AccountId },
+            dataType: "json",
+            success: function (result) {
+                if (result == 1) {
+                    $("#deactivateModal").modal("hide");
+                    location.reload();
+
+                }
+                else if (result == 6) {
+                    $("#ErrorMsg").html("An error occurred, please try again ");
+                    $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                }
+            },
+            })
+        });
+    </script>
+   <script>
+        var IHCList = [];
+        $("#addIHC").click(function () {
+            var Value = $("#Value").val();
+            var selectedType = $("#Type").val();
+            var selectedText = $("#Type option:selected").text();
+            var atLeastOneIsChecked = $('input[name="Result"]:checked').length > 0;
+            var PatientId = $("#PatientId").val();
+            IHCList.push({
+                "Test": selectedText,
+                "Result": atLeastOneIsChecked,
+                "Note": Value,
+            });
+            
+            var html = '';
+            for (var i = 0; i < IHCList.length; i++) {
+                html += '<tr>';
+                for (var j in IHCList[i]) {
+                    html += '<td>' + IHCList[i][j] + '</td>';
+                }
+                html+='<td></td>'
+                html += '</tr>';
+
+
+            }
+            console.log(html);
+            $('#Ihc  > tbody:last-child').append(html);
+            $("#Value").val();
+             $("#Type").val();
+            $.ajax({
+                url: "/Pathology/SaveIHC",
+                type: "post",
+                dataType: "json",
+                contextType: "application/json",
+                data: {"Value": Value, "Type": selectedType, "Result": atLeastOneIsChecked, "PatientId": PatientId},
+                traditional: true,
+                success: function (data) {
+
+
+                }
+
+            });
+        });
+
+</script>
+}

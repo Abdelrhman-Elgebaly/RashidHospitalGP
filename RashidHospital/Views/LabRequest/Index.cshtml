@@ -1,0 +1,209 @@
+﻿@model IEnumerable<RashidHospital.Models.LabOrderVM>
+
+@{
+    ViewBag.Title = "index";
+}
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<section class="content-header">
+    <h1>@ViewBag.PatientInfo</h1>
+</section>
+
+<section class="content">
+    
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="modal-body">
+        <a class="btn btn-success adjust-actions" title="History" onclick="openModal(@ViewBag.PatientId)">
+            Patient History
+        </a>
+        <a class="btn btn-success adjust-actions" title="Visits" onclick="openRecordsModal(@ViewBag.PatientId)">
+            Patient Visit
+        </a>
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openReqandRestModal(@ViewBag.PatientId)">
+            Requests and Results
+        </a>
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openViewModal(@ViewBag.PatientId)">
+            Patient Profile
+        </a>
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@ViewBag.PatientId)">
+            Appointment
+        </a>
+
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreatelModal(@ViewBag.PatientId )">
+Lab Order Requests
+                    
+                                        </a>               
+                 </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Order Date</th>
+                              
+                                <th>Doctor Name</th>
+                                <th class="text-center" width="110px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.IsDeleted == true)
+                                {
+                                    <tr style='color:red;text-decoration:line-through'>
+                                        <td class="adjustContent">@item.OrderDate</td>
+
+                                        <td class="adjustContent">@item.DoctorName</td>
+
+                                        <td class="adjustContent text-center">
+                                          
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr >
+                                        <td class="adjustContent">@item.OrderDate</td>
+
+                                        <td class="adjustContent">@item.DoctorName</td>
+
+                                        <td class="adjustContent text-center">
+                                            <a class="btn btn-default banBtn adjust-actions" title="Details" onclick="OpenDetailsModal(@item.Id)">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenDeleteModal(@item.Id)">
+                                                <i class="fa fa-ban"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+   <!--Deactivate Modal-->
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Delete this? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+<script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		$('#example1').DataTable({
+		    "paging": true,
+		    "lengthChange": false,
+		    "searching": true,
+		    "order": [[0, "desc"]],
+		    "info": true,
+		    "autoWidth": false,
+		    "scrollX": true,
+		});
+		function openCreatelModal(patientID) {
+		    window.location.href = '/LabRequest/Create?PatientId=' + patientID;
+		};
+    
+		function OpenDetailsModal(LabOrderId) {
+		    window.location.href = '/LabRequest/IndexDetails?LabOrderId=' + LabOrderId;
+		};
+            //delete
+            function OpenDeleteModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Delete", "LabRequest")",
+                    cache: false,
+                    data: { ID: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+
+
+</script>
+<script>
+        function openViewModal(patientID) {
+            window.location.href = '/Patient/View?patientID=' + patientID;
+
+        }
+        function openAppointmentModal(patientID) {
+            window.location.href = '/Appointment/Create?PatientId=' + patientID;
+
+        }
+        function openModal(patientID) {
+            window.location.href = '/MedicalCondition/index?patientID=' + patientID;
+        }
+
+        function openReqandRestModal(patientID) {
+            window.location.href = '/Patient/RequestsandResults?patientID=' + patientID;
+
+        }
+        function openRecordsModal(patientID) {
+            window.location.href = '/MedicalRecord/index?patientID=' + patientID;
+        }
+        function openAppointmentModal(patientID) {
+            window.location.href = '/Appointment/Create?PatientId=' + patientID;
+
+        }
+</script>
+    
+}

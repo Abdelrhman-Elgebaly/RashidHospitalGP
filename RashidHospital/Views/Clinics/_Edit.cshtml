@@ -1,0 +1,103 @@
+﻿@model RashidHospital.Models.ClinicVM
+<link href="~/Content/build/css/intlTelInput.min.css" rel="stylesheet" />
+
+
+<form method="post" id="editEmpForm">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    
+    <div class="modal-body">
+        <div class="callout callout-success">
+            <b>Clinic:</b> <span>@Model.Name</span>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <label for="EmpName">Name</label>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Name", @required = "required" } })
+            </div>
+            <div class="form-group">
+                <label for="EmpEmail">Details</label>
+                @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Details" } })
+            </div>
+            <div class="form-group">
+                <label for="EmpName">Visits Per Day</label>
+                    @Html.EditorFor(model => model.visitsPerDay, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.visitsPerDay, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="text-center">
+            <span class="text-danger FinalErrorMsg"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-default" id="btnSubmit">Save changes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+
+            
+    </div>
+</form>
+
+
+<script>
+
+	$("#editEmpForm").submit(function (e) {
+		e.preventDefault();
+			$("#btnSubmit").attr("disabled", true).text('Loading...');
+			$.ajax({
+				type: "Post",
+				url: "@Url.Action("EditClinic", "Clinics")",
+				cache: false,
+				data: $("#editEmpForm").serialize(),
+				success: function (result) {
+					if (result == "Success") {
+					    $("#clinicModel").modal("hide");
+						location.reload();
+					}
+					else if (result == "Error500") {
+						window.location.href = '@Url.Action("Error500", "Home")';
+					}
+					
+				},
+			})
+		
+	});
+</script>
+@*<script>
+    $(document).ready(function () {
+        // Submit form with id function.
+        $("#btnSubmit").click(function () {
+          //  e.preventDefault();
+            $("#btnSubmit").attr("disabled", true).text('Loading...');
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("EditClinic", "Clinics")",
+                cache: false,
+                data: $("#editEmpForm").serialize(),
+                success: function (result) {
+                        $("#clinicModel").modal("hide");
+                        location.reload();
+                  
+                },
+            })
+        });
+        $("#btnCancel").click(function () {
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("_Edit", "Clinics")",
+                cache: false,
+                data: { ClinicID: @Model.Id },
+                success: function (result) {
+                    $("#editClinicBody").html(result.Content);
+                  //  $("#clinicModel").modal("show")
+                    
+                 },
+                error: function (result) {
+                    alert(result);
+		        window.location.href = '@Url.Action("Error404", "Home")';
+		    },
+			})
+        });
+    });
+
+</script>*@

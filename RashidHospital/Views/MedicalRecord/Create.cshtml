@@ -1,0 +1,90 @@
+﻿@model RashidHospital.Models.MedicalRecordVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+    
+
+</style>
+
+@using (Html.BeginForm("Create", "MedicalRecord", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.PatientID)
+
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <h4>
+            
+            Add New Visit.
+        
+        </h4>
+        <div class="callout callout-success">
+            <b>Patient:</b> <span>@ViewBag.PatientInfo</span>
+        </div>
+        <hr />
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("Clinic", htmlAttributes: new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.DropDownList("ClinicId", new SelectList(ViewBag.ClinicDDL, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.ClinicId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Flag, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.Flag, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Complain, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Complain, new { htmlAttributes = new { @class = "form-control", @required = "required", @style="height:100px;"} })
+                    @Html.ValidationMessageFor(model => model.Complain, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Note", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Diagnose, new { htmlAttributes = new { @class = "form-control", @required = "required", @style = "height:100px;" } })
+                    @Html.ValidationMessageFor(model => model.Diagnose, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Recommendation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Recommendation, new { htmlAttributes = new { @class = "form-control",  @required = "required", @style = "height:100px;" } })
+                    @Html.ValidationMessageFor(model => model.Recommendation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="float:right;">
+                <div class="col-md-12">
+                    <button type="submit" value="Create" class="btn btn-default" >Create</button>
+                    <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "MedicalRecord",new { @patientID = (int)ViewBag.PatientId})'" />
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+   </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+
+    <script>
+        $(".select2").select2({
+        tags: true
+    });
+    </script>
+}
