@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
 
     public class RadiologyRequestController : Controller
     {
@@ -27,9 +27,7 @@ namespace RashidHospital.Controllers
         {
             PatientVM _patientvm = new PatientVM();
             ViewBag.PatientId = patientID;
-            PatientVM _Objvm = _patientvm.SelectObject(patientID);
-            ViewBag.PatientInfo = _Objvm.Name + " - " + _Objvm.MedicalID + "-" + _Objvm.DiagnoseName + "-Register Date: " + _Objvm.CreatedDate.ToShortDateString();
-
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(patientID);
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
         }
@@ -64,6 +62,7 @@ namespace RashidHospital.Controllers
             }
             RadiologyRequestVM _obj = new RadiologyRequestVM();
             _obj.PateintID = patientID;
+            _obj.RequestDate = DateTime.Now;
             fillcreatebag(patientID);
             Guid userId = Guid.Parse(User.Identity.GetUserId());
             _obj.CreatedBy = userId;
@@ -110,7 +109,7 @@ namespace RashidHospital.Controllers
         //}
 
 		[HttpPost]	
-        public string Create(int ProcedureType, int Site,DateTime RequestDate, string Note , bool Contrast,  int PateintID)
+        public JsonResult Create(int ProcedureType, int Site,DateTime? RequestDate, string Note , bool Contrast,  int PateintID)
         {
             try
             {
@@ -118,18 +117,26 @@ namespace RashidHospital.Controllers
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 RequestObject.ProcedureType = ProcedureType;
                 RequestObject.Site = Site;
-                RequestObject.RequestDate = RequestDate;
+
+                if (RequestDate == null)
+                {
+                    RequestObject.RequestDate = DateTime.Now;
+
+                }
+                else {
+                    RequestObject.RequestDate = RequestDate.Value;
+                }
                 RequestObject.Note = Note;
                 RequestObject.Contrast = Contrast;
                 RequestObject.PateintID = PateintID;
                 RequestObject.CreatedBy = userId;
                 RequestObject.Create();
-                return "Success"; // succcess
+                return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
 
-                return "Error500";
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
 
             }
         }

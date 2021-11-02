@@ -18,7 +18,7 @@ namespace RashidHospital.Models
         public Guid DoctorId { get; set; }
         public string DoctorName { get; set; }
         public bool IsDeleted { get; set; }
-
+        public string Note { get; set; }
 
         internal override LabOrder Convert(LabOrderVM Obj)
         {
@@ -28,7 +28,8 @@ namespace RashidHospital.Models
                DoctorId=Obj.DoctorId,
                PatinentId=Obj.PatinentId,
                OrderDate=Obj.OrderDate,
-               IsDeleted=Obj.IsDeleted
+               IsDeleted=Obj.IsDeleted,
+               Note=Obj.Note
             };
         }
 
@@ -41,7 +42,8 @@ namespace RashidHospital.Models
                 PatinentId = Obj.PatinentId,
                 OrderDate = Obj.OrderDate,
                 IsDeleted=Obj.IsDeleted,
-                DoctorName = Obj.AspNetUser.FirstName + " " + Obj.AspNetUser.SecondName + "  " + Obj.AspNetUser.ThirdName
+                DoctorName = Obj.AspNetUser.FirstName + " " + Obj.AspNetUser.SecondName + "  " + Obj.AspNetUser.ThirdName,
+                Note = Obj.Note
 
             };
         }

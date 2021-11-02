@@ -24,7 +24,7 @@ namespace RashidHospital.Models
 
         public int PatientNumber { get; set; }
 
-        public bool IsSkipped { get; set; }
+        public bool IsOnCall { get; set; }
 
         public int AppointmentId { get; set; }
 
@@ -33,6 +33,9 @@ namespace RashidHospital.Models
         public string CallTime { get; set; }
         public bool Done { get; set; }
         public Guid? DoctorId { get; set; }
+        public Guid? ModifiedBy { get; set; }
+        public string ModifieByName { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public string DoctorName { get; set; }
@@ -47,7 +50,7 @@ namespace RashidHospital.Models
                     Id = Obj.Id,
                     AppointmentId= Obj.AppointmentId,
                     CallsNo= Obj.CallsNo,
-                    IsSkipped= Obj.IsSkipped,
+                    IsOnCall = Obj.IsOnCall,
                     LastCallTime= Obj.LastCallTime,
                     PatientId= Obj.PatientId,
                     PatientNumber= Obj.PatientNumber,
@@ -55,7 +58,8 @@ namespace RashidHospital.Models
                     ClinicId=Obj.ClinicId,
                     Done=Obj.Done,
                     DoctorId = Obj.DoctorId,
-                    IsDeleted=Obj.IsDeleted
+                    IsDeleted=Obj.IsDeleted,
+                    ModifiedBy=Obj.ModifiedBy
                 };
             }
             return _Obj;
@@ -67,7 +71,7 @@ namespace RashidHospital.Models
             callboard.Id = DbObj.Id;
             callboard.AppointmentId = DbObj.AppointmentId;
             callboard.CallsNo = DbObj.CallsNo != null? DbObj.CallsNo:0;
-            callboard.IsSkipped = DbObj.IsSkipped;
+            callboard.IsOnCall = DbObj.IsOnCall;
             callboard.LastCallTime = DbObj.LastCallTime;
             callboard.CallTime = DbObj.LastCallTime != null? DbObj.LastCallTime.Value.ToShortTimeString():string.Empty;
             callboard.PatientId = DbObj.PatientId;
@@ -86,10 +90,17 @@ namespace RashidHospital.Models
             callboard.Done = DbObj.Done;
             callboard.IsDeleted = DbObj.IsDeleted;
             callboard.DoctorId = DbObj?.DoctorId;
+            callboard.ModifiedBy = DbObj?.ModifiedBy;
             if (DbObj.DoctorId != null) {
                 AspNetUser user = new AspNetUser();
                 AspNetUser _user = user.Getobject(DbObj.DoctorId);
                 callboard.DoctorName = _user?.FirstName + " " + _user?.SecondName + " " + _user?.ThirdName;
+            }
+            if (DbObj.ModifiedBy != null)
+            {
+                AspNetUser user = new AspNetUser();
+                AspNetUser _user = user.Getobject(DbObj.ModifiedBy);
+                callboard.ModifieByName = _user?.FirstName + " " + _user?.SecondName + " " + _user?.ThirdName;
             }
 
 

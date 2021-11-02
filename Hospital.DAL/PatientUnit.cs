@@ -15,6 +15,7 @@ namespace Hospital.DAL
         }
 
         public int Id { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         [Required]
         public string Name { get; set; }

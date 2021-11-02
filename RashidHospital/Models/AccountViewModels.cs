@@ -3,6 +3,7 @@ using RashidHospital.Helper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace RashidHospital.Models
@@ -105,6 +106,8 @@ namespace RashidHospital.Models
         [Required]
         [Display(Name = "Third Name")]
         public string ThirdName { get; set; }
+        public string UserName { get; set; }
+        public string PasswordHash { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedDate { get; set; }
@@ -151,10 +154,13 @@ namespace RashidHospital.Models
                     IsDeleted = Obj.IsDeleted,
                     IsActive = Obj.IsActive,
                     ModifiedDate = Obj.ModifiedDate,
-                    Modifiedby = Obj.Modifiedby,
                     PhoneNumber = Obj.PhoneNumber,
                     SecondName = Obj.SecondName,
                     ThirdName = Obj.ThirdName,
+                    PasswordHash = Obj.PasswordHash,
+                    UserName=Obj.UserName,
+                    ModifiedBy=Obj.Modifiedby,
+                    
 
                 };
             }
@@ -175,10 +181,11 @@ namespace RashidHospital.Models
                 IsDeleted = Obj.IsDeleted,
                 IsActive = Obj.IsActive,
                 ModifiedDate = Obj.ModifiedDate,
-                Modifiedby = Obj.Modifiedby,
                 PhoneNumber = Obj.PhoneNumber,
                 SecondName = Obj.SecondName,
                 ThirdName = Obj.ThirdName,
+                PasswordHash = Obj.PasswordHash,
+                UserName = Obj.UserName
             };
         }
         public RegisterViewModel SelectObject(Guid Id)
@@ -188,10 +195,27 @@ namespace RashidHospital.Models
             RegisterViewModel Object = Convert(_BClass.Getobject(Id));
             return Object;
         }
+        public RegisterViewModel SelectObjectyEmail(string email)
+        {
+            AspNetUser _BClass = new AspNetUser();
+            IEnumerable<AspNetUser> UsersList = _BClass.Where(a => a.Email == email);
+            List<AspNetUser> Users = UsersList.ToList();
+            RegisterViewModel Object = Convert(Users.FirstOrDefault());
+            return Object;
+        }
         public void Edit()
         {
-            _Obj = Convert(this);
-            _Obj.Edit();
+            try
+            {
+                _Obj = Convert(this);
+                _Obj.Edit();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+         
         }
     }
 

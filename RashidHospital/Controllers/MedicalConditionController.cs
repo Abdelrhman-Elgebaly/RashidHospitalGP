@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
     public class MedicalConditionController : Controller
     {
         // GET: MedicalCondition
@@ -31,8 +31,7 @@ namespace RashidHospital.Controllers
 
             ViewBag.PatientId = patientID;
             PatientVM patientObj = _patientvm.SelectObject(patientID);
-            ViewBag.PatientInfo = patientObj.Name + " - " + patientObj.MedicalID + "-" + patientObj.DiagnoseName + "-Register Date: " + patientObj.CreatedDate.ToShortDateString()+"Last Visit Date:"+patientObj.LastVisitDate;
-            
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(patientID);
             ViewBag.gender = patientObj.Gender.ToLower();
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
@@ -48,7 +47,8 @@ namespace RashidHospital.Controllers
             fillMedicalViewBags(patientID);
             MedicalConditionVM _AddMedicalCondition = new MedicalConditionVM();
             _AddMedicalCondition.PatientId = Convert.ToInt32(patientID);
-            _AddMedicalCondition.HistroryType = 0;
+            _AddMedicalCondition.HistroryType = (int)Helper.Enum.HistoryType.Medical;
+
             return Json(new { IsRedirect = false, Content = RenderRazorViewToString("CreateMedical", _AddMedicalCondition) }, JsonRequestBehavior.AllowGet);
         }
         //_EditSurgical
@@ -63,7 +63,7 @@ namespace RashidHospital.Controllers
             fillSurgicalViewBags(patientID);
             MedicalConditionVM _AddSurgicalCondition = new MedicalConditionVM();
             _AddSurgicalCondition.PatientId = Convert.ToInt32(patientID);
-            _AddSurgicalCondition.HistroryType = 1;
+           _AddSurgicalCondition.HistroryType = (int)Helper.Enum.HistoryType.Surgical;
             return Json(new { IsRedirect = false, Content = RenderRazorViewToString("CreateSurgical", _AddSurgicalCondition) }, JsonRequestBehavior.AllowGet);
         }
         public string RenderRazorViewToString(string viewName, object model)
@@ -111,7 +111,7 @@ namespace RashidHospital.Controllers
         //}
         //    data: { "Condition": Condition, "ConditionDate": ConditionDate, "ConditionType": ConditionType, "HistroryType": HistroryType, "PatientId": PatientId },
         [HttpPost]
-        public string AddCondition(string Condition,DateTime ConditionDate,int ConditionType,int HistroryType,int PatientId)
+        public JsonResult AddCondition(string Condition,DateTime ? ConditionDate,int ConditionType,int HistroryType,int PatientId)
         {
             try
             {
@@ -119,17 +119,17 @@ namespace RashidHospital.Controllers
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 vmObject.DoctorId = userId;
                 vmObject.Condition = Condition;
-                vmObject.ConditionDate = ConditionDate;
+                vmObject.ConditionDate = ConditionDate!= null? ConditionDate:DateTime.Now;
                 vmObject.ConditionType = ConditionType;
                 vmObject.HistroryType = HistroryType;
                 vmObject.PatientId = PatientId;
                 vmObject.Create();
-                return "Success"; // succcess
+                return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
 
-                return "Error500";
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
 
             }
         }
@@ -145,6 +145,8 @@ namespace RashidHospital.Controllers
                 MedicalConditionVM _VMObject = new MedicalConditionVM();
                 MedicalConditionVM _obj = _VMObject.SelectObject(ConditionID);
                 _obj.IsDeleted = true;
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                _obj.ModifiedBy = userId;
                 _obj.Edit();
               
                 finalResult = 1;
@@ -214,8 +216,8 @@ namespace RashidHospital.Controllers
             fillMedicalViewBags(patientID);
             MedicalConditionVM _AddMedicalCondition = new MedicalConditionVM();
             _AddMedicalCondition.PatientId = Convert.ToInt32(patientID);
-            _AddMedicalCondition.HistroryType = 0;
-            _AddMedicalCondition.ConditionType = (int)Helper.Enum.MedicalHistory.Allergy;
+            _AddMedicalCondition.HistroryType = (int)Helper.Enum.HistoryType.Allergy;
+            _AddMedicalCondition.ConditionType = -1;
             return Json(new { IsRedirect = false, Content = RenderRazorViewToString("CreateAllergy", _AddMedicalCondition) }, JsonRequestBehavior.AllowGet);
         }
 
@@ -230,8 +232,8 @@ namespace RashidHospital.Controllers
             fillMedicalViewBags(patientID);
             MedicalConditionVM _AddMedicalCondition = new MedicalConditionVM();
             _AddMedicalCondition.PatientId = Convert.ToInt32(patientID);
-            _AddMedicalCondition.HistroryType = 0;
-            _AddMedicalCondition.ConditionType = (int)Helper.Enum.MedicalHistory.FamilyHistory;
+            _AddMedicalCondition.HistroryType = (int)Helper.Enum.HistoryType.Family;
+            _AddMedicalCondition.ConditionType = -1;
             return Json(new { IsRedirect = false, Content = RenderRazorViewToString("CreateFamily", _AddMedicalCondition) }, JsonRequestBehavior.AllowGet);
         }
         //_HypertensionModal

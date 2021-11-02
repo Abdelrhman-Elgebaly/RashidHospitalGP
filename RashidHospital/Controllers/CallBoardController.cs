@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Nurses,Employee,Admin,physician")]
+    [Authorize(Roles = "Nurses,Employee,Admin,Consultant, Doctor")]
 
     public class CallBoardController : Controller
     {
@@ -38,7 +38,10 @@ namespace RashidHospital.Controllers
                 CallBoardVM _callBoard = new CallBoardVM();
                 CallBoardVM _obj = _callBoard.SelectObject(CallBoardId);
                 _obj.CallsNo = _obj.CallsNo + 1 ;
+                var userID = User.Identity.GetUserId();
+                _obj.DoctorId =Guid.Parse(userID);
                 _obj.LastCallTime = DateTime.Now;
+                _obj.IsOnCall = true;
                 _obj.Edit();
               
                 finalResult = 1;
@@ -52,15 +55,36 @@ namespace RashidHospital.Controllers
             return finalResult;
         }
 
+        //[HttpPost]
+        //public int SkipCallBoard(int CallBoardId)
+        //{
+        //    int finalResult = 0;
+        //    try
+        //    {
+        //        CallBoardVM _callBoard = new CallBoardVM();
+        //        CallBoardVM _obj = _callBoard.SelectObject(CallBoardId);
+        //        _obj.IsSkipped = true;
+        //        _obj.Edit();
+
+        //        finalResult = 1;
+
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        finalResult = 6;
+        //    }
+        //    return finalResult;
+        //}
         [HttpPost]
-        public int SkipCallBoard(int CallBoardId)
+        public int UndoAttened(int CallBoardId)
         {
             int finalResult = 0;
             try
             {
                 CallBoardVM _callBoard = new CallBoardVM();
                 CallBoardVM _obj = _callBoard.SelectObject(CallBoardId);
-                _obj.IsSkipped = true;
+                _obj.IsOnCall = false;
                 _obj.Edit();
 
                 finalResult = 1;
@@ -73,6 +97,7 @@ namespace RashidHospital.Controllers
             }
             return finalResult;
         }
+        
         [HttpGet]
         public ActionResult Edit(int Id) {
             CallBoardVM _callBoard = new CallBoardVM();

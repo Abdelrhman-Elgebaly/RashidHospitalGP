@@ -11,7 +11,7 @@ using static RashidHospital.Helper.Enum;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
     public class LabRequestController : Controller
     {
         // GET: LabRequest
@@ -29,6 +29,7 @@ namespace RashidHospital.Controllers
             List<OrderDetailVM> _List = _Order.SelectAllByLabOrderId(LabOrderId);
             LabOrderVM _LabOrder = new LabOrderVM();
             LabOrderVM obj = _LabOrder.SelectObject(LabOrderId);
+            ViewBag.Note = obj.Note;
             fillBag(obj.PatinentId);
             return View(_List);
         }
@@ -36,8 +37,7 @@ namespace RashidHospital.Controllers
         {
             PatientVM _patientvm = new PatientVM();
             ViewBag.PatientId = patientID;
-            PatientVM patientObj = _patientvm.SelectObject(patientID);
-            ViewBag.PatientInfo = patientObj.Name + " - " + patientObj.MedicalID + "-" + patientObj.DiagnoseName + "-Register Date: " + patientObj.CreatedDate.ToShortDateString();
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(patientID);
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
         }
@@ -83,8 +83,6 @@ namespace RashidHospital.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-
         public ActionResult Create(OrderDetailVM vm)
         {
             try
@@ -92,6 +90,7 @@ namespace RashidHospital.Controllers
                 LabOrderVM _labOrder = new LabOrderVM();
                 _labOrder.PatinentId = vm.PatientId;
                 _labOrder.OrderDate = DateTime.Now;
+                _labOrder.Note = vm.Note;
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 _labOrder.DoctorId = userId;
                int OrderId= _labOrder.Create();

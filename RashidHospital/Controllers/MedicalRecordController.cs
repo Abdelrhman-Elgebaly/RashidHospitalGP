@@ -11,7 +11,7 @@ using System.Web.Routing;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
     public class MedicalRecordController : Controller
     {
         // GET: MedicalRecord
@@ -22,7 +22,7 @@ namespace RashidHospital.Controllers
             PatientVM _patientvm = new PatientVM();
             ViewBag.PatientQuery = patientID;
             MedicalRecordVM ObjVm = new MedicalRecordVM();
-            List<MedicalRecordVM> _list = ObjVm.SelectAllByPatientId(_patientID);
+            List<MedicalRecordVM> _list = ObjVm.SelectAllByPatientId(_patientID).OrderByDescending(a=>a.RecordDate).ToList();
             FillViewBags(_patientID);
             
             return View(_list);
@@ -100,6 +100,10 @@ namespace RashidHospital.Controllers
                 obj.DoctorID = userId;
                 if (ModelState.IsValid)
                 {
+                    PatientVM patient = new PatientVM();
+                    patient = patient.SelectObject(obj.PatientID);
+                    patient.LastVisitDate = DateTime.Now.ToShortDateString();
+                    patient.Edit();
                     obj.Create();
                     return RedirectToAction("Index", new RouteValueDictionary(
                                                      new { action = "Index", patientID = patientId }));
@@ -123,9 +127,7 @@ namespace RashidHospital.Controllers
 
         public void FillViewBags(int _patientID) {
             PatientVM _patientvm = new PatientVM();
-            PatientVM _Objvm = _patientvm.SelectObject(_patientID);
-            ViewBag.PatientInfo = _Objvm.Name + " - " + _Objvm.MedicalID + "-" + _Objvm.DiagnoseName + "-Register Date: " + _Objvm.CreatedDate.ToShortDateString();
-
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(_patientID);
             ViewBag.PatientId = _patientID;
             ClinicVM _clinicVm = new ClinicVM();
             ViewBag.ClinicDDL = _clinicVm.ClinicSelectList();
@@ -143,6 +145,9 @@ namespace RashidHospital.Controllers
                 MedicalRecordVM _VMObject = new MedicalRecordVM();
                 MedicalRecordVM _obj = _VMObject.SelectObject(Id);
                 _obj.IsDeleted = true;
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+
+                _obj.ModifiedBy = userId;
                 _obj.Edit();
 
                 finalResult = 1;

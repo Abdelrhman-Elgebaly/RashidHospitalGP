@@ -1,0 +1,62 @@
+﻿@model RashidHospital.Models.ClinicVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+</style>
+@using (Html.BeginForm("Create", "Clinics", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <h4>
+            
+            Create a new Clinic.
+        
+        </h4>
+        <h5> @Html.ValidationSummary("", new { @class = "text-danger" })</h5>
+        <hr />
+        <div class="box-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Visits Per Day", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.visitsPerDay, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.visitsPerDay, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="float:right">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-default" id="btnSubmit">Create</button>
+                    <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "Clinics")'" />
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+   </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

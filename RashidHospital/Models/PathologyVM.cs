@@ -30,7 +30,8 @@ namespace RashidHospital.Models
 
         public string Comment { get; set; }
 
-        public string TumerHistology { get; set; }
+        public int TumerHistology { get; set; }
+        public string TumerHistologyString { get; set; }
 
         public int? TumerGrade { get; set; }
 
@@ -90,6 +91,9 @@ namespace RashidHospital.Models
             _obj.pT = Obj.pT;
             _obj.TumerFocality = Obj.TumerFocality;
             _obj.TumerGrade = Obj.TumerGrade;
+            TumerHistologyTypesVM _histologyType = new TumerHistologyTypesVM();
+             _histologyType = _histologyType.SelectObject(Obj.TumerHistology);
+                _obj.TumerHistologyString = _histologyType?.Title;
             _obj.TumerHistology = Obj.TumerHistology;
             _obj.TumerLVI = Obj.TumerLVI;
             _obj.TumerMargin = Obj.TumerMargin;

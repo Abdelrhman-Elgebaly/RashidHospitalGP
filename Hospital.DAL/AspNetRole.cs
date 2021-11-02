@@ -34,7 +34,7 @@ namespace Hospital.DAL
 
         public Guid CreatedBy { get; set; }
 
-        public Guid Modifiedby { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         [Required]
         public string Note { get; set; }

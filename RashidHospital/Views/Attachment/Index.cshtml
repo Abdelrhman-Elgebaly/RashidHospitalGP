@@ -1,0 +1,79 @@
+﻿@model IEnumerable<RashidHospital.Models.AttachmentVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<section class="content-header">
+    <h1>Manage Attachments</h1>   
+</section>
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+          
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">@Html.ActionLink("Add New Attachments", "Create", "Attachment",new { patientId = ViewBag.PatientId },
+    null)</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>File Date</th>
+                                <th>File Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                
+                                    <tr>
+                                        <td class="adjustContent">
+                                        <a href="~/UploadedFiles/@item.FileName" target="_blank">@item.FileName</a>
+                                       </td>
+                                        <td class="adjustContent">@item.FileDate.ToShortDateString()</td>
+                                        <td class="adjustContent">@item.FileDetails</td>
+                                       
+                                    </tr>
+                                
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+    <script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		$('#example1').DataTable({
+		    "paging": true,
+		    "lengthChange": false,
+		    "searching": true,
+		    "order": [[1, "desc"]],
+		    "info": true,
+		    "autoWidth": false,
+		    "scrollX": true,
+		});
+
+
+        
+    </script>
+}

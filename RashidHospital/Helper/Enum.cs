@@ -8,9 +8,11 @@ namespace RashidHospital.Helper
 {
     public class Enum
     {
-        public enum HistroryType {
+        public enum HistoryType {
             Medical=1,
-            Surgical=2
+            Surgical=2,
+            Family=3,
+            Allergy=4
         }
         public enum _Gender
         {
@@ -340,197 +342,211 @@ namespace RashidHospital.Helper
             CAP,
             [Display(Name = "Enterocolongraphy")]
 
-            Enterocolongraphy
+            Enterocolongraphy,
+            [Display(Name = "Colonscopy")]
 
+            colonscopy,
+            [Display(Name = "Mammogram")]
+
+            mammogram,
+            [Display(Name = "Thoracoscopy")]
+
+            thoracoscopy,
+            [Display(Name = "Upper GIT endoscopy")]
+
+            UpperGITendoscopy,
+            [Display(Name = "Cystoscopy")]
+
+            Cystoscopy
         }
         public enum LabTyps {
-            [Display(Name = "Total WBCs ")]
+            [Display(Name = "Total WBCs")]
             TotalWBCs =1,
-            [Display(Name = "Platelet Count ")]
+            [Display(Name = "Platelet Count")]
             PlateletCount,
-            [Display(Name = "Hemopglibin Conc PCV ")]
+            [Display(Name = "Hemopglibin Conc PCV")]
             HemopglibinConcPCV,
-            [Display(Name = "Urea ")]
+            [Display(Name = "Urea")]
             Urea,
-            [Display(Name = "Ceratinine  ")]
+            [Display(Name = "Ceratinine")]
             Ceratinine,
-            [Display(Name = "Direct Bilirubin  ")]
+            [Display(Name = "Direct Bilirubin")]
             DirectBilirubin,
-            [Display(Name = "Total Bilirubin   ")]
+            [Display(Name = "Total Bilirubin")]
             TotalBilirubin,
-            [Display(Name = "SGOT  ")]
+            [Display(Name = "SGOT")]
             SGOT,
-            [Display(Name = "SGPT   ")]
+            [Display(Name = "SGPT")]
             SGPT,
-            [Display(Name = "Alkaline Phosphatase    ")]
+            [Display(Name = "Alkaline Phosphatase")]
             AlkalinePhosphatase,
-            [Display(Name = "GGT   ")]
+            [Display(Name = "GGT")]
             GGT,
-            [Display(Name = "Serum Albumin   ")]
+            [Display(Name = "Serum Albumin")]
             SerumAlbumin,
-            [Display(Name = "Total Protiens   ")]
+            [Display(Name = "Total Protiens")]
             TotalProtiens,
-            [Display(Name = "Serum Na   ")]
+            [Display(Name = "Serum Na")]
             SerumNa,
-            [Display(Name = "Serum K  ")]
+            [Display(Name = "Serum K")]
             SerumK,
-            [Display(Name = "Serum Uric Acid   ")]
+            [Display(Name = "Serum Uric Acid")]
             SerumUricAcid,
-            [Display(Name = "Serum Total Calcium  ")]
+            [Display(Name = "Serum Total Calcium")]
             SerumTotalCalcium,
-            [Display(Name = "Serum Phosphorus  ")]
+            [Display(Name = "Serum Phosphorus")]
             SerumPhosphorus,
-            [Display(Name = "Serum Chloride  ")]
+            [Display(Name = "Serum Chloride")]
             SerumChloride,
-            [Display(Name = "Lipid profile  ")]
+            [Display(Name = "Lipid profile")]
             Lipidprofile,
-            [Display(Name = "Cholesterol  ")]
+            [Display(Name = "Cholesterol")]
             Cholesterol,
-            [Display(Name = "Triglgycerides  ")]
+            [Display(Name = "Triglgycerides")]
             Triglgycerides,
-            [Display(Name = "HDL Cholesterol  ")]
+            [Display(Name = "HDL Cholesterol")]
             HDLCholesterol,
-            [Display(Name = "LDL Cholesterol  ")]
+            [Display(Name = "LDL Cholesterol")]
             LDLCholesterol,
-            [Display(Name = "Cardiac  ")]
+            [Display(Name = "Cardiac")]
             Cardiac,
-            [Display(Name = "CBK  ")]
+            [Display(Name = "CBK")]
             CBK,
-            [Display(Name = "CKMB  ")]
+            [Display(Name = "CKMB")]
             CKMB,
-            [Display(Name = "TropininTest  ")]
+            [Display(Name = "TropininTest")]
             TropininTest,
-            [Display(Name = "LDH  ")]
+            [Display(Name = "LDH")]
             LDH,
-            [Display(Name = "Fasting Blood Sugar  ")]
+            [Display(Name = "Fasting Blood Sugar")]
             FastingBloodSugar,
-            [Display(Name = "PP Blood Sugar ")]
+            [Display(Name = "PP Blood Sugar")]
             PPBloodSugar,
-            [Display(Name = "Random Blood Sugar ")]
+            [Display(Name = "Random Blood Sugar")]
             RandomBloodSugar,
-            [Display(Name = "Protin Electrophoresis  ")]
+            [Display(Name = "Protin Electrophoresis")]
             ProtinElectrophoresis,
-            [Display(Name = "Serum Iron  ")]
+            [Display(Name = "Serum Iron")]
             SerumIron,
-            [Display(Name = "TIBC  ")]
+            [Display(Name = "TIBC")]
             TIBC,
-            [Display(Name = "Ferritin  ")]
+            [Display(Name = "Ferritin")]
             Ferritin,
-            [Display(Name = "Direct Coombas Test  ")]
+            [Display(Name = "Direct Coombas Test")]
             DirectCoombasTest,
-            [Display(Name = "InDirect Coombas Test   ")]
+            [Display(Name = "InDirect Coombas Test")]
             InDirectCoombasTest,
-            [Display(Name = "BM Aspirate  ")]
+            [Display(Name = "BM Aspirate")]
             BMAspirate,
-            [Display(Name = "BM Biopsy  ")]
+            [Display(Name = "BM Biopsy")]
             BMBiopsy,
-            [Display(Name = "ESR  ")]
+            [Display(Name = "ESR")]
             ESR,
-            [Display(Name = "ASOT  ")]
+            [Display(Name = "ASOT")]
             ASOT,
-            [Display(Name = "CRP  ")]
+            [Display(Name = "CRP")]
             CRP,
-            [Display(Name = "ProthrombinTime  ")]
+            [Display(Name = "ProthrombinTime")]
             ProthrombinTime,
-            [Display(Name = "PTT  ")]
+            [Display(Name = "PTT")]
             PTT,
-            [Display(Name = "BleedingTime  ")]
+            [Display(Name = "BleedingTime")]
             BleedingTime,
-            [Display(Name = "Clotting Time   ")]
+            [Display(Name = "Clotting Time")]
             ClottingTime,
-            [Display(Name = "FDPS  ")]
+            [Display(Name = "FDPS")]
             FDPS,
-            [Display(Name = "Fibrinogen Level  ")]
+            [Display(Name = "Fibrinogen Level")]
             FibrinogenLevel,
-            [Display(Name = "D Dimer  ")]
+            [Display(Name = "D Dimer")]
             DDimer,
-            [Display(Name = "Anti ThrombinIII  ")]
+            [Display(Name = "Anti ThrombinIII")]
             AntiThrombinIII,
-            [Display(Name = "Protein C  ")]
+            [Display(Name = "Protein C")]
             ProteinC,
-            [Display(Name = "Protein S  ")]
+            [Display(Name = "Protein S")]
             ProteinS,
-            [Display(Name = "HBsAb  ")]
+            [Display(Name = "HBsAb")]
             HBsAb,
-            [Display(Name = "HCVAb  ")]
+            [Display(Name = "HCVAb")]
             HCVAb,
-            [Display(Name = "HIVAb  ")]
+            [Display(Name = "HIVAb")]
             HIVAb,
-            [Display(Name = "CMVIgm  ")]
+            [Display(Name = "CMVIgm")]
             CMVIgm,
-            [Display(Name = "RubellaIgM  ")]
+            [Display(Name = "RubellaIgM")]
             RubellaIgM,
-            [Display(Name = "RubellaIgG  ")]
+            [Display(Name = "RubellaIgG")]
             RubellaIgG,
-            [Display(Name = "Toxoplasma  ")]
+            [Display(Name = "Toxoplasma")]
             Toxoplasma,
-            [Display(Name = "TORCH  ")]
+            [Display(Name = "TORCH")]
             TORCH,
-            [Display(Name = "AFP  ")]
+            [Display(Name = "AFP")]
             AFP,
-            [Display(Name = "CEA  ")]
+            [Display(Name = "CEA")]
             CEA,
-            [Display(Name = "CA15.3  ")]
+            [Display(Name = "CA15.3")]
             CA15_3,
-            [Display(Name = "Total PSA  ")]
+            [Display(Name = "Total PSA")]
             TotalPSA,
-            [Display(Name = "CA125  ")]
+            [Display(Name = "CA125")]
             CA125,
-            [Display(Name = "CA19.9  ")]
+            [Display(Name = "CA19.9")]
             CA19_9,
-            [Display(Name = "BhCG  ")]
+            [Display(Name = "BhCG")]
             BhCG,
-            [Display(Name = "Rheumatoid Factor  ")]
+            [Display(Name = "Rheumatoid Factor")]
             RheumatoidFactor,
-            [Display(Name = "Rose Waaler  ")]
+            [Display(Name = "Rose Waaler")]
             RoseWaaler,
-            [Display(Name = "ANA  ")]
+            [Display(Name = "ANA")]
             ANA,
-            [Display(Name = "Anti Mitochondrial Ab  ")]
+            [Display(Name = "Anti Mitochondrial Ab")]
             AntiMitochondrialAb,
-            [Display(Name = "Anti Ds DNA  ")]
+            [Display(Name = "Anti Ds DNA")]
             AntiDsDNA,
-            [Display(Name = "ANCA  ")]
+            [Display(Name = "ANCA")]
             ANCA,
-            [Display(Name = "C3  ")]
+            [Display(Name = "C3")]
             C3,
-            [Display(Name = "C4  ")]
+            [Display(Name = "C4")]
             C4,
-            [Display(Name = "Serum IgM  ")]
+            [Display(Name = "Serum IgM")]
             SerumIgM,
-            [Display(Name = "Serum IgG  ")]
+            [Display(Name = "Serum IgG")]
             SerumIgG,
-            [Display(Name = "T3  ")]
+            [Display(Name = "T3")]
             T3,
-            [Display(Name = "T4  ")]
+            [Display(Name = "T4")]
             T4,
-            [Display(Name = "TSH  ")]
+            [Display(Name = "TSH")]
             TSH,
-            [Display(Name = "FreeT4  ")]
+            [Display(Name = "FreeT4")]
             FreeT4,
-            [Display(Name = "FreeT3  ")]
+            [Display(Name = "FreeT3")]
             FreeT3,
-            [Display(Name = "LH  ")]
+            [Display(Name = "LH")]
             LH,
-            [Display(Name = "FSH  ")]
+            [Display(Name = "FSH")]
             FSH,
-            [Display(Name = "Prolactin  ")]
+            [Display(Name = "Prolactin")]
             Prolactin,
-            [Display(Name = "Total Testosterone   ")]
+            [Display(Name = "Total Testosterone")]
             TotalTestosterone,
-            [Display(Name = "Feer Testosterone    ")]
+            [Display(Name = "Feer Testosterone")]
             FeeTestosterone,
-            [Display(Name = "Progesterone P4    ")]
+            [Display(Name = "Progesterone P4")]
             ProgesteroneP4,
-            [Display(Name = "Estradiol E2   ")]
+            [Display(Name = "Estradiol E2")]
             EstradiolE2,
-            [Display(Name = "Cortisol AM   ")]
+            [Display(Name = "Cortisol AM")]
             CortisolAM,
-            [Display(Name = "CortisolPM   ")]
+            [Display(Name = "CortisolPM")]
             CortisolPM,
-            [Display(Name = "VMA  ")]
+            [Display(Name = "VMA")]
             VMA,
-            [Display(Name = "HBsAg  ")]
+            [Display(Name = "HBsAg")]
             HBsAg,
         }
 
@@ -590,645 +606,645 @@ namespace RashidHospital.Helper
             Involved,
 
         }
-        public enum IHCType {
-            [Display(Name = "ACTH")]
+        //public enum IHCType {
+        //    [Display(Name = "ACTH")]
 
-            ACTH = 1,
-            [Display(Name = "ACTH")]
+        //    ACTH = 1,
+        //    [Display(Name = "ACTH")]
 
-            ACTIN,
-            [Display(Name = "ADENOVIRUS")]
+        //    ACTIN,
+        //    [Display(Name = "ADENOVIRUS")]
 
-            ADENOVIRUS,
-            [Display(Name = "AFP")]
+        //    ADENOVIRUS,
+        //    [Display(Name = "AFP")]
 
-            AFP,
-            [Display(Name = "ALK-1")]
+        //    AFP,
+        //    [Display(Name = "ALK-1")]
 
-            ALK_1,
-            [Display(Name = "AMYLOIDA")]
+        //    ALK_1,
+        //    [Display(Name = "AMYLOIDA")]
 
-            AMYLOIDA,
-            [Display(Name = "ANDROGEN RECEPTOR")]
+        //    AMYLOIDA,
+        //    [Display(Name = "ANDROGEN RECEPTOR")]
 
-            ANDROGENRECEPTOR,
-            [Display(Name = "ANNEXIN")]
+        //    ANDROGENRECEPTOR,
+        //    [Display(Name = "ANNEXIN")]
 
-            ANNEXIN,
-            [Display(Name = "ARGINASE-1")]
+        //    ANNEXIN,
+        //    [Display(Name = "ARGINASE-1")]
 
-            ARGINASE_1,
-            [Display(Name = "BAP1")]
+        //    ARGINASE_1,
+        //    [Display(Name = "BAP1")]
 
-            BAP1,
-            [Display(Name = "B-AMYLOID")]
+        //    BAP1,
+        //    [Display(Name = "B-AMYLOID")]
 
-            B_AMYLOID,
-            [Display(Name = "BCL-1")]
+        //    B_AMYLOID,
+        //    [Display(Name = "BCL-1")]
 
-            BCL_1,
-            [Display(Name = "BCL-2")]
+        //    BCL_1,
+        //    [Display(Name = "BCL-2")]
 
-            BCL_2,
-            [Display(Name = "BCL-6")]
+        //    BCL_2,
+        //    [Display(Name = "BCL-6")]
 
-            BCL_6,
-            [Display(Name = "BEREP4")]
+        //    BCL_6,
+        //    [Display(Name = "BEREP4")]
 
-            BEREP4,
-            [Display(Name = "Beta Catenin")]
+        //    BEREP4,
+        //    [Display(Name = "Beta Catenin")]
 
-            Beta_Catenin,
-            [Display(Name = "BOB-1")]
+        //    Beta_Catenin,
+        //    [Display(Name = "BOB-1")]
 
-            BOB1,
-            [Display(Name = "BRACHYURY")]
+        //    BOB1,
+        //    [Display(Name = "BRACHYURY")]
 
-            BRACHYURY,
-            [Display(Name = "BRST-2")]
+        //    BRACHYURY,
+        //    [Display(Name = "BRST-2")]
 
-            BRST_2,
-            [Display(Name = "C3d")]
+        //    BRST_2,
+        //    [Display(Name = "C3d")]
 
-            C3d,
-            [Display(Name = "C4d")]
+        //    C3d,
+        //    [Display(Name = "C4d")]
 
-            C4d,
-            [Display(Name = "CALCITONIN")]
+        //    C4d,
+        //    [Display(Name = "CALCITONIN")]
 
-            CALCITONIN,
-            [Display(Name = "CALDESMON")]
+        //    CALCITONIN,
+        //    [Display(Name = "CALDESMON")]
 
-            CALDESMON,
-            [Display(Name = "CALPONIN")]
+        //    CALDESMON,
+        //    [Display(Name = "CALPONIN")]
 
-            CALPONIN,
-            [Display(Name = "CALRETININ")]
+        //    CALPONIN,
+        //    [Display(Name = "CALRETININ")]
 
-            CALRETININ,
-            [Display(Name = "CD14")]
+        //    CALRETININ,
+        //    [Display(Name = "CD14")]
 
-            CD14,
-            [Display(Name = "CD117")]
+        //    CD14,
+        //    [Display(Name = "CD117")]
 
-            CD117,
-            [Display(Name = "CD117BM")]
+        //    CD117,
+        //    [Display(Name = "CD117BM")]
 
-            CD117_BM,
-            [Display(Name = "CD123")]
+        //    CD117_BM,
+        //    [Display(Name = "CD123")]
 
-            CD123,
-            [Display(Name = "CD138")]
+        //    CD123,
+        //    [Display(Name = "CD138")]
 
-            CD138,
-            [Display(Name = "CD15")]
+        //    CD138,
+        //    [Display(Name = "CD15")]
 
-            CD15,
-            [Display(Name = "CD163")]
+        //    CD15,
+        //    [Display(Name = "CD163")]
 
-            CD163,
-            [Display(Name = "CD1a")]
+        //    CD163,
+        //    [Display(Name = "CD1a")]
 
-            CD1a,
-            [Display(Name = "CD2")]
+        //    CD1a,
+        //    [Display(Name = "CD2")]
 
-            CD2,
-            [Display(Name = "CD20")]
+        //    CD2,
+        //    [Display(Name = "CD20")]
 
-            CD20,
-            [Display(Name = "CD21")]
+        //    CD20,
+        //    [Display(Name = "CD21")]
 
-            CD21,
-            [Display(Name = "CD23")]
+        //    CD21,
+        //    [Display(Name = "CD23")]
 
-            CD23,
-            [Display(Name = "CD25")]
+        //    CD23,
+        //    [Display(Name = "CD25")]
 
-            CD25,
-            [Display(Name = "CD3")]
+        //    CD25,
+        //    [Display(Name = "CD3")]
 
-            CD3,
-            [Display(Name = "CD30")]
+        //    CD3,
+        //    [Display(Name = "CD30")]
 
-            CD30,
-            [Display(Name = "CD31")]
+        //    CD30,
+        //    [Display(Name = "CD31")]
 
-            CD31,
-            [Display(Name = "CD33")]
+        //    CD31,
+        //    [Display(Name = "CD33")]
 
-            CD33,
-            [Display(Name = "CD34")]
+        //    CD33,
+        //    [Display(Name = "CD34")]
 
-            CD34,
-            [Display(Name = "CD34BM")]
+        //    CD34,
+        //    [Display(Name = "CD34BM")]
 
-            CD34BM,
-            [Display(Name = "CD38")]
+        //    CD34BM,
+        //    [Display(Name = "CD38")]
 
-            CD38,
-            [Display(Name = "CD4")]
+        //    CD38,
+        //    [Display(Name = "CD4")]
 
-            CD4,
-            [Display(Name = "CD43")]
+        //    CD4,
+        //    [Display(Name = "CD43")]
 
-            CD43,
-            [Display(Name = "CD45RA")]
+        //    CD43,
+        //    [Display(Name = "CD45RA")]
 
-            CD45RA,
-            [Display(Name = "CD45RB")]
+        //    CD45RA,
+        //    [Display(Name = "CD45RB")]
 
-            CD45RB,
-            [Display(Name = "CD45RO")]
+        //    CD45RB,
+        //    [Display(Name = "CD45RO")]
 
-            CD45RO,
-            [Display(Name = "CD5")]
+        //    CD45RO,
+        //    [Display(Name = "CD5")]
 
-            CD5,
-            [Display(Name = "CD56")]
+        //    CD5,
+        //    [Display(Name = "CD56")]
 
-            CD56,
-            [Display(Name = "CD57")]
+        //    CD56,
+        //    [Display(Name = "CD57")]
 
-            CD57,
-            [Display(Name = "CD61")]
+        //    CD57,
+        //    [Display(Name = "CD61")]
 
-            CD61,
-            [Display(Name = "CD68")]
+        //    CD61,
+        //    [Display(Name = "CD68")]
 
-            CD68,
-            [Display(Name = "CD7")]
+        //    CD68,
+        //    [Display(Name = "CD7")]
 
-            CD7,
-            [Display(Name = "CD79a")]
+        //    CD7,
+        //    [Display(Name = "CD79a")]
 
-            CD79a,
-            [Display(Name = "CD8")]
+        //    CD79a,
+        //    [Display(Name = "CD8")]
 
-            CD8,
-            [Display(Name = "CD99")]
+        //    CD8,
+        //    [Display(Name = "CD99")]
 
-            CD99,
-            [Display(Name = "CDX2")]
+        //    CD99,
+        //    [Display(Name = "CDX2")]
 
-            CDX2,
-            [Display(Name = "CEAm")]
+        //    CDX2,
+        //    [Display(Name = "CEAm")]
 
-            CEAm,
-            [Display(Name = "CEAp")]
+        //    CEAm,
+        //    [Display(Name = "CEAp")]
 
-            CEAp,
-            [Display(Name = "Chromogranin")]
+        //    CEAp,
+        //    [Display(Name = "Chromogranin")]
 
-            Chromogranin,
-            [Display(Name = "Chymotrypsin")]
+        //    Chromogranin,
+        //    [Display(Name = "Chymotrypsin")]
 
-            Chymotrypsin,
-            [Display(Name = "CK MIX")]
+        //    Chymotrypsin,
+        //    [Display(Name = "CK MIX")]
 
-            CKMIX,
-            [Display(Name = "CK20")]
+        //    CKMIX,
+        //    [Display(Name = "CK20")]
 
-            CK20,
-            [Display(Name = "CK34BE12")]
+        //    CK20,
+        //    [Display(Name = "CK34BE12")]
 
-            CK34BE12,
-            [Display(Name = "CK5-6")]
+        //    CK34BE12,
+        //    [Display(Name = "CK5-6")]
 
-            CK5_6,
-            [Display(Name = "CK7")]
+        //    CK5_6,
+        //    [Display(Name = "CK7")]
 
-            CK7,
-            [Display(Name = "CK19")]
+        //    CK7,
+        //    [Display(Name = "CK19")]
 
-            CK19,
-            [Display(Name = "CKAE1-AE3")]
+        //    CK19,
+        //    [Display(Name = "CKAE1-AE3")]
 
-            CKAE1_AE3,
-            [Display(Name = "CKCAM5-2")]
+        //    CKAE1_AE3,
+        //    [Display(Name = "CKCAM5-2")]
 
-            CKCAM5_2,
-            [Display(Name = "CMV")]
+        //    CKCAM5_2,
+        //    [Display(Name = "CMV")]
 
-            CMV,
-            [Display(Name = "c-Myc")]
+        //    CMV,
+        //    [Display(Name = "c-Myc")]
 
-            c_Myc,
-            [Display(Name = "CXCL 13")]
+        //    c_Myc,
+        //    [Display(Name = "CXCL 13")]
 
-            CXCL13,
-            [Display(Name = "CYCLIN D3")]
+        //    CXCL13,
+        //    [Display(Name = "CYCLIN D3")]
 
-            CYCLIND3,
-            [Display(Name = "D2-40")]
+        //    CYCLIND3,
+        //    [Display(Name = "D2-40")]
 
-            D2_40,
-            [Display(Name = "DBA-44")]
+        //    D2_40,
+        //    [Display(Name = "DBA-44")]
 
-            DBA_44,
-            [Display(Name = "Desmin")]
+        //    DBA_44,
+        //    [Display(Name = "Desmin")]
 
-            Desmin,
-            [Display(Name = "DOG-1")]
+        //    Desmin,
+        //    [Display(Name = "DOG-1")]
 
-            DOG_1,
-            [Display(Name = "EBV-LMP")]
+        //    DOG_1,
+        //    [Display(Name = "EBV-LMP")]
 
-            EBV_LMP,
-            [Display(Name = "E-Cadherin")]
+        //    EBV_LMP,
+        //    [Display(Name = "E-Cadherin")]
 
-            E_Cadherin,
-            [Display(Name = "EGFR")]
+        //    E_Cadherin,
+        //    [Display(Name = "EGFR")]
 
-            EGFR,
-            [Display(Name = "EMA")]
+        //    EGFR,
+        //    [Display(Name = "EMA")]
 
-            EMA,
-            [Display(Name = "EMA-Perineurioma")]
+        //    EMA,
+        //    [Display(Name = "EMA-Perineurioma")]
 
-            EMA_Perineurioma,
-            [Display(Name = "ER")]
+        //    EMA_Perineurioma,
+        //    [Display(Name = "ER")]
 
-            ER,
-            [Display(Name = "ERG")]
+        //    ER,
+        //    [Display(Name = "ERG")]
 
-            ERG,
-            [Display(Name = "Factor-13a")]
+        //    ERG,
+        //    [Display(Name = "Factor-13a")]
 
-            Factor_13a,
-            [Display(Name = "Factor-8")]
+        //    Factor_13a,
+        //    [Display(Name = "Factor-8")]
 
-            Factor_8,
-            [Display(Name = "FOXP1")]
+        //    Factor_8,
+        //    [Display(Name = "FOXP1")]
 
-            FOXP1,
-            [Display(Name = "FSH")]
+        //    FOXP1,
+        //    [Display(Name = "FSH")]
 
-            FSH,
-            [Display(Name = "GALECTIN-3")]
+        //    FSH,
+        //    [Display(Name = "GALECTIN-3")]
 
-            GALECTIN_3,
-            [Display(Name = "Gastrin")]
+        //    GALECTIN_3,
+        //    [Display(Name = "Gastrin")]
 
-            Gastrin,
-            [Display(Name = "GATA-3")]
+        //    Gastrin,
+        //    [Display(Name = "GATA-3")]
 
-            GATA_3,
-            [Display(Name = "GFAP")]
+        //    GATA_3,
+        //    [Display(Name = "GFAP")]
 
-            GFAP,
-            [Display(Name = "GH")]
+        //    GFAP,
+        //    [Display(Name = "GH")]
 
-            GH,
-            [Display(Name = "Glucagon")]
+        //    GH,
+        //    [Display(Name = "Glucagon")]
 
-            Glucagon,
-            [Display(Name = "Glut1")]
+        //    Glucagon,
+        //    [Display(Name = "Glut1")]
 
-            Glut1,
-            [Display(Name = "Glutamine Synthetase")]
+        //    Glut1,
+        //    [Display(Name = "Glutamine Synthetase")]
 
-            Glutamine_Synthetase,
-            [Display(Name = "Glypican-3")]
+        //    Glutamine_Synthetase,
+        //    [Display(Name = "Glypican-3")]
 
-            Glypican_3,
-            [Display(Name = "GPC")]
+        //    Glypican_3,
+        //    [Display(Name = "GPC")]
 
-            GPC,
-            [Display(Name = "GRANZYME")]
+        //    GPC,
+        //    [Display(Name = "GRANZYME")]
 
-            GRANZYME,
-            [Display(Name = "H-pylori")]
+        //    GRANZYME,
+        //    [Display(Name = "H-pylori")]
 
-            H_pylori,
-            [Display(Name = "HBC")]
+        //    H_pylori,
+        //    [Display(Name = "HBC")]
 
-            HBC,
-            [Display(Name = "HBS")]
+        //    HBC,
+        //    [Display(Name = "HBS")]
 
-            HBS,
-            [Display(Name = "hCG")]
+        //    HBS,
+        //    [Display(Name = "hCG")]
 
-            hCG,
-            [Display(Name = "HepPar1")]
+        //    hCG,
+        //    [Display(Name = "HepPar1")]
 
-            HepPar1,
-            [Display(Name = "Her2neu")]
+        //    HepPar1,
+        //    [Display(Name = "Her2neu")]
 
-            Her2neu,
-            [Display(Name = "HGAL")]
+        //    Her2neu,
+        //    [Display(Name = "HGAL")]
 
-            HGAL,
-            [Display(Name = "HHV-8")]
+        //    HGAL,
+        //    [Display(Name = "HHV-8")]
 
-            HHV_8,
-            [Display(Name = "HMB-45")]
+        //    HHV_8,
+        //    [Display(Name = "HMB-45")]
 
-            HMB_45,
-            [Display(Name = "HPL")]
+        //    HMB_45,
+        //    [Display(Name = "HPL")]
 
-            HPL,
-            [Display(Name = "HSV")]
+        //    HPL,
+        //    [Display(Name = "HSV")]
 
-            HSV,
-            [Display(Name = "IDH1")]
+        //    HSV,
+        //    [Display(Name = "IDH1")]
 
-            IDH1,
-            [Display(Name = "IgA")]
+        //    IDH1,
+        //    [Display(Name = "IgA")]
 
-            IgA,
-            [Display(Name = "IgD")]
+        //    IgA,
+        //    [Display(Name = "IgD")]
 
-            IgD,
-            [Display(Name = "IgG")]
+        //    IgD,
+        //    [Display(Name = "IgG")]
 
-            IgG,
-            [Display(Name = "IgG4")]
+        //    IgG,
+        //    [Display(Name = "IgG4")]
 
-            IgG4,
-            [Display(Name = "IgM")]
+        //    IgG4,
+        //    [Display(Name = "IgM")]
 
-            IgM,
-            [Display(Name = "Inhibin")]
+        //    IgM,
+        //    [Display(Name = "Inhibin")]
 
-            Inhibin,
-            [Display(Name = "INI")]
+        //    Inhibin,
+        //    [Display(Name = "INI")]
 
-            INI,
-            [Display(Name = "Insulin")]
+        //    INI,
+        //    [Display(Name = "Insulin")]
 
-            Insulin,
-            [Display(Name = "ISH EBV")]
+        //    Insulin,
+        //    [Display(Name = "ISH EBV")]
 
-            ISH_EBV,
-            [Display(Name = "ISH KAPPA")]
+        //    ISH_EBV,
+        //    [Display(Name = "ISH KAPPA")]
 
-            ISH_KAPPA,
-            [Display(Name = "ISH LAMBDA")]
+        //    ISH_KAPPA,
+        //    [Display(Name = "ISH LAMBDA")]
 
-            ISH_LAMBDA,
-            [Display(Name = "KAPPA")]
+        //    ISH_LAMBDA,
+        //    [Display(Name = "KAPPA")]
 
-            KAPPA,
-            [Display(Name = "KBA62")]
+        //    KAPPA,
+        //    [Display(Name = "KBA62")]
 
-            KBA62,
-            [Display(Name = "KI67")]
+        //    KBA62,
+        //    [Display(Name = "KI67")]
 
-            KI67,
-            [Display(Name = "Lambda")]
+        //    KI67,
+        //    [Display(Name = "Lambda")]
 
-            Lambda,
-            [Display(Name = "LANGERIN")]
+        //    Lambda,
+        //    [Display(Name = "LANGERIN")]
 
-            LANGERIN,
-            [Display(Name = "LAT")]
+        //    LANGERIN,
+        //    [Display(Name = "LAT")]
 
-            LAT,
-            [Display(Name = "LEF1")]
+        //    LAT,
+        //    [Display(Name = "LEF1")]
 
-            LEF1,
-            [Display(Name = "LH")]
+        //    LEF1,
+        //    [Display(Name = "LH")]
 
-            LH,
-            [Display(Name = "LM02")]
+        //    LH,
+        //    [Display(Name = "LM02")]
 
-            LM02,
-            [Display(Name = "LYSOZYME")]
+        //    LM02,
+        //    [Display(Name = "LYSOZYME")]
 
-            LYSOZYME,
-            [Display(Name = "MAP-2")]
+        //    LYSOZYME,
+        //    [Display(Name = "MAP-2")]
 
-            MAP_2,
-            [Display(Name = "MCT")]
+        //    MAP_2,
+        //    [Display(Name = "MCT")]
 
-            MCT,
-            [Display(Name = "MELANA")]
+        //    MCT,
+        //    [Display(Name = "MELANA")]
 
-            MELANA,
-            [Display(Name = "MITF")]
+        //    MELANA,
+        //    [Display(Name = "MITF")]
 
-            MITF,
-            [Display(Name = "MLH1")]
+        //    MITF,
+        //    [Display(Name = "MLH1")]
 
-            MLH1,
-            [Display(Name = "MNDA")]
+        //    MLH1,
+        //    [Display(Name = "MNDA")]
 
-            MNDA,
-            [Display(Name = "MOC-31")]
+        //    MNDA,
+        //    [Display(Name = "MOC-31")]
 
-            MOC_31,
-            [Display(Name = "MPO")]
+        //    MOC_31,
+        //    [Display(Name = "MPO")]
 
-            MPO,
-            [Display(Name = "MSH2")]
+        //    MPO,
+        //    [Display(Name = "MSH2")]
 
-            MSH2,
-            [Display(Name = "MSH6")]
+        //    MSH2,
+        //    [Display(Name = "MSH6")]
 
-            MSH6,
-            [Display(Name = "MUC2")]
+        //    MSH6,
+        //    [Display(Name = "MUC2")]
 
-            MUC2,
-            [Display(Name = "MUC5AC")]
+        //    MUC2,
+        //    [Display(Name = "MUC5AC")]
 
-            MUC5AC,
-            [Display(Name = "MUM1")]
+        //    MUC5AC,
+        //    [Display(Name = "MUM1")]
 
-            MUM1,
-            [Display(Name = "Myogenin")]
+        //    MUM1,
+        //    [Display(Name = "Myogenin")]
 
-            Myogenin,
-            [Display(Name = "NapsinA")]
+        //    Myogenin,
+        //    [Display(Name = "NapsinA")]
 
-            NapsinA,
-            [Display(Name = "NB84")]
+        //    NapsinA,
+        //    [Display(Name = "NB84")]
 
-            NB84,
-            [Display(Name = "NEU N")]
+        //    NB84,
+        //    [Display(Name = "NEU N")]
 
-            NEUN,
-            [Display(Name = "Neurofilament")]
+        //    NEUN,
+        //    [Display(Name = "Neurofilament")]
 
-            Neurofilament,
-            [Display(Name = "NKI/C3")]
+        //    Neurofilament,
+        //    [Display(Name = "NKI/C3")]
 
-            NKI_C3,
-            [Display(Name = "NKX3.1")]
+        //    NKI_C3,
+        //    [Display(Name = "NKX3.1")]
 
-            NKX31,
-            [Display(Name = "NPM")]
+        //    NKX31,
+        //    [Display(Name = "NPM")]
 
-            NPM,
-            [Display(Name = "NSE")]
+        //    NPM,
+        //    [Display(Name = "NSE")]
 
-            NSE,
-            [Display(Name = "NUT")]
+        //    NSE,
+        //    [Display(Name = "NUT")]
 
-            NUT,
-            [Display(Name = "Oct2")]
+        //    NUT,
+        //    [Display(Name = "Oct2")]
 
-            Oct2,
-            [Display(Name = "Oct3/4")]
+        //    Oct2,
+        //    [Display(Name = "Oct3/4")]
 
-            Oct3_4,
-            [Display(Name = "p16")]
+        //    Oct3_4,
+        //    [Display(Name = "p16")]
 
-            p16,
-            [Display(Name = "p53")]
+        //    p16,
+        //    [Display(Name = "p53")]
 
-            p53,
-            [Display(Name = "p57")]
+        //    p53,
+        //    [Display(Name = "p57")]
 
-            p57,
-            [Display(Name = "p63")]
+        //    p57,
+        //    [Display(Name = "p63")]
 
-            p63,
-            [Display(Name = "Parvovirus")]
+        //    p63,
+        //    [Display(Name = "Parvovirus")]
 
-            Parvovirus,
-            [Display(Name = "PAX-2")]
+        //    Parvovirus,
+        //    [Display(Name = "PAX-2")]
 
-            PAX_2,
-            [Display(Name = "PAX-5")]
+        //    PAX_2,
+        //    [Display(Name = "PAX-5")]
 
-            PAX_5,
-            [Display(Name = "PAX8")]
+        //    PAX_5,
+        //    [Display(Name = "PAX8")]
 
-            PAX8,
-            [Display(Name = "PD1")]
+        //    PAX8,
+        //    [Display(Name = "PD1")]
 
-            PD1,
-            [Display(Name = "Perforin")]
+        //    PD1,
+        //    [Display(Name = "Perforin")]
 
-            Perforin,
-            [Display(Name = "PHH3")]
+        //    Perforin,
+        //    [Display(Name = "PHH3")]
 
-            PHH3,
-            [Display(Name = "PHLDA1")]
+        //    PHH3,
+        //    [Display(Name = "PHLDA1")]
 
-            PHLDA1,
-            [Display(Name = "PIN4")]
+        //    PHLDA1,
+        //    [Display(Name = "PIN4")]
 
-            PIN4,
-            [Display(Name = "PLAP")]
+        //    PIN4,
+        //    [Display(Name = "PLAP")]
 
-            PLAP,
-            [Display(Name = "PMS2")]
+        //    PLAP,
+        //    [Display(Name = "PMS2")]
 
-            PMS2,
-            [Display(Name = "PR")]
+        //    PMS2,
+        //    [Display(Name = "PR")]
 
-            PR,
-            [Display(Name = "PRAP")]
+        //    PR,
+        //    [Display(Name = "PRAP")]
 
-            PRAP,
-            [Display(Name = "Prolactin")]
+        //    PRAP,
+        //    [Display(Name = "Prolactin")]
 
-            Prolactin,
-            [Display(Name = "Prox1")]
+        //    Prolactin,
+        //    [Display(Name = "Prox1")]
 
-            Prox1,
-            [Display(Name = "PSA")]
+        //    Prox1,
+        //    [Display(Name = "PSA")]
 
-            PSA,
-            [Display(Name = "RNA")]
+        //    PSA,
+        //    [Display(Name = "RNA")]
 
-            RNA,
-            [Display(Name = "S100")]
+        //    RNA,
+        //    [Display(Name = "S100")]
 
-            S100,
-            [Display(Name = "S100P")]
+        //    S100,
+        //    [Display(Name = "S100P")]
 
-            S100P,
-            [Display(Name = "SALL4")]
+        //    S100P,
+        //    [Display(Name = "SALL4")]
 
-            SALL4,
-            [Display(Name = "SF-1")]
+        //    SALL4,
+        //    [Display(Name = "SF-1")]
 
-            SF1,
-            [Display(Name = "SMA")]
+        //    SF1,
+        //    [Display(Name = "SMA")]
 
-            SMA,
-            [Display(Name = "SMMS")]
+        //    SMA,
+        //    [Display(Name = "SMMS")]
 
-            SMMS,
-            [Display(Name = "Somatostatin")]
+        //    SMMS,
+        //    [Display(Name = "Somatostatin")]
 
-            Somatostatin,
-            [Display(Name = "SOX-10")]
+        //    Somatostatin,
+        //    [Display(Name = "SOX-10")]
 
-            SOX10,
-            [Display(Name = "SOX-11")]
+        //    SOX10,
+        //    [Display(Name = "SOX-11")]
 
-            SOX11,
-            [Display(Name = "Spirochetes")]
+        //    SOX11,
+        //    [Display(Name = "Spirochetes")]
 
-            Spirochetes,
-            [Display(Name = "STAT6")]
+        //    Spirochetes,
+        //    [Display(Name = "STAT6")]
 
-            STAT6,
-            [Display(Name = "SV40")]
+        //    STAT6,
+        //    [Display(Name = "SV40")]
 
-            SV40,
-            [Display(Name = "SYNAP")]
+        //    SV40,
+        //    [Display(Name = "SYNAP")]
 
-            SYNAP,
-            [Display(Name = "Tamm-Horsfall")]
+        //    SYNAP,
+        //    [Display(Name = "Tamm-Horsfall")]
 
-            Tamm_Horsfall,
-            [Display(Name = "Tbet")]
+        //    Tamm_Horsfall,
+        //    [Display(Name = "Tbet")]
 
-            Tbet,
-            [Display(Name = "TCL-1")]
+        //    Tbet,
+        //    [Display(Name = "TCL-1")]
 
-            TCL_1,
-            [Display(Name = "TCR")]
+        //    TCL_1,
+        //    [Display(Name = "TCR")]
 
-            TCR,
-            [Display(Name = "TCR-Gamma")]
+        //    TCR,
+        //    [Display(Name = "TCR-Gamma")]
 
-            TCR_Gamma,
-            [Display(Name = "TdT")]
+        //    TCR_Gamma,
+        //    [Display(Name = "TdT")]
 
-            TdT,
-            [Display(Name = "THYRO")]
+        //    TdT,
+        //    [Display(Name = "THYRO")]
 
-            THYRO,
-            [Display(Name = "TIA-1")]
+        //    THYRO,
+        //    [Display(Name = "TIA-1")]
 
-            TIA_1,
-            [Display(Name = "TOXO")]
+        //    TIA_1,
+        //    [Display(Name = "TOXO")]
 
-            TOXO,
-            [Display(Name = "Transthyretin")]
+        //    TOXO,
+        //    [Display(Name = "Transthyretin")]
 
-            Transthyretin,
-            [Display(Name = "TRAP")]
+        //    Transthyretin,
+        //    [Display(Name = "TRAP")]
 
-            TRAP,
-            [Display(Name = "TSH")]
+        //    TRAP,
+        //    [Display(Name = "TSH")]
 
-            TSH,
-            [Display(Name = "TTF1")]
+        //    TSH,
+        //    [Display(Name = "TTF1")]
 
-            TTF1,
-            [Display(Name = "Tyrosinase")]
+        //    TTF1,
+        //    [Display(Name = "Tyrosinase")]
 
-            Tyrosinase,
-            [Display(Name = "VIMENTIN")]
+        //    Tyrosinase,
+        //    [Display(Name = "VIMENTIN")]
 
-            VIMENTIN,
-            [Display(Name = "WT1")]
+        //    VIMENTIN,
+        //    [Display(Name = "WT1")]
 
-            WT1,
-            [Display(Name = "WT1 (C-19)")]
+        //    WT1,
+        //    [Display(Name = "WT1 (C-19)")]
 
-            WT1_C19,
-            [Display(Name = "ZAP70")]
+        //    WT1_C19,
+        //    [Display(Name = "ZAP70")]
 
-            ZAP70,
+        //    ZAP70,
 
-        }
+        //}
         public enum RadiologyValues {
             [Display(Name = "High")]
             High =1,
@@ -1252,6 +1268,67 @@ namespace RashidHospital.Helper
             PD,
             [Display(Name = "U/N (not identified)")]
             UN,
+        }
+        public enum ToxictyGrade {
+            [Display(Name = "Grade 1")]
+            grade1=1,
+            [Display(Name = "Grade 2")]
+            grade2 = 2,
+            [Display(Name = "Grade 3")]
+            grade3 = 3,
+            [Display(Name = "Grade 4")]
+            grade4 = 4,
+            [Display(Name = "Grade 5")]
+            grade5 = 5
+        }
+        public enum ToxictyCondition {
+            [Display(Name = "Improved")]
+            Improved = 1,
+            [Display(Name = "Stable")]
+            Stable = 2,
+            [Display(Name = "Worse")]
+            Worse = 3
+        }
+        public enum RTXSite {
+            [Display(Name = "Site 1")]
+            Site1 = 1,
+            [Display(Name = "Site 2")]
+            Site2 = 2,
+            [Display(Name = "Site 3")]
+            Site3 = 3,
+            [Display(Name = "Site 4")]
+            Site4 = 4,
+
+        }
+        public enum RTXType
+        {
+            [Display(Name = "Definitive")]
+            Definitive = 1,
+
+            [Display(Name = "Adjuvant")]
+            Adjuvant = 2,
+
+            [Display(Name = "Pallitive")]
+            Pallitive = 3,
+
+            [Display(Name = "Concomittant")]
+            Concomittant = 4,
+
+        }
+        public enum TypeOfTechnique {
+            [Display(Name = "TwoD")]
+            TwoD = 1,
+            [Display(Name = "ThreeD")]
+            ThreeD = 2,
+            [Display(Name = "IMRT")]
+            IMRT = 3,
+            [Display(Name = "VMAT")]
+            VMAT = 4,
+            [Display(Name = "SRS")]
+            SRS = 5,
+            [Display(Name = "SBRT")]
+            SBRT = 6
+
         }
     }
 }

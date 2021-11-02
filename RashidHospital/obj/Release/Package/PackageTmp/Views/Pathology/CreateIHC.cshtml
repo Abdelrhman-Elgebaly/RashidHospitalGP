@@ -1,0 +1,68 @@
+﻿@model RashidHospital.Models.IHCVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm("CreateIHC", "Pathology", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.PatientId)
+    @Html.HiddenFor(model => model.PathologyId)
+
+    <div class="modal-body">
+        <h4>
+            
+            Create a new IHC.
+        
+        </h4>
+        <h5> @Html.ValidationSummary("", new { @class = "text-danger" })</h5>
+        <hr />
+        <div class="box-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Type", new SelectList(ViewBag.IHCType, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Result, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.Result, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            
+            
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" value="Create" class="btn btn-default" style="float:right;">Create</button>
+                </div>
+            </div>
+        </div>
+   </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+
+<script>
+        $(".select2").select2({
+        tags: true
+    });
+</script>
+}

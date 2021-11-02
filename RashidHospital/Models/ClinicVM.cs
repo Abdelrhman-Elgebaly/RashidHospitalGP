@@ -18,6 +18,7 @@ namespace RashidHospital.Models
 
         public string Details { get; set; }
         public bool IsDeleted { get; set; }
+        public Guid? ModifiedBy { get; set; }
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid Number")]
         public int visitsPerDay { get; set; }
@@ -34,6 +35,7 @@ namespace RashidHospital.Models
                      Details = Obj.Details,
                      IsDeleted=Obj.IsDeleted,
                      visitsPerDay=Obj.visitsPerDay,
+                     ModifiedBy=Obj.ModifiedBy
                 };
             }
             return _Obj;
@@ -47,7 +49,8 @@ namespace RashidHospital.Models
                 Name = DbObj.Name,
                  Details = DbObj.Details,
                  IsDeleted=DbObj.IsDeleted,
-                 visitsPerDay=DbObj.visitsPerDay
+                 visitsPerDay=DbObj.visitsPerDay,
+                 ModifiedBy=DbObj.ModifiedBy
 
             };
         }
@@ -88,7 +91,7 @@ namespace RashidHospital.Models
         public List<SelectListItem> ClinicSelectList()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
-            List<ClinicVM> CliniList = SelectAll();
+            List<ClinicVM> CliniList = SelectAll().Where(a => a.IsDeleted == false).ToList();
            
             foreach (ClinicVM Obj in CliniList)
             {

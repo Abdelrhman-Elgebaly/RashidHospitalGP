@@ -10,13 +10,13 @@ namespace Hospital.DAL
     {
         public int Id { get; set; }
 
-        [Required]
+       
         public string Complain { get; set; }
 
-        [Required]
+       
         public string Diagnose { get; set; }
 
-        [Required]
+      
         public string Recommendation { get; set; }
         public bool IsDeleted { get; set; }
 
@@ -29,6 +29,7 @@ namespace Hospital.DAL
         public int ClinicId { get; set; }
 
         public int PatientID { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         public virtual Clinic Clinic { get; set; }
 

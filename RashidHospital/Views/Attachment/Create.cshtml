@@ -1,0 +1,174 @@
+﻿@model RashidHospital.Models.AttachmentVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+    textarea {
+        width: 400px;
+        height: 200px;
+    }
+</style>
+@using (Html.BeginForm("Create", "Attachment", FormMethod.Post, new { @class = "form-horizontal", role = "form" , enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.UserId)
+    <div class="modal-body">
+        <h4>
+
+            Create a new Attachment.
+
+        </h4>
+        <h5> @Html.ValidationSummary("", new { @class = "text-danger" })</h5>
+        <hr />
+        <div class="box-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" id="fileToUpload" name="fileUploded" />
+                    <span class="field-validation-error" id="spanfile"></span>
+                </div>
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FileDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FileDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form -control", @type = "date", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.FileDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FileDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.FileDetails, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FileDetails, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="float:right">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-default" id="btnSubmit">Create</button>
+                    <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "Attachment", new { patientId = ViewBag.PatientId} )'" />
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+   </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+        //get file size
+        function GetFileSize(fileid) {
+         try
+         {
+             var fileSize = 0;
+             //for IE
+             if ($.browser.msie)
+             {
+             //before making an object of ActiveXObject,
+             //please make sure ActiveX is enabled in your IE browser
+             var objFSO = new ActiveXObject("Scripting.FileSystemObject"); var filePath = $("#" + fileid)[0].value;
+             var objFile = objFSO.getFile(filePath);
+             var fileSize = objFile.size; //size in kb
+             fileSize = fileSize / 1048576; //size in mb
+             }
+             //for FF, Safari, Opeara and Others
+             else
+             {
+             fileSize = $("#" + fileid)[0].files[0].size //size in kb
+             fileSize = fileSize / 1048576; //size in mb
+             }
+             return fileSize;
+             }
+             catch (e)
+             {
+             alert("Error is :" + e);
+             }
+            }
+
+        //get file path from client system
+        function getNameFromPath(strFilepath)
+        {
+             var objRE = new RegExp(/([^\/\\]+)$/);
+             var strName = objRE.exec(strFilepath);
+
+             if (strName == null)
+             {
+             return null;
+             }
+             else
+             {
+             return strName[0];
+             }
+        }
+
+        $("#btnSubmit").live("click", function ()
+        {
+             if ($('#fileToUpload').val() == "")
+             {
+             $("#spanfile").html("Please upload file");
+             return false;
+             }
+             else
+             {
+             return checkfile();
+             }
+        });
+
+        function checkfile()
+        {
+             var file = getNameFromPath($("#fileToUpload").val());
+             if (file != null)
+             {
+             var extension = file.substr((file.lastIndexOf('.') + 1));
+             // alert(extension);
+             switch (extension) {
+             case 'jpg':
+             case 'png':
+             case 'gif':
+             case 'pdf':
+             case 'doc':
+             case 'docx':
+             flag = true;
+             break;
+             default:
+             flag = false;
+             }
+             }
+             if (flag == false)
+             {
+                 $("#spanfile").text("You can upload only jpg,png,gif,pdf,doc,docx extension file");
+             return false;
+             }
+             else
+             {
+             var size = GetFileSize('fileToUpload');
+             if (size > 3)
+             {
+             $("#spanfile").text("You can upload file up to 3 MB");
+             return false;
+             }
+             else
+             {
+             $("#spanfile").text("");
+             }
+             }
+        }
+
+        $(function ()
+        {
+             $("#fileToUpload").change(function () {
+                 checkfile();
+             });
+        });
+</script>
+

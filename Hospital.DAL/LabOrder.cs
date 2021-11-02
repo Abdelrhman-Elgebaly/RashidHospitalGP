@@ -20,6 +20,7 @@ namespace Hospital.DAL
 
         public Guid DoctorId { get; set; }
         public bool IsDeleted { get; set; }
+        public string Note { get; set; }
 
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

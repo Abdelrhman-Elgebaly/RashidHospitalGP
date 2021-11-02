@@ -1,4 +1,5 @@
-﻿using RashidHospital.Models;
+﻿using Microsoft.AspNet.Identity;
+using RashidHospital.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,6 +96,8 @@ namespace RashidHospital.Controllers
             {
                 PatientUnitVM _Unit = new PatientUnitVM();
                 PatientUnitVM _obj = _Unit.SelectObject(UnitId);
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                _obj.ModifiedBy = userId;
                 _obj.IsDeleted = true;
                 _obj.Edit();
                 finalResult = 1;

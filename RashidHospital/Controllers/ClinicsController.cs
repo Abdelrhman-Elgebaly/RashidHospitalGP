@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Hospital.DAL;
 using RashidHospital.Models;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace RashidHospital.Controllers
 {
@@ -93,6 +94,8 @@ namespace RashidHospital.Controllers
             {
                 ClinicVM _Clinic = new ClinicVM();
                ClinicVM _obj = _Clinic.SelectObject(ClinicId);
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                _obj.ModifiedBy = userId;
                 _obj.IsDeleted = true;
                 _obj.Edit();
                  finalResult = 1;

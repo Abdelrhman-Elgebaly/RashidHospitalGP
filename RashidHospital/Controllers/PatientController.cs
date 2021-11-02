@@ -1,4 +1,5 @@
-﻿using RashidHospital.Models;
+﻿using Microsoft.AspNet.Identity;
+using RashidHospital.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents,Employee,Nurses,physiatrist,physician")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
     public class PatientController : Controller
     {
         // GET: Patient
@@ -38,6 +39,8 @@ namespace RashidHospital.Controllers
                 patient.CreatedDate = DateTime.Now;
                  DiagonsVM _DiagonsVM = new DiagonsVM();
                 patient.DiagnoseId= _DiagonsVM.GetDefault();
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                 patient.CreatedBy = userId;
                 patient.Create();
                 return RedirectToAction("Index");
            
@@ -71,10 +74,10 @@ namespace RashidHospital.Controllers
 
             }
             FillViewBags();
-
+            int PatientId = Convert.ToInt32(patientID);
             PatientVM _Obj = new PatientVM();
-            PatientVM _objVM = _Obj.SelectObject(Convert.ToInt32(patientID));
-            ViewBag.PatientInfo = _objVM.Name + " - " + _objVM.MedicalID + "-" + _objVM.DiagnoseName + "-Register Date: " + _objVM.CreatedDate.ToShortDateString() ;
+            PatientVM _objVM = _Obj.SelectObject(PatientId);
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(PatientId);
             if (_objVM == null)
             {
                 return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
@@ -147,6 +150,8 @@ namespace RashidHospital.Controllers
                 PatientVM _patient = new PatientVM();
                 PatientVM _obj = _patient.SelectObject(PatientId);
                 _obj.IsDeleted = true;
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                _obj.ModifiedBy = userId;
                 _obj.Edit();
                 finalResult = 1;
 
@@ -184,7 +189,9 @@ namespace RashidHospital.Controllers
         [HttpGet]
         public ActionResult RequestsandResults(int patientID) {
             PatientVM _Obj = new PatientVM();
-            PatientVM _objVM = _Obj.SelectObject(Convert.ToInt32(patientID));
+            int PatientId = Convert.ToInt32(patientID);
+            PatientVM _objVM = _Obj.SelectObject(PatientId);
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(PatientId);
             return View(_objVM); }
     }
 }

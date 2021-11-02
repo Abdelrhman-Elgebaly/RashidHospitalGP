@@ -25,15 +25,12 @@ namespace RashidHospital.Models
         public bool IsDeleted { get; set; }
 
 
-        [Required]
         [StringLength(50)]
         public string T { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string N { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string M { get; set; }
         public string Note { get; set; }
@@ -43,6 +40,7 @@ namespace RashidHospital.Models
         public string SiteString { get; set; }
         public string ProcString { get; set; }
         public string Recisttring { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         #endregion
 

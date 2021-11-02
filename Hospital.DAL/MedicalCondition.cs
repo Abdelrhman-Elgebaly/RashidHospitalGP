@@ -17,6 +17,7 @@ namespace Hospital.DAL
         public int PatientId { get; set; }
         public bool IsDeleted { get; set; }
 
+        public Guid? ModifiedBy { get; set; }
 
         public int ConditionType { get; set; }
         public int HistroryType { get; set; }

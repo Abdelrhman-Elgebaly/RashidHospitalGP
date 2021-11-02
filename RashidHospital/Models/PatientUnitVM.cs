@@ -16,6 +16,7 @@ namespace RashidHospital.Models
         [Required]
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         internal override PatientUnit Convert(PatientUnitVM Obj)
         {
@@ -28,6 +29,7 @@ namespace RashidHospital.Models
                     Id = Obj.Id,
                     Name = Obj.Name,
                     IsDeleted = Obj.IsDeleted,
+                    ModifiedBy=Obj.ModifiedBy
                 };
             }
             return _Obj;
@@ -40,7 +42,7 @@ namespace RashidHospital.Models
                 Id = DbObj.Id,
                 Name = DbObj.Name,
               IsDeleted=DbObj.IsDeleted,
-
+              ModifiedBy=DbObj.ModifiedBy
             };
         }
 
@@ -80,7 +82,7 @@ namespace RashidHospital.Models
         public List<SelectListItem> GetSelectList()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
-            List<PatientUnitVM> _List = SelectAll();
+            List<PatientUnitVM> _List = SelectAll().Where(a => a.IsDeleted == false).ToList();
           
             foreach (PatientUnitVM Obj in _List)
             {

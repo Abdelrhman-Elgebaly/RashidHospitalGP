@@ -19,19 +19,17 @@ namespace Hospital.DAL
 
         public int Recist { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string T { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string N { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string M { get; set; }
         public int PateintID { get; set; }
         public Guid CreatedBy { get; set; }
+        public Guid? ModifiedBy { get; set; }
         public string Note { get; set; }
         public bool IsDeleted { get; set; }
 

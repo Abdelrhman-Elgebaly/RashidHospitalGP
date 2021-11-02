@@ -24,6 +24,9 @@ namespace Hospital.DAL
             Requests = new HashSet<Request>();
             SurgicalConditions = new HashSet<SurgicalCondition>();
             LabOrders = new HashSet<LabOrder>();
+            Toxicties = new HashSet<Toxicty>();
+            RadioTherapies = new HashSet<RadioTherapy>();
+
         }
 
         public int Id { get; set; }
@@ -37,7 +40,6 @@ namespace Hospital.DAL
         [StringLength(50)]
         public string PhoneNumber1 { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string PhoneNumber2 { get; set; }
 
@@ -73,10 +75,12 @@ namespace Hospital.DAL
         [Required]
         public string NameArabic { get; set; }
 
-        [Required]
+   
         [StringLength(50)]
         public string PhoneNumber3 { get; set; }
         public string LastVisitDate { get; set; }
+        public Guid? CreatedBy { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
@@ -118,7 +122,13 @@ namespace Hospital.DAL
         public virtual ICollection<LabOrder> LabOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pathology> Pathologies { get; set; }
-        
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Toxicty> Toxicties { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<RadioTherapy> RadioTherapies { get; set; }
     }
 }

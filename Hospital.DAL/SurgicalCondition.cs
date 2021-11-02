@@ -10,7 +10,6 @@ namespace Hospital.DAL
     {
         public int Id { get; set; }
 
-        [Required]
         public string Condition { get; set; }
 
         public DateTime ConditionDate { get; set; }

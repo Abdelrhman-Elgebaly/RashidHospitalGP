@@ -24,6 +24,7 @@ namespace Hospital.DAL
 
         public int PatientId { get; set; }
         public Guid? DoctorId { get; set; }
+        public Guid? ModifiedBy { get; set; }
         public bool IsDeleted { get; set; }
 
 

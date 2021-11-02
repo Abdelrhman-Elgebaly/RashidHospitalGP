@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -169,10 +170,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
+    <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CallBoardController.cs" />
     <Compile Include="Controllers\ClinicsController.cs" />
+    <Compile Include="Controllers\DeleteTasksController.cs" />
     <Compile Include="Controllers\DiagnoseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IHCTypeController.cs" />
     <Compile Include="Controllers\LabRequestController.cs" />
     <Compile Include="Controllers\LabResualtController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -183,6 +187,10 @@
     <Compile Include="Controllers\PatientUnitController.cs" />
     <Compile Include="Controllers\RadiologyRequestController.cs" />
     <Compile Include="Controllers\RadiologyResultController.cs" />
+    <Compile Include="Controllers\RadioTherapyController.cs" />
+    <Compile Include="Controllers\ToxictyController.cs" />
+    <Compile Include="Controllers\ToxictyTypeController.cs" />
+    <Compile Include="Controllers\TumerHistologyTypesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,10 +199,15 @@
     <Compile Include="Helper\Enum.cs" />
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\PrincipalExtensions.cs" />
+    <Compile Include="Helper\ViewBagsHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppointmentVM.cs" />
+    <Compile Include="Models\AttachmentVM.cs" />
     <Compile Include="Models\CallBoardVM.cs" />
     <Compile Include="Models\ClinicVM.cs" />
+    <Compile Include="Models\DeleteTasksObject.cs" />
+    <Compile Include="Models\FixationVM.cs" />
+    <Compile Include="Models\IHCTypesVM.cs" />
     <Compile Include="Models\DiagonsVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IHCVM.cs" />
@@ -208,8 +221,13 @@
     <Compile Include="Models\PathologyVM.cs" />
     <Compile Include="Models\PatientUnitVM.cs" />
     <Compile Include="Models\PatientVM.cs" />
+    <Compile Include="Models\RadiioTherapiesFixationVM.cs" />
     <Compile Include="Models\RadiologyRequestVM.cs" />
     <Compile Include="Models\RadiologyResultVM.cs" />
+    <Compile Include="Models\RadioTherapyVM.cs" />
+    <Compile Include="Models\ToxictyTypeVM.cs" />
+    <Compile Include="Models\ToxictyVM.cs" />
+    <Compile Include="Models\TumerHistologyTypesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -254,6 +272,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\buttons.html5.min.js" />
@@ -261,6 +281,7 @@
     <Content Include="Scripts\dataTables.bootstrap4.js" />
     <Content Include="Scripts\dataTables.buttons.min.js" />
     <Content Include="Scripts\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\Date_eu.js" />
     <Content Include="Scripts\demo.js" />
     <Content Include="Scripts\intlTelInput.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -287,6 +308,7 @@
     <Content Include="Scripts\jszip.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\natural.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select2.min.js" />
@@ -382,12 +404,33 @@
     <Content Include="Views\RadiologyRequest\_Edit.cshtml" />
     <Content Include="Views\RadiologyRequest\View.cshtml" />
     <Content Include="Views\MedicalRecord\View.cshtml" />
+    <Content Include="Views\DeleteTasks\Index.cshtml" />
+    <Content Include="Views\CallBoard\Index - Copy.cshtml" />
+    <Content Include="Views\IHCType\Create.cshtml" />
+    <Content Include="Views\IHCType\Index.cshtml" />
+    <Content Include="Views\TumerHistologyTypes\Create.cshtml" />
+    <Content Include="Views\TumerHistologyTypes\Index.cshtml" />
+    <Content Include="Views\Pathology\View.cshtml" />
+    <Content Include="Views\Attachment\Index.cshtml" />
+    <Content Include="Views\Attachment\Create.cshtml" />
+    <Content Include="Views\RadiologyResult\_Edit.cshtml" />
+    <Content Include="Views\RadiologyResult\View.cshtml" />
+    <Content Include="Views\Toxicty\Create.cshtml" />
+    <Content Include="Views\Toxicty\Index.cshtml" />
+    <Content Include="Views\Toxicty\_Edit.cshtml" />
+    <Content Include="Views\ToxictyType\Create.cshtml" />
+    <Content Include="Views\ToxictyType\Index.cshtml" />
+    <Content Include="Views\RadioTherapy\Index.cshtml" />
+    <Content Include="Views\RadioTherapy\Create.cshtml" />
+    <Content Include="Views\RadioTherapy\View.cshtml" />
+    <Content Include="Views\RadioTherapy\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\build\" />
     <Folder Include="Content\webfonts\" />
     <Folder Include="Html\AdminLTE-3.0.0\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

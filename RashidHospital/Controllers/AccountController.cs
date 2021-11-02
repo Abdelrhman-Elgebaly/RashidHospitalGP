@@ -12,10 +12,12 @@ using RashidHospital.Models;
 using System.Collections.Generic;
 using Hospital.DAL;
 using System.IO;
+using System.Net;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Employee")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -76,7 +78,7 @@ namespace RashidHospital.Controllers
             {
                 return View(model);
             }
-
+           
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -85,9 +87,20 @@ namespace RashidHospital.Controllers
             {
                 case SignInStatus.Success:
                     {
-                        //Guid userId =Guid.Parse(User.Identity.GetUserId());
-                        //await UserManager.UpdateSecurityStampAsync(userId);
-                        return RedirectToLocal(returnUrl);
+                        //Guid userId = Guid.Parse(User.Identity.GetUserId());
+                        //var user = UserManager.FindById(userId);
+                        //if (user.IsActive == false)
+                        //{
+                        //    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                        //    ModelState.AddModelError("", "Invalid login attempt.");
+                        //    return View(model);
+                        //}
+                        //else
+                        //{
+                        //    await UserManager.UpdateSecurityStampAsync(userId);
+                            return RedirectToAction("Index", "Home");
+                        //}
+
 
                     }
                 case SignInStatus.LockedOut:
@@ -184,7 +197,7 @@ namespace RashidHospital.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                  //  await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
@@ -235,19 +248,21 @@ namespace RashidHospital.Controllers
                 viewModelObject.ThirdName = item.ThirdName;
                 viewModelObject.Id = item.Id;
                 viewModelObject.IsActive = item.IsActive;
-               // viewModelObject.stringId =Convert.ToString(1+StringId);
-               // List<string> RolesID = _aspNetUserRole.SelectRolesIdByUserId(item.Id);
+                // viewModelObject.stringId =Convert.ToString(1+StringId);
+                AspNetUserRole _aspNetUserRole = new AspNetUserRole();
+                AspNetRole _aspNetRole = new AspNetRole();
+                List<string> RolesID = _aspNetUserRole.Where(a=>a.UserId== item.Id).Select(a=> a.RoleId.ToString()).ToList();
                 viewModelObject.PhoneNumber = item.PhoneNumber;
-               // foreach (string role in RolesID)
-               // {
+                foreach (string role in RolesID)
+                {
 
-                 //   viewModelObject.RolesString += _aspNetRole.GetRolesNameById(Guid.Parse(role)) + " ,";
+                    viewModelObject.RolesString += _aspNetRole.Where(a=> a.Id.ToString()==role)?.FirstOrDefault().Name ;
 
-               // }
-               // if (viewModelObject.RolesString != null)
-              //      if (viewModelObject.RolesString.Count() > 0)
+                }
+                // if (viewModelObject.RolesString != null)
+                //      if (viewModelObject.RolesString.Count() > 0)
                 //        viewModelObject.RolesString = viewModelObject.RolesString.Remove(viewModelObject.RolesString.Length - 1);
-               _ViewModellLst.Add(viewModelObject);
+                _ViewModellLst.Add(viewModelObject);
             }
 
             //RegisterViewModel getRolesObject = new RegisterViewModel();
@@ -288,7 +303,7 @@ namespace RashidHospital.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -320,7 +335,14 @@ namespace RashidHospital.Controllers
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            return code == null ? View("Error") : View();
+            //return code == null ? View("Error") : View();
+            string userID = User.Identity.GetUserId();
+            AspNetUser _user = new AspNetUser();
+           var user= _user.Where(a=> a.Id.ToString() == userID).FirstOrDefault();
+            ViewBag.Email = user.Email;
+            ResetPasswordViewModel model = new ResetPasswordViewModel();
+            model.Email = user.Email;
+            return RedirectToAction("Index","Home");
         }
 
         //
@@ -334,18 +356,21 @@ namespace RashidHospital.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
+            //if (user == null)
+            //{
+            //    // Don't reveal that the user does not exist
+            //    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //}
+           
+            ApplicationUser user = await UserManager.FindByEmailAsync(model.Email);
+            var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
+            // if (result.Succeeded)
+            // {
+            //     return RedirectToAction("ResetPasswordConfirmation", "Account");
+            // }
+            //AddErrors(result);
             return View();
         }
 
@@ -522,9 +547,9 @@ namespace RashidHospital.Controllers
             }
         }
        
-        public JsonResult _EditUsers(string UserID)
+        public JsonResult _EditUsers(string UserId)
         {
-            if (UserID == null)
+            if (UserId == null)
             {
                 return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
 
@@ -532,21 +557,26 @@ namespace RashidHospital.Controllers
 
 
             RegisterViewModel _Obj = new RegisterViewModel();
-            RegisterViewModel _objVM = _Obj.SelectObject(Guid.Parse(UserID));
+            RegisterViewModel _objVM = _Obj.SelectObject(Guid.Parse(UserId));
             if (_objVM == null)
             {
                 return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_Edit", _objVM) }, JsonRequestBehavior.AllowGet);
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_EditUsers", _objVM) }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public string EditUser(RegisterViewModel vm)
         {
             try
             {
+                RegisterViewModel _Obj = new RegisterViewModel();
+                RegisterViewModel _objVM = _Obj.SelectObject(vm.Id);
+                var userID = User.Identity.GetUserId();
 
-                vm.ModifiedDate = DateTime.Now;
-                vm.Edit();
+                _objVM.IsActive = vm.IsActive;
+                _objVM.ModifiedDate = DateTime.Now;
+                _objVM.Modifiedby =Guid.Parse(userID);
+                _objVM.Edit();
                 return "Success"; // succcess
 
             }

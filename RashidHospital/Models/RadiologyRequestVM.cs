@@ -29,6 +29,8 @@ namespace RashidHospital.Models
         public string SiteString { get; set; }
         public string ProcString { get; set; }
         public string RadiologyValuestring { get; set; }
+        public Guid? ModifiedBy { get; set; }
+
         internal override RadiologyRequest Convert(RadiologyRequestVM Obj)
         {
             if (Obj == null)
@@ -45,7 +47,8 @@ namespace RashidHospital.Models
                     ProcedureType=Obj.ProcedureType,
                     RequestDate=Obj.RequestDate,
                     Site=Obj.Site,
-                    IsDeleted=Obj.IsDeleted
+                    IsDeleted=Obj.IsDeleted,
+                    ModifiedBy=Obj.ModifiedBy
                     
                 };
             }
@@ -73,6 +76,7 @@ namespace RashidHospital.Models
                 SiteString = enumSite.ToString(),
                 ProcString = enumProc.ToString(),
                  IsDeleted=DbObj.IsDeleted,
+                 ModifiedBy=DbObj.ModifiedBy,
                 DoctorName=DbObj.AspNetUser.FirstName +" "+ DbObj.AspNetUser.SecondName+"  "+ DbObj.AspNetUser.ThirdName
             };
         }

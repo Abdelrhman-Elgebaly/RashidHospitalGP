@@ -20,6 +20,9 @@ namespace Hospital.DAL
             LabOrders = new HashSet<LabOrder>();
             LabResualts = new HashSet<LabResualt>();
             Pathologies = new HashSet<Pathology>();
+            Toxicties = new HashSet<Toxicty>();
+            RadioTherapies = new HashSet<RadioTherapy>();
+
         }
 
         public Guid Id { get; set; }
@@ -72,7 +75,7 @@ namespace Hospital.DAL
 
         public Guid CreatedBy { get; set; }
 
-        public Guid Modifiedby { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
@@ -99,6 +102,13 @@ namespace Hospital.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
         public virtual ICollection<Pathology> Pathologies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Toxicty> Toxicties { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<RadioTherapy> RadioTherapies { get; set; }
+
         
 
     }

@@ -8,9 +8,6 @@ using Hospital.DAL;
 
 namespace RashidHospital.Models
 {
-
-
-
     public class UserRole : IdentityUserRole<Guid>
     {
     }

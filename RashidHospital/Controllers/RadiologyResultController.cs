@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
 
     public class RadiologyResultController : Controller
     {
@@ -27,9 +27,7 @@ namespace RashidHospital.Controllers
         {
             PatientVM _patientvm = new PatientVM();
             ViewBag.PatientId = patientID;
-            PatientVM _Objvm = _patientvm.SelectObject(patientID);
-            ViewBag.PatientInfo = _Objvm.Name + " - " + _Objvm.MedicalID + "-" + _Objvm.DiagnoseName + "-Register Date: " + _Objvm.CreatedDate.ToShortDateString();
-
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(patientID);
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
         }
@@ -111,14 +109,23 @@ namespace RashidHospital.Controllers
         //    }
         //}
         [HttpPost]
-        public string Create(int ProcedureType, int Site, DateTime RadiologyDate, int Recist, string T, string M, string N, string Note, bool Contrast, int PateintID)
+        public JsonResult Create(int ProcedureType, int Site,DateTime? RadiologyDate, int Recist, string T, string M, string N, string Note, bool Contrast, int PateintID)
         {
             try
             {
                 RadiologyResultVM RadiologyObject = new RadiologyResultVM();
                 RadiologyObject.ProcedureType = ProcedureType;
                 RadiologyObject.Site = Site;
-                RadiologyObject.RadiologyDate = RadiologyDate;
+
+
+                if (RadiologyDate == null)
+                {
+                    RadiologyObject.RadiologyDate = DateTime.Now;
+
+                }
+                else {
+                    RadiologyObject.RadiologyDate = RadiologyDate.Value;
+                }
                 RadiologyObject.Recist = Recist;
                 RadiologyObject.T = T;
                 RadiologyObject.M = M;
@@ -129,6 +136,40 @@ namespace RashidHospital.Controllers
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 RadiologyObject.CreatedBy = userId;
                 RadiologyObject.Create();
+                return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+        public JsonResult _Edit(int Id)
+        {
+            if (Id == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            RadiologyResultVM _obj = new RadiologyResultVM();
+            _obj = _obj.SelectObject(Id);
+            fillcreatebag(_obj.PateintID);
+
+
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_Edit", _obj) }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+
+        public string Edit(RadiologyResultVM vm)
+        {
+            try
+            {
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                vm.CreatedBy = userId;
+                vm.Edit();
                 return "Success"; // succcess
             }
             catch (Exception ex)
@@ -138,5 +179,28 @@ namespace RashidHospital.Controllers
 
             }
         }
-     }
+        [HttpGet]
+        public ActionResult View(string Id)
+        {
+            if (Id == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            
+            RadiologyResultVM _Obj = new RadiologyResultVM();
+            RadiologyResultVM _objVM = _Obj.SelectObject(Convert.ToInt32(Id));
+            int PatientId = Convert.ToInt32(_objVM.PateintID);
+            fillcreatebag(PatientId);
+
+            fillBag(PatientId);
+            if (_objVM == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            return View(_objVM);
+
+        }
+    }
 }

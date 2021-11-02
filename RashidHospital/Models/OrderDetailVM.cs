@@ -17,6 +17,7 @@ namespace RashidHospital.Models
         public int PatientId { get; set; }
         public LabTyps[] selectedTypes { get; set; }
         public bool IsDeleted { get; set; }
+        public string Note { get; set; }
 
         internal override OrderDetailVM Convert(OrderDetail Obj)
         {
@@ -28,7 +29,7 @@ namespace RashidHospital.Models
                 LabOrderId = Obj.LabOrderId,
                 Type = Obj.Type,
                 TypeValue = enumType.ToString(),
-                IsDeleted = Obj.IsDeleted
+                IsDeleted = Obj.IsDeleted,
             };
         }
 
@@ -39,7 +40,7 @@ namespace RashidHospital.Models
                 Id = Obj.Id,
                 LabOrderId = Obj.LabOrderId,
                 Type = Obj.Type,
-                IsDeleted=Obj.IsDeleted
+                IsDeleted=Obj.IsDeleted,
             };
         }
 

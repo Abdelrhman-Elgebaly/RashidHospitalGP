@@ -80,7 +80,7 @@ namespace RashidHospital.Models
         public List<SelectListItem> GetSelectList()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
-            List<DiagonsVM> _List = SelectAll();
+            List<DiagonsVM> _List = SelectAll().Where(a => a.IsDeleted == false).ToList();
             foreach (DiagonsVM Obj in _List)
             {
                 SelectListItem _item = new SelectListItem();

@@ -20,6 +20,7 @@ namespace Hospital.DAL
         public DateTime RequestDate { get; set; }
         public int PateintID { get; set; }
         public bool IsDeleted { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         public Guid CreatedBy { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }

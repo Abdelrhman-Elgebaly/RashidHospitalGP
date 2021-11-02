@@ -27,7 +27,7 @@ namespace Hospital.DAL
         public int visitsPerDay { get; set; }
         public bool IsDeleted { get; set; }
 
-
+        public Guid? ModifiedBy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
 

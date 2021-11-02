@@ -13,13 +13,11 @@ namespace RashidHospital.Models
 
         public int Id { get; set; }
 
-        [Required]
         public string Complain { get; set; }
 
-        [Required]
         public string Diagnose { get; set; }
 
-        [Required]
+       
         public string Recommendation { get; set; }
         [Required]
         public DateTime RecordDate { get; set; }
@@ -29,6 +27,7 @@ namespace RashidHospital.Models
         public string DoctorName { get; set; }
         public string ClinicName { get; set; }
         public bool IsDeleted { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
 
         [Required]
@@ -51,6 +50,7 @@ namespace RashidHospital.Models
                 _record.ClinicName = Obj.Clinic?.Name;
                 _record.IsDeleted = Obj.IsDeleted;
                 _record.DoctorName = Obj.AspNetUser?.FirstName + " " + Obj.AspNetUser?.SecondName + " " + Obj.AspNetUser?.ThirdName;
+                _record.ModifiedBy = Obj.ModifiedBy;
                 return _record;
             }
             else return null;
@@ -72,8 +72,8 @@ namespace RashidHospital.Models
                 Recommendation = Obj.Recommendation,
                 RecordDate= Obj.RecordDate,
                 Flag=Obj.Flag,
-                 IsDeleted=Obj.IsDeleted
-
+                 IsDeleted=Obj.IsDeleted,
+                 ModifiedBy=Obj.ModifiedBy
             };
         }
 

@@ -8,12 +8,9 @@ namespace Hospital.DAL
 {
     public partial class Appointment : DbBaseClass<Appointment>
     {
-        public List<Appointment> GetAppointmentsByPatientId(int PatientId,DateTime date)
+        public List<Appointment> GetAppointmentsByPatientId(int PatientId)
         {
-            List<Appointment> medicalList = _Db.Appointments.Where(a => a.PatientId == PatientId 
-            && a.AppointmentDate.Year == date.Date.Year
-            && a.AppointmentDate.Month == date.Date.Month
-            && a.AppointmentDate.Day == date.Date.Day).ToList();
+            List<Appointment> medicalList = _Db.Appointments.Where(a => a.PatientId == PatientId).ToList();
             return medicalList;
 
         }

@@ -21,7 +21,6 @@ namespace RashidHospital.Models
         public bool IsDeleted { get; set; }
 
 
-        [Required]
         [StringLength(50)]
         public string Value { get; set; }
 
@@ -41,8 +40,9 @@ namespace RashidHospital.Models
             _obj.Type = Obj.Type;
             _obj.Value = Obj.Value;
             _obj.PathologyId = Obj.PathologyId;
-            var enumType = (IHCType)Obj.Type;
-            _obj.TypeName = enumType.ToString();
+            IHCTypesVM _type = new IHCTypesVM();
+            _type= _type.SelectObject(Obj.Type);
+            _obj.TypeName = _type.Title;
             _obj.IsDeleted = Obj.IsDeleted;
 
             return _obj;
@@ -84,7 +84,7 @@ namespace RashidHospital.Models
             IHCVM _Obj = new IHCVM();
             IHC _BClass = new IHC();
             List<IHC> dbList = _BClass.GetIHCByPathologyId(PathologyId).ToList();
-            return dbList.Select(z => _Obj.Convert(z)).ToList();
+            return dbList!= null? dbList.Select(z => _Obj.Convert(z)).ToList(): null;
         }
 
         
@@ -97,12 +97,8 @@ namespace RashidHospital.Models
         }
         public List<SelectListItem> GetIHCTypeSelectList()
         {
-
-            return System.Enum.GetValues(typeof(IHCType)).Cast<IHCType>().Select(v => new SelectListItem
-            {
-                Text = EnumHelper<IHCType>.GetDisplayValue(v),
-                Value = ((int)v).ToString()
-            }).ToList();
+            IHCTypesVM _ihcType = new IHCTypesVM();
+          return  _ihcType.GetSelectList();
         }
         #endregion
     }

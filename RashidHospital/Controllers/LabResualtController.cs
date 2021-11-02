@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
     public class LabResualtController : Controller
     {
         // GET: LabResualt
@@ -25,9 +25,7 @@ namespace RashidHospital.Controllers
         {
             PatientVM _patientvm = new PatientVM();
             ViewBag.PatientId = patientID;
-            PatientVM patientObj = _patientvm.SelectObject(patientID);
-            ViewBag.PatientInfo = patientObj.Name + " - " + patientObj.MedicalID + "-" + patientObj.DiagnoseName + "-Register Date: " + patientObj.CreatedDate.ToShortDateString();
-
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(patientID);
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
         }
@@ -107,7 +105,7 @@ namespace RashidHospital.Controllers
             }
         }
         [HttpPost]
-        public string AddResult(int LabType, string Unit, string Result, int PatientId) {
+        public JsonResult AddResult(int LabType, string Unit, string Result, int PatientId) {
             if (LabType != 0 || Unit != null || Result != null || PatientId != 0) {
                 LabResualtVM _labresults = new LabResualtVM();
                 _labresults.PatientId = PatientId;
@@ -119,8 +117,8 @@ namespace RashidHospital.Controllers
                 _labresults.DoctorId = userId;
                 _labresults.Create();
             }
-           
-            return "success";
+
+            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
         }
         // GET: Clinics/Edit/5
         public JsonResult _Edit(int Id)

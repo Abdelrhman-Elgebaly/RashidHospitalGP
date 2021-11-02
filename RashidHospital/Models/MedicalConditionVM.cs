@@ -30,6 +30,7 @@ namespace RashidHospital.Models
         public string PatientMedicalId { get; set; }
         public Guid DoctorId { get; set; }
         public bool IsDeleted { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         public string DoctorName { get; set; }
 
@@ -49,6 +50,7 @@ namespace RashidHospital.Models
                     HistroryType= Obj.HistroryType,
                     DoctorId=Obj.DoctorId,
                     IsDeleted=Obj.IsDeleted,
+                    ModifiedBy=Obj.ModifiedBy
                 };
             }
             return _Obj;
@@ -69,26 +71,36 @@ namespace RashidHospital.Models
             AspNetUser _doctor = new AspNetUser();
             AspNetUser Doctor= _doctor.Getobject(DbObj.DoctorId);
             ObjVM.DoctorName = Doctor?.FirstName+" "+ Doctor?.SecondName + " " +Doctor?.ThirdName;
-            if (DbObj.HistroryType == 0)
+            if (DbObj.HistroryType == 1)
             {
                 var _MedicalHistory = (MedicalHistory)DbObj.ConditionType;
-                var enumCOndition = EnumHelper<MedicalHistory>.GetDisplayValue(_MedicalHistory); 
+                var enumCOndition = EnumHelper<MedicalHistory>.GetDisplayValue(_MedicalHistory);
                 ObjVM.ConditionName = enumCOndition.ToString();
-                ObjVM.HistoryName ="MedicalHistory";
+                ObjVM.HistoryName = "MedicalHistory";
 
+            }
+            else if (DbObj.HistroryType == 2) {
+                var _MedicalHistory = (SurgicalHistory)DbObj.ConditionType;
+                var enumCOndition = EnumHelper<SurgicalHistory>.GetDisplayValue(_MedicalHistory);
+                ObjVM.ConditionName = enumCOndition.ToString();
+                ObjVM.HistoryName = "SurgicalHistory";
+            }
+            else if (DbObj.HistroryType==3) {
+           
+                ObjVM.HistoryName = "FamilyHistory";
             }
             else
             {
-                var _SurgicalHistory = (SurgicalHistory)DbObj.ConditionType;
-                var enumCOndition = EnumHelper<SurgicalHistory>.GetDisplayValue(_SurgicalHistory);
-                ObjVM.ConditionName = enumCOndition.ToString();
-                ObjVM.HistoryName = "SurgicalHistory";
+              
+                ObjVM.HistoryName = "AllergyHistory";
 
             }
             PatientVM _PatientVM = new PatientVM();
            var patientObj = _PatientVM.SelectObject(ObjVM.PatientId);
             ObjVM.PatientName = patientObj.Name;
             ObjVM.PatientMedicalId = patientObj.MedicalID;
+            ObjVM.ModifiedBy = DbObj.ModifiedBy;
+
             return ObjVM;
         }
 

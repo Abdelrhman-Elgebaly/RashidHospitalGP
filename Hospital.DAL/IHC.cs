@@ -15,7 +15,6 @@ namespace Hospital.DAL
 
         public string Result { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Value { get; set; }
 
@@ -28,5 +27,7 @@ namespace Hospital.DAL
         public virtual Pathology Pathologies { get; set; }
 
         public virtual Patient Patient { get; set; }
+
+        public virtual IHCType IHCType { get; set; }
     }
 }

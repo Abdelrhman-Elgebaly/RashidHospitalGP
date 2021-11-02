@@ -16,7 +16,7 @@ namespace Hospital.DAL
 
         public int PatientNumber { get; set; }
 
-        public bool IsSkipped { get; set; }
+        public bool IsOnCall { get; set; }
 
         public int AppointmentId { get; set; }
         public int ClinicId { get; set; }
@@ -26,7 +26,8 @@ namespace Hospital.DAL
         public DateTime? LastCallTime { get; set; }
         public bool Done { get; set; }
         public Guid? DoctorId { get; set; }
-
+        public Guid? ModifiedBy { get; set; }
+        
         public bool IsDeleted { get; set; }
         public virtual Appointment Appointment { get; set; }
         public virtual Clinic Clinic { get; set; }

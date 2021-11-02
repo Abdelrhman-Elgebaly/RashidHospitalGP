@@ -3,6 +3,7 @@ using RashidHospital.Helper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -27,7 +28,7 @@ namespace RashidHospital.Models
                             ErrorMessage = "Please enter a valid Mobile")]
         public string PhoneNumber1 { get; set; }
 
-        [Required]
+      
         [RegularExpression(@"(201)[0-9]{9}",
                             ErrorMessage = "Please enter a valid Mobile")]
 
@@ -66,8 +67,8 @@ namespace RashidHospital.Models
         public string NameArabic { get; set; }
         public string LastVisitDate { get; set; }
 
+        public string RegisteredDateString { get; set; }
 
-        [Required]
         [RegularExpression(@"(201)[0-9]{9}",
                             ErrorMessage = "Please enter a valid Mobile")]
         public string PhoneNumber3 { get; set; }
@@ -77,6 +78,9 @@ namespace RashidHospital.Models
         public string[] MaritalStatusList = new[] { "Single", "Married", "Widow/widower", "Divorced"};
         public string PatientUnitName { get; set; }
         public bool FromCallBoard { get; set; }
+        public Guid? CreatedBy { get; set; }
+        public string Signature { get; set; }
+        public Guid? ModifiedBy { get; set; }
 
         internal override Patient Convert(PatientVM Obj)
         {
@@ -105,7 +109,10 @@ namespace RashidHospital.Models
                     CreatedDate = Obj.CreatedDate,
                     LastVisitDate = Obj.LastVisitDate,
                     PhoneNumber3 = Obj.PhoneNumber3,
-                    DiagnoseId = Obj.DiagnoseId
+                    DiagnoseId = Obj.DiagnoseId,
+                    CreatedBy=Obj.CreatedBy,
+                    ModifiedBy=Obj.ModifiedBy,
+                    
                 };
             }
             return _Obj;
@@ -113,32 +120,40 @@ namespace RashidHospital.Models
 
         internal override PatientVM Convert(Patient DbObj)
         {
-            return new PatientVM()
-            {
-                Id = DbObj.Id,
-                Name = DbObj.Name,
-                Address1 = DbObj.Address1,
-                BirthDate = DbObj.BirthDate,
-                City = DbObj.City,
-                Gender = DbObj.Gender,
-                IsDeleted = DbObj.IsDeleted,
-                MedicalID = DbObj.MedicalID,
-                ModifiedDate = DbObj.ModifiedDate,
-                NameArabic = DbObj.NameArabic,
-                MaritalStatus = DbObj.MaritalStatus,
-                NationalID = DbObj.NationalID,
-                PhoneNumber1 = DbObj.PhoneNumber1,
-                NoOfChildren = DbObj.NoOfChildren,
-                PhoneNumber2 = DbObj.PhoneNumber2,
-                UnitID = DbObj.UnitID,
-                CreatedDate = DbObj.CreatedDate,
-                PatientUnitName = DbObj.PatientUnit?.Name,
-                LastVisitDate = DbObj.LastVisitDate,
-                PhoneNumber3 = DbObj.PhoneNumber3,
-                DiagnoseId=DbObj.DiagnoseId,
-                DiagnoseName = DbObj.Diagons?.Title,
-                
-            };
+            PatientVM patient = new PatientVM();
+            if (DbObj != null) {
+                patient.Id = DbObj.Id;
+                patient.Name = DbObj.Name;
+                patient.Address1 = DbObj.Address1;
+                patient.BirthDate = DbObj.BirthDate;
+                patient.City = DbObj.City;
+                patient.Gender = DbObj.Gender;
+                patient.IsDeleted = DbObj.IsDeleted;
+                patient.MedicalID = DbObj.MedicalID;
+                patient.ModifiedDate = DbObj.ModifiedDate;
+                patient.NameArabic = DbObj.NameArabic;
+                patient.MaritalStatus = DbObj.MaritalStatus;
+                patient.NationalID = DbObj.NationalID;
+                patient.PhoneNumber1 = DbObj.PhoneNumber1;
+                patient.NoOfChildren = DbObj.NoOfChildren;
+                patient.PhoneNumber2 = DbObj.PhoneNumber2;
+                patient.UnitID = DbObj.UnitID;
+                patient.CreatedDate = DbObj.CreatedDate;
+                patient.RegisteredDateString = DbObj.CreatedDate.ToShortDateString();
+                patient.PatientUnitName = DbObj.PatientUnit?.Name;
+                patient.LastVisitDate = DbObj.LastVisitDate;
+                patient.PhoneNumber3 = DbObj.PhoneNumber3;
+                patient.DiagnoseId = DbObj.DiagnoseId;
+                patient.DiagnoseName = DbObj.Diagons?.Title;
+                patient.CreatedBy = DbObj.CreatedBy;
+                AspNetUser _signutre = new AspNetUser();
+                AspNetUser user = _signutre.Where(a => a.Id == DbObj.CreatedBy).FirstOrDefault();
+                patient.Signature = user?.FirstName + " " + user?.SecondName + user?.ThirdName;
+                patient.ModifiedBy = DbObj.ModifiedBy;
+
+            }
+
+            return patient;
         }
 
         #region Functions
@@ -179,7 +194,7 @@ namespace RashidHospital.Models
         public List<SelectListItem> PatientSelectList()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
-            List<PatientVM> _List = SelectAll();
+            List<PatientVM> _List = SelectAll().Where(a => a.IsDeleted == false).ToList();
             
             foreach (PatientVM Obj in _List)
             {
@@ -194,7 +209,7 @@ namespace RashidHospital.Models
         public List<SelectListItem> PatientFullSelectList()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
-            List<PatientVM> _List = SelectAll();
+            List<PatientVM> _List = SelectAll().Where(a => a.IsDeleted==false).ToList();
           
             foreach (PatientVM Obj in _List)
             {
@@ -205,6 +220,13 @@ namespace RashidHospital.Models
             }
 
             return listItems;
+        }
+
+        public void SetVisitDate(int patientId) {
+            PatientVM patient = new PatientVM();
+            patient = patient.SelectObject(patientId);
+            patient.LastVisitDate = DateTime.Now.ToShortDateString();
+            patient.Edit();
         }
 
         #endregion

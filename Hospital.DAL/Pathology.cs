@@ -30,7 +30,7 @@ namespace Hospital.DAL
 
         public string Comment { get; set; }
 
-        public string TumerHistology { get; set; }
+        public int TumerHistology { get; set; }
 
         public int? TumerGrade { get; set; }
 
@@ -59,11 +59,13 @@ namespace Hospital.DAL
 
         public int PatientId { get; set; }
         public Guid DoctorId { get; set; }
+        public Guid? ModifiedBy { get; set; }
         public bool IsDeleted { get; set; }
 
         public virtual AspNetUser Doctors { get; set; }
 
         public virtual Patient Patient { get; set; }
+        public virtual TumerHistologyTypes TumerHistologyType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
         public virtual ICollection<IHC> IHCS { get; set; }

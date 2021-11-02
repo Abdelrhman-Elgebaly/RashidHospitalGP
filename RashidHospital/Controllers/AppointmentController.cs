@@ -8,17 +8,26 @@ using System.Web.Mvc;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents,Nurses,physician")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
     public class AppointmentController : Controller
     {
         // GET: Appointment
-        public ActionResult Index()
+        public ActionResult Index(int? patientd)
         {
-            AppointmentVM appointmntVm = new AppointmentVM();
-          List<AppointmentVM> AppointmentList =  appointmntVm.SelectAllByDate(DateTime.Now).OrderByDescending(a => a.AppointmentDate).ToList();
-            var userID = User.Identity.GetUserId();
-            ViewBag.DoctorId = userID;
-            return View(AppointmentList);
+            if (patientd != null) {
+                AppointmentVM appointmntVm = new AppointmentVM();
+                List<AppointmentVM> AppointmentList = appointmntVm.SelectAllByPatientId(patientd.Value).OrderByDescending(a => a.AppointmentDate).ToList();
+                var userID = User.Identity.GetUserId();
+                ViewBag.DoctorId = userID;
+                return View(AppointmentList);
+            } else {
+                AppointmentVM appointmntVm = new AppointmentVM();
+                List<AppointmentVM> AppointmentList = appointmntVm.SelectAllByDate(DateTime.Now).OrderByDescending(a => a.AppointmentDate).ToList();
+                var userID = User.Identity.GetUserId();
+                ViewBag.DoctorId = userID;
+                return View(AppointmentList);
+            }
+           
         }
         public ActionResult IndexAll()
         {
@@ -33,7 +42,9 @@ namespace RashidHospital.Controllers
             fillViewBags(PatientId);
              AppointmentVM appointment = new AppointmentVM();
             appointment.PatientId = PatientId;
-            return View();
+            appointment.ReturnUrl = System.Web.HttpContext.Current.Request.UrlReferrer?.ToString();
+            appointment.AppointmentDate = DateTime.Now;
+            return View(appointment);
         }
 
         //CreateNew
@@ -41,16 +52,15 @@ namespace RashidHospital.Controllers
         public ActionResult CreateNew()
         {
             fillViewBagsCreateNew();
-            return View();
+            AppointmentVM appointment = new AppointmentVM();
+            appointment.ReturnUrl = System.Web.HttpContext.Current.Request.UrlReferrer?.ToString();
+            appointment.AppointmentDate = DateTime.Now;
+            return View(appointment);
         }
         private void fillViewBags(int PatientId) {
             ClinicVM clinicVM = new ClinicVM();
             ViewBag.clinicList = clinicVM.ClinicSelectList();
-
-            PatientVM patientVm = new PatientVM();
-            PatientVM patientObj = patientVm.SelectObject(PatientId);
-            ViewBag.PatientInfo = patientObj.Name + " - " + patientObj.MedicalID + "-" + patientObj.DiagnoseName + "-Register Date: " + patientObj.CreatedDate.ToShortDateString();
-
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(PatientId);
         }
 
         // POST: Appointment/Create
@@ -68,7 +78,14 @@ namespace RashidHospital.Controllers
                     Guid userId = Guid.Parse(User.Identity.GetUserId());
                     appointment.DoctorId = userId;
                     appointment.Create();
-                    return RedirectToAction("Index");
+                    if (appointment.ReturnUrl != null) {
+                        return Redirect(appointment.ReturnUrl);
+
+                    }
+                    else {
+                        return RedirectToAction("Index");
+
+                    }
                 }
                 else
                 {
@@ -96,6 +113,8 @@ namespace RashidHospital.Controllers
             {
                 AppointmentVM _appointment = new AppointmentVM();
                 AppointmentVM _obj = _appointment.SelectObject(appointmentId);
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                _obj.ModifiedBy = userId;
                 _obj.IsDeleted = true;
                 _obj.Edit();
                 finalResult = 1;
@@ -114,8 +133,13 @@ namespace RashidHospital.Controllers
             int finalResult = 0;
             try
             {
+                PatientVM patient = new PatientVM();
+               
                 AppointmentVM _appointment = new AppointmentVM();
-                AppointmentVM _obj = _appointment.SelectObject(appointmentId);
+                AppointmentVM _obj = _appointment.SelectObject(appointmentId); 
+                patient = patient.SelectObject(_obj.PatientId);
+                patient.LastVisitDate = DateTime.Now.ToShortDateString();
+                patient.Edit();
                 if (_obj.Done == false)
                 {
                     _obj.Done = true;
@@ -132,10 +156,14 @@ namespace RashidHospital.Controllers
                 callBoardVm.PatientNumber=  count + 1;
                 callBoardVm.ClinicId = _obj.ClinicId;
                 callBoardVm.VisitDate = _obj.AppointmentDate;
-                callBoardVm.IsSkipped = false;
+                callBoardVm.IsOnCall = false;
                 callBoardVm.PatientId = _obj.PatientId;
                 callBoardVm.Done = false;
+                callBoardVm.ModifiedBy = Guid.Parse(User.Identity.GetUserId());
                 callBoardVm.Create();
+                PatientVM _patient = new PatientVM();
+                _patient.SetVisitDate(_obj.PatientId);
+
                 finalResult = _obj.PatientId;
                
 
@@ -145,6 +173,32 @@ namespace RashidHospital.Controllers
                 finalResult = 0;
             }
             return finalResult;
+        }
+        [HttpPost]
+        public JsonResult UndoAppointment(int appointmentId)
+        {
+            int finalResult = 0;
+            try
+            {
+                AppointmentVM _appointment = new AppointmentVM();
+                AppointmentVM _obj = _appointment.SelectObject(appointmentId);
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                _obj.ModifiedBy = userId;
+                _obj.Done = false;
+                _obj.Edit();
+                CallBoardVM _objcall = new CallBoardVM();
+                CallBoardVM _undo = _objcall.getByDateandPatient(DateTime.Now,_obj.PatientId);
+                _undo.IsDeleted = true;
+                _undo.Edit();
+                return Json(new { IsRedirect = false, Content = 1 }, JsonRequestBehavior.AllowGet);
+
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { IsRedirect = false, Content = 6 }, JsonRequestBehavior.AllowGet);
+
+            }
         }
 
         [HttpPost]
@@ -156,6 +210,7 @@ namespace RashidHospital.Controllers
                 AppointmentVM _appointment = new AppointmentVM();
                 AppointmentVM _obj = _appointment.SelectObject(appointmentId);
                 _obj.Done = false;
+             
                 _obj.Create();
                 CallBoardVM callBoardVm = new CallBoardVM();
                 callBoardVm.AppointmentId = _obj.Id;
@@ -164,7 +219,7 @@ namespace RashidHospital.Controllers
                 callBoardVm.PatientNumber = count + 1;
                 callBoardVm.ClinicId = _obj.ClinicId;
                 callBoardVm.VisitDate = _obj.AppointmentDate;
-                callBoardVm.IsSkipped = false;
+                callBoardVm.IsOnCall = false;
                 callBoardVm.PatientId = _obj.PatientId;
                 callBoardVm.Done = false;
                 callBoardVm.Create();

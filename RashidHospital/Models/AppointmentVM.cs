@@ -27,8 +27,11 @@ namespace RashidHospital.Models
         public string Diagnose { get; set; }
         public string PatientUnit { get; set; }
         public int AppointmentCountPerDay { get; set; }
+        public string ReturnUrl { get; set; }
 
         public Guid? DoctorId { get; set; }
+        public Guid? ModifiedBy { get; set; }
+
 
         public string DoctorName { get; set; }
         public bool IsDeleted { get; set; }
@@ -48,6 +51,7 @@ namespace RashidHospital.Models
                     PatientId= Obj.PatientId,
                     DoctorId=Obj.DoctorId,
                     IsDeleted=Obj.IsDeleted,
+                    ModifiedBy=Obj.ModifiedBy
                 };
             }
             return _Obj;
@@ -138,11 +142,11 @@ namespace RashidHospital.Models
             else
                 return true;
         }
-        public List<AppointmentVM> SelectAllByPatientId(int patientId,DateTime date)
+        public List<AppointmentVM> SelectAllByPatientId(int patientId)
         {
             AppointmentVM _Obj = new AppointmentVM();
             Appointment _BClass = new Appointment();
-           List<Appointment> dbList = _BClass.GetAppointmentsByPatientId(patientId,date).ToList();
+           List<Appointment> dbList = _BClass.GetAppointmentsByPatientId(patientId).ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
         public bool CheckClinicAvailabilty(int ClinicId,DateTime appointmentDate) {

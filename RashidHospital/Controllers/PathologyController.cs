@@ -10,7 +10,7 @@ using System.Web.Routing;
 
 namespace RashidHospital.Controllers
 {
-    [Authorize(Roles = "Admin,Doctor,Assistant,Consultant,Residents")]
+    [Authorize(Roles = "Doctor, Residents,Admin,Assistant lecturer,Consultant,Nurses,physician,Employee,Assistant,Pharmacist")]
     public class PathologyController : Controller
     {
         // GET: Pathology
@@ -27,24 +27,25 @@ namespace RashidHospital.Controllers
         {
             PatientVM _patientvm = new PatientVM();
             ViewBag.PatientId = patientID;
-            PatientVM _Objvm = _patientvm.SelectObject(patientID);
-            ViewBag.PatientInfo = _Objvm.Name + " - " + _Objvm.MedicalID + "-" + _Objvm.DiagnoseName + "-Register Date: " + _Objvm.CreatedDate.ToShortDateString();
-
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(patientID);
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
 
         }
-        private void ddlViewBags(int patientID) {
+        private void ddlViewBags() {
             PathologyVM _pathologyVm = new PathologyVM();
             ViewBag.TumerGrade = _pathologyVm.GetTumerGradeSelectList();
             ViewBag.TumorFocality = _pathologyVm.GetTumorFocalitySelectList();
             ViewBag.TumorMargins = _pathologyVm.GetTumorMarginsSelectList();
+            TumerHistologyTypesVM _tymerHstology = new TumerHistologyTypesVM();
+            ViewBag.TumerHistologyTypes = _tymerHstology.GetSelectList();
+
         }
         private void ddlIHCViewBags(int patientID)
         {
             IHCVM _iHCVm = new IHCVM();
             ViewBag.IHCType = _iHCVm.GetIHCTypeSelectList();
-           
+            
         }
 
         // GET: Clinics/Create
@@ -52,7 +53,7 @@ namespace RashidHospital.Controllers
         {
             int _patientID = Convert.ToInt32(patientID);
             fillBag(_patientID);
-            ddlViewBags(_patientID);
+            ddlViewBags();
             ddlIHCViewBags(_patientID);
             return View();
         }
@@ -71,16 +72,20 @@ namespace RashidHospital.Controllers
                  pathology.Create();
                 PathologyVM _patholgy = new PathologyVM();
                 _patholgy= _patholgy.SelectAllByPatientId(pathology.PatientId).OrderByDescending(a => a.Date).FirstOrDefault();
-                foreach (var ihc in ihclist) {
-                    saveIhcobject(ihc,pathology.PatientId, _patholgy.Id);
+                if (ihclist != null) {
+                    foreach (var ihc in ihclist)
+                    {
+                        saveIhcobject(ihc, pathology.PatientId, _patholgy.Id);
+                    }
                 }
+                
                 return RedirectToAction("Index", new RouteValueDictionary(
     new { controller = "Pathology", action = "Index", patientID = pathology.PatientId }));
             }
             else
             {
                 fillBag(pathology.PatientId);
-                ddlViewBags(pathology.PatientId);
+                ddlViewBags();
                 ddlIHCViewBags(pathology.PatientId);
                 return View(pathology);
 
@@ -196,13 +201,16 @@ new { controller = "Pathology", action = "Index", patientID = pathology.PatientI
             }
             return finalResult;
         }
-
+        [HttpGet]
         //View?PathologyID
         public ActionResult ViewPathology(string PathologyID) {
+            ddlViewBags();
             int _PathologyID = Convert.ToInt32(PathologyID);
             PathologyVM pathology = new PathologyVM();
             PathologyVM pathologyObject = pathology.SelectObject(_PathologyID);
             ViewBag.PatientId = pathologyObject.PatientId;
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(pathologyObject.PatientId);
+
             IHCVM _IHC = new IHCVM();
             List<IHCVM> IHClist = _IHC.SelectAllByPathologyId(_PathologyID);
             ViewBag.IHClist = IHClist;
@@ -210,9 +218,26 @@ new { controller = "Pathology", action = "Index", patientID = pathology.PatientI
             ddlIHCViewBags(pathologyObject.PatientId);
             return View("ViewPathology", pathologyObject);
         }
+        [HttpGet]
+
+        public ActionResult View(string PathologyID)
+        {
+            int _PathologyID = Convert.ToInt32(PathologyID);
+            PathologyVM pathology = new PathologyVM();
+            PathologyVM pathologyObject = pathology.SelectObject(_PathologyID);
+            ViewBag.PatientId = pathologyObject.PatientId;
+            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(pathologyObject.PatientId);
+
+            IHCVM _IHC = new IHCVM();
+            List<IHCVM> IHClist = _IHC.SelectAllByPathologyId(_PathologyID);
+            ViewBag.IHClist = IHClist;
+            HttpContext.Session[pathologyObject.PatientId.ToString()] = IHClist;
+            ddlIHCViewBags(pathologyObject.PatientId);
+            return View("View", pathologyObject);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult View(PathologyVM pathology)
+        public ActionResult Edit(PathologyVM pathology)
         {
             pathology.Date = DateTime.Now;
             List<IHCVM> ihclist = (List<IHCVM>)HttpContext.Session[pathology.PatientId.ToString()];
@@ -236,7 +261,7 @@ new { controller = "Pathology", action = "Index", patientID = pathology.PatientI
             else
             {
                 fillBag(pathology.PatientId);
-                ddlViewBags(pathology.PatientId);
+                ddlViewBags();
                 ddlIHCViewBags(pathology.PatientId);
                 return View(pathology);
 
