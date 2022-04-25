@@ -21,5 +21,13 @@ namespace RashidHospital
                 patientObj.LastVisitDate + "</li></ul></div>";
             return PatientInfo;
         }
+
+
+
+       
+
+
+
+
     }
 }

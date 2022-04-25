@@ -1,10 +1,13 @@
+
+
 namespace Hospital.DAL
 {
     using System;
     using System.Data.Entity;
+   
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-
+  
     public partial class Model1 : DbContext
     {
         public Model1()
@@ -45,6 +48,14 @@ namespace Hospital.DAL
         public virtual DbSet<RadioTherapy> RadioTherapies { get; set; }
         public virtual DbSet<Fixation> Fixations { get; set; }
         public virtual DbSet<RadiioTherapiesFixation> RadiioTherapiesFixations { get; set; }
+   
+       
+       public virtual DbSet<ChemoTherapy_Template> ChemoTherapy_Template { get; set; }
+       // public virtual DbSet<ChemoTherapyTemplate> ChemoTherapy_Template { get; set; }
+        public virtual DbSet<ChemoTherapyPreLab> ChemoTherapyPreLab { get; set; }
+
+        public virtual DbSet<ChemoTherapyPreInvestigations> ChemoTherapyPreInvestigations { get; set; }
+        public virtual DbSet<ChemoTherapyDrug> ChemoTherapyDrug { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -273,9 +284,17 @@ namespace Hospital.DAL
             .HasForeignKey(e => e.RadioTherapyId)
             .WillCascadeOnDelete(false);
 
-
+            base.OnModelCreating(modelBuilder);
         }
 
+    //    public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyDrugVM> ChemoTherapyDrugVMs { get; set; }
 
+        //   public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyPreLabVM> ChemoTherapyPreLabVMs { get; set; }
+
+        //       public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyDrugVM> ChemoTherapyDrugVMs { get; set; }
+
+        //  public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyDrugVM> ChemoTherapyDrugVMs { get; set; }
+
+        // public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyPreLabVM> ChemoTherapyPreLabVMs { get; set; }
     }
 }

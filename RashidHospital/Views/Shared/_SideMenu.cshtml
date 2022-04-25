@@ -12,87 +12,94 @@
                     </span>
                 </a>
                 <ul class="treeview-menu" style="display: block;">
-                        @if (User.IsInAnyRoles( "Admin" ))
-                        {
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "Clinics")">
-                                    <i class="fa fa-building-o"></i>
-                                    <span>Clinics</span>
-                                </a>
-                            </li>
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "PatientUnit")">
-                                    <i class="fa fa-black-tie"></i>
-                                    <span>Patient Unit / Consultant</span>
-                                </a>
-                            </li>
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "Diagnose")">
-                                    <i class="fa fa-address-card"></i>
-                                    <span>Diagnosis</span>
-                                </a>
-                            </li>
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "IHCType")">
-                                    <i class="fa fa-list"></i>
-                                    <span>IHC Type</span>
-                                </a>
-                            </li>
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "TumerHistologyTypes")">
-                                    <i class="fa fa-archive"></i>
-                                    <span>Tumer Histology Type</span>
-                                </a>
-                            </li>
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "Account")">
-                                    <i class="fa fa-user-circle-o"></i>
-                                    <span>Users </span>
-                                </a>
-                            </li>
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "DeleteTasks")">
-                                    <i class="fa fa-remove"></i>
-                                    <span>DeleteTasks </span>
-                                </a>
-                            </li>
-                            
-                        }
-                        @if (User.IsInAnyRoles("Doctor","Residents","Admin", "Assistant lecturer", "Consultant", "Nurses", "physician", "Employee", "Assistant", "Pharmacist"))
-                        {
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "Patient")">
-                                    <i class="fa fa-address-book-o"></i>
-                                    <span>Patients</span>
-                                </a>
-                            </li>
+                    @if (User.IsInAnyRoles("Admin"))
+                    {
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "Clinics")">
+                                <i class="fa fa-building-o"></i>
+                                <span>Clinics</span>
+                            </a>
+                        </li>
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "PatientUnit")">
+                                <i class="fa fa-black-tie"></i>
+                                <span>Patient Unit / Consultant</span>
+                            </a>
+                        </li>
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "Diagnose")">
+                                <i class="fa fa-address-card"></i>
+                                <span>Diagnosis</span>
+                            </a>
+                        </li>
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "IHCType")">
+                                <i class="fa fa-list"></i>
+                                <span>IHC Type</span>
+                            </a>
+                        </li>
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "TumerHistologyTypes")">
+                                <i class="fa fa-archive"></i>
+                                <span>Tumer Histology Type</span>
+                            </a>
+                        </li>
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "Account")">
+                                <i class="fa fa-user-circle-o"></i>
+                                <span>Users </span>
+                            </a>
+                        </li>
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "DeleteTasks")">
+                                <i class="fa fa-remove"></i>
+                                <span>DeleteTasks </span>
+                            </a>
+                        </li>
 
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "Appointment","Nurses")">
-                                    <i class="fa fa-calendar-check-o"></i>
-                                    <span>Appointment </span>
-                                </a>
-                            </li>
-                            <li class="Detail">
-                                <a href="@Url.Action("resetpassword", "account")">
-                                    <i class="fa fa-building-o"></i>
-                                    <span>Change password</span>
-                                </a>
-                            </li>
-                        }
-                        @if (User.IsInAnyRoles("Employee","Nurses" , "Admin", "physician", "Consultant", "Doctor"))
-                        {
-                            <li class="Detail">
-                                <a href="@Url.Action("Index", "CallBoard")">
-                                    <i class="fa fa-microphone"></i>
-                                    <span>CallBoard </span>
-                                </a>
-                            </li>
-                            
-                        }
-                    
-                 
-                 
+                    }
+                    @if (User.IsInAnyRoles("Doctor", "Residents", "Admin", "Assistant lecturer", "Consultant", "Nurses", "physician", "Employee", "Assistant", "Pharmacist"))
+                    {
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "Patient")">
+                                <i class="fa fa-address-book-o"></i>
+                                <span>Patients</span>
+                            </a>
+                        </li>
+
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "Appointment","Nurses")">
+                                <i class="fa fa-calendar-check-o"></i>
+                                <span>Appointment </span>
+                            </a>
+                        </li>
+                        <li class="Detail">
+                            <a href="@Url.Action("resetpassword", "account")">
+                                <i class="fa fa-building-o"></i>
+                                <span>Change password</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInAnyRoles("Employee", "Nurses", "Admin", "physician", "Consultant", "Doctor"))
+                    {
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "CallBoard")">
+                                <i class="fa fa-microphone"></i>
+                                <span>CallBoard </span>
+                            </a>
+                        </li>
+
+                        <li class="Detail">
+                            <a href="@Url.Action("Index", "ChemoTherapyTemplate")">
+                                <i class="fa fa-hospital-o"></i>
+                                <span>ChemoTherapy </span>
+                            </a>
+                        </li>
+
+                    }
+
+
+
                 </ul>
                 
             </li>

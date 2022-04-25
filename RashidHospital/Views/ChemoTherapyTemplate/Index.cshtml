@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Hospital.DAL.ChemoTherapy_Template>
+
+<section class="content-header">
+    <h1>ChemoTherapy Protocols</h1>
+</section>
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+
+                <div class="box-header">
+                    <h3 class="box-title">
+                        <a href="@Url.Action("Create", "ChemoTherapyTemplate")" class="btn btn-primary">
+                            Add New Protocol
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        </a>
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Disease</th>
+                                <th>Protocol</th>
+                                <th>Frequency </th>
+                                <th>Cycle Days</th>
+                                <th>Maximum cycle allowed</th>
+                                <th>Emetogenic  Level</th>
+                                <th>FN risk</th>
+                                <th>Link</th>
+                                <th> Actions</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Disease)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Protocol_Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Frequency)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cycle_days)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Maximum_cycles)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Emetogenic_Level)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FN_risk)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Link)
+                                    </td>
+
+
+                                    <td>
+                                       
+                                        @Html.ActionLink("Open", "Index", "ChemoTherapyDrug", new { patientID = item.Template_ID } ,null) |
+                                        @Html.ActionLink("Predefined Lab", "PreLabIndex", new { patientID = item.Template_ID }) |
+                                        @Html.ActionLink("Predefined Investigations", "PreInvestigationsIndex", new { patientID = item.Template_ID }) |
+
+
+
+                                        @Html.ActionLink("Edit", "Open", new { id = item.Template_ID }) |
+                                        @Html.ActionLink("Duplicate", "Duplicate", new { id = item.Template_ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Template_ID }, new { onclick = "return confirm('Are You Sure From Deleted... ?')" }) |
+                                    </td>
+                                </tr>
+                            }
+
+                    </table>
+                 

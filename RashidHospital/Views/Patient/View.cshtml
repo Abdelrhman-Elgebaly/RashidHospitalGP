@@ -52,7 +52,7 @@ width:1000px;
         </a>
          @{
            var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
-           if (Callboard != null)
+           if (Callboard != null) 
            {
             <a class="btn btn-success adjust-actions" title="Patient" onclick="openCallBoardagainModal(@Callboard)">
                 Close file and return to call board
