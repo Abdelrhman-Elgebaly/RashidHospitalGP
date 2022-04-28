@@ -10,9 +10,6 @@ namespace Hospital.DAL
     public partial class ChemoTherapyTemplate
     {
 
-
-
-
         [Key]
         public int Template_ID { get; set; }
         public string Protocol_Name { get; set; }

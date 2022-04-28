@@ -22,163 +22,171 @@
 width:1000px;
 }
 </style>
-    <div class="modal-body">
-      <div class="modal-header">
-          @Html.Raw(ViewBag.PatientInfo)
+<div class="modal-body">
+    <div class="modal-header">
+        @Html.Raw(ViewBag.PatientInfo)
 
 
-      </div>
-           
-        <hr />
-        <a class="btn btn-success adjust-actions" title="Patient" onclick="openViewProfileModal(@Model.Id)">
-            Patient Profile
-        </a>
-        
-        <a class="btn btn-success adjust-actions" title="Patient" onclick="openEditDiagnoseModal(@Model.Id)">
-            Patient Diagnosis
-        </a>
+    </div>
 
-        <a class="btn btn-success adjust-actions" title="History" onclick="openConditionModal(@Model.Id)">
-            Patient History
-        </a>
-        <a class="btn btn-success adjust-actions" title="Visits" onclick="openRecordsModal(@Model.Id)">
-            Patient Visit
-        </a>
-        <a class="btn btn-success adjust-actions" title="Patient" onclick="openReqandRestModal(@Model.Id)">
-            Requests and Results
-        </a>
-        <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@Model.Id)">
-            Appointment
-        </a>
-         @{
-           var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
-           if (Callboard != null) 
-           {
+    <hr />
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openViewProfileModal(@Model.Id)">
+        Patient Profile
+    </a>
+
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openEditDiagnoseModal(@Model.Id)">
+        Patient Diagnosis
+    </a>
+
+    <a class="btn btn-success adjust-actions" title="History" onclick="openConditionModal(@Model.Id)">
+        Patient History
+    </a>
+    <a class="btn btn-success adjust-actions" title="Visits" onclick="openRecordsModal(@Model.Id)">
+        Patient Visit
+    </a>
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openReqandRestModal(@Model.Id)">
+        Requests and Results
+    </a>
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@Model.Id)">
+        Appointment
+    </a>
+
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxicityModal(@Model.Id)">
+        Toxicity
+    </a>
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openChemoTherapyModal(@Model.Id)">
+        ChemoTherapy
+    </a>
+
+    @{
+        var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
+        if (Callboard != null)
+        {
             <a class="btn btn-success adjust-actions" title="Patient" onclick="openCallBoardagainModal(@Callboard)">
                 Close file and return to call board
             </a>
-           }
-           }
+        }
+    }
 
-        <hr />
-        <div class="box-body">
+    <hr />
+    <div class="box-body">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Arabic Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NameArabic, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.NameArabic, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Birth Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form -control ", @disabled = "disabled" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Phone 1", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber1, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Phone 2", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber2, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Phone 3", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber3, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("National ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NationalID, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+
+                @foreach (var gender in Model.Genders)
+                {
+                    @Html.RadioButtonFor(model => model.Gender, gender, new { htmlAttributes = new { @class = "form-control", disabled = "true" } }) @gender<br />
+                }
+
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            @Html.Label("MaritaStatus", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+
+                @foreach (var gender in Model.MaritalStatusList)
+                {
+                    @Html.RadioButtonFor(model => model.MaritalStatus, gender, new { htmlAttributes = new { @class = "form-control", disabled = "true" } }) @gender<br />
+                }
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("No Of Children", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoOfChildren, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.PatientUnitName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+
+            </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Diagnosis Name", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control",  @disabled = "disabled" } })
-                   
+
+                    @Html.EditorFor(model => model.DiagnoseName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+
                 </div>
             </div>
 
-            <div class="form-group">
-                @Html.Label("Arabic Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.NameArabic, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                    @Html.ValidationMessageFor(model => model.NameArabic, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Birth Date", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.BirthDate ,new { htmlAttributes = new { @class = "form -control ", @disabled = "disabled" } })
-                  
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Phone 1", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PhoneNumber1, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
-
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Phone 2", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PhoneNumber2, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
-
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Phone 3", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PhoneNumber3, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
-
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                   
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("National ID", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.NationalID, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
-                   
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-
-
-                    @foreach (var gender in Model.Genders)
-                    {
-                        @Html.RadioButtonFor(model => model.Gender, gender, new { htmlAttributes = new { @class = "form-control", disabled = "true" } }) @gender<br />
-                    }
-
-                </div>
-            </div>
-            <br />
-          
-            <div class="form-group">
-                @Html.Label("MaritaStatus", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-
-
-                    @foreach (var gender in Model.MaritalStatusList)
-                    {
-                        @Html.RadioButtonFor(model => model.MaritalStatus, gender, new { htmlAttributes = new { @class = "form-control" , disabled = "true" } }) @gender<br />
-                    }
-
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("No Of Children", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.NoOfChildren, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
-                   
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Unit", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    
-                    @Html.EditorFor(model => model.PatientUnitName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled"} })
-
-
-                </div>
-                <div class="form-group">
-                    @Html.Label("Diagnosis Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-
-                        @Html.EditorFor(model => model.DiagnoseName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-
-
-                    </div>
-                </div>
-          
         </div>
     </div>
 
@@ -257,7 +265,14 @@ width:1000px;
         function openRecordsModal(patientID) {
             window.location.href = '/MedicalRecord/index?patientID=' + patientID;
         }
+    function openToxicityModal(patientID) {
+        window.location.href = '/Toxicty/index?patientID=' + patientID;
+    }
 
+         }
+    function openChemoTherapyModal(patientID) {
+        window.location.href = '/ChemoTherapyTemplate/View/index?patientID=' + patientID;
+    }
 
 </script>
 }

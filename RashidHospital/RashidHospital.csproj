@@ -444,7 +444,6 @@
     <Content Include="Views\RadioTherapy\Create.cshtml" />
     <Content Include="Views\RadioTherapy\View.cshtml" />
     <Content Include="Views\RadioTherapy\_Edit.cshtml" />
-    <Content Include="Views\ChemoTherapyTemplate\Index.cshtml" />
     <Content Include="Views\ChemoTherapyTemplate\Create.cshtml" />
     <Content Include="Views\ChemoTherapyTemplate\Open.cshtml" />
     <Content Include="Views\ChemoTherapyTemplate\PreInvestigationsIndex.cshtml" />
@@ -454,6 +453,8 @@
     <Content Include="Views\ChemoTherapyTemplate\PreLabCreate.cshtml" />
     <Content Include="Views\ChemoTherapyDrug\Create.cshtml" />
     <Content Include="Views\ChemoTherapyDrug\Edit.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\Index.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -461,6 +462,7 @@
     <Folder Include="Content\webfonts\" />
     <Folder Include="Html\AdminLTE-3.0.0\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\ChemoTherapyPatient\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

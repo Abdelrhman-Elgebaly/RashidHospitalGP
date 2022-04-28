@@ -1,0 +1,351 @@
+﻿@model RashidHospital.Models.ChemoTherapyTemplateVM
+
+
+
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+<section class="content-header">
+    <h2>ChemoTherapy</h2>
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
+
+<section class="content">
+
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openViewModal(@ViewBag.PatientId)">
+                        Patient Profile
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openEditDiagnoseModal(@ViewBag.PatientId)">
+                        Patient Diagnosis
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="History" onclick="openConditionModal(@ViewBag.PatientId)">
+                        Patient History
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Visits" onclick="openRecordsModal(@ViewBag.PatientId)">
+                        Patient Visit
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openReqandRestModal(@ViewBag.PatientId)">
+                        Requests and Results
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@ViewBag.PatientId)">
+                        Appointment
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@ViewBag.PatientId)">
+                        Toxicty
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@ViewBag.PatientId)">
+                        RadioTherapy
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@ViewBag.PatientId)">
+                        ChemoTherapy
+                    </a>
+                    @{
+                        var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
+                        if (Callboard != null)
+                        {
+                            <a class="btn btn-success adjust-actions" title="Patient" onclick="openCallBoardagainModal(@Callboard)">
+                                Close file and return to call board
+                            </a>
+                        }
+                    }
+                </div>
+                <hr />
+                <div class="box-header">
+                    <a class="btn btn-success adjust-actions" title="Lab Results" onclick="openResultModal(@ViewBag.PatientId)">
+                        Lab Results
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Lab Requsts" onclick="openReqestModal(@ViewBag.PatientId)">
+                        Lab Requests
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="RadiologyRequest" onclick="openRadiologyRequestModal(@ViewBag.PatientId)">
+                        Radiology Requests
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="RadiologyResults" onclick="openRadiologyResultModal(@ViewBag.PatientId)">
+                        Radiology Results
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Pathology" onclick="openPathologyModal(@ViewBag.PatientId)">
+                        Pathology
+                    </a>
+
+                </div>
+                <section class="content-header">
+                    <h2>Select Protocol to Patient</h2>
+
+                </section>
+
+
+
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Protocol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @*ViewBag.CityList is holding all the cities values*@
+                        @Html.DropDownListFor(model => model.Protocol_Name, (IEnumerable<SelectListItem>) ViewBag.data , new { @class = "form-control", @onChange = "SelectedValue(this)" })
+                        @Html.ValidationMessageFor(model => model.Protocol_Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+                <div &nbsp;&nbsp;&nbsp; class="form-group">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <a href="@Url.Action("ViewCycle", "ChemoTherapyTemplate", new { patientID = ViewBag.PatientId })" class="btn btn-primary">
+                                Apply to Patient
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+
+
+
+
+
+
+</section>
+
+<!--openEditModal-->
+<div class="modal fade" id="EditModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div id="EditBody"></div>
+        </div>
+    </div>
+</div>
+
+<!--Deactivate Modal-->
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Delete this? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		$('#example1').DataTable({
+		    "paging": true,
+		    "lengthChange": false,
+		    "searching": true,
+		    "order": [[0, "desc"]],
+		    "info": true,
+		    "autoWidth": false,
+		    "scrollX": true,
+		});
+
+
+
+            //delete
+            function OpenDeleteModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Delete", "RadioTherapy")",
+                    cache: false,
+                    data: { RequestID: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+
+
+    </script>
+    <script>
+
+
+        function openViewProfileModal(patientID) {
+            window.location.href = '/Patient/View?patientID=' + patientID;
+
+        }
+
+        function openReqandRestModal(patientID) {
+            window.location.href = '/Patient/RequestsandResults?patientID=' + patientID;
+
+        }
+        function openDiagnosisModal(patientID) {
+            window.location.href = '/Patient/_EditDiagnose?patientID=' + patientID;
+
+        }
+        function openAppointmentModal(patientID) {
+            window.location.href = '/Appointment/Create?PatientId=' + patientID;
+
+        }
+        function openConditionModal(patientID) {
+            window.location.href = '/MedicalCondition/index?patientID=' + patientID;
+        }
+
+        function openRecordsModal(patientID) {
+            window.location.href = '/MedicalRecord/index?patientID=' + patientID;
+        }
+
+        function openCallBoardagainModal(callBoardId) {
+            window.location.href = '/CallBoard/Edit?Id=' + callBoardId;
+
+        }
+    </script>
+
+    <script>
+        function openReqestModal(patientID) {
+            window.location.href = '/LabRequest/Index?PatientId=' + patientID;
+        }
+        function openResultModal(patientID) {
+            window.location.href = '/LabResualt/Index?patientID=' + patientID;
+        }
+
+        function openRadiologyResultModal(patientID) {
+            window.location.href = '/RadiologyResult/Index?patientID=' + patientID;
+        }
+        function openRadiologyRequestModal(patientID) {
+            window.location.href = '/RadiologyRequest/Index?patientID=' + patientID;
+        }
+        function openPathologyModal(patientID) {
+            window.location.href = '/Pathology/Index?patientID=' + patientID;
+
+        }
+
+    </script>
+    <script>
+         //delete
+            function OpenDeleteModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Delete", "RadioTherapy")",
+                    cache: false,
+                    data: { toxictyID: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+    </script>
+    <script>
+       function openEditModal(ClinicID) {
+		    $.ajax({
+		        type: "GET",
+		        url: "@Url.Action("_Edit", "RadioTherapy")",
+		        cache: false,
+		        data: { Id: ClinicID },
+		    success: function (result) {
+		        if (result.IsRedirect) {
+		            window.location.href = result.RedirectUrl;
+		        }
+		        else {
+                    $("#EditBody").html(result.Content);
+                    $("#EditModel").modal("show")
+		        }
+		    },
+		    error: function (result) {
+		        window.location.href = '@Url.Action("Error404", "Home")';
+		    },
+			})
+        }
+        function openvisitViewModal(Id) {
+            window.location.href = '/RadioTherapy/View?id=' + Id;
+
+        }
+    </script>
+
+
+    <script>
+        //To get selected value an text of dropdownlist
+        function SelectedValue(ddlObject) {
+            //Selected value of dropdownlist
+            var selectedValue = ddlObject.value;
+            //Selected text of dropdownlist
+            var selectedText = ddlObject.options[ddlObject.selectedIndex].innerHTML;
+
+            //alert popup with detail of seleceted value and text
+            alert(" Selected Value: " + selectedValue + " -- " + "Selected Text: " + selectedText);
+        }
+    </script>
+
+
+
+}

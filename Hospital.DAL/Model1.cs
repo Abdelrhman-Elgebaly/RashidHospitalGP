@@ -50,8 +50,8 @@ namespace Hospital.DAL
         public virtual DbSet<RadiioTherapiesFixation> RadiioTherapiesFixations { get; set; }
    
        
-       public virtual DbSet<ChemoTherapy_Template> ChemoTherapy_Template { get; set; }
-       // public virtual DbSet<ChemoTherapyTemplate> ChemoTherapy_Template { get; set; }
+      // public virtual DbSet<ChemoTherapy_Template> ChemoTherapy_Template { get; set; }
+        public virtual DbSet<ChemoTherapyTemplate> ChemoTherapyTemplate { get; set; }
         public virtual DbSet<ChemoTherapyPreLab> ChemoTherapyPreLab { get; set; }
 
         public virtual DbSet<ChemoTherapyPreInvestigations> ChemoTherapyPreInvestigations { get; set; }
@@ -287,7 +287,13 @@ namespace Hospital.DAL
             base.OnModelCreating(modelBuilder);
         }
 
-    //    public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyDrugVM> ChemoTherapyDrugVMs { get; set; }
+      //  public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyTemplateVM> ChemoTherapyTemplateVMs { get; set; }
+
+        //  public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyTemplateVM> ChemoTherapyTemplateVMs { get; set; }
+        //
+        //  public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyTemplateVM> ChemoTherapyTemplateVMs { get; set; }
+
+        //    public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyDrugVM> ChemoTherapyDrugVMs { get; set; }
 
         //   public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyPreLabVM> ChemoTherapyPreLabVMs { get; set; }
 

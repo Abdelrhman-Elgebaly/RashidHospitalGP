@@ -26,82 +26,168 @@ namespace RashidHospital.Controllers
             _context = context;
 
         }
-        // GET
+
+
         public ActionResult Index()
         {
-            var Result = _context.ChemoTherapy_Template.ToList();
+           
+            ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
+            
 
-            return View(Result);
+            List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
+
+        
+
+
+
+            return View(_list);
         }
-        // GET: Patient
-     
 
         public ActionResult Create()
         {
-            return View();
+           
+            ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
+
+
+            List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
+
+            var items = _list;
+            if (items != null)
+            {
+                ViewBag.data = items;
+            }
+
+            return View(radioTherapyVMVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ChemoTherapy_Template model)
+        public ActionResult Create(ChemoTherapyTemplateVM input)
         {
-           
+
             if (ModelState.IsValid)
             {
-                _context.ChemoTherapy_Template.Add(model);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-          
-            return View();
-        }
-        public ActionResult Open(int? Id)
-        {
-          
-            var result = _context.ChemoTherapy_Template.Find(Id);
-            return View("Open", result);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(ChemoTherapy_Template model)
-        {
-           
-            if (model != null)
-            {
-               //_context.ChemoTherapy_Template.Update(model);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                input.Create();
+                return RedirectToAction("Index");
             }
 
-           
-            return View(model);
-        }
-        public ActionResult Delete(int? Id)
-        {
-            var result = _context.ChemoTherapy_Template.Find(Id);
-            if (result != null)
-            {
-                _context.ChemoTherapy_Template.Remove(result);
-                _context.SaveChanges();
-            }
-            return RedirectToAction(nameof(Index));
+            return View(input);
         }
 
         public ActionResult Duplicate(int? Id)
         {
-            var result = _context.ChemoTherapy_Template.Find(Id);
+            var result = _context.ChemoTherapyTemplate.Find(Id);
             if (result != null)
             {
-                _context.ChemoTherapy_Template.Add(result);
+                _context.ChemoTherapyTemplate.Add(result);
                 _context.SaveChanges();
             }
             return RedirectToAction(nameof(Index));
         }
 
 
+        public ActionResult View(string patientID)
+        {
+            int _patientID = Convert.ToInt32(patientID);
+            fillBag(_patientID);
+            ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
+
+            List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
+
+          /*  var items = _list;
+            if (items != null)
+            {
+                ViewBag.data = items;
+            }
+
+            */
+
+          
+            ViewBag.data = new SelectList(_list, "Template_ID", "Protocol_Name");
 
 
-       
+            return View();
+        }
+
+
+
+        // GET
+        /*
+    public ActionResult Index()
+    {
+        var Result = _context.ChemoTherapy_Template.ToList();
+
+        return View(Result);
+    }
+
+
+
+
+    public ActionResult Create()
+    {
+        return View();
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Create(ChemoTherapy_Template model)
+    {
+
+        if (ModelState.IsValid)
+        {
+            _context.ChemoTherapy_Template.Add(model);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View();
+    }
+    public ActionResult Open(int? Id)
+    {
+
+        var result = _context.ChemoTherapy_Template.Find(Id);
+        return View("Open", result);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Edit(ChemoTherapy_Template model)
+    {
+
+        if (model != null)
+        {
+           //_context.ChemoTherapy_Template.Update(model);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        return View(model);
+    }
+    public ActionResult Delete(int? Id)
+    {
+        var result = _context.ChemoTherapy_Template.Find(Id);
+        if (result != null)
+        {
+            _context.ChemoTherapy_Template.Remove(result);
+            _context.SaveChanges();
+        }
+        return RedirectToAction(nameof(Index));
+    }
+
+    public ActionResult Duplicate(int? Id)
+    {
+        var result = _context.ChemoTherapy_Template.Find(Id);
+        if (result != null)
+        {
+            _context.ChemoTherapy_Template.Add(result);
+            _context.SaveChanges();
+        }
+        return RedirectToAction(nameof(Index));
+    }
+
+
+
+        */
 
 
 
