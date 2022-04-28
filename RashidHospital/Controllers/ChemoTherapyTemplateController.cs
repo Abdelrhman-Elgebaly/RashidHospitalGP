@@ -109,7 +109,29 @@ namespace RashidHospital.Controllers
             return View();
         }
 
+ 
+              public ActionResult ViewCycle(string patientID)
+        {
+            int _patientID = Convert.ToInt32(patientID);
+            fillBag(_patientID);
+            ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
 
+            List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
+
+            /*  var items = _list;
+              if (items != null)
+              {
+                  ViewBag.data = items;
+              }
+
+              */
+
+
+            ViewBag.data = new SelectList(_list, "Template_ID", "Protocol_Name");
+
+
+            return View();
+        }
 
         // GET
         /*
