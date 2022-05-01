@@ -68,31 +68,29 @@ namespace RashidHospital.Controllers
         }
 */
 
-        private void fillBag(int patientID)
+        private void fillBag(int templateID)
         {
-            ViewBag.PatientId = patientID;
-            ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(patientID);
-            var userID = User.Identity.GetUserId();
-            ViewBag.DoctorId = userID;
+            ViewBag.PatientId = templateID;
+           
 
         }
 
-        public ActionResult Index(string patientID)
+        public ActionResult Index(string templateID)
         {
-            int _patientID = Convert.ToInt32(patientID);
-            fillBag(_patientID);
+            int _templateID = Convert.ToInt32(templateID);
+            fillBag(_templateID);
             ChemoTherapyDrugVM ObjVm = new ChemoTherapyDrugVM();
-            List<ChemoTherapyDrugVM> _list = ObjVm.SelectAllByTemplateId(_patientID);
+            List<ChemoTherapyDrugVM> _list = ObjVm.SelectAllByTemplateId(_templateID);
             return View(_list);
         }
 
 
 
-        public ActionResult Create(int patientID, string therapyType)
+        public ActionResult Create(int templateID, string therapyType)
         {
             //  int _patientID = Convert.ToInt32(patientID);
             ChemoTherapyDrugVM radioTherapyVMVM = new ChemoTherapyDrugVM();
-            radioTherapyVMVM.Template_ID = patientID;
+            radioTherapyVMVM.Template_ID = templateID;
             radioTherapyVMVM.Therapy_Type = therapyType;
             return View(radioTherapyVMVM);
         }
@@ -104,7 +102,7 @@ namespace RashidHospital.Controllers
             if (ModelState.IsValid)
             {
                 input.Create();
-                return RedirectToAction("Index", new { patientID = input.Template_ID });
+                return RedirectToAction("Index", new { templateID = input.Template_ID });
             }
 
             return View(input);

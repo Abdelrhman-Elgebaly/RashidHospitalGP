@@ -66,9 +66,9 @@
 
                                     <td>
 
-                                        @Html.ActionLink("Open", "Index", "ChemoTherapyDrug", new { patientID = item.Template_ID }, null) |
-                                        @Html.ActionLink("Predefined Lab", "PreLabIndex", new { patientID = item.Template_ID }) |
-                                        @Html.ActionLink("Predefined Investigations", "PreInvestigationsIndex", new { patientID = item.Template_ID }) |
+                                        @Html.ActionLink("Open", "Index", "ChemoTherapyDrug", new { templateID = item.Template_ID }, null) |
+                                        @Html.ActionLink("Predefined Lab", "PreLabIndex", new { templateID = item.Template_ID }) |
+                                        @Html.ActionLink("Predefined Investigations", "PreInvestigationsIndex", new { templateID = item.Template_ID }) |
 
 
 

@@ -1,4 +1,5 @@
-﻿@model RashidHospital.Models.ChemoTherapyTemplateVM
+﻿
+@model IEnumerable<RashidHospital.Models.ChemoTherapyTemplateVM>
 
 
 
@@ -88,6 +89,8 @@
                     </a>
 
                 </div>
+
+
                 <section class="content-header">
                     <h2>Select Protocol to Patient</h2>
 
@@ -98,36 +101,44 @@
                 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
 
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Disease</th>
+                                <th>Protocol</th>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Protocol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @*ViewBag.CityList is holding all the cities values*@
-                        @Html.DropDownList("ddlMyDropdown", (IEnumerable<SelectListItem>)ViewBag.data, new { @class = "form-control", @onChange = "SelectedValue(this)" })
-                        @Html.ValidationMessageFor(model => model.Protocol_Name, "", new { @class = "text-danger" })
-                    </div>
+
+                                <th> Actions</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Disease)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Protocol_Name)
+                                    </td>
+
+
+
+                                    <td>
+
+                                        @Html.ActionLink("View Template", "Index", "ChemoTherapyDrug", new { templateID = item.Template_ID }, null)
+
+
+
+                                    </td>
+                                </tr>
+                            }
+
+                    </table>
+
+
                 </div>
 
-
-
-
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-                <div &nbsp;&nbsp;&nbsp; class="form-group">
-                    <div class="box-header">
-                        <h3 class="box-title">
-                            <a href="@Url.Action("ViewCycle", "ChemoTherapyTemplate", new { patientID = ViewBag.PatientId, templateID = "Selectedvalue"  })" class="btn btn-primary">
-                                Apply to Patient
-                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                            </a>
-                        </h3>
-                    </div>
-                </div>
-
-
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-                @Html.ActionLink("Submit", "ChemoTherapyTemplate", "ViewCycle", null, new { patientID = ViewBag.PatientId, @templateID = "Selectedvalue" })
 
 
 </section>
@@ -346,18 +357,8 @@
 
             //alert popup with detail of seleceted value and text
             alert(" Selected Value: " + selectedValue + " -- " + "Selected Text: " + selectedText);
-          
+            ViewBag.t = selectedValue;
         }
-    </script>
-
-    <script type="text/javascript">
-        $('#Selectedvalue').click(function () {
-           
-           
-       var ddlValue = $('#ddlMyDropdown').value();
-            var path = '@Url.Content("~/ChemoTherapyTemplate/ViewCycle")' + "?value=" + ddlValue
-        $(this).attr("href", path);
-    });
     </script>
 
 

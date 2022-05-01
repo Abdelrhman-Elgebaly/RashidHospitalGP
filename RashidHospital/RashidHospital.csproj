@@ -179,6 +179,7 @@
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CallBoardController.cs" />
+    <Compile Include="Controllers\ChemoTherapyController.cs" />
     <Compile Include="Controllers\ChemoTherapyDrugController.cs" />
     <Compile Include="Controllers\ChemoTherapyTemplateController.cs" />
     <Compile Include="Controllers\ClinicsController.cs" />
@@ -455,6 +456,9 @@
     <Content Include="Views\ChemoTherapyDrug\Edit.cshtml" />
     <Content Include="Views\ChemoTherapyTemplate\Index.cshtml" />
     <Content Include="Views\ChemoTherapyTemplate\View.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\ViewCycle.cshtml" />
+    <Content Include="Views\ChemoTherapy\Index.cshtml" />
+    <Content Include="Views\ChemoTherapy\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -463,6 +467,7 @@
     <Folder Include="Html\AdminLTE-3.0.0\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\ChemoTherapyPatient\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
