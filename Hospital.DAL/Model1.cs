@@ -289,6 +289,12 @@ namespace Hospital.DAL
 
         public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyTemplateVM> ChemoTherapyTemplateVMs { get; set; }
 
+        public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyPreLabVM> ChemoTherapyPreLabVMs { get; set; }
+
+        public System.Data.Entity.DbSet<Hospital.DAL.ChemoTherapy_Template> ChemoTherapy_Template { get; set; }
+
+        public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyPreInvestigationsVM> ChemoTherapyPreInvestigationsVMs { get; set; }
+
         //   public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyTemplateVM> ChemoTherapyTemplateVMs { get; set; }
 
         //  public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyTemplateVM> ChemoTherapyTemplateVMs { get; set; }

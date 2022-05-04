@@ -1,14 +1,17 @@
 ﻿@model RashidHospital.Models.ChemoTherapyPreInvestigationsVM
 
 
-@using (Html.BeginForm("PreInvestigationsCreate", "ChemoTherapyTemplate", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "ChemoTherapyPreInvestigations", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(model => model.Template_ID)
 
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>ChemoTherapyPreInvestigationsVM</h4>
+        <section class="content-header">
+            <h2>ChemoTherapy PreInvestigations</h2>
+          
+        </section>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
