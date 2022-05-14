@@ -61,6 +61,7 @@ namespace RashidHospital.Controllers
                 {
                     intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
                 }
+                input.CycleDays = intlist;
                 string[] array = new string[1000];
 
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();

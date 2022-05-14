@@ -41,7 +41,7 @@ namespace RashidHospital.Models
         public Nullable<int> Patient_ID { get; set; }
         public string Date_Entered { get; set; }
         public string Disease { get; set; }
-
+        public List<int> CycleDays { get; set; }
         internal override ChemoTherapyTemplate Convert(ChemoTherapyTemplateVM Obj)
         {
             if (Obj == null)
