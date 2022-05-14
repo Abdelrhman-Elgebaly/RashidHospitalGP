@@ -23,7 +23,7 @@ namespace RashidHospital.Models
         public string Test_Name { get; set; }
         public Nullable<int> Value { get; set; }
         public string rule { get; set; }
-        public virtual ChemoTherapy_Template ChemoTherapy_Template { get; set; }
+        //public virtual ChemoTherapy_Template ChemoTherapy_Template { get; set; }
 
 
 

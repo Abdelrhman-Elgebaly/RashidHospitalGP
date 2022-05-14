@@ -37,10 +37,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Cycle_days, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Cycle Days", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Cycle_days, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Cycle_days, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Cycle_days, "Please sepreate days with , ", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -77,15 +77,12 @@
     </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+   
+   
 
-            @Html.DropDownList("Protocol_Name", new SelectList(ViewBag.data, "Template_ID", "Protocol_Name"))
-            @Html.ValidationMessageFor(model => model.Protocol_Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
+ 
 
+    
 
 
     <div class="form-group">

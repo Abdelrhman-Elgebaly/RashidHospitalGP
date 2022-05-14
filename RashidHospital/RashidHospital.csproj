@@ -221,6 +221,7 @@
     <Compile Include="Models\AppointmentVM.cs" />
     <Compile Include="Models\AttachmentVM.cs" />
     <Compile Include="Models\CallBoardVM.cs" />
+    <Compile Include="Models\ChemoTherapyCycleDaysVM.cs" />
     <Compile Include="Models\ChemoTherapyDrugVM.cs" />
     <Compile Include="Models\ChemoTherapyPreInvestigationsVM.cs" />
     <Compile Include="Models\ChemoTherapyPreLabVM.cs" />

@@ -98,6 +98,7 @@
     <Compile Include="Bussiness\AspNetUserRole.cs" />
     <Compile Include="Bussiness\Attachment.cs" />
     <Compile Include="Bussiness\CallBoard.cs" />
+    <Compile Include="Bussiness\ChemoTherapyCycleDays.cs" />
     <Compile Include="Bussiness\ChemoTherapyDrug.cs" />
     <Compile Include="Bussiness\ChemoTherapyPreInvestigations.cs" />
     <Compile Include="Bussiness\ChemoTherapyPreLab.cs" />
@@ -125,11 +126,11 @@
     <Compile Include="Bussiness\ToxictyType.cs" />
     <Compile Include="Bussiness\TumerHistologyTypes.cs" />
     <Compile Include="CallBoard.cs" />
+    <Compile Include="ChemoTherapyCycleDays.cs" />
     <Compile Include="ChemoTherapyDrug.cs" />
     <Compile Include="ChemoTherapyPreInvestigations.cs" />
     <Compile Include="ChemoTherapyPreLab.cs" />
     <Compile Include="ChemoTherapyTemplate.cs" />
-    <Compile Include="ChemoTherapy_Template.cs" />
     <Compile Include="DbBaseClass.cs" />
     <Compile Include="Clinic.cs" />
     <Compile Include="Department.cs" />

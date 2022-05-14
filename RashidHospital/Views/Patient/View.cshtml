@@ -12,15 +12,16 @@
     .form-control {
         margin-bottom: 3px !important;
     }
-       .columns{
-    float: left;
-    position: relative;
-    margin-right: 41px;
-    background-color: azure;
-    padding-right: 59px;
-    column-count: 2;
-width:1000px;
-}
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
 </style>
 <div class="modal-body">
     <div class="modal-header">
@@ -51,12 +52,20 @@ width:1000px;
         Appointment
     </a>
 
-    <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxicityModal(@Model.Id)">
-        Toxicity
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxictyModal(@Model.Id)">
+        Toxicty
     </a>
+
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openRadioTherapyModal(@Model.Id)">
+        RadioTherapy
+    </a>
+
     <a class="btn btn-success adjust-actions" title="Patient" onclick="openChemoTherapyModal(@Model.Id)">
         ChemoTherapy
     </a>
+
+  
+
 
     @{
         var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
@@ -208,11 +217,11 @@ width:1000px;
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script src="~/Scripts/intlTelInput.min.js"></script>
-<script>
-                $('input:radio.form-control').prop('disbled', true);
-</script>
-<script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $('input:radio.form-control').prop('disbled', true);
+    </script>
+    <script>
 
       //openEditDiagnoseModal
     function openEditDiagnoseModal(patientID) {
@@ -235,13 +244,13 @@ width:1000px;
             },
         })
     };
-   
+
     function openCallBoardagainModal(callBoardId){
         window.location.href ='/CallBoard/Edit?Id='+callBoardId;
-    
+
     }
-</script>
-<script>
+    </script>
+    <script>
 
 
         function openViewProfileModal(patientID) {
@@ -253,7 +262,7 @@ width:1000px;
             window.location.href = '/Patient/RequestsandResults?patientID=' + patientID;
 
         }
-        
+
         function openAppointmentModal(patientID) {
             window.location.href = '/Appointment/Create?PatientId=' + patientID;
 
@@ -265,15 +274,23 @@ width:1000px;
         function openRecordsModal(patientID) {
             window.location.href = '/MedicalRecord/index?patientID=' + patientID;
         }
-    function openToxicityModal(patientID) {
-        window.location.href = '/Toxicty/index?patientID=' + patientID;
-    }
 
-         }
-    function openChemoTherapyModal(patientID) {
-        window.location.href = '/ChemoTherapyTemplate/View/index?patientID=' + patientID;
-    }
+        function openToxictyModal(patientID) {
+            window.location.href = '/Toxicty/index?patientID=' + patientID;
+        }
 
-</script>
+        function openRadioTherapyModal(patientID) {
+            window.location.href = '/RadioTherapy/index?patientID=' + patientID;
+        }
+
+        function openChemoTherapyModal(patientID) {
+            window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+        }
+
+     
+
+
+
+    </script>
 }
 

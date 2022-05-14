@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using System.Text.RegularExpressions;
 
 namespace RashidHospital.Controllers
 {
@@ -25,13 +26,8 @@ namespace RashidHospital.Controllers
         {
            
             ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
-            
 
             List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
-
-        
-
-
 
             return View(_list);
         }
@@ -45,11 +41,7 @@ namespace RashidHospital.Controllers
 
             List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
 
-            var items = _list;
-            if (items != null)
-            {
-                ViewBag.data = items;
-            }
+
 
             return View(radioTherapyVMVM);
         }
@@ -60,7 +52,23 @@ namespace RashidHospital.Controllers
 
             if (ModelState.IsValid)
             {
+
+
+                List<string> tokens = input.Cycle_days.Split(',').ToList();
+                List<int> intlist = new List<int>();
+
+                foreach (String str in tokens)
+                {
+                    intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
+                }
+                string[] array = new string[1000];
+
+                array = intlist.ConvertAll(x => x.ToString()).ToArray();
+                input.Cycle_days = string.Join("/", array);
+
+
                 input.Create();
+
                 return RedirectToAction("Index");
             }
 
@@ -134,193 +142,7 @@ namespace RashidHospital.Controllers
 
 
 
-
-            // GET
-            /*
-        public ActionResult Index()
-        {
-            var Result = _context.ChemoTherapy_Template.ToList();
-
-            return View(Result);
-        }
-
-
-
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(ChemoTherapy_Template model)
-        {
-
-            if (ModelState.IsValid)
-            {
-                _context.ChemoTherapy_Template.Add(model);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View();
-        }
-        public ActionResult Open(int? Id)
-        {
-
-            var result = _context.ChemoTherapy_Template.Find(Id);
-            return View("Open", result);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(ChemoTherapy_Template model)
-        {
-
-            if (model != null)
-            {
-               //_context.ChemoTherapy_Template.Update(model);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-
-
-            return View(model);
-        }
-        public ActionResult Delete(int? Id)
-        {
-            var result = _context.ChemoTherapy_Template.Find(Id);
-            if (result != null)
-            {
-                _context.ChemoTherapy_Template.Remove(result);
-                _context.SaveChanges();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
-        public ActionResult Duplicate(int? Id)
-        {
-            var result = _context.ChemoTherapy_Template.Find(Id);
-            if (result != null)
-            {
-                _context.ChemoTherapy_Template.Add(result);
-                _context.SaveChanges();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
-
-
-            */
-
-
-
-
-
-
-            //  public ActionResult PreInvestigationsIndex(int? Id)
-            //  {
-
-
-
-            //     var Result = _context.ChemoTherapyPreInvestigations.ToList();
-
-            //  return View(Result);
-
-
-            //     }
-
-            /*    public ActionResult PreInvestigationsCreate()
-                {
-                    return View();
-                }
-                [HttpPost]
-                [ValidateAntiForgeryToken]
-                public ActionResult PreInvestigationsCreate(ChemoTherapyPreInvestigations model)
-                {
-
-                    if (ModelState.IsValid)
-                    {
-                        _context.ChemoTherapyPreInvestigations.Add(model);
-                        _context.SaveChanges();
-                        return RedirectToAction(nameof(Index));
-                    }
-
-                    return View();
-                }
-
-                */
-            /*  public ActionResult PreInvestigationsIndex(string patientID)
-                 {
-                     int _patientID = Convert.ToInt32(patientID);
-
-                     ChemoTherapyPreInvestigationsVM ObjVm = new ChemoTherapyPreInvestigationsVM();
-                     List<ChemoTherapyPreInvestigationsVM> _list = ObjVm.SelectAllByTemplateID(_patientID);
-                     return View(_list);
-                 }
-
-
-             public ActionResult PreInvestigationsCreate(string patientID)
-            {
-             int _patientID = Convert.ToInt32(patientID);
-                 ChemoTherapyPreInvestigationsVM toxictyVM = new ChemoTherapyPreInvestigationsVM();
-             toxictyVM.Template_ID = _patientID;
-
-             return View();
-            }
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public ActionResult PreInvestigationsCreate(ChemoTherapyPreInvestigationsVM input)
-            {
-             if (ModelState.IsValid)
-             {
-
-                 input.Create();
-                 return RedirectToAction("PreInvestigationsIndex", new { patientID = input.Template_ID });
-             }
-             else
-             {
-                 return View(input);
-
-             }
-
-            }
-            */
-            public ActionResult PreInvestigationsIndex(string templateID)
- {
-     int _templateID = Convert.ToInt32(templateID);
-     fillBag(_templateID);
-     ChemoTherapyPreInvestigationsVM ObjVm = new ChemoTherapyPreInvestigationsVM();
-     List<ChemoTherapyPreInvestigationsVM> _list = ObjVm.SelectAllByTemplateID(_templateID);
-     return View(_list);
- }
-   
-
-     
-
-
       
-
-        public ActionResult PreInvestigationsCreate(int templateID)
-        {
-          //  int _patientID = Convert.ToInt32(patientID);
-            ChemoTherapyPreInvestigationsVM radioTherapyVMVM = new ChemoTherapyPreInvestigationsVM();
-            radioTherapyVMVM.Template_ID = templateID;
-            return View(radioTherapyVMVM);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult PreInvestigationsCreate(ChemoTherapyPreInvestigationsVM input)
-        {
-
-            if (ModelState.IsValid)
-            {
-                input.Create();
-                return RedirectToAction("PreInvestigationsIndex", new { templateID = input.Template_ID });
-            }
-
-            return View(input);
-        }
 
 
         private void fillBag2(int patientID)
@@ -339,41 +161,33 @@ namespace RashidHospital.Controllers
 
         }
 
-
-        public ActionResult PreLabIndex(string templateID)
-        {
-            int _templateID = Convert.ToInt32(templateID);
-             fillBag(_templateID);
-            ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
-            List<ChemoTherapyPreLabVM> _list = ObjVm.SelectAllByTemplateID(_templateID);
-            return View(_list);
-        }
-
-
-
-        public ActionResult PreLabCreate(int templateID)
-        {
-            //  int _patientID = Convert.ToInt32(patientID);
-            ChemoTherapyPreLabVM radioTherapyVMVM = new ChemoTherapyPreLabVM();
-            radioTherapyVMVM.Template_ID = templateID;
-            return View(radioTherapyVMVM);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult PreLabCreate(ChemoTherapyPreLabVM input)
+        private MultiSelectList GetCountries(string[] selectedValues)
         {
 
-            if (ModelState.IsValid)
-            {
-                input.Create();
-                return RedirectToAction("PreLabIndex", new { templateID = input.Template_ID });
-            }
+            List<int> primeNumbers = new List<int>();
+            primeNumbers.Add(1); // adding elements using add() method
+            primeNumbers.Add(3);
+            primeNumbers.Add(5);
+            primeNumbers.Add(7);
 
-            return View(input);
+
+            return new MultiSelectList(primeNumbers, "Template_ID", "Day", selectedValues);
+
         }
 
+      
+        public ActionResult MultiSelectCountry(FormCollection form)
+        {
 
+            ViewBag.YouSelected = form["primeNumbers"];
 
+            string selectedValues = form["primeNumbers"];
+
+            ViewBag.Countrieslist = GetCountries(selectedValues.Split(','));
+
+            return View();
+
+        }
 
 
 
