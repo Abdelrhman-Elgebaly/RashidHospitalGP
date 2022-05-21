@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<RashidHospital.Models.ChemoTherapyTemplateVM>
+﻿@model IEnumerable<RashidHospital.Models.ChemoTherapyTemplateVM>
 
 
 
@@ -89,56 +88,58 @@
                     </a>
 
                 </div>
+            </div>
+        </div>
+    </div>
 
 
-                <section class="content-header">
-                    <h2>Select Protocol to Patient</h2>
+    <section class="content-header">
+        <h2>Select Protocol to Patient</h2>
 
-                </section>
-
-
-
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-
-                <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Disease</th>
-                                <th>Protocol</th>
-
-
-                                <th> Actions</th>
-                            </tr>
-
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Disease)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Protocol_Name)
-                                    </td>
+    </section>
 
 
 
-                                    <td>
-
-                                        @Html.ActionLink("View Template", "Index", "ChemoTherapyDrug", new { templateID = item.Template_ID }, null)
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
 
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Disease</th>
+                    <th>Protocol</th>
 
-                                    </td>
-                                </tr>
-                            }
-
-                    </table>
 
 
-                </div>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Disease)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Protocol_Name)
+                        </td>
 
+
+
+                        <td>
+
+                            @Html.ActionLink("View Template", "View", "ChemoTherapy", new { patientID = ViewBag.PatientId, templateID = item.Template_ID }, null)
+
+
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
 
 </section>

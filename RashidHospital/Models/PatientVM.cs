@@ -82,6 +82,8 @@ namespace RashidHospital.Models
         public string Signature { get; set; }
         public Guid? ModifiedBy { get; set; }
 
+        public Nullable<int> ChemoTherapyId { get; set; }
+
         internal override Patient Convert(PatientVM Obj)
         {
             if (Obj == null)
@@ -112,7 +114,8 @@ namespace RashidHospital.Models
                     DiagnoseId = Obj.DiagnoseId,
                     CreatedBy=Obj.CreatedBy,
                     ModifiedBy=Obj.ModifiedBy,
-                    
+                    ChemoTherapyId= Obj.ChemoTherapyId,
+
                 };
             }
             return _Obj;
@@ -150,7 +153,7 @@ namespace RashidHospital.Models
                 AspNetUser user = _signutre.Where(a => a.Id == DbObj.CreatedBy).FirstOrDefault();
                 patient.Signature = user?.FirstName + " " + user?.SecondName + user?.ThirdName;
                 patient.ModifiedBy = DbObj.ModifiedBy;
-
+                patient.ChemoTherapyId = DbObj.ChemoTherapyId;
             }
 
             return patient;

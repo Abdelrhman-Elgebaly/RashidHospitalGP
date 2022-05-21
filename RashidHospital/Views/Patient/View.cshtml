@@ -60,7 +60,7 @@
         RadioTherapy
     </a>
 
-    <a class="btn btn-success adjust-actions" title="Patient" onclick="openChemoTherapyModal(@Model.Id)">
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openChemoTherapyModal(@Model.Id, @Model.ChemoTherapyId)">
         ChemoTherapy
     </a>
 
@@ -283,8 +283,13 @@
             window.location.href = '/RadioTherapy/index?patientID=' + patientID;
         }
 
-        function openChemoTherapyModal(patientID) {
-            window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+        function openChemoTherapyModal(patientID, chemotherapyID) {
+
+            if (chemotherapyID == null) {
+                window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+            } else {
+                window.location.href = '/ChemoTherapy/ApplyTemplate?patientID=' + patientID + '&templateID=' + chemotherapyID;
+            }
         }
 
      
