@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Hospital.DAL;
 using RashidHospital.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Globalization;
 using Microsoft.AspNet.Identity;
 namespace RashidHospital.Controllers
 {
@@ -22,8 +16,6 @@ namespace RashidHospital.Controllers
             fillBag(_patientID);
             ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
             List <ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
-
-           // ViewBag.data = new SelectList(_list, "Template_ID", "Protocol_Name");
 
             return View(_list);
         }
@@ -38,8 +30,29 @@ namespace RashidHospital.Controllers
         }
 
 
+        public ActionResult bbTemplate(string templateID, DateTime date)
+        {
+            int TemplateID = Convert.ToInt32(templateID);
+            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
+            // ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(PatientId);
 
 
+            _Obj.Admin_Date = date;
+            List<DateTime> dates = new List<DateTime>();
+            dates.Add( date);
+            for (int i = 1; i < _Obj.Maximum_cycles; i++)
+            {
+            double x =     Convert.ToDouble(_Obj.Frequency);
+            DateTime newDate  =   date.AddDays(x);
+                dates.Add(newDate);
+
+            }
+            _Obj.cycleDates = dates;
+
+        }
+
+      
 
 
 

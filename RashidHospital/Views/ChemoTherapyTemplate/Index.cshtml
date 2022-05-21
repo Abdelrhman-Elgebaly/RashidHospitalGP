@@ -9,7 +9,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box">   
 
                 <div class="box-header">
                     <h3 class="box-title">
@@ -18,7 +18,7 @@
                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                         </a>
                     </h3>
-                </div>
+                </div>   
 
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped" style="width:100%">
@@ -70,7 +70,9 @@
                                         @Html.ActionLink("Predefined Lab", "Index", "ChemoTherapyPreLab", new { templateID = item.Template_ID }, null) |
                                         @Html.ActionLink("Predefined Investigations", "Index", "ChemoTherapyPreInvestigations", new { templateID = item.Template_ID }, null) |
 
-                                        @Html.ActionLink("Edit", "Open", new { id = item.Template_ID }) |
+                                        @Html.ActionLink("View", "ViewTemplate", new { templateID = item.Template_ID }) |
+                                        @Html.ActionLink("ViewDe", "ViewDe", new { templateID = item.Template_ID }) |
+
                                         @Html.ActionLink("Duplicate", "Duplicate", new { id = item.Template_ID }) |
                                         @Html.ActionLink("Delete", "Delete", new { id = item.Template_ID }, new { onclick = "return confirm('Are You Sure From Deleted... ?')" }) |
                                     </td>

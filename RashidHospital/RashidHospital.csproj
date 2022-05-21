@@ -461,6 +461,9 @@
     <Content Include="Views\ChemoTherapyPreLab\Create.cshtml" />
     <Content Include="Views\ChemoTherapyPreInvestigations\Index.cshtml" />
     <Content Include="Views\ChemoTherapyPreInvestigations\Create.cshtml" />
+    <Content Include="Views\ChemoTherapy\ApplyTemplate.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\ViewTemplate.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\InsertDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

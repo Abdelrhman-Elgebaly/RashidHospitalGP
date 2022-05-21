@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
 
+using System.IO;
+
 namespace RashidHospital.Controllers
 {
     public class ChemoTherapyTemplateController : Controller
@@ -21,7 +23,7 @@ namespace RashidHospital.Controllers
 
         }
 
-
+     
         public ActionResult Index()
         {
            
@@ -87,7 +89,21 @@ namespace RashidHospital.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+  
+        public ActionResult ViewTemplate(string templateID)
+        {
+        
+           
+            int TemplateID = Convert.ToInt32(templateID);
+            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
+           // ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(PatientId);
+         
+            return View(_objVM);
 
+        }
+       
+ 
         public ActionResult View(string patientID)
         {
             int _patientID = Convert.ToInt32(patientID);
@@ -162,33 +178,7 @@ namespace RashidHospital.Controllers
 
         }
 
-        private MultiSelectList GetCountries(string[] selectedValues)
-        {
 
-            List<int> primeNumbers = new List<int>();
-            primeNumbers.Add(1); // adding elements using add() method
-            primeNumbers.Add(3);
-            primeNumbers.Add(5);
-            primeNumbers.Add(7);
-
-
-            return new MultiSelectList(primeNumbers, "Template_ID", "Day", selectedValues);
-
-        }
-
-      
-        public ActionResult MultiSelectCountry(FormCollection form)
-        {
-
-            ViewBag.YouSelected = form["primeNumbers"];
-
-            string selectedValues = form["primeNumbers"];
-
-            ViewBag.Countrieslist = GetCountries(selectedValues.Split(','));
-
-            return View();
-
-        }
 
 
 
