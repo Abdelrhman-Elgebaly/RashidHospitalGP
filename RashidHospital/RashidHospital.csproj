@@ -464,6 +464,7 @@
     <Content Include="Views\ChemoTherapyTemplate\ViewTemplate.cshtml" />
     <Content Include="Views\ChemoTherapyTemplate\InsertDate.cshtml" />
     <Content Include="Views\ChemoTherapy\ApplyTemplate.cshtml" />
+    <Content Include="Views\ChemoTherapy\InsertDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

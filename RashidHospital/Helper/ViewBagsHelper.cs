@@ -23,10 +23,7 @@ namespace RashidHospital
         }
 
 
-
-       
-
-
+    
 
 
     }

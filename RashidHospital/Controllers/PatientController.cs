@@ -88,12 +88,7 @@ namespace RashidHospital.Controllers
         }
 
         public JsonResult _EditDiagnose(int patientID) {
-            if (patientID == null)
-            {
-                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
-
-            }
-            FillDiagnoseViewBags();
+          
 
             PatientVM _Obj = new PatientVM();
             PatientVM _objVM = _Obj.SelectObject(patientID);
@@ -128,8 +123,8 @@ namespace RashidHospital.Controllers
             {
                 PatientVM _Obj = new PatientVM();
                 PatientVM _objVM = _Obj.SelectObject(vm.Id);
-                _objVM.DiagnoseId = vm.DiagnoseId;
-                _objVM.ModifiedDate = DateTime.Now;
+             _objVM.BirthDate = vm.BirthDate;
+             _objVM.ModifiedDate = DateTime.Now;
                 _objVM.Edit();
                 return "Success"; // succcess
             }

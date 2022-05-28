@@ -7,7 +7,7 @@
         text-align: left;
     }
 </style>
-<form method="post" id="editDiagnosForm">
+<form method="post" id="editDateForm">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Id)
     <div class="modal-body">
@@ -16,10 +16,11 @@
         </div>
         <div class="box-body">
             <div class="form-group">
-                @Html.Label("Diagnose", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Cycle Date", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("DiagnoseId", new SelectList(ViewBag.Diagnoses, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @required = "required" })
-                    @Html.ValidationMessageFor(model => model.DiagnoseId, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.StartDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form -control", @type = "date", @required = "required" } })
+
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -46,14 +47,14 @@
     });
 </script>
 <script>
-    $("#editDiagnosForm").submit(function (e) {
+    $("#editDateForm").submit(function (e) {
 		e.preventDefault();
 			$("#btnSubmit").attr("disabled", true).text('Loading...');
 			$.ajax({
 				type: "Post",
-				url: "@Url.Action("EditDiagnosePatient", "Patient")",
+				url: "@Url.Action("EditDatePatient", "ChemoTherapy")",
 				cache: false,
-				data: $("#editDiagnosForm").serialize(),
+                data: $("#editDateForm").serialize(),
 				success: function (result) {
 					if (result == "Success") {
 					    $("#clinicModel").modal("hide");

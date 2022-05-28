@@ -1,5 +1,4 @@
-﻿@model RashidHospital.Models.ChemoTherapyTemplateVM
-
+﻿@model Tuple<RashidHospital.Models.ChemoTherapyTemplateVM, RashidHospital.Models.PatientVM>
 
 
 <link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
@@ -18,3 +17,145 @@
     <h2>ChemoTherapy</h2>
     @Html.Raw(ViewBag.PatientInfo)
 </section>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Protocol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Protocol_Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Frequency, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Frequency, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Frequency, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Cycle_days, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Cycle_days, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Cycle_days, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Maximum_cycles, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Maximum_cycles, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Maximum_cycles, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div class="form-group">
+    @Html.Label("Cycle Start Date ", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Maximum_cycles, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form -control", @type = "date", @required = "required" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Maximum_cycles, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+
+                <th>Date</th>
+
+
+
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Item2.cycleDates)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item)
+                    </td>
+
+                    <td>
+
+                        @Html.ActionLink("Cycle Days", "View", "ChemoTherapy", new { }, null)
+
+
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div class="box-header">
+    <h3 class="box-title">
+        <a href="@Url.Action("Index", "ChemoTherapyPreLab", new { templateID = Model.Item1.Maximum_cycles})" class="btn btn-primary">
+            Start
+            <span class="" aria-hidden="true"></span>
+        </a>
+    </h3>
+</div>
+
+
+<!--openEditDiagnoseModal-->
+<div class="modal fade" id="DiagnoseModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit Patient</h4>
+            </div>
+            <div id="editDateBody"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $('input:radio.form-control').prop('disbled', true);
+    </script>
+    <script>
+    //openEditDiagnoseModal
+
+    function openEditDiagnoseModal(patientID) {
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("_EditDate", "ChemoTherapy")",
+    cache: false,
+    data: { patientID: patientID },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#editDateBody").html(result.Content);
+    $("#DiagnoseModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    };
+
+    </script>
+}

@@ -5,11 +5,16 @@
     <h1>ChemoTherapy Protocols</h1>
 </section>
 
-<section class="content">
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
 
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">   
+            <div class="box">
 
                 <div class="box-header">
                     <h3 class="box-title">
@@ -18,66 +23,94 @@
                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                         </a>
                     </h3>
-                </div>   
+                </div>
+            </div>
+        </div>
 
-                <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Disease</th>
-                                <th>Protocol</th>
-                                <th>Frequency </th>
-                                <th>Cycle Days</th>
-                                <th>Maximum cycle allowed</th>
-                                <th>Emetogenic  Level</th>
-                                <th>FN risk</th>
-                                <th>Link</th>
-                                <th> Actions</th>
-                            </tr>
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Disease</th>
+                        <th>Protocol</th>
+                        <th>Frequency </th>
+                        <th>Cycle Days</th>
+                        <th>Maximum cycle allowed</th>
+                        <th>Emetogenic Level</th>
+                        <th>FN risk</th>
+                        <th>Link</th>
+                        <th> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Disease)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Protocol_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Frequency)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cycle_days)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Maximum_cycles)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Patient_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FN_risk)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Link)
+                            </td>
 
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Disease)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Protocol_Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Frequency)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Cycle_days)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Maximum_cycles)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Emetogenic_Level)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.FN_risk)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Link)
-                                    </td>
+
+                            <td>
+
+                                @Html.ActionLink("Open", "Index", "ChemoTherapyDrug", new { templateID = item.Template_ID }, null) |
+                                @Html.ActionLink("Predefined Lab", "Index", "ChemoTherapyPreLab", new { templateID = item.Template_ID }, null) |
+                                @Html.ActionLink("Predefined Investigations", "Index", "ChemoTherapyPreInvestigations", new { templateID = item.Template_ID }, null) |
+
+                                @Html.ActionLink("View", "ViewTemplate", new { templateID = item.Template_ID }) |
+                                @Html.ActionLink("ViewDe", "ViewDe", new { templateID = item.Template_ID }) |
+
+                                @Html.ActionLink("Duplicate", "Duplicate", new { id = item.Template_ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { Id = item.Template_ID }, new { onclick = "return confirm('Are You Sure From Deleted... ?')" }) |
+                            </td>
+                        </tr>
+                      
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 
-                                    <td>
+            @section scripts {
+                <script src="~/Scripts/jquery.dataTables.js"></script>
+                <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+                <script src="~/Scripts/intlTelInput.min.js"></script>
+                <script>
+                    $(function () {
+                        $("#loading").fadeOut();
+                    });
 
-                                        @Html.ActionLink("Open", "Index", "ChemoTherapyDrug", new { templateID = item.Template_ID }, null) |
-                                        @Html.ActionLink("Predefined Lab", "Index", "ChemoTherapyPreLab", new { templateID = item.Template_ID }, null) |
-                                        @Html.ActionLink("Predefined Investigations", "Index", "ChemoTherapyPreInvestigations", new { templateID = item.Template_ID }, null) |
-
-                                        @Html.ActionLink("View", "ViewTemplate", new { templateID = item.Template_ID }) |
-                                        @Html.ActionLink("ViewDe", "ViewDe", new { templateID = item.Template_ID }) |
-
-                                        @Html.ActionLink("Duplicate", "Duplicate", new { id = item.Template_ID }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Template_ID }, new { onclick = "return confirm('Are You Sure From Deleted... ?')" }) |
-                                    </td>
-                                </tr>
-                            }
-
-                    </table>
-
+                    $('#example1').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": true,
+                        "order": [[0, "desc"]],
+                        "info": true,
+                        "autoWidth": false,
+                        "scrollX": true,
+                    });
+                </script>
+            }

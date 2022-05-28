@@ -83,7 +83,9 @@ namespace RashidHospital.Models
         public Guid? ModifiedBy { get; set; }
 
         public Nullable<int> ChemoTherapyId { get; set; }
-
+    
+        public DateTime StartDate { get; set; }
+        public List<DateTime> cycleDates { get; set; }
         internal override Patient Convert(PatientVM Obj)
         {
             if (Obj == null)
@@ -112,10 +114,10 @@ namespace RashidHospital.Models
                     LastVisitDate = Obj.LastVisitDate,
                     PhoneNumber3 = Obj.PhoneNumber3,
                     DiagnoseId = Obj.DiagnoseId,
-                    CreatedBy=Obj.CreatedBy,
-                    ModifiedBy=Obj.ModifiedBy,
-                    ChemoTherapyId= Obj.ChemoTherapyId,
-
+                    CreatedBy = Obj.CreatedBy,
+                    ModifiedBy = Obj.ModifiedBy,
+                    ChemoTherapyId = Obj.ChemoTherapyId,
+                    StartDate = Obj.StartDate,
                 };
             }
             return _Obj;
@@ -154,6 +156,7 @@ namespace RashidHospital.Models
                 patient.Signature = user?.FirstName + " " + user?.SecondName + user?.ThirdName;
                 patient.ModifiedBy = DbObj.ModifiedBy;
                 patient.ChemoTherapyId = DbObj.ChemoTherapyId;
+                patient.StartDate = DbObj.StartDate;
             }
 
             return patient;

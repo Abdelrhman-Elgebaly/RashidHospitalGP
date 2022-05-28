@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-   
+
     <section class="content-header">
         <h2>ChemoTherapy Template </h2>
 
@@ -14,20 +14,67 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.Disease, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Disease ", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Disease, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Disease, "", new { @class = "text-danger" })
+            @Html.DropDownList("DD", new List<SelectListItem>
+
+       {
+
+new SelectListItem { Value = "1", Text = "Breast" },
+  new SelectListItem { Value = "2", Text = "Colorectal" },
+  new SelectListItem { Value = "3", Text = "Hematology" },
+  new SelectListItem { Value = "4", Text = "HPB" },
+  new SelectListItem { Value = "5", Text = "Gastric" },
+  new SelectListItem { Value = "6", Text = "Gynecology" },
+  new SelectListItem { Value = "7", Text = "Lung" },
+  new SelectListItem { Value = "8", Text = "CNS" },
+  new SelectListItem { Value = "9", Text = "Endocrine" },
+  new SelectListItem { Value = "10", Text = "H&N" },
+  new SelectListItem { Value = "11", Text = "Saroma" },
+  new SelectListItem { Value = "12", Text = "Skin" },
+  new SelectListItem { Value = "13", Text = "Bladder" },
+  new SelectListItem { Value = "14", Text = "Germ Cell" },
+  new SelectListItem { Value = "15", Text = "Prostate" },
+  new SelectListItem { Value = "16", Text = "RCC" },
+  new SelectListItem { Value = "17", Text = "Lymphoma" },
+  new SelectListItem { Value = "18", Text = "Myeloma" }
+
+       }, "Select Disease ", htmlAttributes: new { @class = "form-control select2" })
+
+            @Html.ValidationMessageFor(model => model.Patient_ID, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Protocol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Protocol ", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Protocol_Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Protocol_Name, "", new { @class = "text-danger" })
+            @Html.DropDownList("DD", new List<SelectListItem>
+
+       {
+
+new SelectListItem { Value = "1", Text = "Breast" },
+  new SelectListItem { Value = "2", Text = "Colorectal" },
+  new SelectListItem { Value = "3", Text = "Hematology" },
+  new SelectListItem { Value = "4", Text = "HPB" },
+  new SelectListItem { Value = "5", Text = "Gastric" },
+  new SelectListItem { Value = "6", Text = "Gynecology" },
+  new SelectListItem { Value = "7", Text = "Lung" },
+  new SelectListItem { Value = "8", Text = "CNS" },
+  new SelectListItem { Value = "9", Text = "Endocrine" },
+  new SelectListItem { Value = "10", Text = "H&N" },
+  new SelectListItem { Value = "11", Text = "Saroma" },
+  new SelectListItem { Value = "12", Text = "Skin" },
+  new SelectListItem { Value = "13", Text = "Bladder" },
+  new SelectListItem { Value = "14", Text = "Germ Cell" },
+  new SelectListItem { Value = "15", Text = "Prostate" },
+  new SelectListItem { Value = "16", Text = "RCC" },
+  new SelectListItem { Value = "17", Text = "Lymphoma" },
+  new SelectListItem { Value = "18", Text = "Myeloma" }
+
+       }, "Select Protocol ", htmlAttributes: new { @class = "form-control select2" })
+
+            @Html.ValidationMessageFor(model => model.Patient_ID, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Frequency, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -53,10 +100,21 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Emetogenic_Level, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Emetogenic Level", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Emetogenic_Level, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Emetogenic_Level, "", new { @class = "text-danger" })
+            @Html.DropDownList("DD", new List<SelectListItem>
+
+       {
+
+new SelectListItem { Value = "1", Text = "High" },
+  new SelectListItem { Value = "2", Text = "Modertae" },
+  new SelectListItem { Value = "3", Text = "Low" },
+  new SelectListItem { Value = "4", Text = "Minimal" },
+
+
+       }, "Select Level "
+           , htmlAttributes: new { @class = "form-control select2" })
+            @Html.ValidationMessageFor(model => model.Patient_ID, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -77,12 +135,12 @@
     </div>
 
 
-   
-   
 
- 
 
-    
+
+
+
+
 
 
     <div class="form-group">
@@ -91,12 +149,28 @@
         </div>
     </div>
 </div>
-    }
+}
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/select2.min.js"></script>
+
+    <script>
+        $(".select2").select2({
+            tags: true
+        });
+    </script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+}
+
+

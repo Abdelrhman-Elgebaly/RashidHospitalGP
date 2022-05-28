@@ -38,10 +38,8 @@ namespace RashidHospital.Controllers
         {
            
             ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
-            ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
 
 
-            List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
 
 
 
@@ -89,77 +87,49 @@ namespace RashidHospital.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-  
-        public ActionResult ViewTemplate(string templateID)
+        [HttpPost]
+        public int Delete(int? Id)
         {
-        
-           
-            int TemplateID = Convert.ToInt32(templateID);
-            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
-            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
-           // ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(PatientId);
-         
-            return View(_objVM);
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
 
+                ChemoTherapyTemplateVM DeleteObject = radioTherapyVMVM.SelectObject(Id);
+                DeleteObject.Delete();
+
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
         }
+
+
+
        
- 
-        public ActionResult View(string patientID)
+
+
+
+
+        private void FillViewBags()
         {
-            int _patientID = Convert.ToInt32(patientID);
-            fillBag(_patientID);
-            ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
-
-            List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
-
-          /*  var items = _list;
-            if (items != null)
-            {
-                ViewBag.data = items;
-            }
-
-            */
-
-          
-            ViewBag.data = new SelectList(_list, "Template_ID", "Protocol_Name");
-
-
-            return View();
+            PatientUnitVM _PatientUnitModel = new PatientUnitVM();
+            ViewBag.PatientUnit = _PatientUnitModel.GetSelectList();
         }
 
 
-
-
-        [HttpGet]
-        public ActionResult ViewCycle(string patientID, string templateID)
+        private void FillDiagnoseViewBags()
         {
-            if (patientID == null)
-            {
-                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
 
-            }
-
-            int PatientId = Convert.ToInt32(patientID);
-            int templateId = Convert.ToInt32(templateID);
-          
-            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
-           
-            _Obj.Patient_ID = PatientId;
-            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(templateId);
-         
-            if (_objVM == null)
-            {
-                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
-
-            }
-            return View(_objVM);
-
-
+            DiagonsVM _DiagnoseModel = new DiagonsVM();
+            ViewBag.Diagnoses = _DiagnoseModel.GetSelectList();
         }
 
-
-
-      
 
 
         private void fillBag2(int patientID)
