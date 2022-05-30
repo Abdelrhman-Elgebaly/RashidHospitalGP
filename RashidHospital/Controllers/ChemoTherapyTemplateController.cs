@@ -87,28 +87,7 @@ namespace RashidHospital.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        public int Delete(int? Id)
-        {
-            int finalResult = 0;
-            try
-            {
-                ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
-
-                ChemoTherapyTemplateVM DeleteObject = radioTherapyVMVM.SelectObject(Id);
-                DeleteObject.Delete();
-
-                finalResult = 1;
-
-
-            }
-            catch (Exception e)
-            {
-                finalResult = 6;
-            }
-            return finalResult;
-        }
-
+    
 
 
        

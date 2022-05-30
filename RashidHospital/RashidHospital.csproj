@@ -56,6 +56,8 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -221,7 +223,6 @@
     <Compile Include="Models\AppointmentVM.cs" />
     <Compile Include="Models\AttachmentVM.cs" />
     <Compile Include="Models\CallBoardVM.cs" />
-    <Compile Include="Models\ChemoTherapyCycleDaysVM.cs" />
     <Compile Include="Models\ChemoTherapyDrugVM.cs" />
     <Compile Include="Models\ChemoTherapyPreInvestigationsVM.cs" />
     <Compile Include="Models\ChemoTherapyPreLabVM.cs" />
@@ -491,6 +492,9 @@
     <EmbeddedResource Include="Migrations\202202240234445_test.resx">
       <DependentUpon>202202240234445_test.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

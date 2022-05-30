@@ -78,8 +78,7 @@
                                 @Html.ActionLink("Predefined Lab", "Index", "ChemoTherapyPreLab", new { templateID = item.Template_ID }, null) |
                                 @Html.ActionLink("Predefined Investigations", "Index", "ChemoTherapyPreInvestigations", new { templateID = item.Template_ID }, null) |
 
-                                @Html.ActionLink("View", "ViewTemplate", new { templateID = item.Template_ID }) |
-                                @Html.ActionLink("ViewDe", "ViewDe", new { templateID = item.Template_ID }) |
+                               
 
                                 @Html.ActionLink("Duplicate", "Duplicate", new { id = item.Template_ID }) |
                                 @Html.ActionLink("Delete", "Delete", new { Id = item.Template_ID }, new { onclick = "return confirm('Are You Sure From Deleted... ?')" }) |
