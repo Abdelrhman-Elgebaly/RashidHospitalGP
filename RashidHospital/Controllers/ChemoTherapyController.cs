@@ -60,38 +60,30 @@ namespace RashidHospital.Controllers
             ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
             ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
             //
-            DateTime date = new DateTime(2015, 06, 27);
-     
+          
+            //
+          // DateTime date = new DateTime(2015, 06, 27);
+               
             List<DateTime> dates = new List<DateTime>();
-            dates.Add(date);
+            dates.Add(_pObjVM.BirthDate);
             for (int i = 1; i < _objVM.Maximum_cycles; i++)
             {
                 double x = Convert.ToDouble(_objVM.Frequency);
-                DateTime newDate = date.AddDays(x);
+                DateTime newDate = _pObjVM.BirthDate.AddDays(x);
                 dates.Add(newDate);
-                date = newDate;
+                _pObjVM.BirthDate = newDate;
 
             }
-            //  DateTime date = new DateTime();
-            // date = _pObjVM.StartDate;
-            /*  _pObjVM.StartDate = new DateTime(2015, 06, 27);
-              _pObjVM.Edit();
-              List<DateTime> dates = new List<DateTime>();
-              dates.Add(_pObjVM.StartDate);
-              for (int i = 1; i < _objVM.Maximum_cycles; i++)
-              {
-                  double x = Convert.ToDouble(_objVM.Frequency);
-                  DateTime newDate = _pObjVM.StartDate.AddDays(x);
-                  dates.Add(newDate);
-                  _pObjVM.StartDate = newDate;
-              }
-            */
+   
             _pObjVM.cycleDates = dates;
             _pObjVM.Edit();
             //
 
             var tuple = new Tuple<ChemoTherapyTemplateVM, PatientVM>(_objVM, _pObjVM);
-            return View(tuple);
+        return View(tuple);
+
+         
+            
         }
 
 

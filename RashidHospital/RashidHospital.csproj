@@ -228,6 +228,7 @@
     <Compile Include="Models\ChemoTherapyPreLabVM.cs" />
     <Compile Include="Models\ChemoTherapyTemplateVM.cs" />
     <Compile Include="Models\ClinicVM.cs" />
+    <Compile Include="Models\CycleStartDateVM.cs" />
     <Compile Include="Models\DeleteTasksObject.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />

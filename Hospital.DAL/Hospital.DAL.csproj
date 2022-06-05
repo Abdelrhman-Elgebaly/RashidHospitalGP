@@ -105,6 +105,7 @@
     <Compile Include="Bussiness\ChemoTherapyPreLab.cs" />
     <Compile Include="Bussiness\ChemoTherapyTemplate.cs" />
     <Compile Include="Bussiness\Clinic.cs" />
+    <Compile Include="Bussiness\CycleStartDate.cs" />
     <Compile Include="Bussiness\Fixation.cs" />
     <Compile Include="Bussiness\IHCType.cs" />
     <Compile Include="Bussiness\Diagons.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="ChemoTherapyPreInvestigations.cs" />
     <Compile Include="ChemoTherapyPreLab.cs" />
     <Compile Include="ChemoTherapyTemplate.cs" />
+    <Compile Include="CycleStartDate.cs" />
     <Compile Include="DbBaseClass.cs" />
     <Compile Include="Clinic.cs" />
     <Compile Include="Department.cs" />

@@ -19,6 +19,7 @@ namespace RashidHospital.Controllers
             fillBag(_templateID);
             ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
             List<ChemoTherapyPreLabVM> _list = ObjVm.SelectAllByTemplateID(_templateID);
+        
             return View(_list);
         }
 

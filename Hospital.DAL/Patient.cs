@@ -82,7 +82,8 @@ namespace Hospital.DAL
         public Guid? CreatedBy { get; set; }
         public Guid? ModifiedBy { get; set; }
         public Nullable<int> ChemoTherapyId { get; set; }
-        public DateTime StartDate { get; set; }
+
+        public DateTime StartDate { get; set; } = DateTime.Today;
 
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

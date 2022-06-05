@@ -59,7 +59,8 @@ namespace Hospital.DAL
         public virtual DbSet<ChemoTherapyCycleDay> ChemoTherapyCycleDay { get; set; }
         public virtual DbSet<ChemoTherapyCyclePackage> ChemoTherapyCyclePackage { get; set; }
         public virtual DbSet<NurseNote> NurseNote { get; set; }
-
+        public virtual DbSet<CycleStartDate> CycleStartDate { get; set; }
+        
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -83,9 +83,10 @@ namespace RashidHospital.Models
         public Guid? ModifiedBy { get; set; }
 
         public Nullable<int> ChemoTherapyId { get; set; }
-    
-        public DateTime StartDate { get; set; }
+        [Required]
+        public DateTime StartDate { get; set; } = DateTime.Today;
         public List<DateTime> cycleDates { get; set; }
+
         internal override Patient Convert(PatientVM Obj)
         {
             if (Obj == null)
@@ -157,6 +158,8 @@ namespace RashidHospital.Models
                 patient.ModifiedBy = DbObj.ModifiedBy;
                 patient.ChemoTherapyId = DbObj.ChemoTherapyId;
                 patient.StartDate = DbObj.StartDate;
+
+
             }
 
             return patient;
