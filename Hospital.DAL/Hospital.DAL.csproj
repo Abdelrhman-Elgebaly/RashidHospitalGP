@@ -119,6 +119,7 @@
     <Compile Include="Bussiness\OrderDetail.cs" />
     <Compile Include="Bussiness\Pathology.cs" />
     <Compile Include="Bussiness\Patient.cs" />
+    <Compile Include="Bussiness\PatientDose.cs" />
     <Compile Include="Bussiness\PatientUnit.cs" />
     <Compile Include="Bussiness\RadiioTherapiesFixation.cs" />
     <Compile Include="Bussiness\RadiologyRequest.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Fixation.cs" />
     <Compile Include="IHC.cs" />
     <Compile Include="NurseNote.cs" />
+    <Compile Include="PatientDose.cs" />
     <Compile Include="RadiioTherapiesFixation.cs" />
     <Compile Include="RadioTherapy.cs" />
     <Compile Include="Toxicty.cs" />

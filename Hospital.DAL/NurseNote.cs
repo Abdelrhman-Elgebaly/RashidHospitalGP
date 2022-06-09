@@ -17,9 +17,11 @@ namespace Hospital.DAL
         public Nullable<int> Temperature { get; set; }
         public Nullable<int> Pulse { get; set; }
         public Nullable<int> BP { get; set; }
-        public Nullable<int> Weight { get; set; }
-        public Nullable<int> Height { get; set; }
-        public Nullable<int> SA { get; set; }
+        public Nullable<double> Weight { get; set; }
+        public Nullable<double> Height { get; set; }
+        public Nullable<double> SA { get; set; }
         public bool IsApproved { get; set; }
+        public Nullable<double> Dose_Calculated { get; set; }
+        
     }
 }

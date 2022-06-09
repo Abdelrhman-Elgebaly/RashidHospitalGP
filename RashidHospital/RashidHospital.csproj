@@ -196,8 +196,10 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicalConditionController.cs" />
     <Compile Include="Controllers\MedicalRecordController.cs" />
+    <Compile Include="Controllers\NurseNoteController.cs" />
     <Compile Include="Controllers\PathologyController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\PatientDoseController.cs" />
     <Compile Include="Controllers\PatientUnitController.cs" />
     <Compile Include="Controllers\RadiologyRequestController.cs" />
     <Compile Include="Controllers\RadiologyResultController.cs" />
@@ -243,8 +245,10 @@
     <Compile Include="Models\MedicalConditionVM.cs" />
     <Compile Include="Models\MedicalRecordVM.cs" />
     <Compile Include="Models\MenstrualHistoryVM.cs" />
+    <Compile Include="Models\NurseNoteVM.cs" />
     <Compile Include="Models\OrderDetailVM.cs" />
     <Compile Include="Models\PathologyVM.cs" />
+    <Compile Include="Models\PatientDoseVM.cs" />
     <Compile Include="Models\PatientUnitVM.cs" />
     <Compile Include="Models\PatientVM.cs" />
     <Compile Include="Models\RadiioTherapiesFixationVM.cs" />
@@ -467,6 +471,9 @@
     <Content Include="Views\ChemoTherapyTemplate\InsertDate.cshtml" />
     <Content Include="Views\ChemoTherapy\ApplyTemplate.cshtml" />
     <Content Include="Views\ChemoTherapy\InsertDate.cshtml" />
+    <Content Include="Views\NurseNote\Index.cshtml" />
+    <Content Include="Views\NurseNote\Create.cshtml" />
+    <Content Include="Views\PatientDose\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

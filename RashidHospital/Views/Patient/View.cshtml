@@ -59,12 +59,14 @@
     <a class="btn btn-success adjust-actions" title="Patient" onclick="openRadioTherapyModal(@Model.Id)">
         RadioTherapy
     </a>
-
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openNurseNoteModal(@Model.Id)">
+        Nurse Notes
+    </a>
     <a class="btn btn-success adjust-actions" title="Patient" onclick="openChemoTherapyModal(@Model.Id, @Model.ChemoTherapyId)">
         ChemoTherapy
     </a>
 
-  
+
 
 
     @{
@@ -293,8 +295,10 @@
         }
 
      
-
-
+        function openNurseNoteModal(patientID) {
+            window.location.href = '/NurseNote/index?patientID=' + patientID;
+        }
+        
 
     </script>
 }

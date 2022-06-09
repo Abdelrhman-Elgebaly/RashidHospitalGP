@@ -65,4 +65,3 @@ E:\GP-Project\RashidHospital\Hospital.DAL\bin\Debug\System.Web.WebPages.Deployme
 E:\GP-Project\RashidHospital\Hospital.DAL\bin\Debug\System.Web.WebPages.Razor.xml
 E:\GP-Project\RashidHospital\Hospital.DAL\bin\Debug\Unity.Abstractions.pdb
 E:\GP-Project\RashidHospital\Hospital.DAL\bin\Debug\Unity.Container.pdb
-E:\GP-Project\RashidHospital\Hospital.DAL\obj\Debug\Hospital.DAL.csproj.AssemblyReference.cache

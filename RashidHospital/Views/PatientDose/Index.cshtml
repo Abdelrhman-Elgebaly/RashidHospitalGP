@@ -1,0 +1,357 @@
+﻿@model Tuple<RashidHospital.Models.NurseNoteVM, List<RashidHospital.Models.ChemoTherapyDrugVM>>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 10000px;
+    }
+</style>
+
+<section class="content-header">
+    <h2>Patient Dose</h2>
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
+
+<section class="content-header">
+    <h2>Pre Therapy</h2>
+
+</section>
+<div class="box-header">
+    <h3 class="box-title">
+        <a href="@Url.Action("Create", "ChemoTherapyDrug", new {patientID = ViewBag.patientID, therapyType = "Therapy" })" class="btn btn-primary">
+            Add New Drug
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+        </a>
+    </h3>
+</div>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+
+
+
+                <th>
+                    Days
+                </th>
+                <th>
+                    Sequence Number
+                </th>
+                <th>
+                    Drug Name
+                </th>
+                <th>
+                    Drug_Dose
+                </th>
+                <th>
+                    Dose Calculated
+                </th>
+                <th>
+                    Fluid_Type
+                </th>
+                <th>
+                    Fluid_Vol
+                </th>
+                <th>
+                    Unit
+                </th>
+                <th>
+                    Route
+                </th>
+                <th>
+                    Duration
+                </th>
+                <th>
+                    Note
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Item2)
+            {
+                if (item.Therapy_Type == "pre")
+                {
+                    <tr>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Days)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sequence_Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Dose)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => Model.Item1.Dose_Calculated)
+                        </td>
+
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fluid_Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Route)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Duration)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Calculate", "Calculate", new { id = item.Drug_ID, noteId = Model.Item1.ID, patientID = Model.Item1.Patient_ID }) |
+                            @Html.ActionLink("Modify", "Modify", new { id = item.Drug_ID }) |
+                            @Html.ActionLink("Omit", "Omit", new { id = item.Drug_ID })
+                        </td>
+                    </tr>
+                }
+            }
+
+    </table>
+</div>
+
+
+
+<section class="content-header">
+    <h2>Therapy</h2>
+
+</section>
+<div class="box-header">
+    <h3 class="box-title">
+        <a href="@Url.Action("Create", "ChemoTherapyDrug", new {patientID = ViewBag.patientID, therapyType = "Therapy" })" class="btn btn-primary">
+            Add New Drug
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+        </a>
+    </h3>
+</div>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+
+
+
+                <th>
+                    Days
+                </th>
+                <th>
+                    Sequence Number
+                </th>
+                <th>
+                    Drug Name
+                </th>
+                <th>
+                    Drug_Dose
+                </th>
+                <th>
+                    Dose Calculated
+                </th>
+                <th>
+                    Fluid_Type
+                </th>
+                <th>
+                    Fluid_Vol
+                </th>
+                <th>
+                    Unit
+                </th>
+                <th>
+                    Route
+                </th>
+                <th>
+                    Duration
+                </th>
+                <th>
+                    Note
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Item2)
+            {
+                if (item.Therapy_Type == "Therapy")
+                {
+                    <tr>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Days)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sequence_Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Dose)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => Model.Item1.Dose_Calculated)
+                        </td>
+
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fluid_Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Route)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Duration)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Calculate", "Calculate", new { id = item.Drug_ID, noteId = Model.Item1.ID, patientID = Model.Item1.Patient_ID }) |
+                            @Html.ActionLink("Modify", "Modify", new { id = item.Drug_ID }) |
+                            @Html.ActionLink("Omit", "Omit", new { id = item.Drug_ID })
+                        </td>
+                    </tr>
+                }
+            }
+
+    </table>
+</div>
+
+<section class="content-header">
+    <h2>Post Therapy</h2>
+
+</section>
+<div class="box-header">
+    <h3 class="box-title">
+        <a href="@Url.Action("Create", "ChemoTherapyDrug", new {patientID = ViewBag.patientID, therapyType = "Therapy" })" class="btn btn-primary">
+            Add New Drug
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+        </a>
+    </h3>
+</div>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+
+
+
+                <th>
+                    Days
+                </th>
+                <th>
+                    Sequence Number
+                </th>
+                <th>
+                    Drug Name
+                </th>
+                <th>
+                    Drug_Dose
+                </th>
+                <th>
+                    Dose Calculated
+                </th>
+                <th>
+                    Fluid_Type
+                </th>
+                <th>
+                    Fluid_Vol
+                </th>
+                <th>
+                    Unit
+                </th>
+                <th>
+                    Route
+                </th>
+                <th>
+                    Duration
+                </th>
+                <th>
+                    Note
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Item2)
+            {
+                if (item.Therapy_Type == "post")
+                {
+                    <tr>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Days)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sequence_Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Dose)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => Model.Item1.Dose_Calculated)
+                        </td>
+
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fluid_Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Route)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Duration)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Calculate", "Calculate", new { id = item.Drug_ID, noteId = Model.Item1.ID, patientID = Model.Item1.Patient_ID }) |
+                            @Html.ActionLink("Modify", "Modify", new { id = item.Drug_ID }) |
+                            @Html.ActionLink("Omit", "Omit", new { id = item.Drug_ID })
+                        </td>
+                    </tr>
+                }
+            }
+
+    </table>
+</div>

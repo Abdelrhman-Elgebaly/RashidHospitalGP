@@ -126,36 +126,52 @@
         </div>
     </div>
 </div>
-
+<!--Create Modal-->
+<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add new Lab</h4>
+            </div>
+            <div id="CreateBody"></div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/intlTelInput.min.js"></script>
-    <script>
-        $('input:radio.form-control').prop('disbled', true);
-    </script>
-    <script>
-    //openEditDiagnoseModal
 
-    function openEditDiagnoseModal(patientID) {
+
+    function openCreateModel(PatientId) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     $.ajax({
     type: "GET",
-    url: "@Url.Action("_EditDate", "ChemoTherapy")",
+    url: "@Url.Action("Create", "LabResualt")",
     cache: false,
-    data: { patientID: patientID },
+    data: { PatientId: PatientId },
     success: function (result) {
     if (result.IsRedirect) {
     window.location.href = result.RedirectUrl;
     }
     else {
-    $("#editDateBody").html(result.Content);
-    $("#DiagnoseModel").modal("show")
+    $("#CreateBody").html(result.Content);
+    $("#CreateModel").modal("show")
     }
     },
     error: function (result) {
     window.location.href = '@Url.Action("Error404", "Home")';
     },
     })
+    }
+
+    function openCreatelModal(patientID) {
+    window.location.href = '/LabResualt/Create?PatientId=' + patientID;
     };
 
-    </script>
+
+
+
 }

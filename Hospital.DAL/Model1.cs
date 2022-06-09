@@ -59,6 +59,8 @@ namespace Hospital.DAL
         public virtual DbSet<ChemoTherapyCycleDay> ChemoTherapyCycleDay { get; set; }
         public virtual DbSet<ChemoTherapyCyclePackage> ChemoTherapyCyclePackage { get; set; }
         public virtual DbSet<NurseNote> NurseNote { get; set; }
+        public virtual DbSet<PatientDose> PatientDose { get; set; }
+    
         public virtual DbSet<CycleStartDate> CycleStartDate { get; set; }
         
 
@@ -293,7 +295,11 @@ namespace Hospital.DAL
             base.OnModelCreating(modelBuilder);
         }
 
-     
+     //   public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyDrugVM> ChemoTherapyDrugVMs { get; set; }
+
+        //    public System.Data.Entity.DbSet<RashidHospital.Models.NurseNoteVM> NurseNoteVMs { get; set; }
+
+
 
         //public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyTemplateVM> ChemoTherapyTemplateVMs { get; set; }
 
