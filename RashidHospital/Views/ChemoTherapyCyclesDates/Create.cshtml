@@ -1,5 +1,7 @@
-﻿
-@model RashidHospital.Models.LabResualtVM
+﻿@model RashidHospital.Models.ChemoTherapyCyclesDatesVM
+
+
+
 
 @{
     ViewBag.Title = "Create";
@@ -30,37 +32,26 @@
 
     <div class="modal-body">
         <div class="box-body">
+            
             <div class="form-group">
-                @Html.Label("TestName", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Cycles_Number", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("LabType", new SelectList(ViewBag.LabTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
-                    @Html.ValidationMessageFor(model => model.LabType, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Cycles_Number, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Cycles_Number, "", new { @class = "text-danger" })
                 </div>
             </div>
+           
             <div class="form-group">
-                @Html.Label("Result", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label(" Date", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Unit", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Unit, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Resualt Date", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ResualtDate, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
+                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
 
-                    @Html.ValidationMessageFor(model => model.ResualtDate, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group" style="float:right;">
                 <div class="col-md-12">
-                    <button type="button" value="Create" class="btn btn-default" id="AddResult">save add more</button>
+                  
 
                     <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
                     <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
@@ -84,7 +75,7 @@
 
 <script type="text/javascript">
 
-    $("#ResualtDate").datepicker({
+    $("#Date").datepicker({
         format: 'dd-mm-yyyy',
         autoclose: true,
         orientation: 'bottom left'
@@ -103,7 +94,7 @@
         var Unit = $("#Unit").val();
         var LabType = $("#LabType option:selected").val();
         var PatientId = $("#PatientId").val();
-        
+
         $("#Unit").val('');
         $("#Note").val('');
         $.ajax({
@@ -119,19 +110,17 @@
     })
 
     $("body").on("click", "#btnSaveandExit", function () {
-        var Result = $("#Note").val();
-        var Unit = $("#Unit").val();
-        var LabType = $("#LabType option:selected").val();
+        var Cycles_Number = $("#Cycles_Number").val();
+      
         var PatientId = $("#PatientId").val();
-        var ResualtDate = $("#ResualtDate").val();
-        $("#Unit").val('');
-        $("#Note").val('');
+        var Date = $("#Date").val();
+     
         $.ajax({
-            url: "/LabResualt/AddResult",
+            url: "/ChemoTherapyCyclesDates/AddResult",
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId, "ResualtDate": ResualtDate},
+            data: { "Cycles_Number": Cycles_Number, "PatientId": PatientId, "Date": Date},
             success: function (result) {
                 $("#CreateModel").modal("hide");
                 window.location.reload();

@@ -145,6 +145,7 @@ namespace RashidHospital.Controllers
             {
                 _nobjVM.Dose_Calculated = ObjVm.Drug_Dose * _nobjVM.SA;
                 _nobjVM.Edit();
+                
             }
 
             else if (ObjVm.Unit == "mg/kg")

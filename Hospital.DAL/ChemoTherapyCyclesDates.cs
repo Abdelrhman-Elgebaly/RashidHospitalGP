@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Hospital.DAL
 {
-    public partial class CycleStartDate
+    public partial class ChemoTherapyCyclesDates
     {
 
         [Key]
@@ -16,6 +16,7 @@ namespace Hospital.DAL
     
         public Nullable<int> Patient_ID { get; set; }
         public DateTime Date { get; set; }
-      
+        public int Cycles_Number { get; set; }
+        // 
     }
 }

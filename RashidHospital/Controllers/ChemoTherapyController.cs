@@ -60,12 +60,12 @@ namespace RashidHospital.Controllers
             ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
             ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
             //
-
+           
             //
             if (_pObjVM.cycleDates == null) { 
-            DateTime date = new DateTime(2015, 06, 27);
-
-            List<DateTime> dates = new List<DateTime>();
+           // DateTime date = _CobjVM.Date;
+                DateTime date = new DateTime(2015, 06, 27);
+                List<DateTime> dates = new List<DateTime>();
             dates.Add(date);
             for (int i = 1; i < _objVM.Maximum_cycles; i++)
             {
@@ -186,6 +186,50 @@ namespace RashidHospital.Controllers
                 return sw.GetStringBuilder().ToString();
             }
         }
+
+
+      
+
+        public JsonResult _TestPopUp(int PatientId)
+        {
+            if (PatientId == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+
+            //if (_objVM == null)
+            //{
+            //    return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+            //}
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_TestPopUp", null) }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _TestPopUp(ChemoTherapyCyclesDatesVM vm)
+        {
+            try
+            {
+                vm.Patient_ID = vm.Patient_ID;
+           
+                vm.Create();
+
+                //PatientId
+                return RedirectToAction("Index", new { patientID = vm.Patient_ID , });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error500");
+            }
+        }
+
+
+
+
+
+
 
     }
 }

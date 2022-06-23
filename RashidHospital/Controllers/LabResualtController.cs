@@ -91,7 +91,7 @@ namespace RashidHospital.Controllers
             try
             {
                 vm.PatientId = vm.PatientId;
-                vm.ResualtDate = DateTime.Now;
+             //   vm.ResualtDate = DateTime.Now;
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 vm.DoctorId = userId;
                 vm.Create();
@@ -105,14 +105,14 @@ namespace RashidHospital.Controllers
             }
         }
         [HttpPost]
-        public JsonResult AddResult(int LabType, string Unit, string Result, int PatientId) {
+        public JsonResult AddResult(int LabType, string Unit, string Result, int PatientId , DateTime ResualtDate) {
             if (LabType != 0 || Unit != null || Result != null || PatientId != 0) {
                 LabResualtVM _labresults = new LabResualtVM();
                 _labresults.PatientId = PatientId;
                 _labresults.LabType = LabType;
                 _labresults.Unit = Unit;
                 _labresults.Note = Result;
-                _labresults.ResualtDate = DateTime.Now;
+                _labresults.ResualtDate = ResualtDate;
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 _labresults.DoctorId = userId;
                 _labresults.Create();

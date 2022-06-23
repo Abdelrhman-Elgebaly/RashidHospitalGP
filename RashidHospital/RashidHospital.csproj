@@ -182,11 +182,13 @@
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CallBoardController.cs" />
     <Compile Include="Controllers\ChemoTherapyController.cs" />
+    <Compile Include="Controllers\ChemoTherapyCyclePackageController.cs" />
     <Compile Include="Controllers\ChemoTherapyDrugController.cs" />
     <Compile Include="Controllers\ChemoTherapyPreInvestigationsController.cs" />
     <Compile Include="Controllers\ChemoTherapyPreLabController.cs" />
     <Compile Include="Controllers\ChemoTherapyTemplateController.cs" />
     <Compile Include="Controllers\ClinicsController.cs" />
+    <Compile Include="Controllers\ChemoTherapyCyclesDatesController.cs" />
     <Compile Include="Controllers\DeleteTasksController.cs" />
     <Compile Include="Controllers\DiagnoseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -225,12 +227,13 @@
     <Compile Include="Models\AppointmentVM.cs" />
     <Compile Include="Models\AttachmentVM.cs" />
     <Compile Include="Models\CallBoardVM.cs" />
+    <Compile Include="Models\ChemoTherapyCyclePackageVM.cs" />
     <Compile Include="Models\ChemoTherapyDrugVM.cs" />
     <Compile Include="Models\ChemoTherapyPreInvestigationsVM.cs" />
     <Compile Include="Models\ChemoTherapyPreLabVM.cs" />
     <Compile Include="Models\ChemoTherapyTemplateVM.cs" />
     <Compile Include="Models\ClinicVM.cs" />
-    <Compile Include="Models\CycleStartDateVM.cs" />
+    <Compile Include="Models\ChemoTherapyCyclesDatesVM.cs" />
     <Compile Include="Models\DeleteTasksObject.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -474,6 +477,9 @@
     <Content Include="Views\NurseNote\Index.cshtml" />
     <Content Include="Views\NurseNote\Create.cshtml" />
     <Content Include="Views\PatientDose\Index.cshtml" />
+    <Content Include="Views\ChemoTherapy\_TestPopUp.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclesDates\Create.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclesDates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -481,6 +487,8 @@
     <Folder Include="Content\webfonts\" />
     <Folder Include="Html\AdminLTE-3.0.0\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\ChemoTherapyCyclePackage\" />
+    <Folder Include="Views\CycleStartDate\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
