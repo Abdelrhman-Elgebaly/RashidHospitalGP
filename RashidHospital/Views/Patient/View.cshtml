@@ -66,7 +66,7 @@
         ChemoTherapy
     </a>
 
-    <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@Model.Id, @Model.ChemoTherapyId)">
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@Model.Id)">
         Test
     </a>
 
@@ -296,13 +296,11 @@
             }
         }
 
-        function TestModal(patientID, chemotherapyID) {
+        function TestModal(patientID) {
 
-            if (chemotherapyID == null) {
-                window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
-            } else {
-                window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID + '&templateID=' + chemotherapyID;
-            }
+         
+                window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID ;
+          
         }
      
         function openNurseNoteModal(patientID) {

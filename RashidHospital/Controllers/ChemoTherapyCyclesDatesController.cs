@@ -17,7 +17,7 @@ namespace RashidHospital.Controllers
        
         // GET: CycleStartDate
       
-        public ActionResult Index(string patientID, string templateID)
+        public ActionResult TestIndex(string patientID, string templateID)
         {
           
             int PatientId = Convert.ToInt32(patientID);
@@ -72,7 +72,33 @@ namespace RashidHospital.Controllers
 
         }
 
-     
+
+
+
+        public ActionResult Index(int PatientId)
+        {
+            ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
+            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId).OrderBy(a => a.Date).ToList();
+            fillBag(PatientId);
+            return View(OrderList);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public JsonResult Create(int PatientId)
         {
             if (PatientId == null)
@@ -123,10 +149,30 @@ namespace RashidHospital.Controllers
         {
             try
             {
+
                 vm.Patient_ID = vm.Patient_ID;
                 //   vm.ResualtDate = DateTime.Now;
-            
+
                 vm.Create();
+
+                for (int i = 1; i < vm.Cycles_Number; i++)
+                {
+                    vm.Patient_ID = vm.Patient_ID;
+                    //   vm.ResualtDate = DateTime.Now;
+
+                    double x = Convert.ToDouble(vm.Cycles_Number);
+                    DateTime newDate = vm.Date.AddDays(x);
+                   
+                    vm.Date = newDate;
+
+                    vm.Create();
+
+                }
+
+
+
+
+               
 
                 //PatientId
                 //return RedirectToAction("Index", new { PatientId = vm.Patient_ID });
@@ -140,15 +186,35 @@ namespace RashidHospital.Controllers
         [HttpPost]
         public JsonResult AddResult(int Cycles_Number, int PatientId, DateTime Date)
         {
-            if (Cycles_Number != 0 || PatientId != 0)
-            {
-                ChemoTherapyCyclesDatesVM _labresults = new ChemoTherapyCyclesDatesVM();
-                _labresults.Patient_ID = PatientId;
 
-                _labresults.Date = Date;
-                _labresults.Cycles_Number = Cycles_Number;
-                _labresults.ID = PatientId;
-                _labresults.Create();
+            for (int i = 0; i < Cycles_Number; i++)
+            {
+
+
+
+                if (Cycles_Number != 0 || PatientId != 0)
+                {
+                    ChemoTherapyCyclesDatesVM _labresults = new ChemoTherapyCyclesDatesVM();
+                    _labresults.Patient_ID = PatientId;
+
+                 
+                    if (i !=0)
+                    {
+                        double x = Convert.ToDouble(Cycles_Number);
+                        DateTime newDate = Date.AddDays(x);
+                        Date = newDate;
+                    }
+                   
+
+                  
+
+                    _labresults.Date = Date;
+                    _labresults.Cycles_Number = Cycles_Number;
+                    _labresults.ID = PatientId;
+                    _labresults.Create();
+                }
+
+
             }
 
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);

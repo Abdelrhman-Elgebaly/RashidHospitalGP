@@ -1,121 +1,47 @@
-﻿@model Tuple<RashidHospital.Models.ChemoTherapyTemplateVM, RashidHospital.Models.ChemoTherapyCyclesDatesVM>
+﻿@model IEnumerable<RashidHospital.Models.ChemoTherapyCyclesDatesVM>
 
-
-<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
-<style>
-    .columns {
-        float: left;
-        position: relative;
-        margin-right: 41px;
-        background-color: azure;
-        padding-right: 59px;
-        column-count: 2;
-        width: 1000px;
-    }
-</style>
-<section class="content-header">
-    <h2>ChemoTherapy</h2>
-    @Html.Raw(ViewBag.PatientInfo)
-</section>
-
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => Model.Item1.Protocol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => Model.Item1.Protocol_Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => Model.Item1.Frequency, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => Model.Item1.Frequency, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-        @Html.ValidationMessageFor(model => Model.Item1.Frequency, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => Model.Item1.Cycle_days, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => Model.Item1.Cycle_days, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-        @Html.ValidationMessageFor(model => Model.Item1.Cycle_days, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => Model.Item1.Maximum_cycles, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => Model.Item1.Maximum_cycles, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-        @Html.ValidationMessageFor(model => Model.Item1.Maximum_cycles, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-<div class="form-group">
-    @Html.Label("Cycle Start Date ", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => Model.Item1.Maximum_cycles, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form -control", @type = "date", @required = "required" } })
-        @Html.ValidationMessageFor(model => Model.Item1.Maximum_cycles, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div>
-    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@Model.Item2.Id)">
-        <i class="fa fa-edit"></i>
-    </a>
-</div>
 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PatientId )">
     Add new Lab
 </a>
 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cycles_Number)
+        </th>
+        <th></th>
+    </tr>
 
-<div class="box-body">
-    <table id="example1" class="table table-bordered table-striped" style="width:100%">
-        <thead>
-            <tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cycles_Number)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
-                <th>Date</th>
-
-
-
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var item in Model.Item2.cycleDates)
-            {
-                <tr>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item)
-                    </td>
-
-                    <td>
-
-                        @Html.ActionLink("Cycle Days", "View", "ChemoTherapy", new { }, null)
+</table>
 
 
-
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-    </table>
-</div>
-
-<div class="box-header">
-    <h3 class="box-title">
-        <a href="@Url.Action("Index", "ChemoTherapyPreLab", new { templateID = Model.Item1.Maximum_cycles})" class="btn btn-primary">
-            Start
-            <span class="" aria-hidden="true"></span>
-        </a>
-    </h3>
-</div>
 
 <!--Edit Modal-->
 <div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
@@ -204,8 +130,4 @@
 
     </script>
 
-
-
-
 }
-

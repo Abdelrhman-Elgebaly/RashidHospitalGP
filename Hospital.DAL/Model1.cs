@@ -295,7 +295,9 @@ namespace Hospital.DAL
             base.OnModelCreating(modelBuilder);
         }
 
-    //    public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyCyclesDatesVM> ChemoTherapyCyclesDatesVMs { get; set; }
+   //     public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyCyclesDatesVM> ChemoTherapyCyclesDatesVMs { get; set; }
+
+        //    public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyCyclesDatesVM> ChemoTherapyCyclesDatesVMs { get; set; }
 
         //   public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyDrugVM> ChemoTherapyDrugVMs { get; set; }
 
