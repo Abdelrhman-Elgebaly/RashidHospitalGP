@@ -132,9 +132,11 @@ namespace RashidHospital.Controllers
                 if (Cycles_Number != 0 || PatientId != 0)
                 {
                     ChemoTherapyCyclesDatesVM _labresults = new ChemoTherapyCyclesDatesVM();
+                    
                     _labresults.Patient_ID = PatientId;
 
                  
+
                     if (i !=0)
                     {
                         double x = Convert.ToDouble(Cycles_Number);
@@ -145,9 +147,34 @@ namespace RashidHospital.Controllers
 
                     _labresults.Date = Date;
                     _labresults.Cycles_Number = Cycles_Number;
-                    _labresults.ID = PatientId;
+                  //  _labresults.ID = PatientId;
                     _labresults.Create();
+
+
+                    //Cycle days
+                    List<int> lst = new List<int>();
+                    lst.Add(1);
+                    lst.Add(2);
+                   
+
+
+                    foreach (var item in lst)
+                    {
+                        ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
+                        _labresults22.Patient_ID = PatientId;
+                        _labresults22.MainCycle_ID = _labresults.ID;
+                        double x = Convert.ToDouble(Cycles_Number);
+                        _labresults22.Date = _labresults.Date.AddDays(item-1);
+                        _labresults22.Create();
+
+                    }
+                   
+
+
+
                 }
+
+             
 
 
             }
