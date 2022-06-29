@@ -17,86 +17,30 @@ namespace RashidHospital.Controllers
        
         // GET: CycleStartDate
       
-        public ActionResult TestIndex(string patientID, string templateID)
+      
+        public ActionResult Index(int PatientId, string templateID)
         {
-          
-            int PatientId = Convert.ToInt32(patientID);
-            fillBag(PatientId);
+
+            //Assign Template to patient 
             int TemplateID = Convert.ToInt32(templateID);
-            //
+            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
             PatientVM _pObj = new PatientVM();
             PatientVM _pObjVM = _pObj.SelectObject(PatientId);
             _pObjVM.ChemoTherapyId = TemplateID;
             _pObjVM.Edit();
-            //
-            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
-            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
-            //
-            ChemoTherapyCyclesDatesVM c= new  ChemoTherapyCyclesDatesVM();
-            ChemoTherapyCyclesDatesVM  _cobjVM = c.SelectObject(PatientId);
-            //
-            if (_cobjVM.ID != null)
-            {
-                if (_cobjVM.cycleDates == null)
-                {
-                    // DateTime date = _CobjVM.Date;
-                    DateTime date = _cobjVM.Date;
-                    List<DateTime> dates = new List<DateTime>();
-                    dates.Add(date);
-                    for (int i = 1; i < _objVM.Maximum_cycles; i++)
-                    {
-                        double x = Convert.ToDouble(_objVM.Frequency);
-                        DateTime newDate = date.AddDays(x);
-                        dates.Add(newDate);
-                        date = newDate;
 
-                    }
+            //Start Dates 
 
-                    _cobjVM.cycleDates = dates;
-                    _cobjVM.Edit();
-                    //
-                    var tuple = new Tuple<ChemoTherapyTemplateVM, ChemoTherapyCyclesDatesVM>(_objVM, _cobjVM);
-                    return View(tuple);
-
-                }
-                else
-                {
-                    var tuple = new Tuple<ChemoTherapyTemplateVM, ChemoTherapyCyclesDatesVM>(_objVM, _cobjVM);
-                    return View(tuple);
-                }
-
-            } else
-            {
-                return View(_objVM);
-            }
-
-        }
-
-
-
-
-        public ActionResult Index(int PatientId)
-        {
             ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
             List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId).OrderBy(a => a.Date).ToList();
             fillBag(PatientId);
-            return View(OrderList);
+
+            var tuple = new Tuple<ChemoTherapyTemplateVM, List<ChemoTherapyCyclesDatesVM>>(_objVM, OrderList);
+            return View(tuple);
+
+           // return View(OrderList);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         public JsonResult Create(int PatientId)
@@ -169,11 +113,6 @@ namespace RashidHospital.Controllers
 
                 }
 
-
-
-
-               
-
                 //PatientId
                 //return RedirectToAction("Index", new { PatientId = vm.Patient_ID });
                 return RedirectToAction("Error500");
@@ -190,8 +129,6 @@ namespace RashidHospital.Controllers
             for (int i = 0; i < Cycles_Number; i++)
             {
 
-
-
                 if (Cycles_Number != 0 || PatientId != 0)
                 {
                     ChemoTherapyCyclesDatesVM _labresults = new ChemoTherapyCyclesDatesVM();
@@ -204,9 +141,7 @@ namespace RashidHospital.Controllers
                         DateTime newDate = Date.AddDays(x);
                         Date = newDate;
                     }
-                   
-
-                  
+            
 
                     _labresults.Date = Date;
                     _labresults.Cycles_Number = Cycles_Number;

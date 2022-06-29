@@ -103,12 +103,15 @@
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
     <div &nbsp;&nbsp;&nbsp; class="form-group">
+       
         <div class="box-header">
             <h3 class="box-title">
-                <a href="@Url.Action("ApplyTemplate", "ChemoTherapy", new { patientID = ViewBag.PatientId,templateID = @Model.Template_ID  })" class="btn btn-primary">
-                    Apply to Patient
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                </a>
+                <center>
+                    <a href="@Url.Action("Index", "ChemoTherapyCyclesDates", new { PatientId = ViewBag.PatientId,templateID = @Model.Template_ID  })" class="btn btn-primary">
+                        Apply to Patient
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    </a>
+                </center>
             </h3>
         </div>
     </div>

@@ -182,6 +182,7 @@
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CallBoardController.cs" />
     <Compile Include="Controllers\ChemoTherapyController.cs" />
+    <Compile Include="Controllers\ChemoTherapyCycleDayController.cs" />
     <Compile Include="Controllers\ChemoTherapyCyclePackageController.cs" />
     <Compile Include="Controllers\ChemoTherapyDrugController.cs" />
     <Compile Include="Controllers\ChemoTherapyPreInvestigationsController.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Models\AppointmentVM.cs" />
     <Compile Include="Models\AttachmentVM.cs" />
     <Compile Include="Models\CallBoardVM.cs" />
+    <Compile Include="Models\ChemoTherapyCycleDayVM.cs" />
     <Compile Include="Models\ChemoTherapyCyclePackageVM.cs" />
     <Compile Include="Models\ChemoTherapyDrugVM.cs" />
     <Compile Include="Models\ChemoTherapyPreInvestigationsVM.cs" />
@@ -487,6 +489,7 @@
     <Folder Include="Content\webfonts\" />
     <Folder Include="Html\AdminLTE-3.0.0\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\ChemoTherapyCycleDay\" />
     <Folder Include="Views\ChemoTherapyCyclePackage\" />
     <Folder Include="Views\CycleStartDate\" />
   </ItemGroup>

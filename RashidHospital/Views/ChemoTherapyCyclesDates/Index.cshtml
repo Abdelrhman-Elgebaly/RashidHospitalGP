@@ -1,45 +1,112 @@
-﻿@model IEnumerable<RashidHospital.Models.ChemoTherapyCyclesDatesVM>
+﻿@model Tuple<RashidHospital.Models.ChemoTherapyTemplateVM, List<RashidHospital.Models.ChemoTherapyCyclesDatesVM>>
 
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-<a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PatientId )">
-    Add new Lab
-</a>
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Patient_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cycles_Number)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patient_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cycles_Number)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
     }
+</style>
+<section class="content-header">
+    <h2>ChemoTherapy</h2>
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
 
-</table>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Protocol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Protocol_Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Frequency, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Frequency, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Frequency, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Cycle_days, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Cycle_days, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Cycle_days, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Maximum_cycles, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Maximum_cycles, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Maximum_cycles, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+@{
+    
+        if (Model.Item2.Count() == 0 )
+        {
+            
+            <center>
+
+
+                <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PatientId )">
+                    CYCLES START DATE
+                </a>
+            </center>
+        }
+    
+}
+
+
+
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+
+                <th>Date</th>
+
+
+
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Item2)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
 
 
 
