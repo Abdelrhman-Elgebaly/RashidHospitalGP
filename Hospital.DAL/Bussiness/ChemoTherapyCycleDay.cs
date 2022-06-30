@@ -11,9 +11,9 @@ namespace Hospital.DAL
 {
     public partial class ChemoTherapyCycleDay : DbBaseClass<ChemoTherapyCycleDay>
     {
-        public List<ChemoTherapyCycleDay> GetLabResualtByPatientId(int PatientId)
+        public List<ChemoTherapyCycleDay> GetCycleDaysByMainId(int MainCycleId)
         {
-            List<ChemoTherapyCycleDay> medicalList = _Db.ChemoTherapyCycleDay.Where(a => a.Patient_ID == PatientId).ToList();
+            List<ChemoTherapyCycleDay> medicalList = _Db.ChemoTherapyCycleDays.Where(a => a.MainCycle_ID == MainCycleId).ToList();
 
             //  medicalList.Find(PatientId);
 

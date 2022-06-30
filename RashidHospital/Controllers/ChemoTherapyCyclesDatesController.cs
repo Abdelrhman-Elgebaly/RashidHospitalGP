@@ -35,7 +35,7 @@ namespace RashidHospital.Controllers
             ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
             List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId).OrderBy(a => a.Date).ToList();
             fillBag(PatientId);
-
+          
             var tuple = new Tuple<ChemoTherapyTemplateVM, List<ChemoTherapyCyclesDatesVM>>(_objVM, OrderList);
             return View(tuple);
 
@@ -67,6 +67,8 @@ namespace RashidHospital.Controllers
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
         }
+
+     
         private void fillCreateBag(int PatientId)
         {
             LabResualtVM results = new LabResualtVM();
@@ -125,7 +127,12 @@ namespace RashidHospital.Controllers
         [HttpPost]
         public JsonResult AddResult(int Cycles_Number, int PatientId, DateTime Date)
         {
+            PatientVM _pObj = new PatientVM();
+            PatientVM _pObjVM = _pObj.SelectObject(PatientId);
+            int TemplateID = Convert.ToInt32(_pObjVM.ChemoTherapyId);
 
+            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
             for (int i = 0; i < Cycles_Number; i++)
             {
 
@@ -139,7 +146,7 @@ namespace RashidHospital.Controllers
 
                     if (i !=0)
                     {
-                        double x = Convert.ToDouble(Cycles_Number);
+                        double x = Convert.ToDouble(_objVM.Frequency);
                         DateTime newDate = Date.AddDays(x);
                         Date = newDate;
                     }
@@ -149,32 +156,45 @@ namespace RashidHospital.Controllers
                     _labresults.Cycles_Number = Cycles_Number;
                   //  _labresults.ID = PatientId;
                     _labresults.Create();
+                }
 
 
-                    //Cycle days
-                    List<int> lst = new List<int>();
-                    lst.Add(1);
-                    lst.Add(2);
-                   
 
 
-                    foreach (var item in lst)
-                    {
-                        ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
-                        _labresults22.Patient_ID = PatientId;
-                        _labresults22.MainCycle_ID = _labresults.ID;
-                        double x = Convert.ToDouble(Cycles_Number);
-                        _labresults22.Date = _labresults.Date.AddDays(item-1);
-                        _labresults22.Create();
-
-                    }
-                   
 
 
+
+
+
+            }
+
+            //Cycle days/////
+
+            //Cycle days
+            List<int> lst = new List<int>();
+            lst.Add(1);
+            lst.Add(2);
+
+            ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
+            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId);
+
+            foreach (var itemm in OrderList)
+            {
+
+
+                //Cycle days
+
+                foreach (var item in lst)
+                {
+                    ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
+                    _labresults22.Patient_ID = PatientId;
+                    _labresults22.MainCycle_ID = itemm.ID;
+
+                    _labresults22.Date = itemm.Date.AddDays(item - 1);
+                    _labresults22.Create();
 
                 }
 
-             
 
 
             }
@@ -183,7 +203,37 @@ namespace RashidHospital.Controllers
         }
 
 
+        public ActionResult test(int PatientId)
+        {
+            List<int> lst = new List<int>();
+            lst.Add(1);
+            lst.Add(2);
 
+            ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
+            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId);
+
+            foreach (var itemm in OrderList)
+            {
+
+
+                //Cycle days
+
+                foreach (var item in lst)
+                {
+                    ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
+                    _labresults22.Patient_ID = PatientId;
+                    _labresults22.MainCycle_ID = itemm.ID;
+
+                    _labresults22.Date = itemm.Date.AddDays(item - 1);
+                    _labresults22.Create();
+
+                }
+
+               
+
+            }
+            return RedirectToAction("Index", new { PatientId = PatientId });
+        }
 
 
 

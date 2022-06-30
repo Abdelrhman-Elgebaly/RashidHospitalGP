@@ -482,6 +482,7 @@
     <Content Include="Views\ChemoTherapy\_TestPopUp.cshtml" />
     <Content Include="Views\ChemoTherapyCyclesDates\Create.cshtml" />
     <Content Include="Views\ChemoTherapyCyclesDates\Index.cshtml" />
+    <Content Include="Views\ChemoTherapyCycleDay\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -489,7 +490,6 @@
     <Folder Include="Content\webfonts\" />
     <Folder Include="Html\AdminLTE-3.0.0\" />
     <Folder Include="UploadedFiles\" />
-    <Folder Include="Views\ChemoTherapyCycleDay\" />
     <Folder Include="Views\ChemoTherapyCyclePackage\" />
     <Folder Include="Views\CycleStartDate\" />
   </ItemGroup>

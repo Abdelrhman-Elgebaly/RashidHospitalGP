@@ -32,7 +32,7 @@
 
     <div class="modal-body">
         <div class="box-body">
-            
+
             <div class="form-group">
                 @Html.Label("Cycles_Number", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -40,7 +40,7 @@
                     @Html.ValidationMessageFor(model => model.Cycles_Number, "", new { @class = "text-danger" })
                 </div>
             </div>
-           
+
             <div class="form-group">
                 @Html.Label(" Date", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -51,7 +51,7 @@
             </div>
             <div class="form-group" style="float:right;">
                 <div class="col-md-12">
-                  
+
 
                     <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
                     <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
@@ -94,7 +94,7 @@
         var Unit = $("#Unit").val();
         var LabType = $("#LabType option:selected").val();
         var PatientId = $("#PatientId").val();
-
+       
         $("#Unit").val('');
         $("#Note").val('');
         $.ajax({
@@ -102,7 +102,7 @@
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId },
+            data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId},
             traditional: true,
             success: function (result) {
             }
@@ -111,10 +111,10 @@
 
     $("body").on("click", "#btnSaveandExit", function () {
         var Cycles_Number = $("#Cycles_Number").val();
-      
+
         var PatientId = $("#PatientId").val();
         var Date = $("#Date").val();
-     
+      
         $.ajax({
             url: "/ChemoTherapyCyclesDates/AddResult",
             type: "post",

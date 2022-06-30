@@ -16,16 +16,23 @@ namespace RashidHospital.Controllers
     {
 
         // GET: ChemoTherapyCycleDay
-        public ActionResult Index()
+        public ActionResult Index(int MainCycleId)
         {
-            return View();
+
+       
+
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> DatesList = _Obj.SelectAllByMainCycleId(MainCycleId).OrderBy(a => a.Date).ToList();
+         
+
+        
+            return View(DatesList);
+
+            // return View(OrderList);
         }
+
+
+
+   
     }
-
-
-
-
-
-
-
 }

@@ -1,8 +1,4 @@
 ﻿
-
-
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,11 +77,11 @@ namespace RashidHospital.Models
             _Obj.Delete();
         }
 
-        public List<ChemoTherapyCycleDayVM> SelectAllByPatientId(int PatientId)
+        public List<ChemoTherapyCycleDayVM> SelectAllByMainCycleId(int MainCycleId)
         {
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
             ChemoTherapyCycleDay _BClass = new ChemoTherapyCycleDay();
-            List<ChemoTherapyCycleDay> dbList = _BClass.GetLabResualtByPatientId(PatientId).ToList();
+            List<ChemoTherapyCycleDay> dbList = _BClass.GetCycleDaysByMainId(MainCycleId).ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
         public ChemoTherapyCycleDayVM SelectObject(int Id)

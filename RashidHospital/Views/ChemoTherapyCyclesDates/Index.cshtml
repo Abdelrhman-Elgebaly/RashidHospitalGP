@@ -97,9 +97,10 @@
                     </td>
 
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+
+                      
+                        @Html.ActionLink("Cycle Days", "Index", "ChemoTherapyCycleDay", new { MainCycleId = item.ID }, null)
+
                     </td>
                 </tr>
             }
@@ -133,7 +134,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Add new Lab</h4>
+                <h4 class="modal-title">Add Start Date</h4>
             </div>
             <div id="CreateBody"></div>
         </div>
@@ -166,7 +167,7 @@
         }
 
 
-               function openCreateModel(PatientId) {
+        function openCreateModel(PatientId) {
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
             $.ajax({
                 type: "GET",
