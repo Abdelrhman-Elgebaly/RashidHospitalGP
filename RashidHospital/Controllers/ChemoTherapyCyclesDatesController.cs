@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Text.RegularExpressions;
 
 
 namespace RashidHospital.Controllers
@@ -178,13 +178,26 @@ namespace RashidHospital.Controllers
             ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
             List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId);
 
+
+
+            List<string> tokens = _objVM.Cycle_days.Split('/').ToList();
+            List<int> intlist = new List<int>();
+
+            foreach (String str in tokens)
+            {
+                intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
+            }
+
+
+
+
             foreach (var itemm in OrderList)
             {
 
 
                 //Cycle days
 
-                foreach (var item in lst)
+                foreach (var item in intlist)
                 {
                     ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
                     _labresults22.Patient_ID = PatientId;
@@ -203,38 +216,7 @@ namespace RashidHospital.Controllers
         }
 
 
-        public ActionResult test(int PatientId)
-        {
-            List<int> lst = new List<int>();
-            lst.Add(1);
-            lst.Add(2);
-
-            ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
-            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId);
-
-            foreach (var itemm in OrderList)
-            {
-
-
-                //Cycle days
-
-                foreach (var item in lst)
-                {
-                    ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
-                    _labresults22.Patient_ID = PatientId;
-                    _labresults22.MainCycle_ID = itemm.ID;
-
-                    _labresults22.Date = itemm.Date.AddDays(item - 1);
-                    _labresults22.Create();
-
-                }
-
-               
-
-            }
-            return RedirectToAction("Index", new { PatientId = PatientId });
-        }
-
+     
 
 
 

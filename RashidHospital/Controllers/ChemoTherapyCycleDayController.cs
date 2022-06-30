@@ -32,7 +32,37 @@ namespace RashidHospital.Controllers
         }
 
 
+        public string RenderRazorViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
 
-   
+
+        public JsonResult _TestPopUp(int Id)
+        {
+            if (Id == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> DatesList = _Obj.SelectAllByMainCycleId(Id).OrderBy(a => a.Date).ToList();
+            //if (_objVM == null)
+            //{
+            //    return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+            //}
+
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_TestPopUp", DatesList) }, JsonRequestBehavior.AllowGet);
+        }
+
+       
     }
 }

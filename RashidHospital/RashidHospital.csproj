@@ -483,6 +483,7 @@
     <Content Include="Views\ChemoTherapyCyclesDates\Create.cshtml" />
     <Content Include="Views\ChemoTherapyCyclesDates\Index.cshtml" />
     <Content Include="Views\ChemoTherapyCycleDay\Index.cshtml" />
+    <Content Include="Views\ChemoTherapyCycleDay\_TestPopUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
