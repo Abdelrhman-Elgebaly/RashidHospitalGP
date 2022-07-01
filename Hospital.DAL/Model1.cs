@@ -57,7 +57,7 @@ namespace Hospital.DAL
         public virtual DbSet<ChemoTherapyPreInvestigations> ChemoTherapyPreInvestigations { get; set; }
         public virtual DbSet<ChemoTherapyDrug> ChemoTherapyDrug { get; set; }
         public virtual DbSet<ChemoTherapyCycleDay> ChemoTherapyCycleDays { get; set; }
-        public virtual DbSet<ChemoTherapyCyclePackage> ChemoTherapyCyclePackage { get; set; }
+        public virtual DbSet<ChemoTherapyCyclePackage> ChemoTherapyCyclePackages { get; set; }
         public virtual DbSet<NurseNote> NurseNote { get; set; }
         public virtual DbSet<PatientDose> PatientDose { get; set; }
     

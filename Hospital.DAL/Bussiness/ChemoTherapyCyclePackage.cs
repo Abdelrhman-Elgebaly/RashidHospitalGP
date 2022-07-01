@@ -8,9 +8,9 @@ namespace Hospital.DAL
     {
         public partial class ChemoTherapyCyclePackage : DbBaseClass<ChemoTherapyCyclePackage>
         {
-            public List<ChemoTherapyCyclePackage> GetLabPackageByPatientId(int PatientId)
+            public List<ChemoTherapyCyclePackage> GetLabPackageByCycleID(int CycleID)
         {
-            List<ChemoTherapyCyclePackage> medicalList = _Db.ChemoTherapyCyclePackage.Where(a => a.Patient_ID == PatientId).ToList();
+            List<ChemoTherapyCyclePackage> medicalList = _Db.ChemoTherapyCyclePackages.Where(a => a.Cycle_ID == CycleID).ToList();
             return medicalList;
 
         }

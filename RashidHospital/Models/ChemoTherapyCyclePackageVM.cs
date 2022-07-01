@@ -84,11 +84,11 @@ namespace RashidHospital.Models
             _Obj.Delete();
         }
 
-        public List<ChemoTherapyCyclePackageVM> SelectAllByPatientId(int PatientId)
+        public List<ChemoTherapyCyclePackageVM> SelectAllByCycleID(int CycleID)
         {
             ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
             ChemoTherapyCyclePackage _BClass = new ChemoTherapyCyclePackage();
-            List<ChemoTherapyCyclePackage> dbList = _BClass.GetLabPackageByPatientId(PatientId).ToList();
+            List<ChemoTherapyCyclePackage> dbList = _BClass.GetLabPackageByCycleID(CycleID).ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
         public ChemoTherapyCyclePackageVM SelectObject(int Id)
