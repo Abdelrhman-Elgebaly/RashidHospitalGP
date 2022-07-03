@@ -1,6 +1,8 @@
 ﻿@model Tuple<RashidHospital.Models.ChemoTherapyTemplateVM, List<RashidHospital.Models.ChemoTherapyCyclePackageVM>>
 
 <link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+
 <style>
     .columns {
         float: left;
@@ -11,6 +13,158 @@
         column-count: 2;
         width: 1000px;
     }
+
+    .form-wizard {
+        margin: 0 auto;
+        display: block;
+        margin-bottom: 25px;
+    }
+
+        .form-wizard .nav li {
+            box-shadow: 0 5px 3px -3px #ddd;
+        }
+
+            .form-wizard .nav li + li {
+                margin-left: 0px;
+            }
+
+            .form-wizard .nav li:first-child a {
+                padding-left: 10px;
+            }
+
+            .form-wizard .nav li:last-child a {
+                border-right: 1px solid #000;
+            }
+
+            .form-wizard .nav li:last-child:after, .form-wizard .nav li:last-child:before {
+                border-width: 0;
+            }
+
+            .form-wizard .nav li:last-child:hover:after, .form-wizard .nav li:last-child:hover:before {
+                border-width: 0;
+            }
+
+            .form-wizard .nav li:last-child:hover a {
+                border-right: 1px solid #000;
+            }
+
+            .form-wizard .nav li a {
+                border-radius: 0;
+                padding-left: 30px;
+                background: #fff;
+                border: 1px solid #000;
+                color: teal;
+                border-right: 0;
+            }
+
+                .form-wizard .nav li a:hover, .form-wizard .nav li a:active, .form-wizard .nav li a:focus {
+                    background: teal;
+                    color: white;
+                }
+
+            .form-wizard .nav li:after, .form-wizard .nav li:before {
+                content: "";
+                border-color: transparent transparent transparent #000;
+                border-style: solid;
+                border-width: 20px;
+                position: absolute;
+                display: block;
+                top: 0;
+                z-index: 1;
+            }
+
+            .form-wizard .nav li:after {
+                border-left-color: #fff;
+                top: 1px;
+                right: -39px;
+            }
+
+            .form-wizard .nav li:before {
+                border-width: 21px;
+                right: -41px;
+            }
+
+            .form-wizard .nav li.completed a {
+                border-radius: 0;
+                padding-left: 30px;
+                background: #A9A9A9;
+                border: 1px solid #000;
+                border-right: 0;
+                color: teal;
+                cursor: pointer;
+            }
+
+            .form-wizard .nav li.completed:after, .form-wizard .nav li.completed:before {
+                content: "";
+                border-color: transparent transparent transparent #000;
+                border-style: solid;
+                border-width: 20px;
+                position: absolute;
+                display: block;
+                top: 0;
+                right: -40px;
+                z-index: 1;
+            }
+
+            .form-wizard .nav li.completed:after {
+                border-left-color: #fff;
+                top: 1px;
+                right: -39px;
+            }
+
+            .form-wizard .nav li.completed:before {
+                border-width: 21px;
+                right: -41px;
+            }
+
+            .form-wizard .nav li.current a {
+                border-radius: 0;
+                padding-left: 30px;
+                background: #4B2259;
+                border: 1px solid #000;
+                border-right: 0;
+                color: white;
+                cursor: pointer;
+            }
+
+            .form-wizard .nav li.current:after, .form-wizard .nav li.current:before {
+                content: "";
+                border-color: transparent transparent transparent #000;
+                border-style: solid;
+                border-width: 20px;
+                position: absolute;
+                display: block;
+                top: 0;
+                right: -40px;
+                z-index: 1;
+            }
+
+            .form-wizard .nav li.current:after {
+                border-left-color: #4B2259;
+                top: 1px;
+                right: -39px;
+            }
+
+            .form-wizard .nav li.current:before {
+                border-width: 21px;
+                right: -41px;
+            }
+
+            .form-wizard .nav li.current:last-child a {
+                border-right: 1px solid #000;
+            }
+
+            .form-wizard .nav li.current:last-child:after, .form-wizard .nav li.current:last-child:before {
+                border-width: 0;
+            }
+
+            .form-wizard .nav li.current:last-child:hover:after, .form-wizard .nav li.current:last-child:hover:before {
+                border-width: 0;
+            }
+
+            .form-wizard .nav li.current:last-child:hover a {
+                border-right: 1px solid #000;
+            }
 </style>
 <section class="content-header">
     <h2>Lab Validation</h2>
@@ -18,12 +172,151 @@
 </section>
 
 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
-<div class="form-group">
-    @Html.LabelFor(model => Model.Item1.Protocol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => Model.Item1.Protocol_Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<center>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div class="form-wizard centered-pills">
+        <ul class="nav nav-pills">
+            <li role="presentation" class="current"><a href="#">1. Lab Validation</a></li>
+            <li role="presentation" class="complete"><a href="#">2.   Predeined Investigation</a></li>
+            <li role="presentation" class="complete"><a href="#">3. Toxicty</a></li>
+            <li role="presentation" class="complete"><a href="#">4.  Nurse Note</a></li>
+            <li role="presentation" class="complete"><a href="#">5.  Dose Calculation</a></li>
 
+            <li role="presentation"><a href="#">6. Summary</a></li>
+        </ul>
+    </div>
+
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
+        Add Lab
+    </a>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
+        Add Lab By Package
+    </a>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+  
+
+</center>
+
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+
+                <th>Lab</th>
+                <th>Value</th>
+                <th>Actual Value</th>
+                <th>Rule</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Item2)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Test_TypeValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Test_Value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Actual_Value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rule_TypeValue)
+                    </td>
+                    <td>
+
+                        <center>
+
+                            <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<center>
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
+       Next  >>
+    </a>
+
+</center>
+<!--Edit Modal-->
+<div class="modal fade" id="EditModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div id="EditBody"></div>
+        </div>
+    </div>
+</div>
+<!--Create Modal-->
+<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add new Lab</h4>
+            </div>
+            <div id="CreateBody"></div>
+        </div>
     </div>
 </div>
 
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+
+
+    <script>
+
+        function openCreateModel(Id) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("Create", "ChemoTherapyCyclePackage")",
+    cache: false,
+        data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#CreateBody").html(result.Content);
+    $("#CreateModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    }
+    </script>
+}

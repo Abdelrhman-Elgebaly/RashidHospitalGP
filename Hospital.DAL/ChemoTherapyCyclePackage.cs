@@ -16,9 +16,16 @@ namespace Hospital.DAL
         public Nullable<int> Cycle_ID { get; set; }
         public Nullable<int> Patient_ID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public string Test_Name { get; set; }
         public Nullable<int> Test_Value { get; set; }
         public string Note { get; set; }
-        public bool IsApproved { get; set; }
+        public Nullable<bool> IsApproved { get; set; }
+      
+        public Nullable<int> Test_Type { get; set; }
+        public Nullable<int> Actual_Value { get; set; }
+
+        public Nullable<int> Rule_Type { get; set; }
+
+
+
     }
 }

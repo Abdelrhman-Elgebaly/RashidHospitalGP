@@ -485,6 +485,7 @@
     <Content Include="Views\ChemoTherapyCycleDay\Index.cshtml" />
     <Content Include="Views\ChemoTherapyCycleDay\_TestPopUp.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Index.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

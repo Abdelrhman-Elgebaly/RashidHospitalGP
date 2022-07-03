@@ -606,6 +606,22 @@ namespace RashidHospital.Helper
             Involved,
 
         }
+
+        public enum Rule
+        {
+            [Display(Name = "High")]
+
+            High = 1,
+            [Display(Name = "Below")]
+
+            Below,
+            [Display(Name = "Equal or High")]
+
+            EqualorHigh,
+            [Display(Name = "Equal or Below")]
+
+            EqualorBelow,
+        }
         //public enum IHCType {
         //    [Display(Name = "ACTH")]
 
