@@ -17,10 +17,14 @@ namespace Hospital.DAL
         public Nullable<int> Sequence_Number { get; set; }
         public string Drug_Name { get; set; }
         public int Drug_Dose { get; set; }
-        public string Fluid_Type { get; set; }
+       
         public string Fluid_Vol { get; set; }
-        public string Unit { get; set; }
-        public string Route { get; set; }
+        
+        public Nullable<int> Unit { get; set; }
+        public Nullable<int> Route { get; set; }
+        public Nullable<int> Fluid_Type { get; set; }
+
+       
         public string Duration { get; set; }
         public string Note { get; set; }
 

@@ -16,8 +16,8 @@ namespace Hospital.DAL
         public Nullable<int> Frequency { get; set; }
         public string Cycle_days { get; set; }
         public Nullable<int> Maximum_cycles { get; set; }
-        public string Emetogenic_Level { get; set; }
         public Nullable<int> FN_risk { get; set; }
+        public Nullable<int> Emetogenic_Level { get; set; }
         public string Link { get; set; }
         public string Date_Created { get; set; }
         public string Created_By { get; set; }
@@ -26,7 +26,6 @@ namespace Hospital.DAL
         public string Instruction { get; set; }
         public Nullable<int> Admin_Day { get; set; }
         public Nullable<System.DateTime> Admin_Date { get; set; }
-        public Nullable<int> Patient_ID { get; set; }
         public string Date_Entered { get; set; }
         public string Disease { get; set; }
     }

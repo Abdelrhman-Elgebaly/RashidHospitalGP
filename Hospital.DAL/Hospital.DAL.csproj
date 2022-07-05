@@ -141,11 +141,13 @@
     <Compile Include="Clinic.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Diagons.cs" />
+    <Compile Include="Disease.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Fixation.cs" />
     <Compile Include="IHC.cs" />
     <Compile Include="NurseNote.cs" />
     <Compile Include="PatientDose.cs" />
+    <Compile Include="protocol.cs" />
     <Compile Include="RadiioTherapiesFixation.cs" />
     <Compile Include="RadioTherapy.cs" />
     <Compile Include="Toxicty.cs" />

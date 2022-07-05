@@ -15,6 +15,8 @@ using RashidHospital.Helper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web.Mvc;
+using static RashidHospital.Helper.Enum;
 namespace RashidHospital.Models
 {
 
@@ -28,7 +30,9 @@ namespace RashidHospital.Models
         public Nullable<int> Frequency { get; set; }
         public string Cycle_days { get; set; }
         public Nullable<int> Maximum_cycles { get; set; }
-        public string Emetogenic_Level { get; set; }
+        public string Emetogenic_Level_Value { get; set; }
+        public Nullable<int> Emetogenic_Level { get; set; }
+
         public Nullable<int> FN_risk { get; set; }
         public string Link { get; set; }
         public string Date_Created { get; set; }
@@ -38,11 +42,14 @@ namespace RashidHospital.Models
         public string Instruction { get; set; }
         public Nullable<int> Admin_Day { get; set; }
         public Nullable<System.DateTime> Admin_Date { get; set; }
-        public Nullable<int> Patient_ID { get; set; }
         public string Date_Entered { get; set; }
         public string Disease { get; set; }
         public List<int> CycleDays { get; set; }
         public List<DateTime> cycleDates { get; set; }
+        public int DiseaseId { get; set; }
+        public int ProtocolId { get; set; }
+
+
         internal override ChemoTherapyTemplate Convert(ChemoTherapyTemplateVM Obj)
         {
             if (Obj == null)
@@ -67,7 +74,7 @@ namespace RashidHospital.Models
                     Admin_Day = Obj.Admin_Day,
 
                     Admin_Date = Obj.Admin_Date,
-                    Patient_ID = Obj.Patient_ID,
+               //     Patient_ID = Obj.Patient_ID,
                     Date_Entered = Obj.Date_Entered,
                     Disease = Obj.Disease,
 
@@ -78,21 +85,24 @@ namespace RashidHospital.Models
             return _Obj;
         }
 
-        internal override ChemoTherapyTemplateVM Convert(ChemoTherapyTemplate Obj)
+      
+
+                       internal override ChemoTherapyTemplateVM Convert(ChemoTherapyTemplate Obj)
         {
-            ChemoTherapyTemplateVM cd = new ChemoTherapyTemplateVM();
-            if (Obj == null)
-                return null;
-            else
+            var Site = (Emetogenic_Level)Obj?.Emetogenic_Level;
+            var enumType = EnumHelper<Emetogenic_Level>.GetDisplayValue(Site);
+
+            return new ChemoTherapyTemplateVM
             {
-                ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM
-                {
-                    Template_ID = Obj.Template_ID,
+
+
+                Template_ID = Obj.Template_ID,
                     Protocol_Name = Obj.Protocol_Name,
                     Frequency = Obj.Frequency,
                     Cycle_days = Obj.Cycle_days,
                     Maximum_cycles = Obj.Maximum_cycles,
                     Emetogenic_Level = Obj.Emetogenic_Level,
+                    Emetogenic_Level_Value = enumType.ToString(),
                     FN_risk = Obj.FN_risk,
                     Link = Obj.Link,
                     Date_Created = Obj.Date_Created,
@@ -103,18 +113,15 @@ namespace RashidHospital.Models
                     Admin_Day = Obj.Admin_Day,
 
                     Admin_Date = Obj.Admin_Date,
-                    Patient_ID = Obj.Patient_ID,
+               //     Patient_ID = Obj.Patient_ID,
                     Date_Entered = Obj.Date_Entered,
                     Disease = Obj.Disease,
-
-
-                };
-                return _Obj;
-            }
-
+            };
         }
 
-    
+
+
+
         public void Create()
         {
             _Obj = Convert(this);
@@ -150,7 +157,14 @@ namespace RashidHospital.Models
         }
 
 
-
+        public List<SelectListItem> GetELevelSelectList()
+        {
+            return System.Enum.GetValues(typeof(Emetogenic_Level)).Cast<Emetogenic_Level>().Select(v => new SelectListItem
+            {
+                Text = EnumHelper<Emetogenic_Level>.GetDisplayValue(v),
+                Value = ((int)v).ToString()
+            }).ToList();
+        }
 
 
 

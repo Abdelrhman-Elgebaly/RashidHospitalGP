@@ -51,13 +51,6 @@
             </div>
 
 
-            <div class="form-group">
-                @Html.Label("Cycle_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Cycle_ID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Cycle_ID, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
             <div class="box-body">
                 <div class="form-group">
@@ -140,7 +133,7 @@
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "Test_Type": Test_Type, "Test_Value": Test_Value, "Cycle_ID": Cycle_ID, "Rule_Type": Rule_Type },
+            data: { "Test_Type": Test_Type, "Test_Value":Test_Value, "Cycle_ID": Cycle_ID, "Rule_Type": Rule_Type },
             success: function (result) {
                 $("#CreateModel").modal("hide");
                 window.location.reload();

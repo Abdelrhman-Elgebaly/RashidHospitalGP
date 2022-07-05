@@ -23,7 +23,13 @@ namespace RashidHospital.Controllers
 
         }
 
-     
+        public JsonResult GetProrocolList(int DiseaseId)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            List<protocol> ProtocolList = _context.protocols.Where(x => x.DiseaseId == DiseaseId).ToList();
+            return Json(ProtocolList, JsonRequestBehavior.AllowGet);
+
+        }
         public ActionResult Index()
         {
            
@@ -36,11 +42,11 @@ namespace RashidHospital.Controllers
 
         public ActionResult Create()
         {
-           
+            fillCreateBag();
+
             ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
 
-
-
+           
 
 
             return View(radioTherapyVMVM);
@@ -49,6 +55,7 @@ namespace RashidHospital.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ChemoTherapyTemplateVM input)
         {
+            fillCreateBag();
 
             if (ModelState.IsValid)
             {
@@ -72,9 +79,19 @@ namespace RashidHospital.Controllers
 
                 return RedirectToAction("Index");
             }
+            fillCreateBag();
 
             return View(input);
         }
+
+        private void fillCreateBag()
+        {
+            ChemoTherapyTemplateVM results = new ChemoTherapyTemplateVM();
+            ViewBag.ELevel = results.GetELevelSelectList();
+
+     
+        }
+
 
         public ActionResult Duplicate(int? Id)
         {

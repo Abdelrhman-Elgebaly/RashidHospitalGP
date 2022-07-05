@@ -49,7 +49,8 @@ namespace RashidHospital.Models
                     Test_Value = Obj.Test_Value,
                     Note = Obj.Note,
                     IsApproved=Obj.IsApproved,
-                    Rule_Type= Obj.Rule_Type
+                    Rule_Type= Obj.Rule_Type,
+                    Actual_Value =Obj.Actual_Value,
                 };
             }
             return _Obj;
@@ -78,6 +79,7 @@ namespace RashidHospital.Models
             pl.Test_Value = DbObj.Test_Value;
             pl.Note = DbObj.Note;
             pl.IsApproved = DbObj.IsApproved;
+            pl.Actual_Value = DbObj.Actual_Value;
 
             return pl;
         }

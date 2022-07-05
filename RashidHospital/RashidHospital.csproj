@@ -193,6 +193,7 @@
     <Compile Include="Controllers\DeleteTasksController.cs" />
     <Compile Include="Controllers\DiagnoseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HoomeController.cs" />
     <Compile Include="Controllers\IHCTypeController.cs" />
     <Compile Include="Controllers\LabRequestController.cs" />
     <Compile Include="Controllers\LabResualtController.cs" />
@@ -486,6 +487,11 @@
     <Content Include="Views\ChemoTherapyCycleDay\_TestPopUp.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Index.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Create.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\Investigation.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\Toxicty.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\NurseNote.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\Test.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,6 +11,8 @@ using RashidHospital.Helper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web.Mvc;
+using static RashidHospital.Helper.Enum;
 namespace RashidHospital.Models
 {
 
@@ -25,13 +27,15 @@ namespace RashidHospital.Models
         public Nullable<int> Sequence_Number { get; set; }
         public string Drug_Name { get; set; }
         public int Drug_Dose { get; set; }
-        public string Fluid_Type { get; set; }
+        public string Fluid_Type_Value { get; set; }
         public string Fluid_Vol { get; set; }
-        public string Unit { get; set; }
-        public string Route { get; set; }
+        public string Unit_Value { get; set; }
+        public string Route_Value { get; set; }
         public string Duration { get; set; }
         public string Note { get; set; }
-
+        public Nullable<int> Unit { get; set; }
+        public Nullable<int> Route { get; set; }
+        public Nullable<int> Fluid_Type { get; set; }
 
 
 
@@ -68,13 +72,22 @@ namespace RashidHospital.Models
 
         internal override ChemoTherapyDrugVM Convert(ChemoTherapyDrug Obj)
         {
-            ChemoTherapyDrugVM cd = new ChemoTherapyDrugVM();
-            if (Obj == null)
-                return null;
-            else
+            var Site = (Unit)Obj?.Unit;
+            var enumType = EnumHelper<Unit>.GetDisplayValue(Site);
+
+            var Site1 = (Route)Obj?.Route;
+            var enumType1 = EnumHelper<Route>.GetDisplayValue(Site1);
+
+            var Site2 = (Fluid_Type)Obj?.Fluid_Type;
+            var enumType2 = EnumHelper<Fluid_Type>.GetDisplayValue(Site2);
+
+            return new ChemoTherapyDrugVM
             {
-                ChemoTherapyDrugVM _Obj = new ChemoTherapyDrugVM
-                {
+
+
+
+
+
                     Drug_ID = Obj.Drug_ID,
                     Template_ID = Obj.Template_ID,
                     Therapy_Type = Obj.Therapy_Type,
@@ -88,13 +101,13 @@ namespace RashidHospital.Models
                     Route = Obj.Route,
                     Duration = Obj.Duration,
                     Note = Obj.Note,
+                Unit_Value = enumType.ToString(),
+                Route_Value = enumType1.ToString(),
+               Fluid_Type_Value = enumType2.ToString(),
 
-
-                };
-                return _Obj;
-            }
-
+            };
         }
+
 
 
 
@@ -134,7 +147,32 @@ namespace RashidHospital.Models
 
 
 
+        public List<SelectListItem> GetUnitSelectList()
+        {
+            return System.Enum.GetValues(typeof(Unit)).Cast<Unit>().Select(v => new SelectListItem
+            {
+                Text = EnumHelper<Unit>.GetDisplayValue(v),
+                Value = ((int)v).ToString()
+            }).ToList();
+        }
 
+        public List<SelectListItem> GetRouteSelectList()
+        {
+            return System.Enum.GetValues(typeof(Route)).Cast<Route>().Select(v => new SelectListItem
+            {
+                Text = EnumHelper<Route>.GetDisplayValue(v),
+                Value = ((int)v).ToString()
+            }).ToList();
+        }
+
+         public List<SelectListItem> GetFluidTSelectList()
+        {
+            return System.Enum.GetValues(typeof(Fluid_Type)).Cast<Fluid_Type>().Select(v => new SelectListItem
+            {
+                Text = EnumHelper<Fluid_Type>.GetDisplayValue(v),
+                Value = ((int)v).ToString()
+            }).ToList();
+        }
 
 
 

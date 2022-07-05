@@ -39,51 +39,58 @@
                         <th>Emetogenic Level</th>
                         <th>FN risk</th>
                         <th>Link</th>
+                        <th>TestD</th>
+                        <th>TestP</th>
                         <th> Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Disease)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Protocol_Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Frequency)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Cycle_days)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Maximum_cycles)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Emetogenic_Level)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FN_risk)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Link)
-                            </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Disease)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Protocol_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Frequency)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cycle_days)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Maximum_cycles)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emetogenic_Level_Value)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FN_risk)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Link)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DiseaseId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProtocolId)
+                        </td>
+
+                        <td>
+
+                            @Html.ActionLink("Open", "Index", "ChemoTherapyDrug", new { templateID = item.Template_ID }, null) |
+                            @Html.ActionLink("Predefined Lab", "Index", "ChemoTherapyPreLab", new { templateID = item.Template_ID }, null) |
+                            @Html.ActionLink("Predefined Investigations", "Index", "ChemoTherapyPreInvestigations", new { templateID = item.Template_ID }, null) |
 
 
-                            <td>
 
-                                @Html.ActionLink("Open", "Index", "ChemoTherapyDrug", new { templateID = item.Template_ID }, null) |
-                                @Html.ActionLink("Predefined Lab", "Index", "ChemoTherapyPreLab", new { templateID = item.Template_ID }, null) |
-                                @Html.ActionLink("Predefined Investigations", "Index", "ChemoTherapyPreInvestigations", new { templateID = item.Template_ID }, null) |
-
-                               
-
-                                @Html.ActionLink("Duplicate", "Duplicate", new { id = item.Template_ID }) |
-                                @Html.ActionLink("Delete", "Delete", new { Id = item.Template_ID }, new { onclick = "return confirm('Are You Sure From Deleted... ?')" }) |
-                            </td>
-                        </tr>
+                            @Html.ActionLink("Duplicate", "Duplicate", new { id = item.Template_ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { Id = item.Template_ID }, new { onclick = "return confirm('Are You Sure From Deleted... ?')" }) |
+                        </td>
+                    </tr>
                       
                     }
                 </tbody>

@@ -622,6 +622,89 @@ namespace RashidHospital.Helper
 
             EqualorBelow,
         }
+
+        public enum Emetogenic_Level
+        {
+            [Display(Name = "High")]
+
+            High = 1,
+            [Display(Name = "Modertae")]
+
+            Modertae,
+            [Display(Name = "Low")]
+
+            Low,
+            [Display(Name = "Minimal")]
+
+            Minimal,
+        }
+        public enum Unit
+        {
+            [Display(Name = "mg/m2")]
+
+            mg = 1,
+            [Display(Name = "mg/kg")]
+
+            kg,
+            [Display(Name = "mg")]
+
+            mgg,
+            [Display(Name = "IU")]
+
+            IU,
+            [Display(Name = "AUC")]
+
+            AUC,
+           
+        }
+        public enum Route
+        {
+            [Display(Name = "IV")]
+
+            IV = 1,
+            [Display(Name = "IM")]
+
+            IM,
+            [Display(Name = "Oral ")]
+
+            Oral,
+            [Display(Name = "SC")]
+
+            SC,
+            [Display(Name = "IP")]
+            IP,
+            [Display(Name = "Nasal")]
+
+            Nasal,
+            [Display(Name = "Topical")]
+
+            Topical,
+            [Display(Name = "IT ")]
+
+            IT,
+            [Display(Name = "Intra occular")]
+
+            Intraoccular,
+            [Display(Name = "Intraventricular")]
+            Intraventricular,
+
+        }
+
+        public enum Fluid_Type 
+        {
+            [Display(Name = "NS 9%")]
+
+            NS = 1,
+            [Display(Name = "Glucose 5%")]
+
+            Glucose,
+            [Display(Name = "Ringer lactate")]
+
+            Ringer,
+            [Display(Name = "Glucosaline")]
+
+            Glucosaline,
+        }
         //public enum IHCType {
         //    [Display(Name = "ACTH")]
 

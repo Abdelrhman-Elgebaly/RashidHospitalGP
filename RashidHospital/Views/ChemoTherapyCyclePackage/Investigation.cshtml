@@ -1,7 +1,7 @@
 ﻿@model Tuple<RashidHospital.Models.ChemoTherapyTemplateVM, List<RashidHospital.Models.ChemoTherapyCyclePackageVM>>
 
 <link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
-@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 
 <style>
     .columns {
@@ -167,7 +167,7 @@
             }
 </style>
 <section class="content-header">
-    <h2>Lab Validation</h2>
+    <h2>Predeined Investigation</h2>
     @Html.Raw(ViewBag.PatientInfo)
 </section>
 
@@ -182,8 +182,8 @@
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
     <div class="form-wizard centered-pills">
         <ul class="nav nav-pills">
-            <li role="presentation" class="current"><a href="#">1. Lab Validation</a></li>
-            <li role="presentation" class="complete"><a href="#">2.   Predeined Investigation</a></li>
+            <li role="presentation" class="complete"><a href="#">1. Lab Validation</a></li>
+            <li role="presentation" class="current"><a href="#">2.   Predeined Investigation</a></li>
             <li role="presentation" class="complete"><a href="#">3. Toxicty</a></li>
             <li role="presentation" class="complete"><a href="#">4.  Nurse Note</a></li>
             <li role="presentation" class="complete"><a href="#">5.  Dose Calculation</a></li>
@@ -192,20 +192,12 @@
         </ul>
     </div>
 
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
-        Add Lab
-    </a>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
-        Add Lab By Package
-    </a>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <h3 class="box-title">
 
-        @Html.ActionLink("Add New ", "Test", "ChemoTherapyCyclePackage", new { Id = ViewBag.CycleId, pid = ViewBag.PatientId }, null)
-    </h3>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
+
 
 </center>
 
@@ -214,108 +206,51 @@
         <thead>
             <tr>
 
-                <th>Lab</th>
+                <th>Investigation</th>
                 <th>Value</th>
                 <th>Actual Value</th>
                 <th>Rule</th>
                
-              
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
 
             @foreach (var item in Model.Item2)
             {
-            <tr>
+                <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Test_TypeValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Test_Value)
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Test_TypeValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Test_Value)
+                    </td>
+                    <td>
 
-                </td>
-                <td>
-
-                    <div class="col-md-10">
-
-                        @Html.EditorFor(modelItem => item.Actual_Value, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                        @{
-                            if (item.Rule_Type == 1)
-                            {
-                                if (item.Actual_Value <= item.Test_Value)
-                                {
-                                    @Html.ValidationMessageFor(modelItem => item.Actual_Value, "Warning: Input is not in normal range", new { @class = "text-danger" })
-
-                                }
-                            }
-
-
-
-                            if (item.Rule_Type == 2)
-                            {
-                                if (item.Actual_Value >= item.Test_Value)
-                                {
-                                    @Html.ValidationMessageFor(modelItem => item.Actual_Value, "Warning: Input is not in normal range", new { @class = "text-danger" })
-
-                                }
-                            }
-
-
-                            if (item.Rule_Type == 3)
-                            {
-                                if (item.Actual_Value < item.Test_Value)
-                                {
-                                    @Html.ValidationMessageFor(modelItem => item.Actual_Value, "Warning: Input is not in normal range", new { @class = "text-danger" })
-
-                                }
-                            }
-
-
-                            if (item.Rule_Type == 4)
-                            {
-                                if (item.Actual_Value > item.Test_Value)
-                                {
-                                    @Html.ValidationMessageFor(modelItem => item.Actual_Value, "Warning: Input is not in normal range", new { @class = "text-danger" })
-
-                                }
-                            }
-
-
-
-                        }
-                    </div>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rule_TypeValue)
-                </td>
-              
-
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { Id = item.ID, pid = ViewBag.PatientId }) |
-
-                </td>
-            </tr>
+                        <div class="col-md-10">
+                            @Html.EditorFor(modelItem => item.Test_Value, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(modelItem => item.Test_Value, "", new { @class = "text-danger" })
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rule_TypeValue)
+                    </td>
+               
+                </tr>
             }
 
         </tbody>
     </table>
 </div>
 <center>
-
-
-   
     <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
         Save Changes
     </a>
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-   
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openNurseNoteModal(@ViewBag.CycleId,@ViewBag.PatientId )">
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openToxictyModal(@ViewBag.PatientId )">
         Next  >>
     </a>
-
 </center>
 <!--Edit Modal-->
 <div class="modal fade" id="EditModel" data-backdrop="static" data-keyboard="false">
@@ -356,9 +291,7 @@
 
 
     <script>
-        function openCreatelModal(Id) {
-            window.location.href = '/ChemoTherapyCyclePackage/Create?Id=' + Id;
-        };
+
         function openCreateModel(Id) {
     $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     $.ajax({
@@ -382,11 +315,10 @@
         }
 
 
-
-        function openNurseNoteModal(cycleID , patientID) {
-            window.location.href = '/ChemoTherapyCyclePackage/Investigation?Id=' + cycleID + '&pid=' + patientID;
+        function openToxictyModal(patientID) {
+            window.location.href = '/ChemoTherapyCyclePackage/Toxicty?patientID=' + patientID;
         }
-
 
     </script>
 }
+

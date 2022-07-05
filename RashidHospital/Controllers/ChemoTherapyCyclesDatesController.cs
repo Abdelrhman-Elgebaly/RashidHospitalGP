@@ -101,7 +101,7 @@ namespace RashidHospital.Controllers
 
                 vm.Create();
 
-                for (int i = 1; i < vm.Cycles_Number; i++)
+              /*  for (int i = 1; i < vm.Cycles_Number; i++)
                 {
                     vm.Patient_ID = vm.Patient_ID;
                     //   vm.ResualtDate = DateTime.Now;
@@ -114,7 +114,7 @@ namespace RashidHospital.Controllers
                     vm.Create();
 
                 }
-
+              */
                 //PatientId
                 //return RedirectToAction("Index", new { PatientId = vm.Patient_ID });
                 return RedirectToAction("Error500");

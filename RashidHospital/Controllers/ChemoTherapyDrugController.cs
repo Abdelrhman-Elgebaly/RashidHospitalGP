@@ -84,27 +84,38 @@ namespace RashidHospital.Controllers
             return View(_list);
         }
 
+        private void fillCreateBag()
+        {
+            ChemoTherapyDrugVM results = new ChemoTherapyDrugVM();
+            ViewBag.Unit = results.GetUnitSelectList();
+            ViewBag.Route = results.GetRouteSelectList();
+            ViewBag.Fluid = results.GetFluidTSelectList();
 
+
+
+        }
 
         public ActionResult Create(int templateID, string therapyType)
         {
             //  int _patientID = Convert.ToInt32(patientID);
             ChemoTherapyDrugVM radioTherapyVMVM = new ChemoTherapyDrugVM();
+            fillCreateBag();
             radioTherapyVMVM.Template_ID = templateID;
             radioTherapyVMVM.Therapy_Type = therapyType;
+            fillCreateBag();
             return View(radioTherapyVMVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ChemoTherapyDrugVM input)
         {
-
+            fillCreateBag();
             if (ModelState.IsValid)
             {
                 input.Create();
                 return RedirectToAction("Index", new { templateID = input.Template_ID });
             }
-
+            fillCreateBag();
             return View(input);
         }
 
