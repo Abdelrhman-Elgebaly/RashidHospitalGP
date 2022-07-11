@@ -65,6 +65,12 @@ namespace Hospital.DAL
 
         public virtual DbSet<protocol> protocols { get; set; }
         public virtual DbSet<Disease> Diseases { get; set; }
+        public virtual DbSet<ChemoTherapyDose> ChemoTherapyDoses { get; set; }
+        public virtual DbSet<ChemoTherapyProtocol> ChemoTherapyProtocols { get; set; }
+        public virtual DbSet<Package> Packages { get; set; }
+        public virtual DbSet<LabPackage> LabPackages { get; set; }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

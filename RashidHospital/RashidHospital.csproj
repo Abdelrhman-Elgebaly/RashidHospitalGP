@@ -231,9 +231,11 @@
     <Compile Include="Models\CallBoardVM.cs" />
     <Compile Include="Models\ChemoTherapyCycleDayVM.cs" />
     <Compile Include="Models\ChemoTherapyCyclePackageVM.cs" />
+    <Compile Include="Models\ChemoTherapyDoseVM.cs" />
     <Compile Include="Models\ChemoTherapyDrugVM.cs" />
     <Compile Include="Models\ChemoTherapyPreInvestigationsVM.cs" />
     <Compile Include="Models\ChemoTherapyPreLabVM.cs" />
+    <Compile Include="Models\ChemoTherapyProtocolVM.cs" />
     <Compile Include="Models\ChemoTherapyTemplateVM.cs" />
     <Compile Include="Models\ClinicVM.cs" />
     <Compile Include="Models\ChemoTherapyCyclesDatesVM.cs" />
@@ -246,6 +248,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IHCVM.cs" />
     <Compile Include="Models\LabOrderVM.cs" />
+    <Compile Include="Models\LabPackageVM.cs" />
     <Compile Include="Models\LabResualtVM.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalConditionVM.cs" />
@@ -253,6 +256,7 @@
     <Compile Include="Models\MenstrualHistoryVM.cs" />
     <Compile Include="Models\NurseNoteVM.cs" />
     <Compile Include="Models\OrderDetailVM.cs" />
+    <Compile Include="Models\PackageVM.cs" />
     <Compile Include="Models\PathologyVM.cs" />
     <Compile Include="Models\PatientDoseVM.cs" />
     <Compile Include="Models\PatientUnitVM.cs" />
@@ -492,6 +496,7 @@
     <Content Include="Views\ChemoTherapyCyclePackage\NurseNote.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Test.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Edit.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\NCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

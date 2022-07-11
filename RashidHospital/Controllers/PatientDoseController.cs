@@ -141,21 +141,21 @@ namespace RashidHospital.Controllers
 
 
 
-            if (ObjVm.Unit == "mg/m2")
+            if (ObjVm.Unit == 1)
             {
                 _nobjVM.Dose_Calculated = ObjVm.Drug_Dose * _nobjVM.SA;
                 _nobjVM.Edit();
                 
             }
 
-            else if (ObjVm.Unit == "mg/kg")
+            else if (ObjVm.Unit == 2)
             {
                 _nobjVM.Dose_Calculated = ObjVm.Drug_Dose * _nobjVM.Weight;
                 _nobjVM.Edit();
 
             }
 
-            else if (ObjVm.Unit == "AUC")
+            else if (ObjVm.Unit == 5)
             {
                 int age = DateTime.Now.Year - _pobjVM.BirthDate.Year;
                 var weight = _nobjVM.Weight;

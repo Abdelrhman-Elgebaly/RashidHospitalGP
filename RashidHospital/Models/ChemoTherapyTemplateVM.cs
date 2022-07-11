@@ -92,6 +92,7 @@ namespace RashidHospital.Models
             var Site = (Emetogenic_Level)Obj?.Emetogenic_Level;
             var enumType = EnumHelper<Emetogenic_Level>.GetDisplayValue(Site);
 
+
             return new ChemoTherapyTemplateVM
             {
 
@@ -166,7 +167,7 @@ namespace RashidHospital.Models
             }).ToList();
         }
 
-
+       
 
     }
 }

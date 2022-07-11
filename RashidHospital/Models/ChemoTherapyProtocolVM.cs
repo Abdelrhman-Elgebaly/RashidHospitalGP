@@ -1,0 +1,116 @@
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Hospital.DAL;
+using RashidHospital.Helper;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using static RashidHospital.Helper.Enum;
+using System.Web.Mvc;
+namespace RashidHospital.Models
+{
+
+    public class ChemoTherapyProtocolVM : BusinessBaseClass<ChemoTherapyProtocol, ChemoTherapyProtocolVM>
+    {
+
+        [Key]
+        public int ID { get; set; }
+        public Nullable<int> Patient_ID { get; set; }
+        public Nullable<int> Template_ID { get; set; }
+        public Nullable<int> Cycles_Number { get; set; }
+        public string Protocol_Name { get; set; }
+
+
+
+        internal override ChemoTherapyProtocol Convert(ChemoTherapyProtocolVM Obj)
+        {
+            if (Obj == null)
+                return null;
+            else
+            {
+                _Obj = new ChemoTherapyProtocol
+                {
+                    ID = Obj.ID,
+                    Patient_ID = Obj.Patient_ID,
+                    Template_ID = Obj.Template_ID,
+                    Cycles_Number = Obj.Cycles_Number,
+                    Protocol_Name = Obj.Protocol_Name,
+               
+                };
+            }
+            return _Obj;
+        }
+
+
+        internal override ChemoTherapyProtocolVM Convert(ChemoTherapyProtocol DbObj)
+        {
+
+
+            ChemoTherapyProtocolVM pl = new ChemoTherapyProtocolVM();
+
+
+
+            pl.ID = DbObj.ID;
+            pl.Patient_ID = DbObj.Patient_ID;
+            pl.Template_ID = DbObj.Template_ID;
+            pl.Cycles_Number = DbObj.Cycles_Number;
+            pl.Protocol_Name = DbObj.Protocol_Name;
+
+
+            return pl;
+        }
+
+
+
+        public void Create()
+        {
+            _Obj = Convert(this);
+            _Obj.AddNew();
+        }
+
+        public List<ChemoTherapyProtocolVM> SelectAllByPatientID(int PatientId)
+        {
+            ChemoTherapyProtocolVM _Obj = new ChemoTherapyProtocolVM();
+            ChemoTherapyProtocol _BClass = new ChemoTherapyProtocol();
+            List<ChemoTherapyProtocol> dbList = _BClass.GetProtocolsByPatientId(PatientId).ToList();
+            return dbList.Select(z => _Obj.Convert(z)).ToList();
+        }
+
+
+
+        public ChemoTherapyProtocolVM SelectObject(int Id)
+        {
+            ChemoTherapyProtocol _BClass = new ChemoTherapyProtocol();
+            ChemoTherapyProtocolVM ClinicObject = Convert(_BClass.Getobject(Id));
+            return ClinicObject;
+        }
+
+
+
+        public List<SelectListItem> GeLabTypsSelectList()
+        {
+            return System.Enum.GetValues(typeof(LabTyps)).Cast<LabTyps>().Select(v => new SelectListItem
+            {
+                Text = EnumHelper<LabTyps>.GetDisplayValue(v),
+                Value = ((int)v).ToString()
+            }).ToList();
+        }
+
+
+        public List<SelectListItem> GetRuleTypsSelectList()
+        {
+            return System.Enum.GetValues(typeof(Rule)).Cast<Rule>().Select(v => new SelectListItem
+            {
+                Text = EnumHelper<Rule>.GetDisplayValue(v),
+                Value = ((int)v).ToString()
+            }).ToList();
+        }
+
+
+
+
+    }
+}

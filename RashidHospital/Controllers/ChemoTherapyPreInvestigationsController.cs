@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using System.Text.RegularExpressions;
 
 namespace RashidHospital.Controllers
 {
@@ -27,6 +28,7 @@ namespace RashidHospital.Controllers
             //  int _patientID = Convert.ToInt32(patientID);
             ChemoTherapyPreInvestigationsVM radioTherapyVMVM = new ChemoTherapyPreInvestigationsVM();
             radioTherapyVMVM.Template_ID = templateID;
+            fillCreateBag();
             return View(radioTherapyVMVM);
         }
         [HttpPost]
@@ -36,6 +38,24 @@ namespace RashidHospital.Controllers
 
             if (ModelState.IsValid)
             {
+
+
+
+
+                List<string> tokens = input.Days.Split(',').ToList();
+                List<int> intlist = new List<int>();
+
+                foreach (String str in tokens)
+                {
+                    intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
+                }
+
+                string[] array = new string[1000];
+
+                array = intlist.ConvertAll(x => x.ToString()).ToArray();
+                input.Days = string.Join("/", array);
+
+
                 input.Create();
                 return RedirectToAction("Index", new { templateID = input.Template_ID });
             }
@@ -59,5 +79,17 @@ namespace RashidHospital.Controllers
             ViewBag.DoctorId = userID;
 
         }
+
+
+
+        private void fillCreateBag()
+        {
+            ChemoTherapyPreInvestigationsVM results = new ChemoTherapyPreInvestigationsVM();
+           
+            ViewBag.RuleTypesList = results.GetRuleTypsSelectList();
+
+
+        }
+
     }
 }

@@ -10,7 +10,27 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Protocol Therapies</h4>
+    <section class="content-header">
+
+        @{
+            if (@Model.Therapy_Type == "pre")
+            {
+                <h2>Protocol Pre Therapy</h2>
+            }
+
+            if (@Model.Therapy_Type == "Therapy")
+            {
+                <h2>Protocol Therapy</h2>
+            }
+
+
+            if (@Model.Therapy_Type == "post")
+            {
+                <h2>Protocol Post Therapy</h2>
+            }
+
+        }
+    </section>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -22,7 +42,7 @@
         @Html.LabelFor(model => model.Days, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Days, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Days, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Days, "Please sepreate days with ,", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -54,7 +74,7 @@
     <div class="form-group">
         @Html.Label("Unit", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("Unit", new SelectList(ViewBag.Unit, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+            @Html.DropDownList("Unit", new SelectList((IEnumerable<SelectListItem>)ViewBag.Unit, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
             @Html.ValidationMessageFor(model => model.Unit, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -62,7 +82,7 @@
     <div class="form-group">
         @Html.Label("Route", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("Route", new SelectList(ViewBag.Route, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+            @Html.DropDownList("Route", new SelectList((IEnumerable<SelectListItem>)ViewBag.Route, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
             @Html.ValidationMessageFor(model => model.Route, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -82,12 +102,12 @@
     <div class="form-group">
         @Html.Label("Fluid_Type", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("Fluid_Type", new SelectList (ViewBag.Fluid, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+            @Html.DropDownList("Fluid_Type", new SelectList((IEnumerable<SelectListItem>)ViewBag.Fluid, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
             @Html.ValidationMessageFor(model => model.Fluid_Type, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })

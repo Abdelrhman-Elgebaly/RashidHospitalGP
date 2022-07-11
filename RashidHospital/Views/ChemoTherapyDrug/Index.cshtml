@@ -133,8 +133,7 @@
                 <!--column names -->
                 <tr>
 
-                 
-                 
+
                     <th>
                         @Html.DisplayNameFor(model => model.Days)
                     </th>
@@ -148,13 +147,13 @@
                         @Html.DisplayNameFor(model => model.Drug_Dose)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Fluid_Type)
+                        @Html.DisplayNameFor(model => model.Unit)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Fluid_Vol)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Unit)
+                        @Html.DisplayNameFor(model => model.Fluid_Type)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Route)
@@ -166,51 +165,53 @@
                         @Html.DisplayNameFor(model => model.Note)
                     </th>
                     <th></th>
+
+
                 </tr>
 
                 @foreach (var item in Model)
                 {
                     if (item.Therapy_Type == "Therapy")
                     {
-                    <tr>
-                       
-                      
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Days)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Sequence_Number)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Dose)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Unit)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Route)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duration)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Note)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { patientID = item.Drug_ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Drug_ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
-                        </td>
-                    </tr>
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Days)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sequence_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Drug_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Drug_Dose)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit_Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Route_Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Drug_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Drug_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
+                </td>
+
+            </tr>
                     }
                 }
 
@@ -236,8 +237,7 @@
                 <!--column names -->
                 <tr>
 
-                  
-                  
+
                     <th>
                         @Html.DisplayNameFor(model => model.Days)
                     </th>
@@ -251,13 +251,13 @@
                         @Html.DisplayNameFor(model => model.Drug_Dose)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Fluid_Type)
+                        @Html.DisplayNameFor(model => model.Unit)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Fluid_Vol)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Unit)
+                        @Html.DisplayNameFor(model => model.Fluid_Type)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Route)
@@ -269,6 +269,7 @@
                         @Html.DisplayNameFor(model => model.Note)
                     </th>
                     <th></th>
+
                 </tr>
 
 
@@ -277,45 +278,45 @@
                 {
                     if (item.Therapy_Type == "post")
                     {
-                        <tr>
-                           
-                          
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Days)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Sequence_Number)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Drug_Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Drug_Dose)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Fluid_Type)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Unit)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Route)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Duration)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Note)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Drug_ID }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.Drug_ID }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
-                            </td>
-                        </tr>
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Days)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sequence_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Drug_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Drug_Dose)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit_Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Route_Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Drug_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Drug_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
+                </td>
+
+            </tr>
                     }
                 }
 

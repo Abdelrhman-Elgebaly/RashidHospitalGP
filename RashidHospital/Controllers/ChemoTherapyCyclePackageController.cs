@@ -265,6 +265,45 @@ namespace RashidHospital.Controllers
             List<NurseNoteVM> _list = ObjVm.SelectAllByPatientId(_patientID);
             return View(_list);
         }
+
+
+
+        public ActionResult NCreate(string patientID)
+        {
+            int _patientID = Convert.ToInt32(patientID);
+            NurseNoteVM nurseNoteVM = new NurseNoteVM();
+            nurseNoteVM.Patient_ID = _patientID;
+            fillBag(_patientID);
+
+            return View(nurseNoteVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NCreate(NurseNoteVM input)
+        {
+
+            if (ModelState.IsValid)
+            {
+                input.Date = DateTime.Now;
+
+
+                // Guid userId = Guid.Parse(User.Identity.GetUserId());
+                //double x = Convert.ToDouble((input.Weight * input.Height) / 3600);
+                var x = (input.Weight * input.Height) / 3600;
+                input.SA = Math.Sqrt(Convert.ToDouble(x));
+                input.Create();
+                return RedirectToAction("NurseNote", new { patientID = input.Patient_ID });
+            }
+
+            return View(input);
+        }
+
+
+
+
+
+
+
     }
 }
 

@@ -213,33 +213,7 @@
                
             </tr>
         </thead>
-        <tbody>
-
-            @foreach (var item in Model.Item2)
-            {
-                <tr>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Test_TypeValue)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Test_Value)
-                    </td>
-                    <td>
-
-                        <div class="col-md-10">
-                            @Html.EditorFor(modelItem => item.Test_Value, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(modelItem => item.Test_Value, "", new { @class = "text-danger" })
-                        </div>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rule_TypeValue)
-                    </td>
-               
-                </tr>
-            }
-
-        </tbody>
+        
     </table>
 </div>
 <center>

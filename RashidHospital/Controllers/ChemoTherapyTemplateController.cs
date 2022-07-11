@@ -46,16 +46,16 @@ namespace RashidHospital.Controllers
 
             ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
 
-           
 
 
+            fillCreateBag();
             return View(radioTherapyVMVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ChemoTherapyTemplateVM input)
         {
-            fillCreateBag();
+           // fillCreateBag();
 
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace RashidHospital.Controllers
 
                 return RedirectToAction("Index");
             }
-            fillCreateBag();
+          //  fillCreateBag();
 
             return View(input);
         }
@@ -88,8 +88,8 @@ namespace RashidHospital.Controllers
         {
             ChemoTherapyTemplateVM results = new ChemoTherapyTemplateVM();
             ViewBag.ELevel = results.GetELevelSelectList();
-
-     
+          
+          
         }
 
 

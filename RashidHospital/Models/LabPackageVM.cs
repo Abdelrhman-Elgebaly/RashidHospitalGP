@@ -10,74 +10,62 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using static RashidHospital.Helper.Enum;
 using System.Web.Mvc;
+
 namespace RashidHospital.Models
 {
 
-    public class ChemoTherapyPreLabVM : BusinessBaseClass<ChemoTherapyPreLab, ChemoTherapyPreLabVM>
+    public class LabPackageVM : BusinessBaseClass<LabPackage, LabPackageVM>
     {
-
-
 
         [Key]
         public int ID { get; set; }
-        public Nullable<int> Template_ID { get; set; }
-        public string Days { get; set; }
-        public string Test_Name { get; set; }
+        public Nullable<int> Package_ID { get; set; }
+        public Nullable<int> Test { get; set; }
         public Nullable<int> Value { get; set; }
-        public string rule { get; set; }
-        //   public virtual ChemoTherapy_Template ChemoTherapy_Template { get; set; }
-        public Nullable<int> Test_Type { get; set; }
-        public Nullable<int> Rule_Type { get; set; }
+        public Nullable<int> Rule { get; set; }
         public string Test_TypeValue { get; set; }
-
         public string Rule_TypeValue { get; set; }
 
-        internal override ChemoTherapyPreLab Convert(ChemoTherapyPreLabVM Obj)
+        internal override LabPackage Convert(LabPackageVM Obj)
         {
             if (Obj == null)
                 return null;
             else
             {
-                _Obj = new ChemoTherapyPreLab
+                _Obj = new LabPackage
                 {
                     ID = Obj.ID,
-                    Days = Obj.Days,
-                    Test_Name = Obj.Test_Name,
+                    Package_ID = Obj.Package_ID,
+                    Test = Obj.Test,
                     Value = Obj.Value,
-                    Template_ID = Obj.Template_ID,
-                    rule = Obj.rule,
-
-                    Test_Type = Obj.Test_Type,
-                    Rule_Type = Obj.Rule_Type,
+                    Rule = Obj.Rule,
+                   
                 };
             }
             return _Obj;
         }
 
 
-        internal override ChemoTherapyPreLabVM Convert(ChemoTherapyPreLab DbObj)
+        internal override LabPackageVM Convert(LabPackage DbObj)
         {
-           
+            LabPackageVM pl = new LabPackageVM();
 
-            ChemoTherapyPreLabVM pl = new ChemoTherapyPreLabVM();
-
-            var Site = (LabTyps)DbObj?.Test_Type;
+            var Site = (LabTyps)DbObj?.Test;
             var enumType = EnumHelper<LabTyps>.GetDisplayValue(Site);
 
-            var Site2 = (Rule)DbObj?.Rule_Type;
+            var Site2 = (Rule)DbObj?.Rule;
             var enumType2 = EnumHelper<Rule>.GetDisplayValue(Site2);
 
             pl.ID = DbObj.ID;
-            pl.Days = DbObj.Days;
-            pl.rule = DbObj.rule;
-            pl.Test_Name = DbObj.Test_Name;
-            pl.Value = DbObj.Value;
-            pl.Template_ID = DbObj.Template_ID;
-            pl.Test_Type = DbObj.Test_Type;
-            pl.Test_TypeValue = enumType.ToString();
-            pl.Rule_Type = DbObj.Rule_Type;
-            pl.Rule_TypeValue = enumType2.ToString();
 
+          
+            pl.Package_ID = DbObj.Package_ID;
+            pl.Test = DbObj.Test;
+            pl.Value = DbObj.Value;
+            pl.Test_TypeValue = enumType.ToString();
+            pl.Rule = DbObj.Rule;
+            pl.Rule_TypeValue = enumType2.ToString();
+       
 
             return pl;
         }
@@ -89,24 +77,31 @@ namespace RashidHospital.Models
             _Obj = Convert(this);
             _Obj.AddNew();
         }
-
-        public List<ChemoTherapyPreLabVM> SelectAllByTemplateID(int templateId)
+        public void Edit()
         {
-            ChemoTherapyPreLabVM _Obj = new ChemoTherapyPreLabVM();
-            ChemoTherapyPreLab _BClass = new ChemoTherapyPreLab();
-            List<ChemoTherapyPreLab> dbList = _BClass.GetChemoTherapyPreLabByTemplateId(templateId).ToList();
+            _Obj = Convert(this);
+            _Obj.Edit();
+        }
+
+        public void Delete()
+        {
+            _Obj = Convert(this);
+            _Obj.Delete();
+        }
+
+        public List<LabPackageVM> SelectAllByPackageID(int PackageId)
+        {
+            LabPackageVM _Obj = new LabPackageVM();
+            LabPackage _BClass = new LabPackage();
+            List<LabPackage> dbList = _BClass.GetLabPackagesByPackageId(PackageId).ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
-
-
-
-        public ChemoTherapyPreLabVM SelectObject(int Id)
+        public LabPackageVM SelectObject(int Id)
         {
-            ChemoTherapyPreLab _BClass = new ChemoTherapyPreLab();
-            ChemoTherapyPreLabVM ClinicObject = Convert(_BClass.Getobject(Id));
+            LabPackage _BClass = new LabPackage();
+            LabPackageVM ClinicObject = Convert(_BClass.Getobject(Id));
             return ClinicObject;
         }
-
 
 
         public List<SelectListItem> GeLabTypsSelectList()
@@ -127,6 +122,19 @@ namespace RashidHospital.Models
                 Value = ((int)v).ToString()
             }).ToList();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

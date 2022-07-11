@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using static RashidHospital.Helper.Enum;
+using System.Text.RegularExpressions;
 
 
 namespace RashidHospital.Controllers
@@ -77,12 +78,83 @@ namespace RashidHospital.Controllers
 
         public ActionResult Index(string templateID)
         {
+            fillCreateBag();
+
             int _templateID = Convert.ToInt32(templateID);
             fillBag(_templateID);
+            fillCreateBag();
+
             ChemoTherapyDrugVM ObjVm = new ChemoTherapyDrugVM();
             List<ChemoTherapyDrugVM> _list = ObjVm.SelectAllByTemplateId(_templateID);
+            fillCreateBag();
+
             return View(_list);
         }
+
+     
+
+        public ActionResult Create(int templateID, string therapyType)
+        {
+
+            fillCreateBag();
+
+            //  int _patientID = Convert.ToInt32(patientID);
+            ChemoTherapyDrugVM radioTherapyVMVM = new ChemoTherapyDrugVM();
+            fillCreateBag();
+
+            radioTherapyVMVM.Template_ID = templateID;
+            radioTherapyVMVM.Therapy_Type = therapyType;
+
+
+
+            fillCreateBag();
+
+
+            return View(radioTherapyVMVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ChemoTherapyDrugVM input)
+        {
+            fillCreateBag();
+
+            if (ModelState.IsValid)
+            {
+                fillCreateBag();
+
+
+
+                List<string> tokens = input.Days.Split(',').ToList();
+                List<int> intlist = new List<int>();
+
+                foreach (String str in tokens)
+                {
+                    intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
+                }
+
+                string[] array = new string[1000];
+
+                array = intlist.ConvertAll(x => x.ToString()).ToArray();
+                input.Days = string.Join("/", array);
+
+
+
+
+
+
+
+
+
+
+                input.Create();
+
+                return RedirectToAction("Index", new { templateID = input.Template_ID });
+            }
+            fillCreateBag();
+
+            return View(input);
+        }
+
 
         private void fillCreateBag()
         {
@@ -94,80 +166,6 @@ namespace RashidHospital.Controllers
 
 
         }
-
-        public ActionResult Create(int templateID, string therapyType)
-        {
-            //  int _patientID = Convert.ToInt32(patientID);
-            ChemoTherapyDrugVM radioTherapyVMVM = new ChemoTherapyDrugVM();
-            fillCreateBag();
-            radioTherapyVMVM.Template_ID = templateID;
-            radioTherapyVMVM.Therapy_Type = therapyType;
-            fillCreateBag();
-            return View(radioTherapyVMVM);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(ChemoTherapyDrugVM input)
-        {
-            fillCreateBag();
-            if (ModelState.IsValid)
-            {
-                input.Create();
-                return RedirectToAction("Index", new { templateID = input.Template_ID });
-            }
-            fillCreateBag();
-            return View(input);
-        }
-
-
-
-        public JsonResult Edit(int patientID)
-        {
-            if (patientID == null)
-            {
-                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
-
-            }
-
-
-            ChemoTherapyDrugVM _Obj = new ChemoTherapyDrugVM();
-            ChemoTherapyDrugVM _objVM = _Obj.SelectObject(patientID);
-            if (_objVM == null)
-            {
-                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
-            }
-            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("Edit", _objVM) }, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public string _Edit(ChemoTherapyDrugVM vm)
-        {
-            try
-            {
-              
-                vm.Edit();
-                return "Success"; // succcess
-            }
-            catch (Exception ex)
-            {
-
-                return "Error500";
-
-            }
-        }
-
-        public string RenderRazorViewToString(string viewName, object model)
-        {
-            ViewData.Model = model;
-            using (var sw = new StringWriter())
-            {
-                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-                return sw.GetStringBuilder().ToString();
-            }
-        }
-
 
     }
 }

@@ -21,15 +21,15 @@
         @Html.LabelFor(model => model.Days, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Days, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Days, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Days, "Please sepreate days with ,", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Test_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Test_Type", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Test_Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Test_Name, "", new { @class = "text-danger" })
+            @Html.DropDownList("Test_Type", new SelectList(ViewBag.LabTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+            @Html.ValidationMessageFor(model => model.Test_Type, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -41,26 +41,31 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.rule, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.rule, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.rule, "", new { @class = "text-danger" })
+
+   
+        <div class="form-group">
+            @Html.Label("Rule_Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Rule_Type", new SelectList(ViewBag.RuleTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+                @Html.ValidationMessageFor(model => model.Rule_Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </div>
     </div>
+    }
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
-</div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
