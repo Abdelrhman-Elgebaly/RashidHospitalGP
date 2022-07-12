@@ -39,11 +39,25 @@ namespace RashidHospital.Controllers
 
             return View(_list);
         }
+        public List<SelectListItem> PatientFullSelectList()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            List<Disease> DiseaseList = _context.Diseases.ToList();
+            foreach (Disease Obj in DiseaseList)
+            {
+                SelectListItem _item = new SelectListItem();
+                _item.Text = Obj.DiseaseName ;
+                _item.Value = Obj.DiseaseId.ToString();
+                listItems.Add(_item);
+            }
 
+            return listItems;
+        }
         public ActionResult Create()
         {
             fillCreateBag();
-
+          
+            ViewBag.DiseaseList = PatientFullSelectList();
             ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
 
 

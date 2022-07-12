@@ -22,7 +22,14 @@ namespace RashidHospital.Controllers
             return View(callboardList);
         }
 
-        
+        public ActionResult ChemoTherapy()
+        {
+            CallBoardVM board = new CallBoardVM();
+            List<CallBoardVM> callboardList = board.getListByDate(DateTime.Now);
+            var userID = User.Identity.GetUserId();
+            ViewBag.DoctorId = userID;
+            return View(callboardList);
+        }
         public ActionResult IndexAll()
         {
             CallBoardVM board = new CallBoardVM();

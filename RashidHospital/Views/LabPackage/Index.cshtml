@@ -1,0 +1,172 @@
+﻿@model IEnumerable<RashidHospital.Models.LabPackageVM>
+@{
+    ViewBag.Title = "index";
+}
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+<center>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PackageId )">
+        Add new Lab
+    </a>
+</center>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Test)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Value)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rule)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Test_TypeValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rule_TypeValue)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+   
+<!--Create Modal-->
+<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add new Lab</h4>
+            </div>
+            <div id="CreateBody"></div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+
+    <script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		$('#example1').DataTable({
+		    "paging": true,
+		    "lengthChange": false,
+		    "searching": true,
+		    "order": [[0, "desc"]],
+		    "info": true,
+		    "autoWidth": true,
+		    "scrollX": true,
+		    "columnDefs": [
+   { "searchable": false, "targets": 2 },
+     { "searchable": false, "targets": 3 },
+      { "searchable": false, "targets": 4 }
+		    ]
+		});
+		function openCreatelModal(patientID) {
+            window.location.href = '/LabPackage/Create?PackageId=' + PackageId;
+		};
+
+		function OpenDetailsModal(ResultId) {
+		    window.location.href = '/LabResualt/Details?ResultId=' + ResultId;
+		};
+            //delete
+            function OpenDeleteModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Delete", "LabResualt")",
+                    cache: false,
+                    data: { ID: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+
+
+    </script>
+    <script>
+
+        function openCreateModel(PackageId) {
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Create", "LabPackage")",
+                cache: false,
+                data: { PackageId: PackageId },
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#CreateBody").html(result.Content);
+                    $("#CreateModel").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+    }
+
+    </script>
+}

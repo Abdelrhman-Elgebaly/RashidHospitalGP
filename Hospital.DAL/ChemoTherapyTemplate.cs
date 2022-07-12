@@ -28,5 +28,8 @@ namespace Hospital.DAL
         public Nullable<System.DateTime> Admin_Date { get; set; }
         public string Date_Entered { get; set; }
         public string Disease { get; set; }
+      
+             public Nullable<int> ProtocolId { get; set; }
+        public Nullable<int> DiseaseId { get; set; }
     }
 }

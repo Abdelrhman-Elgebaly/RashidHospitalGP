@@ -200,12 +200,19 @@ namespace RashidHospital.Controllers
                 foreach (var item in intlist)
                 {
                     ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
+                    AppointmentVM appointment = new AppointmentVM();
                     _labresults22.Patient_ID = PatientId;
+                    appointment.PatientId = PatientId;
                     _labresults22.MainCycle_ID = itemm.ID;
-
+                    appointment.ReturnUrl = System.Web.HttpContext.Current.Request.UrlReferrer?.ToString();
                     _labresults22.Date = itemm.Date.AddDays(item - 1);
+                    appointment.AppointmentDate = itemm.Date.AddDays(item - 1);
+                    appointment.ClinicId = 1004;
+                    appointment.Create();
                     _labresults22.Create();
-
+                   
+                   
+                   
                 }
 
 

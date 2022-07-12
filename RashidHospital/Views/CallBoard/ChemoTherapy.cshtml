@@ -18,17 +18,18 @@
         background-color: azure;
         padding-right: 59px;
         column-count: 2;
-        width:1000px;
+        width: 1000px;
     }
 </style>
 <section class="content-header">
-    <h1>Manage today CallBoard</h1>   
+    <h1>ChemoTherapy CallBoard</h1>
 </section>
 <section class="content-header">
-    @Html.ActionLink(
-    "View All CallBoard",                                                  // linkText
-    "IndexAll",                                    // actionName
-    "CallBoard")
+    <div>
+        <a class="btn btn-success adjust-actions" title="Add New Package" onclick="openTestPopUp(1)">
+          Pending Pharmacy
+        </a>
+    </div>
 </section>
 
 <section class="content">
@@ -37,9 +38,9 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-          
+
             <div class="box">
-               
+
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped" style="width:100%">
                         <thead>
@@ -62,86 +63,106 @@
                             {
                                 if (item.IsDeleted == true)
                                 {
+                                    if (item.ClinicId == 1004)
+                                    {
                                     <tr style='color:red;text-decoration:line-through'>
-                                            <td class="adjustContent">@item.PatientNumber</td>
-                                            <td class="adjustContent">@item.PatientName</td>
-                                            <td class="adjustContent">@item.PatientMedicalId</td>
-                                            <td class="adjustContent">@item.Diagnose</td>
-                                            <td class="adjustContent">@item.PatientUnit</td>
-                                            <td class="adjustContent">@item.ClinicName</td>
-                                            <td class="adjustContent">@item.CallTime</td>
-                                            <td class="adjustContent">@item.CallsNo</td>
+                                        <td class="adjustContent">@item.PatientNumber</td>
+                                        <td class="adjustContent">@item.PatientName</td>
+                                        <td class="adjustContent">@item.PatientMedicalId</td>
+                                        <td class="adjustContent">@item.Diagnose</td>
+                                        <td class="adjustContent">@item.PatientUnit</td>
+                                        <td class="adjustContent">@item.ClinicName</td>
+                                        <td class="adjustContent">@item.CallTime</td>
+                                        <td class="adjustContent">@item.CallsNo</td>
                                         <td class="adjustContent">@item.DoctorName</td>
 
-                                            <td class="adjustContent">@item.ModifieByName</td>
+                                        <td class="adjustContent">@item.ModifieByName</td>
                                         <td class="adjustContent text-center">
-                                          
-                                               
                                         </td>
                                     </tr>
+                                    }
                                 }
                                 else
                                 {
-                                    <tr >
-                                       @if (item.Done == true)
-                                       {
-                                        <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientNumber</td>
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientName</td>
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientMedicalId</td>
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.Diagnose</td>
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientUnit</td>
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.ClinicName</td>
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.CallTime</td>
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.CallsNo</td>
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.DoctorName</td>
+                        <tr>
+                            @if (item.Done == true)
+                            {
+                                if (item.ClinicId == 1004)
+                                {
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientNumber</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientName</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientMedicalId</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.Diagnose</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientUnit</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.ClinicName</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.CallTime</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.CallsNo</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.DoctorName</td>
 
-                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.ModifieByName</td>
-                                       }
-                                       else if (item.IsOnCall == true)
-                                       {
-                                        <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientNumber</td>
-                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientName</td>
-                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientMedicalId</td>
-                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.Diagnose</td>
-                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientUnit</td>
-                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.ClinicName</td>
-                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.CallTime</td>
-                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.CallsNo</td>
-                                          <td class="adjustContent" style="background-color:darkseagreen;color:black;font-weight:bold;">@item.DoctorName</td>
+                                    <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.ModifieByName</td>
+                                }
+                            }
+                            else if (item.IsOnCall == true)
+                            {
+                                if (item.ClinicId == 1004)
+                                {
+                                    <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientNumber</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientName</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientMedicalId</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.Diagnose</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientUnit</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.ClinicName</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.CallTime</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.CallsNo</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen;color:black;font-weight:bold;">@item.DoctorName</td>
 
-                                            <td class="adjustContent" style="background-color:darkseagreen;color:black;font-weight:bold;">@item.ModifieByName</td>
+                                    <td class="adjustContent" style="background-color:darkseagreen;color:black;font-weight:bold;">@item.ModifieByName</td>
+                                    <td class="adjustContent text-center">
+                                        <a class="btn btn-default banBtn adjust-actions" title="Call" onclick="OpenCallModal(@item.Id)">
+                                            <i class="fa fa-microphone"></i>
+                                        </a>
+                                        <a class="btn btn-default banBtn adjust-actions" title="UnDo" onclick="OpenUnDoModal(@item.Id)">
+                                            <i class="fa fa-undo"></i>
+                                        </a>
+                                        <a class="btn btn-success adjust-actions" title="OpenFile" target="_blank" href="/ChemoTherapy/Index/index?patientID=@item.PatientId&CallBoard=@item.Id">
+                                            <i class="fa fa-thermometer"></i>
+                                        </a>
+                                    </td>
+                                }
+
+                            }
+                            else
+                            {
+                                if (item.ClinicId == 1004)
+                                {
+                                    <td class="adjustContent">@item.PatientNumber</td>
+
+                                    <td class="adjustContent">@item.PatientName</td>
+                                    <td class="adjustContent">@item.PatientMedicalId</td>
+                                    <td class="adjustContent">@item.Diagnose</td>
+                                    <td class="adjustContent">@item.PatientUnit</td>
+                                    <td class="adjustContent">@item.ClinicName</td>
+                                    <td class="adjustContent">@item.CallTime</td>
+                                    <td class="adjustContent">@item.CallsNo</td>
+                                    <td class="adjustContent">@item.ModifieByName</td>
+                                    <td class="adjustContent">@item.DoctorName</td>
 
 
-                                       }
-                                       else
-                                       {
 
-                                        <td class="adjustContent">@item.PatientNumber</td>
-
-                                            <td class="adjustContent">@item.PatientName</td>
-                                            <td class="adjustContent">@item.PatientMedicalId</td>
-                                            <td class="adjustContent">@item.Diagnose</td>
-                                            <td class="adjustContent">@item.PatientUnit</td>
-                                            <td class="adjustContent">@item.ClinicName</td>
-                                            <td class="adjustContent">@item.CallTime</td>
-                                            <td class="adjustContent">@item.CallsNo</td>
-                                            <td class="adjustContent">@item.ModifieByName</td>
-                                            <td class="adjustContent">@item.DoctorName</td>
-
-                                       }
-                                        
-                                        <td class="adjustContent text-center">
-                                              <a class="btn btn-default banBtn adjust-actions" title="Call" onclick="OpenCallModal(@item.Id)">
-                                                    <i class="fa fa-microphone"></i>
-                                                </a>
-                                            <a class="btn btn-default banBtn adjust-actions" title="UnDo" onclick="OpenUnDoModal(@item.Id)">
-                                                <i class="fa fa-undo"></i>
-                                            </a>
-                                            <a class="btn btn-success adjust-actions" title="OpenFile" target="_blank" href="/Patient/View?patientID=@item.PatientId&CallBoard=@item.Id">
-                                                <i class="fa fa-male"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    <td class="adjustContent text-center">
+                                        <a class="btn btn-default banBtn adjust-actions" title="Call" onclick="OpenCallModal(@item.Id)">
+                                            <i class="fa fa-microphone"></i>
+                                        </a>
+                                        <a class="btn btn-default banBtn adjust-actions" title="UnDo" onclick="OpenUnDoModal(@item.Id)">
+                                            <i class="fa fa-undo"></i>
+                                        </a>
+                                        <a class="btn btn-success adjust-actions" title="OpenFile" target="_blank" href="/ChemoTherapy/Index/index?patientID=@item.PatientId&CallBoard=@item.Id">
+                                            <i class="fa fa-thermometer"></i>
+                                        </a>
+                                    </td>
+                                }
+                            }
+                        </tr>
                                 }
 
                             }
@@ -211,7 +232,7 @@
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/dataTables.fixedHeader.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-<script>
+    <script>
         $(document).ready(function () {
             // Setup - add a text input to each footer cell
             $('#example1 thead tr').clone(true).appendTo('#example1 thead');
@@ -230,20 +251,20 @@
             });
 
             var table = $('#example1').DataTable({
-                    "orderCellsTop": true,
-                    "fixedHeader": false,
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "scrollX": true,
-                    "orderCellsTop": true,
-                    "stateSave": true
+                "orderCellsTop": true,
+                "fixedHeader": false,
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "scrollX": true,
+                "orderCellsTop": true,
+                "stateSave": true
             });
         });
-</script>
+    </script>
 
     <script>
 		$(function () {

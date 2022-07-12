@@ -302,7 +302,11 @@ namespace Hospital.DAL
             base.OnModelCreating(modelBuilder);
         }
 
-     //   public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyCyclePackageVM> ChemoTherapyCyclePackageVMs { get; set; }
+   //     public System.Data.Entity.DbSet<RashidHospital.Models.LabPackageVM> LabPackageVMs { get; set; }
+
+        //     public System.Data.Entity.DbSet<RashidHospital.Models.PackageVM> PackageVMs { get; set; }
+
+        //   public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyCyclePackageVM> ChemoTherapyCyclePackageVMs { get; set; }
 
         //    public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyCyclePackageVM> ChemoTherapyCyclePackageVMs { get; set; }
 

@@ -195,12 +195,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HoomeController.cs" />
     <Compile Include="Controllers\IHCTypeController.cs" />
+    <Compile Include="Controllers\LabPackageController.cs" />
     <Compile Include="Controllers\LabRequestController.cs" />
     <Compile Include="Controllers\LabResualtController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicalConditionController.cs" />
     <Compile Include="Controllers\MedicalRecordController.cs" />
     <Compile Include="Controllers\NurseNoteController.cs" />
+    <Compile Include="Controllers\PackageController.cs" />
     <Compile Include="Controllers\PathologyController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientDoseController.cs" />
@@ -497,6 +499,11 @@
     <Content Include="Views\ChemoTherapyCyclePackage\Test.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Edit.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\NCreate.cshtml" />
+    <Content Include="Views\Package\Index.cshtml" />
+    <Content Include="Views\Package\Create.cshtml" />
+    <Content Include="Views\LabPackage\Index.cshtml" />
+    <Content Include="Views\LabPackage\Create.cshtml" />
+    <Content Include="Views\CallBoard\ChemoTherapy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

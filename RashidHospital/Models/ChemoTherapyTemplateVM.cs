@@ -46,8 +46,8 @@ namespace RashidHospital.Models
         public string Disease { get; set; }
         public List<int> CycleDays { get; set; }
         public List<DateTime> cycleDates { get; set; }
-        public int DiseaseId { get; set; }
-        public int ProtocolId { get; set; }
+        public Nullable<int> ProtocolId { get; set; }
+        public Nullable<int> DiseaseId { get; set; }
 
 
         internal override ChemoTherapyTemplate Convert(ChemoTherapyTemplateVM Obj)
@@ -77,6 +77,8 @@ namespace RashidHospital.Models
                //     Patient_ID = Obj.Patient_ID,
                     Date_Entered = Obj.Date_Entered,
                     Disease = Obj.Disease,
+                    ProtocolId = Obj.ProtocolId,
+                    DiseaseId = Obj.DiseaseId,
 
 
 
@@ -117,6 +119,8 @@ namespace RashidHospital.Models
                //     Patient_ID = Obj.Patient_ID,
                     Date_Entered = Obj.Date_Entered,
                     Disease = Obj.Disease,
+                ProtocolId = Obj.ProtocolId,
+                DiseaseId = Obj.DiseaseId,
             };
         }
 
@@ -148,7 +152,7 @@ namespace RashidHospital.Models
             List<ChemoTherapyTemplate> dbList = _BClass.GetAll<ChemoTherapyTemplate>().ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
-
+       
         public ChemoTherapyTemplateVM SelectObject(int Id)
         {
             ChemoTherapyTemplate _BClass = new ChemoTherapyTemplate();
