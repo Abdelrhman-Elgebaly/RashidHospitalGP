@@ -187,6 +187,7 @@
     <Compile Include="Controllers\ChemoTherapyDrugController.cs" />
     <Compile Include="Controllers\ChemoTherapyPreInvestigationsController.cs" />
     <Compile Include="Controllers\ChemoTherapyPreLabController.cs" />
+    <Compile Include="Controllers\ChemoTherapyProtocolController.cs" />
     <Compile Include="Controllers\ChemoTherapyTemplateController.cs" />
     <Compile Include="Controllers\ClinicsController.cs" />
     <Compile Include="Controllers\ChemoTherapyCyclesDatesController.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Models\ChemoTherapyCyclesDatesVM.cs" />
     <Compile Include="Models\DeleteTasksObject.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DiseaseVM.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\FixationVM.cs" />
     <Compile Include="Models\IHCTypesVM.cs" />
@@ -263,6 +265,7 @@
     <Compile Include="Models\PatientDoseVM.cs" />
     <Compile Include="Models\PatientUnitVM.cs" />
     <Compile Include="Models\PatientVM.cs" />
+    <Compile Include="Models\protocolVM.cs" />
     <Compile Include="Models\RadiioTherapiesFixationVM.cs" />
     <Compile Include="Models\RadiologyRequestVM.cs" />
     <Compile Include="Models\RadiologyResultVM.cs" />
@@ -511,6 +514,7 @@
     <Folder Include="Content\webfonts\" />
     <Folder Include="Html\AdminLTE-3.0.0\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\ChemoTherapyProtocol\" />
     <Folder Include="Views\CycleStartDate\" />
   </ItemGroup>
   <ItemGroup>

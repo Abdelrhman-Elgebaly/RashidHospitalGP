@@ -108,6 +108,7 @@
     <Compile Include="Bussiness\ChemoTherapyTemplate.cs" />
     <Compile Include="Bussiness\Clinic.cs" />
     <Compile Include="Bussiness\ChemoTherapyCyclesDates.cs" />
+    <Compile Include="Bussiness\Disease.cs" />
     <Compile Include="Bussiness\Fixation.cs" />
     <Compile Include="Bussiness\IHCType.cs" />
     <Compile Include="Bussiness\Diagons.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Bussiness\Patient.cs" />
     <Compile Include="Bussiness\PatientDose.cs" />
     <Compile Include="Bussiness\PatientUnit.cs" />
+    <Compile Include="Bussiness\protocol.cs" />
     <Compile Include="Bussiness\RadiioTherapiesFixation.cs" />
     <Compile Include="Bussiness\RadiologyRequest.cs" />
     <Compile Include="Bussiness\RadiologyResult.cs" />

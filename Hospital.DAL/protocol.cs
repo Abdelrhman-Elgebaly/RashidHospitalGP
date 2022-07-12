@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hospital.DAL
 {
-    public class protocol
+    public partial class protocol
     {
         public int ProtocolID { get; set; }
         public string ProtocolName { get; set; }

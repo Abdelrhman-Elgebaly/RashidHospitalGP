@@ -46,8 +46,8 @@ namespace RashidHospital.Models
         public string Disease { get; set; }
         public List<int> CycleDays { get; set; }
         public List<DateTime> cycleDates { get; set; }
-        public Nullable<int> ProtocolId { get; set; }
-        public Nullable<int> DiseaseId { get; set; }
+        public int ProtocolId { get; set; }
+        public int DiseaseId { get; set; }
 
 
         internal override ChemoTherapyTemplate Convert(ChemoTherapyTemplateVM Obj)
@@ -74,7 +74,7 @@ namespace RashidHospital.Models
                     Admin_Day = Obj.Admin_Day,
 
                     Admin_Date = Obj.Admin_Date,
-               //     Patient_ID = Obj.Patient_ID,
+                    //     Patient_ID = Obj.Patient_ID,
                     Date_Entered = Obj.Date_Entered,
                     Disease = Obj.Disease,
                     ProtocolId = Obj.ProtocolId,
@@ -87,40 +87,44 @@ namespace RashidHospital.Models
             return _Obj;
         }
 
-      
 
-                       internal override ChemoTherapyTemplateVM Convert(ChemoTherapyTemplate Obj)
+
+        internal override ChemoTherapyTemplateVM Convert(ChemoTherapyTemplate Obj)
         {
             var Site = (Emetogenic_Level)Obj?.Emetogenic_Level;
             var enumType = EnumHelper<Emetogenic_Level>.GetDisplayValue(Site);
-
-
+            DiseaseVM clinicVm = new DiseaseVM();
+            DiseaseVM clinicObj = clinicVm.SelectObject(Obj.DiseaseId);
+            protocolVM cplinicVm = new protocolVM();
+            protocolVM cplinicObj = cplinicVm.SelectObject(Obj.ProtocolId);
             return new ChemoTherapyTemplateVM
             {
 
 
                 Template_ID = Obj.Template_ID,
-                    Protocol_Name = Obj.Protocol_Name,
-                    Frequency = Obj.Frequency,
-                    Cycle_days = Obj.Cycle_days,
-                    Maximum_cycles = Obj.Maximum_cycles,
-                    Emetogenic_Level = Obj.Emetogenic_Level,
-                    Emetogenic_Level_Value = enumType.ToString(),
-                    FN_risk = Obj.FN_risk,
-                    Link = Obj.Link,
-                    Date_Created = Obj.Date_Created,
-                    Created_By = Obj.Created_By,
-                    Date_Modified = Obj.Date_Modified,
-                    Modified_By = Obj.Modified_By,
-                    Instruction = Obj.Instruction,
-                    Admin_Day = Obj.Admin_Day,
+               
+                Frequency = Obj.Frequency,
+                Cycle_days = Obj.Cycle_days,
+                Maximum_cycles = Obj.Maximum_cycles,
+                Emetogenic_Level = Obj.Emetogenic_Level,
+                Emetogenic_Level_Value = enumType.ToString(),
+                FN_risk = Obj.FN_risk,
+                Link = Obj.Link,
+                Date_Created = Obj.Date_Created,
+                Created_By = Obj.Created_By,
+                Date_Modified = Obj.Date_Modified,
+                Modified_By = Obj.Modified_By,
+                Instruction = Obj.Instruction,
+                Admin_Day = Obj.Admin_Day,
 
-                    Admin_Date = Obj.Admin_Date,
-               //     Patient_ID = Obj.Patient_ID,
-                    Date_Entered = Obj.Date_Entered,
-                    Disease = Obj.Disease,
+                Admin_Date = Obj.Admin_Date,
+                //     Patient_ID = Obj.Patient_ID,
+                Date_Entered = Obj.Date_Entered,
+                
                 ProtocolId = Obj.ProtocolId,
                 DiseaseId = Obj.DiseaseId,
+               Disease = clinicObj?.DiseaseName,
+                Protocol_Name = cplinicObj?.ProtocolName,
             };
         }
 
@@ -152,7 +156,7 @@ namespace RashidHospital.Models
             List<ChemoTherapyTemplate> dbList = _BClass.GetAll<ChemoTherapyTemplate>().ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
-       
+
         public ChemoTherapyTemplateVM SelectObject(int Id)
         {
             ChemoTherapyTemplate _BClass = new ChemoTherapyTemplate();
@@ -171,7 +175,7 @@ namespace RashidHospital.Models
             }).ToList();
         }
 
-       
+
 
     }
 }

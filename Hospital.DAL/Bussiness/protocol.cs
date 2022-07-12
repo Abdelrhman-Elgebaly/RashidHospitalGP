@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hospital.DAL
 {
-    public partial class Disease
+    public partial class protocol : DbBaseClass<protocol>
     {
-        public int DiseaseId { get; set; }
-        public string DiseaseName { get; set; }
     }
 }

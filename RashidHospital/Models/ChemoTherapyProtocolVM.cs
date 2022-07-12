@@ -18,11 +18,13 @@ namespace RashidHospital.Models
 
         [Key]
         public int ID { get; set; }
-        public Nullable<int> Patient_ID { get; set; }
-        public Nullable<int> Template_ID { get; set; }
+        public int Patient_ID { get; set; }
+        public int Template_ID { get; set; }
         public Nullable<int> Cycles_Number { get; set; }
-        public string Protocol_Name { get; set; }
-
+        public Nullable<int> ProtocolId { get; set; }
+        public Nullable<int> DiseaseId { get; set; }
+        public string ProtocolName { get; set; }
+        public string DiseaseName { get; set; }
 
 
         internal override ChemoTherapyProtocol Convert(ChemoTherapyProtocolVM Obj)
@@ -37,8 +39,8 @@ namespace RashidHospital.Models
                     Patient_ID = Obj.Patient_ID,
                     Template_ID = Obj.Template_ID,
                     Cycles_Number = Obj.Cycles_Number,
-                    Protocol_Name = Obj.Protocol_Name,
-               
+                    ProtocolId = Obj.ProtocolId,
+                    DiseaseId = Obj.DiseaseId,
                 };
             }
             return _Obj;
@@ -57,8 +59,12 @@ namespace RashidHospital.Models
             pl.Patient_ID = DbObj.Patient_ID;
             pl.Template_ID = DbObj.Template_ID;
             pl.Cycles_Number = DbObj.Cycles_Number;
-            pl.Protocol_Name = DbObj.Protocol_Name;
-
+            pl.ProtocolId = DbObj.ProtocolId;
+            pl.DiseaseId = DbObj.DiseaseId;
+            ChemoTherapyTemplateVM chemoVm = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM chemoObj = chemoVm.SelectObject(DbObj.Template_ID);
+            pl.DiseaseName = chemoObj.Disease;
+            pl.ProtocolName = chemoObj.Protocol_Name;
 
             return pl;
         }
