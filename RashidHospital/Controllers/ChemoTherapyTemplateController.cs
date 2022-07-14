@@ -75,7 +75,8 @@ namespace RashidHospital.Controllers
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();
                 input.Cycle_days = string.Join("/", array);
 
-
+                input.Protocol_Name = input.Protocol_Name;
+                input.Disease = input.Disease;
                 input.Create();
 
                 return RedirectToAction("Index");

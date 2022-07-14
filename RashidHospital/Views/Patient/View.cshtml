@@ -65,8 +65,10 @@
     <a class="btn btn-success adjust-actions" title="Patient" onclick="openChemoTherapyModal(@Model.Id, @Model.ChemoTherapyId)">
         ChemoTherapy
     </a>
-
- 
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@Model.Id)">
+        TestModal
+    </a>
+    
 
 
     @{
@@ -297,7 +299,7 @@
         function TestModal(patientID) {
 
          
-                window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID ;
+            window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID ;
           
         }
      

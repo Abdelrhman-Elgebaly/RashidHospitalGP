@@ -25,9 +25,12 @@
 @using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
 {
     @Html.Hidden("PatientId", (int)ViewBag.PatientId)
+    @Html.Hidden("TemplateId", (int)ViewBag.TemplateId)
 
-    <div class="modal-header">
-        @*@Html.Raw(ViewBag.PatientInfo)*@
+
+  <div class="modal-header">
+
+    @*@Html.Raw(ViewBag.PatientInfo)*@
     </div>
 
     <div class="modal-body">
@@ -60,6 +63,8 @@
             </div>
         </div>
     </div>
+    
+
 }
 
 
@@ -94,7 +99,8 @@
         var Unit = $("#Unit").val();
         var LabType = $("#LabType option:selected").val();
         var PatientId = $("#PatientId").val();
-       
+
+
         $("#Unit").val('');
         $("#Note").val('');
         $.ajax({
@@ -102,7 +108,7 @@
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId},
+            data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId },
             traditional: true,
             success: function (result) {
             }
@@ -114,13 +120,13 @@
 
         var PatientId = $("#PatientId").val();
         var Date = $("#Date").val();
-      
+        var TemplateId = $("#TemplateId").val();
         $.ajax({
             url: "/ChemoTherapyCyclesDates/AddResult",
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "Cycles_Number": Cycles_Number, "PatientId": PatientId, "Date": Date},
+            data: { "Cycles_Number": Cycles_Number, "PatientId": PatientId, "Date": Date, "TemplateId": TemplateId },
             success: function (result) {
                 $("#CreateModel").modal("hide");
                 window.location.reload();

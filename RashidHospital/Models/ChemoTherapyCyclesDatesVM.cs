@@ -20,6 +20,7 @@ namespace RashidHospital.Models
         public int ID { get; set; }
 
         public Nullable<int> Patient_ID { get; set; }
+        public int TemplateId { get; set; }
         public DateTime Date { get; set; }
         //   public virtual ChemoTherapy_Template ChemoTherapy_Template { get; set; }
         public int Cycles_Number { get; set; }
@@ -36,8 +37,8 @@ namespace RashidHospital.Models
                     ID = Obj.ID,
                     Patient_ID = Obj.Patient_ID,
                     Date = Obj.Date,
-                    Cycles_Number = Obj.Cycles_Number
-
+                    Cycles_Number = Obj.Cycles_Number,
+                    TemplateId = Obj.TemplateId,
 
                 };
             }
@@ -53,7 +54,7 @@ namespace RashidHospital.Models
             pl.Patient_ID = DbObj.Patient_ID;
             pl.Date = DbObj.Date;
             pl.Cycles_Number = DbObj.Cycles_Number;
-
+            pl.TemplateId = DbObj.TemplateId;
             return pl;
         }
 
@@ -76,11 +77,11 @@ namespace RashidHospital.Models
             _Obj.Delete();
         }
 
-        public List<ChemoTherapyCyclesDatesVM> SelectAllByPatientId(int PatientId)
+        public List<ChemoTherapyCyclesDatesVM> SelectAllByTemplateId(int TemplateId)
         {
             ChemoTherapyCyclesDatesVM _Obj = new ChemoTherapyCyclesDatesVM();
             ChemoTherapyCyclesDates _BClass = new ChemoTherapyCyclesDates();
-            List<ChemoTherapyCyclesDates> dbList = _BClass.GetLabResualtByPatientId(PatientId).ToList();
+            List<ChemoTherapyCyclesDates> dbList = _BClass.GetCyclesByTemplateId(TemplateId).ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
         public ChemoTherapyCyclesDatesVM SelectObject(int Id)

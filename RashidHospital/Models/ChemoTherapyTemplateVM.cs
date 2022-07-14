@@ -91,41 +91,51 @@ namespace RashidHospital.Models
 
         internal override ChemoTherapyTemplateVM Convert(ChemoTherapyTemplate Obj)
         {
-            var Site = (Emetogenic_Level)Obj?.Emetogenic_Level;
-            var enumType = EnumHelper<Emetogenic_Level>.GetDisplayValue(Site);
-            DiseaseVM clinicVm = new DiseaseVM();
-            DiseaseVM clinicObj = clinicVm.SelectObject(Obj.DiseaseId);
-            protocolVM cplinicVm = new protocolVM();
-            protocolVM cplinicObj = cplinicVm.SelectObject(Obj.ProtocolId);
-            return new ChemoTherapyTemplateVM
+            if (Obj == null)
+                return null;
+            else
             {
+                Protocol_Name = Obj.Protocol_Name;
+                Disease = Obj.Disease;
+                var Site = (Emetogenic_Level)Obj?.Emetogenic_Level;
+                var enumType = EnumHelper<Emetogenic_Level>.GetDisplayValue(Site);
+                DiseaseVM clinicVm = new DiseaseVM();
+                DiseaseVM clinicObj = clinicVm.SelectObject(Obj.DiseaseId);
+                protocolVM cplinicVm = new protocolVM();
+                protocolVM cplinicObj = cplinicVm.SelectObject(Obj.ProtocolId);
+                return new ChemoTherapyTemplateVM
+                {
 
 
-                Template_ID = Obj.Template_ID,
+                    Template_ID = Obj.Template_ID,
+
+                    Frequency = Obj.Frequency,
+                    Cycle_days = Obj.Cycle_days,
+                    Maximum_cycles = Obj.Maximum_cycles,
+                    Emetogenic_Level = Obj.Emetogenic_Level,
+                    Emetogenic_Level_Value = enumType.ToString(),
+                    FN_risk = Obj.FN_risk,
+                    Link = Obj.Link,
+                    Date_Created = Obj.Date_Created,
+                    Created_By = Obj.Created_By,
+                    Date_Modified = Obj.Date_Modified,
+                    Modified_By = Obj.Modified_By,
+                    Instruction = Obj.Instruction,
+                    Admin_Day = Obj.Admin_Day,
+
+                    Admin_Date = Obj.Admin_Date,
+                    //     Patient_ID = Obj.Patient_ID,
+                    Date_Entered = Obj.Date_Entered,
+
+                    ProtocolId = Obj.ProtocolId,
+                    DiseaseId = Obj.DiseaseId,
+                    Disease = clinicObj?.DiseaseName,
+                    Protocol_Name = cplinicObj?.ProtocolName,
+                   
+                };
                
-                Frequency = Obj.Frequency,
-                Cycle_days = Obj.Cycle_days,
-                Maximum_cycles = Obj.Maximum_cycles,
-                Emetogenic_Level = Obj.Emetogenic_Level,
-                Emetogenic_Level_Value = enumType.ToString(),
-                FN_risk = Obj.FN_risk,
-                Link = Obj.Link,
-                Date_Created = Obj.Date_Created,
-                Created_By = Obj.Created_By,
-                Date_Modified = Obj.Date_Modified,
-                Modified_By = Obj.Modified_By,
-                Instruction = Obj.Instruction,
-                Admin_Day = Obj.Admin_Day,
 
-                Admin_Date = Obj.Admin_Date,
-                //     Patient_ID = Obj.Patient_ID,
-                Date_Entered = Obj.Date_Entered,
-                
-                ProtocolId = Obj.ProtocolId,
-                DiseaseId = Obj.DiseaseId,
-               Disease = clinicObj?.DiseaseName,
-                Protocol_Name = cplinicObj?.ProtocolName,
-            };
+            }
         }
 
 
@@ -175,7 +185,37 @@ namespace RashidHospital.Models
             }).ToList();
         }
 
+        public List<SelectListItem> ProtocolSelectList()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            List<ChemoTherapyTemplateVM> CliniList = SelectAll();
 
+            foreach (ChemoTherapyTemplateVM Obj in CliniList)
+            {
+                SelectListItem _item = new SelectListItem();
+                _item.Text = Obj.Protocol_Name;
+                _item.Value = Obj.Template_ID.ToString();
+                listItems.Add(_item);
+            }
+
+            return listItems;
+        }
+
+        public List<SelectListItem> DiseaseSelectList()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            List<ChemoTherapyTemplateVM> CliniList = SelectAll();
+
+            foreach (ChemoTherapyTemplateVM Obj in CliniList)
+            {
+                SelectListItem _item = new SelectListItem();
+                _item.Text = Obj.Disease;
+                _item.Value = Obj.DiseaseId.ToString();
+                listItems.Add(_item);
+            }
+
+            return listItems;
+        }
 
     }
 }

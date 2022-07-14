@@ -62,7 +62,7 @@
         <center>
 
 
-            <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PatientId )">
+            <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PatientId,@ViewBag.TemplateId )">
                 CYCLES START DATE
             </a>
         </center>
@@ -90,22 +90,23 @@
 
             @foreach (var item in Model.Item2)
             {
-                <tr>
+            <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
+              
 
-                    <td>
+                <td class="adjustContent">@item.Date.ToString("dd/MM/yyyy")</td>
 
-                        <center>
 
-                            <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </center>
-                    </td>
-                </tr>
+                <td>
+
+                    <center>
+
+                        <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </center>
+                </td>
+            </tr>
             }
 
         </tbody>
@@ -171,13 +172,13 @@
 
 
 
-    function openCreateModel(PatientId) {
+        function openCreateModel(PatientId, TemplateId) {
     $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     $.ajax({
     type: "GET",
     url: "@Url.Action("Create", "ChemoTherapyCyclesDates")",
     cache: false,
-    data: { PatientId: PatientId },
+        data: { PatientId: PatientId, TemplateId: TemplateId },
     success: function (result) {
     if (result.IsRedirect) {
     window.location.href = result.RedirectUrl;

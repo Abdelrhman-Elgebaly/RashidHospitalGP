@@ -78,7 +78,7 @@ namespace RashidHospital.Controllers
 
         public ActionResult Index(string templateID)
         {
-            fillCreateBag();
+           
 
             int _templateID = Convert.ToInt32(templateID);
             fillBag(_templateID);
@@ -86,7 +86,7 @@ namespace RashidHospital.Controllers
 
             ChemoTherapyDrugVM ObjVm = new ChemoTherapyDrugVM();
             List<ChemoTherapyDrugVM> _list = ObjVm.SelectAllByTemplateId(_templateID);
-            fillCreateBag();
+          
 
             return View(_list);
         }

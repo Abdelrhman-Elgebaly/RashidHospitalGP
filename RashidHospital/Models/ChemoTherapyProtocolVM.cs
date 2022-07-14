@@ -57,15 +57,17 @@ namespace RashidHospital.Models
 
             pl.ID = DbObj.ID;
             pl.Patient_ID = DbObj.Patient_ID;
-            pl.Template_ID = DbObj.Template_ID;
-            pl.Cycles_Number = DbObj.Cycles_Number;
-            pl.ProtocolId = DbObj.ProtocolId;
             pl.DiseaseId = DbObj.DiseaseId;
+
+            pl.Cycles_Number = DbObj.Cycles_Number;
+            
+            pl.Template_ID = DbObj.Template_ID;
             ChemoTherapyTemplateVM chemoVm = new ChemoTherapyTemplateVM();
             ChemoTherapyTemplateVM chemoObj = chemoVm.SelectObject(DbObj.Template_ID);
+            pl.ProtocolId = chemoObj.ProtocolId;
             pl.DiseaseName = chemoObj.Disease;
-            pl.ProtocolName = chemoObj.Protocol_Name;
-
+           pl.ProtocolName = chemoObj.Protocol_Name;
+           
             return pl;
         }
 
@@ -96,24 +98,7 @@ namespace RashidHospital.Models
 
 
 
-        public List<SelectListItem> GeLabTypsSelectList()
-        {
-            return System.Enum.GetValues(typeof(LabTyps)).Cast<LabTyps>().Select(v => new SelectListItem
-            {
-                Text = EnumHelper<LabTyps>.GetDisplayValue(v),
-                Value = ((int)v).ToString()
-            }).ToList();
-        }
-
-
-        public List<SelectListItem> GetRuleTypsSelectList()
-        {
-            return System.Enum.GetValues(typeof(Rule)).Cast<Rule>().Select(v => new SelectListItem
-            {
-                Text = EnumHelper<Rule>.GetDisplayValue(v),
-                Value = ((int)v).ToString()
-            }).ToList();
-        }
+ 
 
 
 

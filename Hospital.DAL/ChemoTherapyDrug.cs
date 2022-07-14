@@ -19,10 +19,10 @@ namespace Hospital.DAL
         public int Drug_Dose { get; set; }
        
         public string Fluid_Vol { get; set; }
-        
-        public Nullable<int> Unit { get; set; }
-        public Nullable<int> Route { get; set; }
-        public Nullable<int> Fluid_Type { get; set; }
+
+        public int Unit { get; set; }
+        public int Route { get; set; }
+        public int Fluid_Type { get; set; }
 
        
         public string Duration { get; set; }

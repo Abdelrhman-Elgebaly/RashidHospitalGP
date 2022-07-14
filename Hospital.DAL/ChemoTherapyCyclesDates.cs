@@ -13,7 +13,7 @@ namespace Hospital.DAL
 
         [Key]
         public int ID { get; set; }
-    
+        public int TemplateId { get; set; }
         public Nullable<int> Patient_ID { get; set; }
         public DateTime Date { get; set; }
         public int Cycles_Number { get; set; }

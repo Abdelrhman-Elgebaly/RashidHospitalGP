@@ -26,7 +26,7 @@ namespace RashidHospital.Models
         public Nullable<int> Value { get; set; }
         public string rule { get; set; }
         //public virtual ChemoTherapy_Template ChemoTherapy_Template { get; set; }
-        public Nullable<int> Rule_Type { get; set; }
+        public int Rule_Type { get; set; } = 1;
         public string Rule_TypeValue { get; set; }
 
         internal override ChemoTherapyPreInvestigations Convert(ChemoTherapyPreInvestigationsVM Obj)

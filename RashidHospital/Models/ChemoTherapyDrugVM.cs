@@ -33,9 +33,9 @@ namespace RashidHospital.Models
         public string Route_Value { get; set; }
         public string Duration { get; set; }
         public string Note { get; set; }
-        public Nullable<int> Unit { get; set; }
-        public Nullable<int> Route { get; set; }
-        public Nullable<int> Fluid_Type { get; set; }
+        public int Unit { get; set; }
+        public int Route { get; set; }
+        public int Fluid_Type { get; set; }
 
 
 
@@ -72,40 +72,38 @@ namespace RashidHospital.Models
 
         internal override ChemoTherapyDrugVM Convert(ChemoTherapyDrug Obj)
         {
+
+            ChemoTherapyDrugVM pl = new ChemoTherapyDrugVM();
             var Site = (Unit)Obj?.Unit;
-            var enumType = EnumHelper<Unit>.GetDisplayValue(Site);
+                var enumType = EnumHelper<Unit>.GetDisplayValue(Site);
 
-            var Site1 = (Route)Obj?.Route;
-            var enumType1 = EnumHelper<Route>.GetDisplayValue(Site1);
+                var Site1 = (Route)Obj?.Route;
+                var enumType1 = EnumHelper<Route>.GetDisplayValue(Site1);
 
-            var Site2 = (Fluid_Type)Obj?.Fluid_Type;
-            var enumType2 = EnumHelper<Fluid_Type>.GetDisplayValue(Site2);
-
-            return new ChemoTherapyDrugVM
-            {
+                var Site2 = (Fluid_Type)Obj?.Fluid_Type;
+                var enumType2 = EnumHelper<Fluid_Type>.GetDisplayValue(Site2);
 
 
 
 
+            Drug_ID = Obj.Drug_ID;
+            Template_ID = Obj.Template_ID;
+            Therapy_Type = Obj.Therapy_Type;
+            Days = Obj.Days;
+            Sequence_Number = Obj.Sequence_Number;
+            Drug_Name = Obj.Drug_Name;
+            Drug_Dose = Obj.Drug_Dose;
+            Fluid_Type = Obj.Fluid_Type;
+            Fluid_Vol = Obj.Fluid_Vol;
+            Unit = Obj.Unit;
+            Route = Obj.Route;
+            Duration = Obj.Duration;
+            Note = Obj.Note;
+            Unit_Value = enumType.ToString();
+            Route_Value = enumType1.ToString();
+            Fluid_Type_Value = enumType2.ToString();
+                return pl;
 
-                    Drug_ID = Obj.Drug_ID,
-                    Template_ID = Obj.Template_ID,
-                    Therapy_Type = Obj.Therapy_Type,
-                    Days = Obj.Days,
-                    Sequence_Number = Obj.Sequence_Number,
-                    Drug_Name = Obj.Drug_Name,
-                    Drug_Dose = Obj.Drug_Dose,
-                    Fluid_Type = Obj.Fluid_Type,
-                    Fluid_Vol = Obj.Fluid_Vol,
-                    Unit = Obj.Unit,
-                    Route = Obj.Route,
-                    Duration = Obj.Duration,
-                    Note = Obj.Note,
-                Unit_Value = enumType.ToString(),
-                Route_Value = enumType1.ToString(),
-               Fluid_Type_Value = enumType2.ToString(),
-
-            };
         }
 
 

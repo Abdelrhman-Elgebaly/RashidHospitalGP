@@ -23,18 +23,18 @@ namespace RashidHospital.Controllers
 
             //Assign Template to patient 
             int TemplateID = Convert.ToInt32(templateID);
+            ChemoTherapyProtocolVM _cObj = new ChemoTherapyProtocolVM();
+            ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(TemplateID);
+           
             ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
-            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
-            PatientVM _pObj = new PatientVM();
-            PatientVM _pObjVM = _pObj.SelectObject(PatientId);
-            _pObjVM.ChemoTherapyId = TemplateID;
-            _pObjVM.Edit();
+            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(_cobjVM.Template_ID);
+            
 
             //Start Dates 
 
             ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
-            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId).OrderBy(a => a.Date).ToList();
-            fillBag(PatientId);
+            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateID).OrderBy(a => a.Date).ToList();
+            fillBag(PatientId, TemplateID);
           
             var tuple = new Tuple<ChemoTherapyTemplateVM, List<ChemoTherapyCyclesDatesVM>>(_objVM, OrderList);
             return View(tuple);
@@ -43,15 +43,15 @@ namespace RashidHospital.Controllers
         }
 
 
-        public JsonResult Create(int PatientId)
+        public JsonResult Create(int PatientId, int TemplateId)
         {
-            if (PatientId == null)
+            if (PatientId == null && TemplateId == null)
             {
                 return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
 
 
             }
-            fillCreateBag(PatientId);
+            fillCreateBag(PatientId, TemplateId);
             return Json(new { IsRedirect = false, Content = RenderRazorViewToString("Create", null) }, JsonRequestBehavior.AllowGet);
 
             //  return View();
@@ -59,21 +59,23 @@ namespace RashidHospital.Controllers
         }
 
 
-        private void fillBag(int patientID)
+        private void fillBag(int patientID, int TemplateId)
         {
             PatientVM _patientvm = new PatientVM();
             ViewBag.PatientId = patientID;
+            ViewBag.TemplateId = TemplateId;
+            
             ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(patientID);
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
         }
 
      
-        private void fillCreateBag(int PatientId)
+        private void fillCreateBag(int PatientId,int TemplateId)
         {
             LabResualtVM results = new LabResualtVM();
             ViewBag.LabTypesList = results.GeLabTypsSelectList();
-            fillBag(PatientId);
+            fillBag(PatientId, TemplateId);
 
         }
         public string RenderRazorViewToString(string viewName, object model)
@@ -97,6 +99,7 @@ namespace RashidHospital.Controllers
             {
 
                 vm.Patient_ID = vm.Patient_ID;
+                vm.TemplateId = vm.TemplateId;
                 //   vm.ResualtDate = DateTime.Now;
 
                 vm.Create();
@@ -125,11 +128,15 @@ namespace RashidHospital.Controllers
             }
         }
         [HttpPost]
-        public JsonResult AddResult(int Cycles_Number, int PatientId, DateTime Date)
+        public JsonResult AddResult(int Cycles_Number, int PatientId, DateTime Date, int TemplateId)
         {
-            PatientVM _pObj = new PatientVM();
-            PatientVM _pObjVM = _pObj.SelectObject(PatientId);
-            int TemplateID = Convert.ToInt32(_pObjVM.ChemoTherapyId);
+
+           
+            ChemoTherapyProtocolVM _cObj = new ChemoTherapyProtocolVM();
+            ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(TemplateId);
+
+           
+            int TemplateID = Convert.ToInt32(_cobjVM.Template_ID);
 
             ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
             ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
@@ -141,8 +148,9 @@ namespace RashidHospital.Controllers
                     ChemoTherapyCyclesDatesVM _labresults = new ChemoTherapyCyclesDatesVM();
                     
                     _labresults.Patient_ID = PatientId;
+                    _labresults.TemplateId = TemplateId;
 
-                 
+
 
                     if (i !=0)
                     {
@@ -176,7 +184,7 @@ namespace RashidHospital.Controllers
             lst.Add(2);
 
             ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
-            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByPatientId(PatientId);
+            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateId);
 
 
 
