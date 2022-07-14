@@ -140,6 +140,16 @@ namespace RashidHospital.Controllers
 
             ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
             ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
+
+
+
+
+
+
+
+
+
+
             for (int i = 0; i < Cycles_Number; i++)
             {
 
@@ -178,10 +188,7 @@ namespace RashidHospital.Controllers
 
             //Cycle days/////
 
-            //Cycle days
-            List<int> lst = new List<int>();
-            lst.Add(1);
-            lst.Add(2);
+        
 
             ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
             List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateId);
@@ -210,6 +217,7 @@ namespace RashidHospital.Controllers
                     ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
                     AppointmentVM appointment = new AppointmentVM();
                     _labresults22.Patient_ID = PatientId;
+                    _labresults22.TemplateId = TemplateId;
                     appointment.PatientId = PatientId;
                     _labresults22.MainCycle_ID = itemm.ID;
                     appointment.ReturnUrl = System.Web.HttpContext.Current.Request.UrlReferrer?.ToString();
@@ -227,7 +235,61 @@ namespace RashidHospital.Controllers
 
             }
 
-            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+            // Lab Package
+
+            foreach (var itemm in OrderList)
+            {
+
+
+
+                ChemoTherapyCycleDayVM _Labresultsv = new ChemoTherapyCycleDayVM();
+                List<ChemoTherapyCycleDayVM> OrderListv = _Labresultsv.SelectAllByMainCycleId(itemm.ID);
+
+                foreach (var item in OrderListv)
+                {
+                    ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
+                    List<ChemoTherapyPreLabVM> _list = ObjVm.SelectAllByTemplateID(_objVM.Template_ID);
+                    foreach (var itemm3 in _list)
+                    {
+
+                        ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
+                        cc.Cycle_ID = item.ID;
+                       // cc.Actual_Value = 0;
+                        cc.Test_Type = itemm3.Test_Type;
+                        cc.Test_Value = itemm3.Value;
+                        cc.Rule_Type = itemm3.Rule_Type;
+                        cc.Patient_ID = item.Patient_ID;
+                        cc.TemplateId = TemplateId;
+
+                        cc.Create();
+
+                    }
+                    ChemoTherapyPreInvestigationsVM ObjVmi = new ChemoTherapyPreInvestigationsVM();
+                    List<ChemoTherapyPreInvestigationsVM> _listi = ObjVmi.SelectAllByTemplateID(_objVM.Template_ID);
+                    foreach (var itemm4 in _listi)
+                    {
+                       
+                        ChemoTherapyCycleInvestigationVM cc = new ChemoTherapyCycleInvestigationVM();
+                        cc.Cycle_ID = item.ID;
+                        // cc.Actual_Value = 0;
+                        cc.Inves_Type = itemm4.Test_Name;
+                        cc.Value = itemm4.Value;
+                        cc.Rule_Type = itemm4.Rule_Type;
+                        cc.Patient_ID = item.Patient_ID;
+                        cc.TemplateId = TemplateId;
+                        cc.Create();
+
+                    }
+
+
+
+
+
+
+                }
+
+            }
+                return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
         }
 
 

@@ -99,6 +99,7 @@
     <Compile Include="Bussiness\Attachment.cs" />
     <Compile Include="Bussiness\CallBoard.cs" />
     <Compile Include="Bussiness\ChemoTherapyCycleDay.cs" />
+    <Compile Include="Bussiness\ChemoTherapyCycleInvestigation.cs" />
     <Compile Include="Bussiness\ChemoTherapyCyclePackage.cs" />
     <Compile Include="Bussiness\ChemoTherapyDose.cs" />
     <Compile Include="Bussiness\ChemoTherapyDrug.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Bussiness\TumerHistologyTypes.cs" />
     <Compile Include="CallBoard.cs" />
     <Compile Include="ChemoTherapyCycleDay.cs" />
+    <Compile Include="ChemoTherapyCycleInvestigation.cs" />
     <Compile Include="ChemoTherapyCyclePackage.cs" />
     <Compile Include="ChemoTherapyDose.cs" />
     <Compile Include="ChemoTherapyDrug.cs" />

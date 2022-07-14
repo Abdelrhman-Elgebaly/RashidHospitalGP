@@ -18,19 +18,22 @@ namespace RashidHospital.Controllers
         {
             //
            ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
+
+          
+
+
             List<ChemoTherapyCyclePackageVM> LabList = _Obj.SelectAllByCycleID(Id);
 
 
-
-
+            ChemoTherapyCycleDayVM _dObj = new ChemoTherapyCycleDayVM();
+            ChemoTherapyCycleDayVM _cObjVM = _dObj.SelectObject(Id);
 
             //
-          
-            int patientID = Convert.ToInt32(pid);
-            PatientVM _pObj = new PatientVM();
-            PatientVM _pObjVM = _pObj.SelectObject(patientID);
 
-            int TemplateID = Convert.ToInt32(_pObjVM.ChemoTherapyId);
+            int patientID = Convert.ToInt32(pid);
+         
+
+            int TemplateID = Convert.ToInt32(_cObjVM.TemplateId);
    
             ChemoTherapyTemplateVM _Objt = new ChemoTherapyTemplateVM();
             ChemoTherapyTemplateVM _objVMt = _Objt.SelectObject(TemplateID);
@@ -47,11 +50,7 @@ namespace RashidHospital.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult ChangeStatus(int Id)
-        {
-            return RedirectToAction("Index");
-        }
+    
     
     void Edit(int Id, int pid )
         {

@@ -17,5 +17,6 @@ namespace Hospital.DAL
         public Nullable<int> Patient_ID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public bool IsFinished { get; set; }
+         public int TemplateId { get; set; }
     }
 }

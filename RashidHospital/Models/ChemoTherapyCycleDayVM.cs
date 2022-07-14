@@ -23,6 +23,7 @@ namespace RashidHospital.Models
         public Nullable<int> MainCycle_ID { get; set; }
         public Nullable<int> Patient_ID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public int TemplateId { get; set; }
 
         internal override ChemoTherapyCycleDay Convert(ChemoTherapyCycleDayVM Obj)
         {
@@ -35,7 +36,8 @@ namespace RashidHospital.Models
                     ID = Obj.ID,
                     Patient_ID = Obj.Patient_ID,
                     Date = Obj.Date,
-                    MainCycle_ID = Obj.MainCycle_ID
+                    MainCycle_ID = Obj.MainCycle_ID,
+                 TemplateId = Obj.TemplateId,
 
 
                 };
@@ -54,6 +56,7 @@ namespace RashidHospital.Models
             pl.Date = DbObj.Date;
 
             pl.MainCycle_ID = DbObj.MainCycle_ID;
+            pl.TemplateId = DbObj.TemplateId;
 
             return pl;
         }

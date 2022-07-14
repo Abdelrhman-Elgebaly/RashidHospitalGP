@@ -183,6 +183,7 @@
     <Compile Include="Controllers\CallBoardController.cs" />
     <Compile Include="Controllers\ChemoTherapyController.cs" />
     <Compile Include="Controllers\ChemoTherapyCycleDayController.cs" />
+    <Compile Include="Controllers\ChemoTherapyCycleInvestigationController.cs" />
     <Compile Include="Controllers\ChemoTherapyCyclePackageController.cs" />
     <Compile Include="Controllers\ChemoTherapyDrugController.cs" />
     <Compile Include="Controllers\ChemoTherapyPreInvestigationsController.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Models\AttachmentVM.cs" />
     <Compile Include="Models\CallBoardVM.cs" />
     <Compile Include="Models\ChemoTherapyCycleDayVM.cs" />
+    <Compile Include="Models\ChemoTherapyCycleInvestigationVM.cs" />
     <Compile Include="Models\ChemoTherapyCyclePackageVM.cs" />
     <Compile Include="Models\ChemoTherapyDoseVM.cs" />
     <Compile Include="Models\ChemoTherapyDrugVM.cs" />
@@ -509,6 +511,7 @@
     <Content Include="Views\CallBoard\ChemoTherapy.cshtml" />
     <Content Include="Views\ChemoTherapyProtocol\Index.cshtml" />
     <Content Include="Views\ChemoTherapyProtocol\Create.cshtml" />
+    <Content Include="Views\ChemoTherapyCycleInvestigation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
