@@ -70,8 +70,9 @@ namespace Hospital.DAL
         public virtual DbSet<Package> Packages { get; set; }
         public virtual DbSet<LabPackage> LabPackages { get; set; }
         public virtual DbSet<ChemoTherapyCycleInvestigation> ChemoTherapyCycleInvestigations { get; set; }
+        public virtual DbSet<Drugs> Drugs { get; set; }
 
-        
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -303,7 +304,9 @@ namespace Hospital.DAL
             base.OnModelCreating(modelBuilder);
         }
 
-   //     public System.Data.Entity.DbSet<RashidHospital.Models.LabPackageVM> LabPackageVMs { get; set; }
+      //  public System.Data.Entity.DbSet<RashidHospital.Models.PatientDoseVM> PatientDoseVMs { get; set; }
+
+        //     public System.Data.Entity.DbSet<RashidHospital.Models.LabPackageVM> LabPackageVMs { get; set; }
 
         //     public System.Data.Entity.DbSet<RashidHospital.Models.PackageVM> PackageVMs { get; set; }
 

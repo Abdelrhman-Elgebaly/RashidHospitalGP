@@ -1,0 +1,82 @@
+﻿@model List<RashidHospital.Models.ChemoTherapyTemplateVM>
+
+
+<section class="content-header">
+    <h1>ChemoTherapy Protocols</h1>
+</section>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+
+         
+
+        <div class="box-body">
+            <table class="table">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.Hidden("employees.Index", (@i + 10))
+                            @Html.TextBox("employees[" + (@i + 10) + "].ID",
+                            Model[i].Template_ID, new { @readonly = "readonly" })
+                        </td>
+                        <td>
+                            @Html.TextBox("employees[" + (@i + 10) + "].Name",
+                            Model[i].Protocol_Name)
+                        </td>
+                
+                    </tr>
+
+                }
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="Submit" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $(function () {
+            $("#loading").fadeOut();
+        });
+
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "order": [[0, "desc"]],
+            "info": true,
+            "autoWidth": false,
+            "scrollX": true,
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+}
+

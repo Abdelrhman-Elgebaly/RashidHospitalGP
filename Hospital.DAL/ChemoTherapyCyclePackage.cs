@@ -20,10 +20,10 @@ namespace Hospital.DAL
         public string Note { get; set; }
         public Nullable<bool> IsApproved { get; set; }
       
-        public Nullable<int> Test_Type { get; set; }
+        public int Test_Type { get; set; }
         public Nullable<int> Actual_Value { get; set; }
 
-        public Nullable<int> Rule_Type { get; set; }
+        public int Rule_Type { get; set; }
         public int TemplateId { get; set; }
 
 

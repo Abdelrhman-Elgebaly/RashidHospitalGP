@@ -9,11 +9,18 @@ namespace Hospital.DAL
 {
     public partial class PatientDose : DbBaseClass<PatientDose>
     {
-        public List<PatientDose> GetAllPatientDoseByPatientId(int PatientId)
+       
+
+
+
+        public List<PatientDose> GetAllPatientDoses(int NoteId, int CycleId)
         {
-            List<PatientDose> PatientDoseList = _Db.PatientDose.Where(a => a.Patient_ID == PatientId).ToList();
+            List<PatientDose> PatientDoseList = _Db.PatientDose.Where(a => a.NurseNote_ID == NoteId && a.Cycle_ID == CycleId).ToList();
             return PatientDoseList;
 
         }
+
+
+
     }
 }

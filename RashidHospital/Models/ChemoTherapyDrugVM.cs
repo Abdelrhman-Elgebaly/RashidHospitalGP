@@ -36,7 +36,7 @@ namespace RashidHospital.Models
         public int Unit { get; set; }
         public int Route { get; set; }
         public int Fluid_Type { get; set; }
-
+        public int DrugType { get; set; }
 
 
 
@@ -61,7 +61,7 @@ namespace RashidHospital.Models
                     Route = Obj.Route,
                     Duration = Obj.Duration,
                     Note = Obj.Note,
-
+                    DrugType = Obj.DrugType,
 
                 };
             }
@@ -72,7 +72,8 @@ namespace RashidHospital.Models
 
         internal override ChemoTherapyDrugVM Convert(ChemoTherapyDrug Obj)
         {
-
+            DrugsVM clinicVm = new DrugsVM();
+            DrugsVM clinicObj = clinicVm.SelectObject(Obj.DrugType);
             ChemoTherapyDrugVM pl = new ChemoTherapyDrugVM();
             var Site = (Unit)Obj?.Unit;
                 var enumType = EnumHelper<Unit>.GetDisplayValue(Site);
@@ -82,27 +83,28 @@ namespace RashidHospital.Models
 
                 var Site2 = (Fluid_Type)Obj?.Fluid_Type;
                 var enumType2 = EnumHelper<Fluid_Type>.GetDisplayValue(Site2);
+       
 
 
 
-
-            Drug_ID = Obj.Drug_ID;
-            Template_ID = Obj.Template_ID;
-            Therapy_Type = Obj.Therapy_Type;
-            Days = Obj.Days;
-            Sequence_Number = Obj.Sequence_Number;
-            Drug_Name = Obj.Drug_Name;
-            Drug_Dose = Obj.Drug_Dose;
-            Fluid_Type = Obj.Fluid_Type;
-            Fluid_Vol = Obj.Fluid_Vol;
-            Unit = Obj.Unit;
-            Route = Obj.Route;
-            Duration = Obj.Duration;
-            Note = Obj.Note;
-            Unit_Value = enumType.ToString();
-            Route_Value = enumType1.ToString();
-            Fluid_Type_Value = enumType2.ToString();
-                return pl;
+            pl.Drug_ID = Obj.Drug_ID;
+            pl.Template_ID = Obj.Template_ID;
+            pl.Therapy_Type = Obj.Therapy_Type;
+            pl.Days = Obj.Days;
+            pl.Sequence_Number = Obj.Sequence_Number;
+            pl.DrugType = Obj.DrugType;
+            pl.Drug_Dose = Obj.Drug_Dose;
+            pl.Fluid_Type = Obj.Fluid_Type;
+            pl.Fluid_Vol = Obj.Fluid_Vol;
+            pl.Unit = Obj.Unit;
+            pl.Route = Obj.Route;
+            pl.Duration = Obj.Duration;
+            pl.Note = Obj.Note;
+            pl.Unit_Value = enumType.ToString();
+            pl.Route_Value = enumType1.ToString();
+            pl.Fluid_Type_Value = enumType2.ToString();
+            pl.Drug_Name = clinicObj.Drugname;
+            return pl;
 
         }
 

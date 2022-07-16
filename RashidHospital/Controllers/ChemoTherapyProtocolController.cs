@@ -53,7 +53,8 @@ namespace RashidHospital.Controllers
             ChemoTherapyTemplateVM results = new ChemoTherapyTemplateVM();
             ViewBag.DeasesList = results.DiseaseSelectList();
             ViewBag.ProtocolList = results.ProtocolSelectList();
-          
+            
+
         }
         public string RenderRazorViewToString(string viewName, object model)
         {

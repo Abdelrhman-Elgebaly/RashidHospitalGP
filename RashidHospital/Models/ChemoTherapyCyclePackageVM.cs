@@ -25,10 +25,10 @@ namespace RashidHospital.Models
         public string Note { get; set; }
         public Nullable<bool> IsApproved { get; set; }
 
-        public Nullable<int> Test_Type { get; set; }
+        public int Test_Type { get; set; }
         public Nullable<int> Actual_Value { get; set; }
 
-        public Nullable<int> Rule_Type { get; set; }
+        public int Rule_Type { get; set; }
         public string Test_TypeValue { get; set; }
 
         public string Rule_TypeValue { get; set; }

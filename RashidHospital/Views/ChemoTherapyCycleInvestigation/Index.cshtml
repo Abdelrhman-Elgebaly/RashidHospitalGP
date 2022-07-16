@@ -297,7 +297,7 @@
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openInvestigationModal(@ViewBag.CycleId,@ViewBag.PatientId )">
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openToxictyModal(@ViewBag.CycleId,@ViewBag.PatientId )">
         Next  >>
     </a>
 
@@ -366,15 +366,11 @@
     })
         }
 
-
-
-        function openInvestigationModal(cycleID , patientID) {
-            window.location.href = '/ChemoTherapyCycleInvestigation/Index?Id=' + cycleID + '&pid=' + patientID;
+        function openToxictyModal(cycleID,patientID) {
+                window.location.href = '/ChemoTherapyCyclePackage/Toxicty?Id=' + cycleID + '&pid=' + patientID;
         }
 
-        function openAddLabModal(cycleID, patientID) {
-            window.location.href = '/ChemoTherapyCyclePackage/Test?Id=' + cycleID + '&pid=' + patientID;
-        }
+        
     </script>
 }
 

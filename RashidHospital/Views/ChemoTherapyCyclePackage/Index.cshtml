@@ -194,11 +194,11 @@
 
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openAddLabModal(@ViewBag.CycleId,@ViewBag.PatientId )">
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateLabModel(@ViewBag.CycleId,@ViewBag.PatientId )">
         Add Lab
     </a>
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId,@ViewBag.PatientId )">
         Add Lab By Package
     </a>
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -333,7 +333,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Add new Lab</h4>
+                <h4 class="modal-title">Add new Lab Package</h4>
             </div>
             <div id="CreateBody"></div>
         </div>
@@ -350,16 +350,36 @@
 
 
     <script>
-        function openCreatelModal(Id) {
-            window.location.href = '/ChemoTherapyCyclePackage/Create?Id=' + Id;
-        };
-        function openCreateModel(Id) {
+
+        function openCreateLabModel(CycleId, PatientId) {
     $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     $.ajax({
     type: "GET",
-    url: "@Url.Action("Create", "ChemoTherapyCyclePackage")",
+    url: "@Url.Action("CreateLab", "ChemoTherapyCyclePackage")",
     cache: false,
-        data: { Id: Id },
+        data: { CycleId: CycleId, PatientId: PatientId},
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+        $("#EditBody").html(result.Content);
+        $("#EditModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+        }
+
+        function openCreateModel(CycleId, PatientId) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("CreateLabPackage", "ChemoTherapyCyclePackage")",
+    cache: false,
+        data: { CycleId: CycleId, PatientId: PatientId},
     success: function (result) {
     if (result.IsRedirect) {
     window.location.href = result.RedirectUrl;
@@ -374,7 +394,6 @@
     },
     })
         }
-
 
 
         function openInvestigationModal(cycleID , patientID) {

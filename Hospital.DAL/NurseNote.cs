@@ -22,6 +22,7 @@ namespace Hospital.DAL
         public Nullable<double> SA { get; set; }
         public bool IsApproved { get; set; }
         public Nullable<double> Dose_Calculated { get; set; }
-        
+        public Nullable<int> CycleId { get; set; }
+
     }
 }

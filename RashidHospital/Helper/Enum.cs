@@ -621,6 +621,9 @@ namespace RashidHospital.Helper
             [Display(Name = "Equal or Below")]
 
             EqualorBelow,
+            [Display(Name = "Equal")]
+
+            Equal,
         }
 
         public enum Emetogenic_Level

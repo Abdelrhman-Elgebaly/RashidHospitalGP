@@ -15,6 +15,7 @@
 @using (Html.BeginForm("NCreate", "ChemoTherapyCyclePackage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(model => model.Patient_ID)
+    @Html.HiddenFor(model => model.CycleId)
 
     @Html.AntiForgeryToken()
     <div class="modal-body">

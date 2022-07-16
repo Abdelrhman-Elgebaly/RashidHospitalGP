@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using RashidHospital.Models;
 using System;
 using System.Collections.Generic;
@@ -29,16 +28,12 @@ namespace RashidHospital.Controllers
             List<ChemoTherapyDrugVM> _list = ObjVm.SelectAllByTemplateId(_templateID);
             return View(_list);
         }
-
-
-
         private void fillBag(int templateID)
         {
             ViewBag.PatientId = templateID;
             ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(templateID);
             var userID = User.Identity.GetUserId();
             ViewBag.DoctorId = userID;
-
         }
         public ActionResult Create(int templateID, string therapyType )
         {
@@ -63,22 +58,20 @@ namespace RashidHospital.Controllers
             else
             {
                 return View(input);
-
             }
-
         }
 */
 
         private void fillBag(int templateID)
         {
             ViewBag.PatientId = templateID;
-           
+
 
         }
 
         public ActionResult Index(string templateID)
         {
-           
+
 
             int _templateID = Convert.ToInt32(templateID);
             fillBag(_templateID);
@@ -86,12 +79,12 @@ namespace RashidHospital.Controllers
 
             ChemoTherapyDrugVM ObjVm = new ChemoTherapyDrugVM();
             List<ChemoTherapyDrugVM> _list = ObjVm.SelectAllByTemplateId(_templateID);
-          
+
 
             return View(_list);
         }
 
-     
+
 
         public ActionResult Create(int templateID, string therapyType)
         {
@@ -162,7 +155,8 @@ namespace RashidHospital.Controllers
             ViewBag.Unit = results.GetUnitSelectList();
             ViewBag.Route = results.GetRouteSelectList();
             ViewBag.Fluid = results.GetFluidTSelectList();
-
+            DrugsVM drugs = new DrugsVM();
+            ViewBag.Drugs = drugs.DrugsSelectList();
 
 
         }

@@ -1,0 +1,389 @@
+﻿@model Tuple<RashidHospital.Models.PatientVM, RashidHospital.Models.ChemoTherapyCycleDayVM, List<RashidHospital.Models.PatientDoseVM>>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 10000px;
+    }
+
+    .form-wizard {
+        margin: 0 auto;
+        display: block;
+        margin-bottom: 25px;
+    }
+
+        .form-wizard .nav li {
+            box-shadow: 0 5px 3px -3px #ddd;
+        }
+
+            .form-wizard .nav li + li {
+                margin-left: 0px;
+            }
+
+            .form-wizard .nav li:first-child a {
+                padding-left: 10px;
+            }
+
+            .form-wizard .nav li:last-child a {
+                border-right: 1px solid #000;
+            }
+
+            .form-wizard .nav li:last-child:after, .form-wizard .nav li:last-child:before {
+                border-width: 0;
+            }
+
+            .form-wizard .nav li:last-child:hover:after, .form-wizard .nav li:last-child:hover:before {
+                border-width: 0;
+            }
+
+            .form-wizard .nav li:last-child:hover a {
+                border-right: 1px solid #000;
+            }
+
+            .form-wizard .nav li a {
+                border-radius: 0;
+                padding-left: 30px;
+                background: #fff;
+                border: 1px solid #000;
+                color: teal;
+                border-right: 0;
+            }
+
+                .form-wizard .nav li a:hover, .form-wizard .nav li a:active, .form-wizard .nav li a:focus {
+                    background: teal;
+                    color: white;
+                }
+
+            .form-wizard .nav li:after, .form-wizard .nav li:before {
+                content: "";
+                border-color: transparent transparent transparent #000;
+                border-style: solid;
+                border-width: 20px;
+                position: absolute;
+                display: block;
+                top: 0;
+                z-index: 1;
+            }
+
+            .form-wizard .nav li:after {
+                border-left-color: #fff;
+                top: 1px;
+                right: -39px;
+            }
+
+            .form-wizard .nav li:before {
+                border-width: 21px;
+                right: -41px;
+            }
+
+            .form-wizard .nav li.completed a {
+                border-radius: 0;
+                padding-left: 30px;
+                background: #A9A9A9;
+                border: 1px solid #000;
+                border-right: 0;
+                color: teal;
+                cursor: pointer;
+            }
+
+            .form-wizard .nav li.completed:after, .form-wizard .nav li.completed:before {
+                content: "";
+                border-color: transparent transparent transparent #000;
+                border-style: solid;
+                border-width: 20px;
+                position: absolute;
+                display: block;
+                top: 0;
+                right: -40px;
+                z-index: 1;
+            }
+
+            .form-wizard .nav li.completed:after {
+                border-left-color: #fff;
+                top: 1px;
+                right: -39px;
+            }
+
+            .form-wizard .nav li.completed:before {
+                border-width: 21px;
+                right: -41px;
+            }
+
+            .form-wizard .nav li.current a {
+                border-radius: 0;
+                padding-left: 30px;
+                background: #4B2259;
+                border: 1px solid #000;
+                border-right: 0;
+                color: white;
+                cursor: pointer;
+            }
+
+            .form-wizard .nav li.current:after, .form-wizard .nav li.current:before {
+                content: "";
+                border-color: transparent transparent transparent #000;
+                border-style: solid;
+                border-width: 20px;
+                position: absolute;
+                display: block;
+                top: 0;
+                right: -40px;
+                z-index: 1;
+            }
+
+            .form-wizard .nav li.current:after {
+                border-left-color: #4B2259;
+                top: 1px;
+                right: -39px;
+            }
+
+            .form-wizard .nav li.current:before {
+                border-width: 21px;
+                right: -41px;
+            }
+
+            .form-wizard .nav li.current:last-child a {
+                border-right: 1px solid #000;
+            }
+
+            .form-wizard .nav li.current:last-child:after, .form-wizard .nav li.current:last-child:before {
+                border-width: 0;
+            }
+
+            .form-wizard .nav li.current:last-child:hover:after, .form-wizard .nav li.current:last-child:hover:before {
+                border-width: 0;
+            }
+
+            .form-wizard .nav li.current:last-child:hover a {
+                border-right: 1px solid #000;
+            }
+</style>
+
+<section class="content-header">
+    <h2>Cycle Summery</h2>
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
+<center>
+
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div class="form-wizard centered-pills">
+        <ul class="nav nav-pills">
+            <li role="presentation" class="complete"><a href="#">1. Lab Validation</a></li>
+            <li role="presentation" class="complete"><a href="#">2.   Predeined Investigation</a></li>
+            <li role="presentation" class="complete"><a href="#">3. Toxicty</a></li>
+            <li role="presentation" class="complete"><a href="#">4.  Nurse Note</a></li>
+            <li role="presentation" class="complete"><a href="#">5.  Dose Calculation</a></li>
+
+            <li role="presentation" class="current"><a href="#">6. Summary</a></li>
+        </ul>
+    </div>
+</center>
+<section class="content-header">
+    <h2>Patient Info</h2>
+
+</section>
+<div class="box-body">
+    <div class="form-group">
+        @Html.LabelFor(model => Model.Item1.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => Model.Item1.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Arabic Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => Model.Item1.NameArabic, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => Model.Item1.NameArabic, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.Label("Patient ID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => Model.Item1.MedicalID, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => Model.Item1.MedicalID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Diagnose", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => Model.Item1.DiagnoseName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => Model.Item1.MedicalID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<section class="content-header">
+    <h2>Cycle Info</h2>
+
+</section>
+
+<div class="form-group">
+    @Html.Label("Cycle Date", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item2.Date, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item2.Date, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<section class="content-header">
+    <h2>Patient Dose </h2>
+
+</section>
+
+
+<style>
+    h2 {
+        color: #4B2259;
+    }
+</style>
+
+
+<div class="form-group">
+    @Html.Label("Pre Therapy", htmlAttributes: new { @class = "control-label col-md-2" })
+</div>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+                <th>
+                    Drug Name
+                </th>
+
+                <th>
+                    Calculated Patient Dose
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model.Item3)
+            {
+                if (item.Therapy_Type == "pre")
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                        </td>
+
+
+
+                    </tr>
+                }
+            }
+
+    </table>
+</div>
+<div class="form-group">
+    @Html.Label("Therapy", htmlAttributes: new { @class = "control-label col-md-2" })
+</div>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+                <th>
+                    Drug Name
+                </th>
+
+                <th>
+                    Calculated Patient Dose
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Item3)
+            {
+                if (item.Therapy_Type == "Therapy")
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                        </td>
+                    </tr>
+                }
+            }
+
+    </table>
+</div>
+<div class="form-group">
+    @Html.Label("Post Therapy", htmlAttributes: new { @class = "control-label col-md-2" })
+</div>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+                <th>
+                    Drug Name
+                </th>
+
+                <th>
+                    Calculated Patient Dose
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Item3)
+            {
+                if (item.Therapy_Type == "post")
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                        </td>
+                    </tr>
+                }
+            }
+
+    </table>
+</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
+
+<center>
+
+    <a class="btn btn-success adjust-actions" title="Approve" onclick="window.print();">
+        Print Summery
+    </a>
+
+</center>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<center>
+
+    <a class="btn btn-success adjust-actions" title="Approve" onclick="window.print();">
+        Released to Pharmacy
+    </a>
+
+</center>
+
+

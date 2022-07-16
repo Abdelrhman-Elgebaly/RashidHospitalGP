@@ -20,9 +20,9 @@ namespace RashidHospital.Models
         [Key]
         public int ID { get; set; }
         public Nullable<int> Package_ID { get; set; }
-        public Nullable<int> Test { get; set; }
+        public int Test { get; set; }
         public Nullable<int> Value { get; set; }
-        public Nullable<int> Rule { get; set; }
+        public int Rule { get; set; }
         public string Test_TypeValue { get; set; }
         public string Rule_TypeValue { get; set; }
 

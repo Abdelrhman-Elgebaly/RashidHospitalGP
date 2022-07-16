@@ -103,5 +103,22 @@ namespace RashidHospital.Models
         }
 
 
+        public List<SelectListItem> PackageSelectList()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            List<PackageVM> CliniList = SelectAll();
+
+            foreach (PackageVM Obj in CliniList)
+            {
+                SelectListItem _item = new SelectListItem();
+                _item.Text = Obj.Name;
+                _item.Value = Obj.ID.ToString();
+                listItems.Add(_item);
+            }
+
+            return listItems;
+        }
+
+
     }
 }

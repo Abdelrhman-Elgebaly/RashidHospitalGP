@@ -247,6 +247,7 @@
     <Compile Include="Models\DeleteTasksObject.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DiseaseVM.cs" />
+    <Compile Include="Models\DrugsVM.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\FixationVM.cs" />
     <Compile Include="Models\IHCTypesVM.cs" />
@@ -497,7 +498,6 @@
     <Content Include="Views\ChemoTherapyCycleDay\Index.cshtml" />
     <Content Include="Views\ChemoTherapyCycleDay\_TestPopUp.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Index.cshtml" />
-    <Content Include="Views\ChemoTherapyCyclePackage\Create.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Investigation.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Toxicty.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\NurseNote.cshtml" />
@@ -512,6 +512,11 @@
     <Content Include="Views\ChemoTherapyProtocol\Index.cshtml" />
     <Content Include="Views\ChemoTherapyProtocol\Create.cshtml" />
     <Content Include="Views\ChemoTherapyCycleInvestigation\Index.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\CreateLabPackage.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\CreateLab.cshtml" />
+    <Content Include="Views\PatientDose\Test.cshtml" />
+    <Content Include="Views\PatientDose\Summery.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

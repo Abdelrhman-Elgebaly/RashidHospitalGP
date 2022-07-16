@@ -206,7 +206,7 @@
 
     <div class="box-header">
         <h3 class="box-title">
-            <a href="@Url.Action("NCreate", "ChemoTherapyCyclePackage", new { patientID = ViewBag.PatientId } )" class="btn btn-primary">
+            <a href="@Url.Action("NCreate", "ChemoTherapyCyclePackage", new {Id = ViewBag.CycleId ,pid = ViewBag.PatientId } )" class="btn btn-primary">
                 Create new Nurse Note
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
             </a>
@@ -243,7 +243,7 @@
 
                         <td class="adjustContent text-center">
 
-                            <a class="btn btn-success adjust-actions" title="Approve" href="/PatientDose/Index?patientID=@item.Patient_ID&noteId=@item.ID">
+                            <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Test?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
                                 <i class="fa fa-check"></i>
                             </a>
 

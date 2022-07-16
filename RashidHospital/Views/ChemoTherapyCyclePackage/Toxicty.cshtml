@@ -254,7 +254,7 @@
 <center>
   
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openToxictyModal(@ViewBag.PatientId )">
+    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openNurseNoteModal(@ViewBag.CycleId,@ViewBag.PatientId )">
         Next  >>
     </a>
 </center>
@@ -404,9 +404,8 @@
 
         }
 
-
-        function openToxictyModal(patientID) {
-            window.location.href = '/ChemoTherapyCyclePackage/NurseNote?patientID=' + patientID;
+        function openNurseNoteModal(cycleID,patientID) {
+            window.location.href = '/ChemoTherapyCyclePackage/NurseNote?Id=' + cycleID + '&pid=' + patientID;
         }
 
     </script>

@@ -24,9 +24,12 @@
 
 @using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.Hidden("Cycle_ID", (int)ViewBag.CycleId)
+    @Html.Hidden("CycleId", (int)ViewBag.CycleId)
+    @Html.Hidden("PatientId", (int)ViewBag.PatientId)
+
 
     <div class="modal-header">
+
         @*@Html.Raw(ViewBag.PatientInfo)*@
     </div>
 
@@ -34,7 +37,7 @@
         <div class="box-body">
 
             <div class="form-group">
-                @Html.Label("Test_Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Test", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("Test_Type", new SelectList(ViewBag.LabTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
                     @Html.ValidationMessageFor(model => model.Test_Type, "", new { @class = "text-danger" })
@@ -43,7 +46,7 @@
 
 
             <div class="form-group">
-                @Html.Label("Test_Value", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Value", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Test_Value, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Test_Value, "", new { @class = "text-danger" })
@@ -51,27 +54,19 @@
             </div>
 
 
-
-            <div class="box-body">
-                <div class="form-group">
-                    @Html.Label("Rule_Type", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("Rule_Type", new SelectList(ViewBag.RuleTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
-                        @Html.ValidationMessageFor(model => model.Rule_Type, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group" style="float:right;">
-                    <div class="col-md-12">
+            <div class="form-group" style="float:right;">
+                <div class="col-md-12">
 
 
-                        <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
-                        <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
-                        @*onclick="location.href='@Url.Action("Index", "LabResualt", new { @PatientId = (int)ViewBag.PatientId })'"*@
-                    </div>
+                    <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
+                    @*onclick="location.href='@Url.Action("Index", "LabResualt", new { @PatientId = (int)ViewBag.PatientId })'"*@
                 </div>
             </div>
         </div>
     </div>
+
+
 }
 
 
@@ -107,6 +102,7 @@
         var LabType = $("#LabType option:selected").val();
         var PatientId = $("#PatientId").val();
 
+
         $("#Unit").val('');
         $("#Note").val('');
         $.ajax({
@@ -122,18 +118,17 @@
     })
 
     $("body").on("click", "#btnSaveandExit", function () {
+        var CycleId = $("#CycleId").val();
 
-        var Test_Type = $("#Test_Type option:selected").val();
+        var PatientId = $("#PatientId").val();
+        var Test_Type = $("#Test_Type").val();
         var Test_Value = $("#Test_Value").val();
-        var Cycle_ID = $("#CycleID").val();
-        var Rule_Type = $("#Rule_Type option:selected").val();
-
         $.ajax({
-            url: "/ChemoTherapyCyclePackage/AddResult",
+            url: "/ChemoTherapyCyclePackage/AddLabResult",
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "Test_Type": Test_Type, "Test_Value":Test_Value, "Cycle_ID": Cycle_ID, "Rule_Type": Rule_Type },
+            data: { "CycleId": CycleId, "PatientId": PatientId, "Test_Type": Test_Type, "Test_Value": Test_Value},
             success: function (result) {
                 $("#CreateModel").modal("hide");
                 window.location.reload();
@@ -142,4 +137,6 @@
         });
     })
 </script>
+
+
 

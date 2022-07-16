@@ -13,9 +13,9 @@ namespace Hospital.DAL
         [Key]
         public int ID { get; set; }
         public Nullable<int> Package_ID { get; set; }
-        public Nullable<int> Test { get; set; }
+        public int Test { get; set; }
         public Nullable<int> Value { get; set; }
-        public Nullable<int> Rule { get; set; }
+        public int Rule { get; set; }
 
 
 

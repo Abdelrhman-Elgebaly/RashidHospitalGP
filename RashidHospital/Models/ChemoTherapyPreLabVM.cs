@@ -26,8 +26,8 @@ namespace RashidHospital.Models
         public Nullable<int> Value { get; set; }
         public string rule { get; set; }
         //   public virtual ChemoTherapy_Template ChemoTherapy_Template { get; set; }
-        public Nullable<int> Test_Type { get; set; }
-        public Nullable<int> Rule_Type { get; set; }
+        public int Test_Type { get; set; }
+        public int Rule_Type { get; set; }
         public string Test_TypeValue { get; set; }
 
         public string Rule_TypeValue { get; set; }

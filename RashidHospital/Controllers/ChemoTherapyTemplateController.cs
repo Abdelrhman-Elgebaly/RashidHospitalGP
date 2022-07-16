@@ -39,7 +39,7 @@ namespace RashidHospital.Controllers
 
             return View(_list);
         }
-        
+       
         public ActionResult Create()
         {
             fillCreateBag();
