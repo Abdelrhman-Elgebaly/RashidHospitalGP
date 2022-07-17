@@ -25,6 +25,7 @@ namespace Hospital.DAL
 
         public int Rule_Type { get; set; }
         public int TemplateId { get; set; }
+        public Nullable<int> PreProtocol { get; set; }
 
 
 

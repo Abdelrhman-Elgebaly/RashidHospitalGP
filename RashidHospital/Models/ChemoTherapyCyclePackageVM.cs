@@ -33,6 +33,7 @@ namespace RashidHospital.Models
 
         public string Rule_TypeValue { get; set; }
         public int TemplateId { get; set; }
+        public Nullable<int> PreProtocol { get; set; }
         internal override ChemoTherapyCyclePackage Convert(ChemoTherapyCyclePackageVM Obj)
         {
             if (Obj == null)
@@ -52,6 +53,7 @@ namespace RashidHospital.Models
                     Rule_Type= Obj.Rule_Type,
                     Actual_Value =Obj.Actual_Value,
                     TemplateId = Obj.TemplateId,
+                    PreProtocol=Obj.PreProtocol,
                 };
             }
             return _Obj;
@@ -82,7 +84,7 @@ namespace RashidHospital.Models
             pl.IsApproved = DbObj.IsApproved;
             pl.Actual_Value = DbObj.Actual_Value;
             pl.TemplateId = DbObj.TemplateId;
-
+            pl.PreProtocol = DbObj.PreProtocol;
             return pl;
         }
 

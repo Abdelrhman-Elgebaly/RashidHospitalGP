@@ -182,8 +182,14 @@ namespace RashidHospital.Controllers
         {
             PatientDoseVM pObjVm = new PatientDoseVM();
             List<PatientDoseVM> _Doselist = pObjVm.SelectAll(NoteId, CycleId);
-            if (_Doselist.Count == 0)
+
+            foreach (var item in _Doselist)
             {
+                item.Delete();
+            }
+
+
+
 
                 ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
                 ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
@@ -235,31 +241,40 @@ namespace RashidHospital.Controllers
                             if (Objvm.Test_TypeValue == "Ceratinine")
                             {
                                 serum_creatinine = Convert.ToInt32(Objvm.Actual_Value);
-                            }
-                           
-                        }
-
-
-                        var creat_clearance = (140 - age) * weight / (72 * serum_creatinine);
-
-                        
-
-                        if (_pobjVM.Gender == "Male")
-
-                        {
-
-                            ObjVm.Dose_Calculated = item.Drug_Dose * (creat_clearance + 25);
-                           
-                        }
-                        if (_pobjVM.Gender == "Female")
-                        {
-                            creat_clearance = creat_clearance * 0.85;
-                            ObjVm.Dose_Calculated = item.Drug_Dose * (creat_clearance + 25);
+                            } 
                             
+                           
+                        }
 
+                        if (serum_creatinine == 0)
+                        {
+                            ObjVm.Dose_Calculated = null;
+                        }
+                        else
+                        {
+
+                            var creat_clearance = (140 - age) * weight / (72 * serum_creatinine);
+
+
+
+                            if (_pobjVM.Gender == "Male")
+
+                            {
+
+                                ObjVm.Dose_Calculated = item.Drug_Dose * (creat_clearance + 25);
+
+                            }
+                            if (_pobjVM.Gender == "Female")
+                            {
+                                creat_clearance = creat_clearance * 0.85;
+                                ObjVm.Dose_Calculated = item.Drug_Dose * (creat_clearance + 25);
+
+
+                            }
                         }
 
                     }
+
                     ObjVm.Drug_Name = item.Drug_Name;
                     ObjVm.Drug_Dose = item.Drug_Dose;
                     ObjVm.Unit_Value = item.Unit_Value;
@@ -269,7 +284,7 @@ namespace RashidHospital.Controllers
                 }
 
 
-            }
+         
 
 
 

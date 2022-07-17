@@ -16,11 +16,10 @@ namespace RashidHospital.Controllers
         // GET: ChemoTherapyCyclePackage
         public ActionResult Index(int Id, int pid)
         {
+
+            GetProtocolPreLab(Id);
             //
            ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
-
-          
-
 
             List<ChemoTherapyCyclePackageVM> LabList = _Obj.SelectAllByCycleID(Id);
 
@@ -45,9 +44,71 @@ namespace RashidHospital.Controllers
 
         }
 
-    
-    
-  
+
+
+        public JsonResult GetProtocolPreLab(int Id )
+        {
+
+
+
+            ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
+            List<ChemoTherapyCyclePackageVM> LabList = _Obj.SelectAllByCycleID(Id);
+
+            foreach (var item in LabList)
+            {
+                if (item.PreProtocol == 1 ) {
+                item.Delete();
+                }
+            }
+
+            ChemoTherapyCycleDayVM _dObj = new ChemoTherapyCycleDayVM();
+            ChemoTherapyCycleDayVM _cObjVM = _dObj.SelectObject(Id);
+
+
+
+            ChemoTherapyProtocolVM _cObj = new ChemoTherapyProtocolVM();
+            ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(_cObjVM.TemplateId);
+
+
+            int TemplateID = Convert.ToInt32(_cobjVM.Template_ID);
+
+            ChemoTherapyTemplateVM _Objt = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM _objVMt = _Objt.SelectObject(TemplateID);
+
+
+
+
+
+
+            ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
+                    List<ChemoTherapyPreLabVM> _list = ObjVm.SelectAllByTemplateID(_objVMt.Template_ID);
+                    foreach (var itemm3 in _list)
+                    {
+
+                        ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
+                        cc.Cycle_ID = Id;
+                        cc.Actual_Value = 7;
+                        cc.Test_Type = itemm3.Test_Type;
+                        cc.Test_Value = itemm3.Value;
+                        cc.Rule_Type = itemm3.Rule_Type;
+                cc.PreProtocol = 1;
+
+                        cc.Create();
+
+                    }
+
+
+
+
+
+       
+
+
+
+
+                    return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+
+        }
 
 
 
@@ -176,7 +237,7 @@ namespace RashidHospital.Controllers
 
                 ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
                 cc.Cycle_ID = CycleId;
-                
+                cc.Actual_Value = 7;
                 cc.Test_Type = itemm3.Test;
                 cc.Test_Value = itemm3.Value;
                 cc.Rule_Type = itemm3.Rule;
@@ -207,8 +268,9 @@ namespace RashidHospital.Controllers
                 ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
 
                 cc.Cycle_ID = CycleId;
+            cc.Actual_Value = 7;
 
-                cc.Test_Type = Test_Type;
+            cc.Test_Type = Test_Type;
                 cc.Test_Value = Test_Value;
                 cc.Rule_Type= 5;
                 cc.Patient_ID = PatientId;

@@ -234,6 +234,9 @@ namespace RashidHospital.Controllers
 
             // Lab Package
 
+
+
+           /*
             foreach (var itemm in OrderList)
             {
 
@@ -251,7 +254,7 @@ namespace RashidHospital.Controllers
 
                         ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
                         cc.Cycle_ID = item.ID;
-                        // cc.Actual_Value = 0;
+                         cc.Actual_Value = 7;
                         cc.Test_Type = itemm3.Test_Type;
                         cc.Test_Value = itemm3.Value;
                         cc.Rule_Type = itemm3.Rule_Type;
@@ -261,6 +264,7 @@ namespace RashidHospital.Controllers
                         cc.Create();
 
                     }
+            
                     ChemoTherapyPreInvestigationsVM ObjVmi = new ChemoTherapyPreInvestigationsVM();
                     List<ChemoTherapyPreInvestigationsVM> _listi = ObjVmi.SelectAllByTemplateID(_objVM.Template_ID);
                     foreach (var itemm4 in _listi)
@@ -286,6 +290,7 @@ namespace RashidHospital.Controllers
                 }
 
             }
+            */
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
         }
 
