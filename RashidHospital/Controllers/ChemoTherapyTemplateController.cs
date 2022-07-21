@@ -39,7 +39,41 @@ namespace RashidHospital.Controllers
 
             return View(_list);
         }
-       
+ 
+        [HttpGet]
+
+        public ActionResult Indext()
+
+        {
+
+            EmployeeModel employeeModel = new EmployeeModel();
+            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplate _BClass = new ChemoTherapyTemplate();
+            List<ChemoTherapyTemplate> dbList = _BClass.GetAll<ChemoTherapyTemplate>().ToList();
+            employeeModel.EmployeeList = dbList;
+
+            //Here i have adding donw dummy value as id
+
+            //In this we will create 5 rows
+
+
+
+            return View(employeeModel);
+
+        }
+        [HttpPost]
+
+        public ActionResult Indext(EmployeeModel employeeModel)
+
+        {
+
+            //Now save the department id in the database as required
+
+            //Rebind the employee table data again 
+
+            return View(employeeModel);
+
+        }
         public ActionResult Create()
         {
             fillCreateBag();

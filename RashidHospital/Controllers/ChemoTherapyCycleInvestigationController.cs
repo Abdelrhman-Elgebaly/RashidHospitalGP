@@ -18,8 +18,8 @@ namespace RashidHospital.Controllers
 
 
 
-            GetProtocolPreInves(Id, pid);
-            //
+        //    GetProtocolPreInves(Id, pid);
+           
             ChemoTherapyCycleInvestigationVM _Obj = new ChemoTherapyCycleInvestigationVM();
 
 
@@ -123,9 +123,6 @@ namespace RashidHospital.Controllers
                 cc.Create();
 
 
-
-
-
             }
 
 
@@ -137,6 +134,56 @@ namespace RashidHospital.Controllers
 
 
 
+            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+
+        public JsonResult _EditNote(int Id)
+        {
+            ViewBag.Id = Id;
+            if (Id == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            ViewBag.Id = Id;
+
+            ChemoTherapyCycleInvestigationVM _Obj = new ChemoTherapyCycleInvestigationVM();
+            ChemoTherapyCycleInvestigationVM _ObjvM = _Obj.SelectObject(Id);
+            //if (_objVM == null)
+            //{
+            //    return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+            //}
+
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_EditNote", _ObjvM) }, JsonRequestBehavior.AllowGet);
+        }
+
+        public string RenderRazorViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
+        public JsonResult AddNote(int Id, string Note, int Actual_Value)
+
+        {
+
+            ChemoTherapyCycleInvestigationVM _Obj = new ChemoTherapyCycleInvestigationVM();
+            ChemoTherapyCycleInvestigationVM _ObjvM = _Obj.SelectObject(Id);
+            _ObjvM.Note = Note;
+            _ObjvM.Actual_Value = Actual_Value;
+            _ObjvM.Edit();
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
 
         }

@@ -95,8 +95,7 @@ namespace RashidHospital.Models
                 return null;
             else
             {
-                Protocol_Name = Obj.Protocol_Name;
-                Disease = Obj.Disease;
+               
                 var Site = (Emetogenic_Level)Obj?.Emetogenic_Level;
                 var enumType = EnumHelper<Emetogenic_Level>.GetDisplayValue(Site);
                 DiseaseVM clinicVm = new DiseaseVM();

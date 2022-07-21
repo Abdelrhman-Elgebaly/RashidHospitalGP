@@ -215,9 +215,9 @@
                 <th>Value</th>
                 <th>Actual Value</th>
                 <th>Rule</th>
-               
-              
-              
+
+                <th>Note</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -237,7 +237,7 @@
 
                     <div class="col-md-10">
 
-                        @Html.EditorFor(modelItem => item.Actual_Value, new { htmlAttributes = new { @class = "form-control",  } })
+                        @Html.EditorFor(modelItem => item.Actual_Value, new { htmlAttributes = new { @class = "form-control", } })
                         @{
                             if (item.Rule_Type == 1)
                             {
@@ -287,9 +287,33 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Rule_TypeValue)
                 </td>
-              
+                @if (item.Note == null)
+                {
+                    <td >
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td>
+                }
+                else
+                {
+                    <td bgcolor="darkseagreen">
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td bgcolor="darkseagreen">
+                }
 
-              
+
+
+
+       
+                <td>
+
+                    <center>
+
+                        <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </center>
+                </td>
+
             </tr>
             }
 
@@ -299,13 +323,8 @@
 <center>
 
 
-   
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
-        Save Changes
-    </a>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-   
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
     <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openInvestigationModal(@ViewBag.CycleId,@ViewBag.PatientId )">
         Next  >>
     </a>
@@ -336,6 +355,20 @@
                 <h4 class="modal-title">Add new Lab Package</h4>
             </div>
             <div id="CreateBody"></div>
+        </div>
+    </div>
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Pharmacist Note</h4>
+            </div>
+            <div id="NoteBody"></div>
         </div>
     </div>
 </div>
@@ -403,5 +436,30 @@
         function openAddLabModal(cycleID, patientID) {
             window.location.href = '/ChemoTherapyCyclePackage/Test?Id=' + cycleID + '&pid=' + patientID;
         }
+
+
+
+                function openTestPopUp(Id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_EditNote", "ChemoTherapyCyclePackage")",
+                cache: false,
+                data: { Id: Id },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#NoteBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
     </script>
 }

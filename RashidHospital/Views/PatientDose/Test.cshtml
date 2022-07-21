@@ -216,6 +216,7 @@
                 <th>
                     Fluid Volume
                 </th>
+                <th>Note</th>
 
                 <th></th>
             </tr>
@@ -224,29 +225,62 @@
             {
                 if (item.Therapy_Type == "pre")
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Unit_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Dose)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit_Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Dose)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="darkseagreen">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else
+            {
 
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                        </td>
-                    </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+            </td>
+            @if (item.Pharmacist_Note == null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else
+            {
+                <td bgcolor="darkseagreen">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+
+            <td>
+                <center>
+
+                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </center>
+              
+            </td>
+        </tr>
                 }
             }
 
@@ -275,6 +309,7 @@
                 <th>
                     Fluid Volume
                 </th>
+                <th>Note</th>
 
                 <th></th>
             </tr>
@@ -283,29 +318,60 @@
             {
                 if (item.Therapy_Type == "Therapy")
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Unit_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Dose)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit_Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Dose)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="darkseagreen">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else
+            {
 
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                        </td>
-                    </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+            </td>
+            @if (item.Pharmacist_Note == null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else
+            {
+                <td bgcolor="darkseagreen">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            <td>
+                <center>
+
+                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </center>
+              
+            </td>
+        </tr>
                 }
             }
 
@@ -334,6 +400,7 @@
                 <th>
                     Fluid Volume
                 </th>
+                <th>Note</th>
 
                 <th></th>
             </tr>
@@ -342,29 +409,60 @@
             {
                 if (item.Therapy_Type == "post")
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Unit_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Dose)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit_Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Dose)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="darkseagreen">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else
+            {
 
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                        </td>
-                    </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+            </td>
+            @if (item.Pharmacist_Note == null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else
+            {
+                <td bgcolor="darkseagreen">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            <td>
+                <center>
+
+                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </center>
+            
+            </td>
+        </tr>
                 }
             }
 
@@ -378,3 +476,52 @@
     </a>
 
 </center>
+
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Pharmacist Note</h4>
+            </div>
+            <div id="NoteBody"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+
+    <script>
+    function openTestPopUp(Id) {
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("_EditNote", "PatientDose")",
+    cache: false,
+    data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#NoteBody").html(result.Content);
+    $("#TestPopUp").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    }
+
+
+    </script>
+
+}
+

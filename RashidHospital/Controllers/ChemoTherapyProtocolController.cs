@@ -87,15 +87,15 @@ namespace RashidHospital.Controllers
             }
         }
         [HttpPost]
-        public JsonResult AddResult(int DiseaseId, int Template_ID, int Patient_ID)
+        public JsonResult AddResult( int Template_ID, int Patient_ID)
         {
-            if (DiseaseId != 0  || Patient_ID != 0)
+            if (  Patient_ID != 0)
             {
                 ChemoTherapyProtocolVM _labresults = new ChemoTherapyProtocolVM();
-                _labresults.DiseaseId = DiseaseId;
+                
                 _labresults.Template_ID = Template_ID;
                 _labresults.Patient_ID = Patient_ID;
-            
+                _labresults.DiseaseId = 1;
            
                 _labresults.Create();
             }

@@ -17,8 +17,8 @@ namespace RashidHospital.Controllers
         public ActionResult Index(int Id, int pid)
         {
 
-            GetProtocolPreLab(Id);
-            //
+          //  GetProtocolPreLab(Id);
+           
            ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
 
             List<ChemoTherapyCyclePackageVM> LabList = _Obj.SelectAllByCycleID(Id);
@@ -26,7 +26,8 @@ namespace RashidHospital.Controllers
 
             ChemoTherapyCycleDayVM _dObj = new ChemoTherapyCycleDayVM();
             ChemoTherapyCycleDayVM _cObjVM = _dObj.SelectObject(Id);
-
+            _cObjVM.IsStart = true;
+            _cObjVM.Edit();
             //
 
             int patientID = Convert.ToInt32(pid);
@@ -44,8 +45,7 @@ namespace RashidHospital.Controllers
 
         }
 
-
-
+    
         public JsonResult GetProtocolPreLab(int Id )
         {
 
@@ -53,14 +53,14 @@ namespace RashidHospital.Controllers
 
             ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
             List<ChemoTherapyCyclePackageVM> LabList = _Obj.SelectAllByCycleID(Id);
-
+            /*
             foreach (var item in LabList)
             {
                 if (item.PreProtocol == 1 ) {
                 item.Delete();
                 }
             }
-
+          */
             ChemoTherapyCycleDayVM _dObj = new ChemoTherapyCycleDayVM();
             ChemoTherapyCycleDayVM _cObjVM = _dObj.SelectObject(Id);
 
@@ -82,22 +82,29 @@ namespace RashidHospital.Controllers
 
             ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
                     List<ChemoTherapyPreLabVM> _list = ObjVm.SelectAllByTemplateID(_objVMt.Template_ID);
-                    foreach (var itemm3 in _list)
-                    {
 
-                        ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
-                        cc.Cycle_ID = Id;
-                        cc.Actual_Value = 7;
-                        cc.Test_Type = itemm3.Test_Type;
-                        cc.Test_Value = itemm3.Value;
-                        cc.Rule_Type = itemm3.Rule_Type;
-                cc.PreProtocol = 1;
+            foreach (var item in LabList)
+            {
+                foreach (var itemm3 in _list)
 
-                        cc.Create();
 
+                {
+
+
+                    if (item.Test_Type != itemm3.Test_Type) { 
+                    ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
+                    cc.Cycle_ID = Id;
+                    cc.Actual_Value = 7;
+                    cc.Test_Type = itemm3.Test_Type;
+                    cc.Test_Value = itemm3.Value;
+                    cc.Rule_Type = itemm3.Rule_Type;
+                    cc.PreProtocol = 1;
+
+                    cc.Create();
                     }
+                }
 
-
+            }
 
 
 
@@ -134,6 +141,26 @@ namespace RashidHospital.Controllers
             }
 
             return View(input);
+        }
+
+        public JsonResult _EditNote(int Id)
+        {
+            ViewBag.Id = Id;
+            if (Id == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            ViewBag.Id = Id;
+
+            ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
+            ChemoTherapyCyclePackageVM _ObjvM = _Obj.SelectObject(Id);
+            //if (_objVM == null)
+            //{
+            //    return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+            //}
+
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_EditNote", _ObjvM) }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -237,7 +264,7 @@ namespace RashidHospital.Controllers
 
                 ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
                 cc.Cycle_ID = CycleId;
-                cc.Actual_Value = 7;
+                cc.Actual_Value = 0;
                 cc.Test_Type = itemm3.Test;
                 cc.Test_Value = itemm3.Value;
                 cc.Rule_Type = itemm3.Rule;
@@ -268,11 +295,13 @@ namespace RashidHospital.Controllers
                 ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
 
                 cc.Cycle_ID = CycleId;
-            cc.Actual_Value = 7;
+            cc.Actual_Value = 0;
+            cc.Rule_Type = 5;
+            cc.Rule_TypeValue = null; 
 
             cc.Test_Type = Test_Type;
                 cc.Test_Value = Test_Value;
-                cc.Rule_Type= 5;
+               
                 cc.Patient_ID = PatientId;
                   
                 cc.Create();
@@ -290,60 +319,8 @@ namespace RashidHospital.Controllers
         }
 
 
-        public ActionResult Toxicty(int Id , string pid)
-        {
-            int _patientID = Convert.ToInt32(pid);
-            fillBag(Id, _patientID);
-
-            ToxictyVM ObjVm = new ToxictyVM();
-            List<ToxictyVM> _list = ObjVm.SelectAllByPatientId(_patientID);
-            return View(_list);
-        }
-
-        public ActionResult NurseNote(int Id, string pid)
-        {
-            int _patientID = Convert.ToInt32(pid);
-        
-            NurseNoteVM ObjVm = new NurseNoteVM();
-            fillBag(Id, _patientID);
-            List<NurseNoteVM> _list = ObjVm.SelectAllByPatientId(_patientID);
-            return View(_list);
-        }
-
-
-
-        public ActionResult NCreate(int Id, string pid)
-        {
-            int _patientID = Convert.ToInt32(pid);
-            fillBag(Id, _patientID);
-            NurseNoteVM nurseNoteVM = new NurseNoteVM();
-            nurseNoteVM.Patient_ID = _patientID;
-            nurseNoteVM.CycleId = Id;
-           // fillBag(_patientID);
-
-            return View(nurseNoteVM);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult NCreate(NurseNoteVM input)
-        {
-
-            if (ModelState.IsValid)
-            {
-                input.Date = DateTime.Now;
-
-
-                // Guid userId = Guid.Parse(User.Identity.GetUserId());
-                //double x = Convert.ToDouble((input.Weight * input.Height) / 3600);
-                var x = (input.Weight * input.Height) / 3600;
-                input.SA = Math.Sqrt(Convert.ToDouble(x));
-                input.Create();
-                return RedirectToAction("NurseNote", new { Id = input.CycleId, pid = input.Patient_ID });
-            }
-
-            return View(input);
-        }
-
+    
+     
 
 
         public JsonResult EditLabValue( int CycleId, int pid)
@@ -362,7 +339,18 @@ namespace RashidHospital.Controllers
 
         }
 
+        public JsonResult AddNote(int Id, string Note, int Actual_Value)
 
+        {
+
+            ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
+            ChemoTherapyCyclePackageVM _ObjvM = _Obj.SelectObject(Id);
+            _ObjvM.Note = Note;
+            _ObjvM.Actual_Value = Actual_Value;
+            _ObjvM.Edit();
+            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+
+        }
 
     }
 }

@@ -34,6 +34,9 @@ namespace RashidHospital.Models
         public string Rule_TypeValue { get; set; }
         public int TemplateId { get; set; }
         public Nullable<int> PreProtocol { get; set; }
+
+        
+
         internal override ChemoTherapyCyclePackage Convert(ChemoTherapyCyclePackageVM Obj)
         {
             if (Obj == null)

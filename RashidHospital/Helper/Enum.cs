@@ -621,9 +621,10 @@ namespace RashidHospital.Helper
             [Display(Name = "Equal or Below")]
 
             EqualorBelow,
-            [Display(Name = "Equal")]
+            [Display(Name = " ")]
 
-            Equal,
+            Equ,
+
         }
 
         public enum Emetogenic_Level
@@ -707,6 +708,25 @@ namespace RashidHospital.Helper
             [Display(Name = "Glucosaline")]
 
             Glucosaline,
+        }
+
+        public enum DrugOrder
+        {
+            [Display(Name = "Ordered")]
+
+            Ordered = 1,
+            [Display(Name = "Cleared")]
+
+            Cleared,
+            [Display(Name = "Hold")]
+
+            Hold,
+            [Display(Name = "Cancelled")]
+
+            Cancelled,
+            [Display(Name = "Finalized")]
+
+            Finalized,
         }
         //public enum IHCType {
         //    [Display(Name = "ACTH")]

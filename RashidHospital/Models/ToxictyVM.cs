@@ -16,6 +16,8 @@ namespace RashidHospital.Models
         public string Description { get; set; }
         public int Condition { get; set; }
         public string Note { get; set; }
+        public string Pharmacist_Note { get; set; }
+
         public int ToxictyTypeId { get; set; }
         public string ToxictyTypeName { get; set; }
         public bool IsDeleted { get; set; }
@@ -48,8 +50,10 @@ namespace RashidHospital.Models
                     DoctorId = Obj.DoctorId,
                     IsDeleted = Obj.IsDeleted,
                     ModifiedBy = Obj.ModifiedBy,
-                    ToxictyDate=Obj.ToxictyDate
-                };
+                    ToxictyDate=Obj.ToxictyDate,
+                    Pharmacist_Note = Obj.Pharmacist_Note,
+
+    };
             }
             return _Obj;
         }
@@ -78,6 +82,7 @@ namespace RashidHospital.Models
                     ToxictyDate = Obj.ToxictyDate,
                     ToxictyTypeName =Obj.ToxictyTypes.Name,
                     DoctorName = Obj.AspNetUser.FirstName + " " + Obj.AspNetUser.SecondName + "  " + Obj.AspNetUser.ThirdName,
+                    Pharmacist_Note = Obj.Pharmacist_Note,
 
 
                 };

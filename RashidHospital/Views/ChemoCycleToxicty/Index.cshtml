@@ -15,6 +15,7 @@
         column-count: 2;
         width: 1000px;
     }
+
     .form-wizard {
         margin: 0 auto;
         display: block;
@@ -208,8 +209,14 @@
 
     </center>
 
-    @Html.ActionLink("Add New Toxicty", "Create", "Toxicty", new { patientID = ViewBag.PatientId })
-
+    <div class="box-header">
+        <h3 class="box-title">
+            <a href="@Url.Action("Create", "ChemoCycleToxicty", new {Id = ViewBag.CycleId ,pid = ViewBag.PatientId } )" class="btn btn-primary">
+                Add New Toxicty
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </a>
+        </h3>
+    </div>
     <hr />
     <div class="box-body">
         <table id="example1" class="table table-bordered table-striped" style="width:100%">
@@ -252,7 +259,7 @@
 
 </section>
 <center>
-  
+
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
     <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openNurseNoteModal(@ViewBag.CycleId,@ViewBag.PatientId )">
         Next  >>
@@ -405,7 +412,7 @@
         }
 
         function openNurseNoteModal(cycleID,patientID) {
-            window.location.href = '/ChemoTherapyCyclePackage/NurseNote?Id=' + cycleID + '&pid=' + patientID;
+            window.location.href = '/ChemoCycleNuresNote/Index?Id=' + cycleID + '&pid=' + patientID;
         }
 
     </script>
@@ -440,3 +447,4 @@
             });
     </script>
 }
+

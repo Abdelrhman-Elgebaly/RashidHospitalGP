@@ -181,6 +181,8 @@
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CallBoardController.cs" />
+    <Compile Include="Controllers\ChemoCycleNuresNoteController.cs" />
+    <Compile Include="Controllers\ChemoCycleToxictyController.cs" />
     <Compile Include="Controllers\ChemoTherapyController.cs" />
     <Compile Include="Controllers\ChemoTherapyCycleDayController.cs" />
     <Compile Include="Controllers\ChemoTherapyCycleInvestigationController.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="Controllers\ChemoTherapyPreLabController.cs" />
     <Compile Include="Controllers\ChemoTherapyProtocolController.cs" />
     <Compile Include="Controllers\ChemoTherapyTemplateController.cs" />
+    <Compile Include="Controllers\ClinicalPharmacyController.cs" />
     <Compile Include="Controllers\ClinicsController.cs" />
     <Compile Include="Controllers\ChemoTherapyCyclesDatesController.cs" />
     <Compile Include="Controllers\DeleteTasksController.cs" />
@@ -249,6 +252,7 @@
     <Compile Include="Models\DiseaseVM.cs" />
     <Compile Include="Models\DrugsVM.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\FixationVM.cs" />
     <Compile Include="Models\IHCTypesVM.cs" />
     <Compile Include="Models\DiagonsVM.cs" />
@@ -498,12 +502,6 @@
     <Content Include="Views\ChemoTherapyCycleDay\Index.cshtml" />
     <Content Include="Views\ChemoTherapyCycleDay\_TestPopUp.cshtml" />
     <Content Include="Views\ChemoTherapyCyclePackage\Index.cshtml" />
-    <Content Include="Views\ChemoTherapyCyclePackage\Investigation.cshtml" />
-    <Content Include="Views\ChemoTherapyCyclePackage\Toxicty.cshtml" />
-    <Content Include="Views\ChemoTherapyCyclePackage\NurseNote.cshtml" />
-    <Content Include="Views\ChemoTherapyCyclePackage\Test.cshtml" />
-    <Content Include="Views\ChemoTherapyCyclePackage\Edit.cshtml" />
-    <Content Include="Views\ChemoTherapyCyclePackage\NCreate.cshtml" />
     <Content Include="Views\Package\Index.cshtml" />
     <Content Include="Views\Package\Create.cshtml" />
     <Content Include="Views\LabPackage\Index.cshtml" />
@@ -517,6 +515,22 @@
     <Content Include="Views\PatientDose\Test.cshtml" />
     <Content Include="Views\PatientDose\Summery.cshtml" />
     <Content Include="Views\ChemoTherapyTemplate\Test.cshtml" />
+    <Content Include="Views\ClinicalPharmacy\IndexCurrent.cshtml" />
+    <Content Include="Views\ClinicalPharmacy\Pending.cshtml" />
+    <Content Include="Views\ClinicalPharmacy\FinalApproved.cshtml" />
+    <Content Include="Views\ClinicalPharmacy\ClinicalPharmacy.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclePackage\_EditNote.cshtml" />
+    <Content Include="Views\ChemoTherapyCycleInvestigation\_EditNote.cshtml" />
+    <Content Include="Views\PatientDose\_EditNote.cshtml" />
+    <Content Include="Views\ChemoCycleNuresNote\Index.cshtml" />
+    <Content Include="Views\ChemoCycleNuresNote\Create.cshtml" />
+    <Content Include="Views\ChemoCycleToxicty\Index.cshtml" />
+    <Content Include="Views\ChemoCycleToxicty\Create.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\Indext.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\View.cshtml" />
+    <Content Include="Views\NurseNote\_EditNote.cshtml" />
+    <Content Include="Views\ClinicalPharmacy\_EditDrugCondition.cshtml" />
+    <Content Include="Views\ChemoCycleNuresNote\_EditNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

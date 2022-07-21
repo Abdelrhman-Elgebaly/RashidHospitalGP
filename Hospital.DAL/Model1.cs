@@ -304,7 +304,9 @@ namespace Hospital.DAL
             base.OnModelCreating(modelBuilder);
         }
 
-      //  public System.Data.Entity.DbSet<RashidHospital.Models.PatientDoseVM> PatientDoseVMs { get; set; }
+      //  public System.Data.Entity.DbSet<RashidHospital.Models.ChemoTherapyTemplateVM> ChemoTherapyTemplateVMs { get; set; }
+//
+        //  public System.Data.Entity.DbSet<RashidHospital.Models.PatientDoseVM> PatientDoseVMs { get; set; }
 
         //     public System.Data.Entity.DbSet<RashidHospital.Models.LabPackageVM> LabPackageVMs { get; set; }
 

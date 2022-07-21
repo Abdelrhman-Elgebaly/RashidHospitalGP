@@ -236,7 +236,7 @@ namespace RashidHospital.Controllers
 
 
 
-           /*
+         
             foreach (var itemm in OrderList)
             {
 
@@ -254,7 +254,7 @@ namespace RashidHospital.Controllers
 
                         ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
                         cc.Cycle_ID = item.ID;
-                         cc.Actual_Value = 7;
+                         cc.Actual_Value = null;
                         cc.Test_Type = itemm3.Test_Type;
                         cc.Test_Value = itemm3.Value;
                         cc.Rule_Type = itemm3.Rule_Type;
@@ -272,7 +272,7 @@ namespace RashidHospital.Controllers
 
                         ChemoTherapyCycleInvestigationVM cc = new ChemoTherapyCycleInvestigationVM();
                         cc.Cycle_ID = item.ID;
-                        // cc.Actual_Value = 0;
+                         cc.Actual_Value = null;
                         cc.Inves_Type = itemm4.Test_Name;
                         cc.Value = itemm4.Value;
                         cc.Rule_Type = itemm4.Rule_Type;
@@ -290,7 +290,7 @@ namespace RashidHospital.Controllers
                 }
 
             }
-            */
+          
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
         }
 

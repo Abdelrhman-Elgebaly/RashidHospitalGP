@@ -33,22 +33,42 @@
 
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    if (item.IsStart == true)
+                    {
+                        <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+                      
+                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-
-                        <td>
+                            <td>
 
 
-                            @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID , pid = item.Patient_ID}, null)
+                                @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
 
-                        </td>
-                    </tr>
-                }
+                            </td>
+                        </tr>
+                        }
+                        else{
 
-            </tbody>
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+
+                            <td>
+
+
+                                @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+
+                            </td>
+                        </tr>
+                        }
+                        }
+
+                    </tbody>
         </table>
     </div>
 </div>

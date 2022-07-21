@@ -1,0 +1,140 @@
+﻿@model RashidHospital.Models.PatientDoseVM
+
+<style>
+    .form-control {
+        margin-bottom: 4px;
+    }
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+@using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.Hidden("Id", (int)ViewBag.Id)
+
+
+    <div class="modal-header">
+
+        @*@Html.Raw(ViewBag.PatientInfo)*@
+    </div>
+    <div class="modal-body">
+
+
+        <div class="box-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Dose_Calculated, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Dose_Calculated, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Dose_Calculated, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Fluid_Vol, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Fluid_Vol, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Fluid_Vol, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pharmacist_Note, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Pharmacist_Note, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Pharmacist_Note, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="float:right;">
+                <div class="col-md-12">
+
+
+                    <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
+                    @*onclick="location.href='@Url.Action("Index", "LabResualt", new { @PatientId = (int)ViewBag.PatientId })'"*@
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+
+        $("#Date").datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            orientation: 'bottom left'
+        });
+
+
+</script>
+<script>
+        $(".select2").select2({
+            tags: true
+        });
+</script>
+<script>
+        $("body").on("click", "#AddResult", function () {
+            var Result = $("#Note").val();
+            var Unit = $("#Unit").val();
+            var LabType = $("#LabType option:selected").val();
+            var PatientId = $("#PatientId").val();
+
+
+            $("#Unit").val('');
+            $("#Note").val('');
+            $.ajax({
+                url: "/LabResualt/AddResult",
+                type: "post",
+                dataType: "json",
+                contextType: "application/json",
+                data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId },
+                traditional: true,
+                success: function (result) {
+                }
+            });
+        })
+
+        $("body").on("click", "#btnSaveandExit", function () {
+
+
+            var Id = $("#Id").val();
+            var Note = $("#Pharmacist_Note").val();
+            var Dose_Calculated = $("#Dose_Calculated").val();
+            var Fluid_Vol = $("#Fluid_Vol").val();
+
+            
+            
+            $.ajax({
+                url: "/PatientDose/AddNote",
+                type: "post",
+                dataType: "json",
+                contextType: "application/json",
+                data: { "Id": Id, "Note": Note, "Dose": Dose_Calculated, "Fluid": Fluid_Vol },
+                success: function (result) {
+                    $("#CreateModel").modal("hide");
+                    window.location.reload();
+
+                }
+            });
+        })
+</script>
+
+

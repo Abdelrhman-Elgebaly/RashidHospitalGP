@@ -29,9 +29,10 @@ namespace RashidHospital.Models
         public int TemplateId { get; set; }
 
         public string Rule_TypeValue { get; set; }
-        
+        public string Note { get; set; }
 
-             public int Value { get; set; }
+
+        public int Value { get; set; }
         internal override ChemoTherapyCycleInvestigation Convert(ChemoTherapyCycleInvestigationVM Obj)
         {
             if (Obj == null)
@@ -49,6 +50,7 @@ namespace RashidHospital.Models
                     Actual_Value = Obj.Actual_Value,
                     TemplateId = Obj.TemplateId,
                     Value =Obj.Value,
+                    Note =Obj.Note,
                 };
             }
             return _Obj;
@@ -78,7 +80,7 @@ namespace RashidHospital.Models
             pl.Actual_Value = DbObj.Actual_Value;
             pl.TemplateId = DbObj.TemplateId;
             pl.Value = DbObj.Value;
-           
+            pl.Note = DbObj.Note;
             return pl;
         }
 

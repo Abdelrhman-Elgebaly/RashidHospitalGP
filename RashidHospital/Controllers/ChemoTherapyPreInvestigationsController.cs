@@ -28,6 +28,7 @@ namespace RashidHospital.Controllers
             //  int _patientID = Convert.ToInt32(patientID);
             ChemoTherapyPreInvestigationsVM radioTherapyVMVM = new ChemoTherapyPreInvestigationsVM();
             radioTherapyVMVM.Template_ID = templateID;
+       
             fillCreateBag();
             return View(radioTherapyVMVM);
         }
@@ -38,7 +39,6 @@ namespace RashidHospital.Controllers
 
             if (ModelState.IsValid)
             {
-
 
 
 
@@ -55,7 +55,7 @@ namespace RashidHospital.Controllers
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();
                 input.Days = string.Join("/", array);
 
-
+             
                 input.Create();
                 return RedirectToAction("Index", new { templateID = input.Template_ID });
             }

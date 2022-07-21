@@ -17,8 +17,10 @@ namespace RashidHospital.Models
     {
         [Key]
         public int ID { get; set; }
-        public Nullable<int> Patient_ID { get; set; }
+        public int Patient_ID { get; set; }
+        public int MainDrugId { get; set; }
 
+        
         public Nullable<int> NurseNote_ID { get; set; }
 
         public Nullable<int> Template_ID { get; set; }
@@ -31,8 +33,21 @@ namespace RashidHospital.Models
         
         public string Fluid_Vol { get; set; }
         public string Unit_Value { get; set; }
-     
+        public int Pharmacy_Condition { get; set; }
+        public string Pharmacist_Note { get; set; }
 
+        public bool IsEditByDoctor { get; set; }
+        public bool IsEditByPharmacy { get; set; }
+        public bool IsApproved { get; set; }
+        public string PatientName { get; set; }
+
+        public Nullable<int> Sequence_Number { get; set; }
+        public string Route_Value { get; set; }
+        public string Fluid_Type_Value { get; set; }
+        public string Duration { get; set; }
+        public string Pharmacy_Condition_Value { get; set; }
+
+        
 
 
         internal override PatientDose Convert(PatientDoseVM Obj)
@@ -54,8 +69,16 @@ namespace RashidHospital.Models
                 Drug_Dose = Obj.Drug_Dose,
                 Unit_Value = Obj.Unit_Value,
                 Fluid_Vol = Obj.Fluid_Vol,
+                    Pharmacy_Condition = Obj.Pharmacy_Condition,
+                    Pharmacist_Note=Obj.Pharmacist_Note,
 
-            };
+                    IsEditByDoctor = Obj.IsEditByDoctor,
+                    IsEditByPharmacy = Obj.IsEditByPharmacy,
+                    IsApproved = Obj.IsApproved,
+                    MainDrugId = Obj.MainDrugId,
+
+                    
+                };
             }
             return _Obj;
         }
@@ -64,7 +87,8 @@ namespace RashidHospital.Models
         internal override PatientDoseVM Convert(PatientDose DbObj)
         {
             PatientDoseVM pl = new PatientDoseVM();
-
+          //  var Site = (DrugOrder)DbObj?.Pharmacy_Condition;
+          //  var enumType = EnumHelper<DrugOrder>.GetDisplayValue(Site);
             pl.ID = DbObj.ID;
             pl.Patient_ID = DbObj.Patient_ID;
             pl.NurseNote_ID = DbObj.NurseNote_ID;
@@ -77,6 +101,25 @@ namespace RashidHospital.Models
             pl.Drug_Dose = DbObj.Drug_Dose;
             pl.Unit_Value = DbObj.Unit_Value;
             pl.Fluid_Vol = DbObj.Fluid_Vol;
+            pl.Pharmacist_Note = DbObj.Pharmacist_Note;
+            pl.IsEditByDoctor = DbObj.IsEditByDoctor;
+            pl.IsEditByPharmacy = DbObj.IsEditByPharmacy;
+            pl.IsApproved = DbObj.IsApproved;
+            pl.MainDrugId = DbObj.MainDrugId;
+          //  pl.Pharmacy_Condition_Value = enumType.ToString();
+            PatientVM Obj = new PatientVM();
+
+            PatientVM Objm = Obj.SelectObject(DbObj.Patient_ID);
+            pl.PatientName = Objm.Name;
+
+            ChemoTherapyDrugVM dObj = new ChemoTherapyDrugVM();
+
+            ChemoTherapyDrugVM dObjm = dObj.SelectObject(DbObj.MainDrugId);
+            pl.Sequence_Number = dObjm.Sequence_Number;
+            pl.Route_Value = dObjm.Route_Value;
+            pl.Fluid_Type_Value = dObjm.Fluid_Type_Value;
+            pl.Duration = dObjm.Duration;
+
             return pl;
         }
 
@@ -111,5 +154,25 @@ namespace RashidHospital.Models
             PatientDoseVM Object = Convert(_BClass.Getobject(Id));
             return Object;
         }
+
+        public List<PatientDoseVM> SelectAllFinalApproved()
+        {
+            PatientDoseVM _Obj = new PatientDoseVM();
+            PatientDose _BClass = new PatientDose();
+            List<PatientDose> dbList = _BClass.GetAllFinalApproved().ToList();
+            return dbList.Select(z => _Obj.Convert(z)).ToList();
+        }
+/*
+        public List<SelectListItem> GetOrderSelectList()
+        {
+            return System.Enum.GetValues(typeof(DrugOrder)).Cast<DrugOrder>().Select(v => new SelectListItem
+            {
+                Text = EnumHelper<DrugOrder>.GetDisplayValue(v),
+                Value = ((int)v).ToString()
+            }).ToList();
+        }
+*/
+
+
     }
 }

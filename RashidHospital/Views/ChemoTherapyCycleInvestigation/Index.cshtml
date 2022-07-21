@@ -193,7 +193,7 @@
     </div>
 
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-   
+
 
 
 </center>
@@ -206,7 +206,8 @@
                 <th>Value</th>
                 <th>Actual Value</th>
                 <th>Rule</th>
-
+                <th> Pharmacist Note</th>
+                <th>Actions</th>
 
 
             </tr>
@@ -278,7 +279,33 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Rule_TypeValue)
                     </td>
+               
+                    @if (item.Note == null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    }
+                    else
+                    {
+                        <td bgcolor="darkseagreen">
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    }
 
+
+
+
+
+                    <td>
+
+                        <center>
+
+                            <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
 
 
                 </tr>
@@ -291,10 +318,7 @@
 
 
 
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
-        Save Changes
-    </a>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+   
 
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
     <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openToxictyModal(@ViewBag.CycleId,@ViewBag.PatientId )">
@@ -330,6 +354,22 @@
         </div>
     </div>
 </div>
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div id="NoteBody"></div>
+        </div>
+    </div>
+</div>
+
+
 
 
 @section Scripts {
@@ -367,10 +407,34 @@
         }
 
         function openToxictyModal(cycleID,patientID) {
-                window.location.href = '/ChemoTherapyCyclePackage/Toxicty?Id=' + cycleID + '&pid=' + patientID;
+            window.location.href = '/ChemoCycleToxicty/Index?Id=' + cycleID + '&pid=' + patientID;
         }
 
-        
+
+
+                function openTestPopUp(Id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_EditNote", "ChemoTherapyCycleInvestigation")",
+                cache: false,
+                data: { Id: Id },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#NoteBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
     </script>
+  
 }
 

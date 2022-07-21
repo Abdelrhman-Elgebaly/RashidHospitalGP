@@ -1,8 +1,6 @@
-﻿@model Tuple<RashidHospital.Models.ChemoTherapyTemplateVM, List<RashidHospital.Models.ChemoTherapyCyclePackageVM>>
+﻿@model IEnumerable<RashidHospital.Models.NurseNoteVM>
 
 <link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
-
-
 <style>
     .columns {
         float: left;
@@ -167,12 +165,9 @@
             }
 </style>
 <section class="content-header">
-    <h2>Predeined Investigation</h2>
+    <h2>Nurse Note</h2>
     @Html.Raw(ViewBag.PatientInfo)
 </section>
-
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -183,9 +178,9 @@
     <div class="form-wizard centered-pills">
         <ul class="nav nav-pills">
             <li role="presentation" class="complete"><a href="#">1. Lab Validation</a></li>
-            <li role="presentation" class="current"><a href="#">2.   Predeined Investigation</a></li>
+            <li role="presentation" class="complete"><a href="#">2.   Predeined Investigation</a></li>
             <li role="presentation" class="complete"><a href="#">3. Toxicty</a></li>
-            <li role="presentation" class="complete"><a href="#">4.  Nurse Note</a></li>
+            <li role="presentation" class="current"><a href="#">4.  Nurse Note</a></li>
             <li role="presentation" class="complete"><a href="#">5.  Dose Calculation</a></li>
 
             <li role="presentation"><a href="#">6. Summary</a></li>
@@ -200,34 +195,148 @@
 
 
 </center>
+<section class="content">
 
-<div class="box-body">
-    <table id="example1" class="table table-bordered table-striped" style="width:100%">
-        <thead>
-            <tr>
 
-                <th>Investigation</th>
-                <th>Value</th>
-                <th>Actual Value</th>
-                <th>Rule</th>
-               
-            </tr>
-        </thead>
-        
-    </table>
-</div>
-<center>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId )">
-        Save Changes
-    </a>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openToxictyModal(@ViewBag.PatientId )">
-        Next  >>
-    </a>
-</center>
+
+
+
+
+
+
+    <div class="box-header">
+        <h3 class="box-title">
+            <a href="@Url.Action("Create", "ChemoCycleNuresNote", new {Id = ViewBag.CycleId ,pid = ViewBag.PatientId } )" class="btn btn-primary">
+                Create new Nurse Note
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </a>
+        </h3>
+    </div>
+    <hr />
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Temperature</th>
+                    <th>Pulse</th>
+                    <th>BP</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>SA</th>
+                    <th>Date</th>
+                    <th> Pharmacist Note</th>
+                    <th>Actions</th>
+                    <th class="text-center" width="110px">Select</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.IsSelected == true)
+                    {
+                        <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+                            <td class="adjustContent">@item.Temperature</td>
+                            <td class="adjustContent">@item.Pulse</td>
+                            <td class="adjustContent">@item.BP</td>
+                            <td class="adjustContent">@item.Weight</td>
+                            <td class="adjustContent">@item.Height</td>
+                            <td class="adjustContent">@item.SA</td>
+                            <td class="adjustContent">@item.Date</td>
+
+                            @if (item.Pharmacist_Note == null)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                </td>
+                            }
+                            else
+                            {
+                                <td bgcolor="darkseagreen">
+                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                </td>
+                            }
+
+
+
+
+
+                            <td>
+
+                                <center>
+
+                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </center>
+                            </td>
+
+                            <td class="adjustContent text-center">
+
+                                <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Test?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
+                                    <i class="fa fa-check"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="adjustContent">@item.Temperature</td>
+                            <td class="adjustContent">@item.Pulse</td>
+                            <td class="adjustContent">@item.BP</td>
+                            <td class="adjustContent">@item.Weight</td>
+                            <td class="adjustContent">@item.Height</td>
+                            <td class="adjustContent">@item.SA</td>
+                            <td class="adjustContent">@item.Date</td>
+
+                            @if (item.Pharmacist_Note == null)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                </td>
+                            }
+                            else
+                            {
+                                <td bgcolor="darkseagreen">
+                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                </td>
+                            }
+
+
+
+
+
+                            <td>
+
+                                <center>
+
+                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </center>
+                            </td>
+
+                            <td class="adjustContent text-center">
+
+                                <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Test?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
+                                    <i class="fa fa-check"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+
 <!--Edit Modal-->
-<div class="modal fade" id="EditModel" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -236,25 +345,10 @@
                 </button>
                 <h4 class="modal-title">Edit</h4>
             </div>
-            <div id="EditBody"></div>
+            <div id="NoteBody"></div>
         </div>
     </div>
 </div>
-<!--Create Modal-->
-<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Add new Lab</h4>
-            </div>
-            <div id="CreateBody"></div>
-        </div>
-    </div>
-</div>
-
 
 @section Scripts {
 
@@ -265,7 +359,9 @@
 
 
     <script>
-
+        function openCreatelModal(Id) {
+            window.location.href = '/ChemoTherapyCyclePackage/Create?Id=' + Id;
+        };
         function openCreateModel(Id) {
     $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     $.ajax({
@@ -288,11 +384,35 @@
     })
         }
 
-
-        function openToxictyModal(patientID) {
-            window.location.href = '/ChemoTherapyCyclePackage/Toxicty?patientID=' + patientID;
+        function openToxictyModal(cycleID,patientID) {
+            window.location.href = '/ChemoCycleToxicty/Index?Id=' + cycleID + '&pid=' + patientID;
         }
 
+
+
+                function openTestPopUp(Id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_EditNote", "NurseNote")",
+                cache: false,
+                data: { Id: Id },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#NoteBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
     </script>
+
 }
 

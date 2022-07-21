@@ -20,7 +20,15 @@ namespace Hospital.DAL
 
         }
 
+        public List<PatientDose> GetAllFinalApproved()
+        {
+            List<PatientDose> medicalList = _Db.PatientDose.Where(a => a.IsApproved == true).ToList();
 
+            //  medicalList.Find(PatientId);
+
+            return medicalList;
+
+        }
 
     }
 }

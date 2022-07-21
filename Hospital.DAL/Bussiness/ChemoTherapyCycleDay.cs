@@ -22,8 +22,33 @@ namespace Hospital.DAL
         }
 
 
+        public List<ChemoTherapyCycleDay> GetAllReleasedCycleDays()
+        {
+            List<ChemoTherapyCycleDay> medicalList = _Db.ChemoTherapyCycleDays.Where(a => a.IsReleased == true).ToList();
 
+            //  medicalList.Find(PatientId);
 
+            return medicalList;
+
+        }
+        public List<ChemoTherapyCycleDay> GetAllPendingCycleDays()
+        {
+            List<ChemoTherapyCycleDay> medicalList = _Db.ChemoTherapyCycleDays.Where(a => a.IsPending == true).ToList();
+
+            //  medicalList.Find(PatientId);
+
+            return medicalList;
+
+        }
+        public List<ChemoTherapyCycleDay> GetAllFinalApprovedCycleDays()
+        {
+            List<ChemoTherapyCycleDay> medicalList = _Db.ChemoTherapyCycleDays.Where(a => a.IsApproved == true).ToList();
+
+            //  medicalList.Find(PatientId);
+
+            return medicalList;
+
+        }
 
 
     }

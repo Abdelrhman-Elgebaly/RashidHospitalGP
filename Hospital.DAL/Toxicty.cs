@@ -16,6 +16,8 @@ namespace Hospital.DAL
         public string Description { get; set; }
         public int Condition { get; set; }
         public string Note { get; set; }
+        public string Pharmacist_Note { get; set; }
+
         public int ToxictyTypeId { get; set; }
         public bool IsDeleted { get; set; }
         public Guid? DoctorId { get; set; }

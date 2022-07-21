@@ -23,6 +23,8 @@ namespace Hospital.DAL
         public bool IsApproved { get; set; }
         public Nullable<double> Dose_Calculated { get; set; }
         public Nullable<int> CycleId { get; set; }
+        public string Pharmacist_Note { get; set; }
+        public Nullable<bool> IsSelected { get; set; }
 
     }
 }

@@ -167,9 +167,13 @@ namespace RashidHospital.Controllers
             // Patient Dose
             PatientDoseVM ObjVm = new PatientDoseVM();
             List<PatientDoseVM> _Doselist = ObjVm.SelectAll(NoteId, CycleId);
-
-
-              var tuple = new Tuple<PatientVM, ChemoTherapyCycleDayVM, List<PatientDoseVM>>(_pobjVM, _Objm, _Doselist);
+            NurseNoteVM _nObj = new NurseNoteVM();
+            NurseNoteVM _nObjm = _nObj.SelectObject(NoteId);
+            if(_Objm.IsReleased == true || _Objm.IsPending == true || _Objm.IsApproved == true)
+            {
+                _nObjm.IsSelected = true;
+            }
+            var tuple = new Tuple<PatientVM, ChemoTherapyCycleDayVM, List<PatientDoseVM>>(_pobjVM, _Objm, _Doselist);
 
             fillBag(NoteId, CycleId, pid);
 
@@ -182,15 +186,15 @@ namespace RashidHospital.Controllers
         {
             PatientDoseVM pObjVm = new PatientDoseVM();
             List<PatientDoseVM> _Doselist = pObjVm.SelectAll(NoteId, CycleId);
-
+/*
             foreach (var item in _Doselist)
             {
                 item.Delete();
             }
 
-
-
-
+            
+*/
+                        if (_Doselist.Count == 0) {
                 ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
                 ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
 
@@ -206,6 +210,7 @@ namespace RashidHospital.Controllers
                 List<ChemoTherapyDrugVM> _Druglist = ObjVmd.SelectAllByTemplateId(_templateID);
                 NurseNoteVM _nobj = new NurseNoteVM();
                 NurseNoteVM _nobjVM = _nobj.SelectObject(NoteId);
+        
                 foreach (var item in _Druglist)
                 {
                     PatientDoseVM ObjVm = new PatientDoseVM();
@@ -215,12 +220,20 @@ namespace RashidHospital.Controllers
                     if (item.Unit == 1)
                     {
                         ObjVm.Dose_Calculated = item.Drug_Dose * _nobjVM.SA;
-
+                        double test = Convert.ToDouble(ObjVm.Dose_Calculated);
+                        ObjVm.Dose_Calculated = Math.Round(test, 2);
                     }
 
                     else if (item.Unit == 2)
                     {
                         ObjVm.Dose_Calculated = item.Drug_Dose * _nobjVM.Weight;
+                        double test = Convert.ToDouble(ObjVm.Dose_Calculated);
+                        ObjVm.Dose_Calculated = Math.Round(test, 2);
+
+                    }
+                    else if (item.Unit == 3 || item.Unit == 4)
+                    {
+                        ObjVm.Dose_Calculated = item.Drug_Dose;
 
 
                     }
@@ -262,13 +275,15 @@ namespace RashidHospital.Controllers
                             {
 
                                 ObjVm.Dose_Calculated = item.Drug_Dose * (creat_clearance + 25);
-
+                                double test = Convert.ToDouble(ObjVm.Dose_Calculated);
+                                ObjVm.Dose_Calculated = Math.Round(test, 2);
                             }
                             if (_pobjVM.Gender == "Female")
                             {
                                 creat_clearance = creat_clearance * 0.85;
                                 ObjVm.Dose_Calculated = item.Drug_Dose * (creat_clearance + 25);
-
+                                double test = Convert.ToDouble(ObjVm.Dose_Calculated);
+                                ObjVm.Dose_Calculated = Math.Round(test, 2);
 
                             }
                         }
@@ -279,23 +294,159 @@ namespace RashidHospital.Controllers
                     ObjVm.Drug_Dose = item.Drug_Dose;
                     ObjVm.Unit_Value = item.Unit_Value;
                     ObjVm.Fluid_Vol = item.Fluid_Vol;
+                    ObjVm.MainDrugId = item.Drug_ID;
+                    ObjVm.Patient_ID = pid;
                     ObjVm.Create();
 
                 }
 
 
-         
 
 
 
 
+            }
 
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
 
         }
 
+        public string RenderRazorViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+        public JsonResult _EditNote(int Id)
+        {
+            ViewBag.Id = Id;
+            if (Id == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            ViewBag.Id = Id;
+
+            PatientDoseVM _Obj = new PatientDoseVM();
+            PatientDoseVM _ObjvM = _Obj.SelectObject(Id);
+            //if (_objVM == null)
+            //{
+            //    return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+            //}
+
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_EditNote", _ObjvM) }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AddNote(int Id, string Note, int Dose , string Fluid)
+
+        {
+            if (User.IsInAnyRoles("Doctor")) {
+                PatientDoseVM _Obj = new PatientDoseVM();
+                PatientDoseVM _ObjvM = _Obj.SelectObject(Id);
+                _ObjvM.Dose_Calculated = Dose;
+                _ObjvM.Fluid_Vol = Fluid;
+
+                _ObjvM.Pharmacist_Note = Note;
+                _ObjvM.IsEditByDoctor = true;
+                _ObjvM.Edit();
+            }
+            if (User.IsInAnyRoles("Pharmacist"))
+            {
+                PatientDoseVM _Obj = new PatientDoseVM();
+                PatientDoseVM _ObjvM = _Obj.SelectObject(Id);
+                _ObjvM.Dose_Calculated = Dose;
+                _ObjvM.Fluid_Vol = Fluid;
+                _ObjvM.Pharmacist_Note = Note;
+                _ObjvM.IsEditByPharmacy = true;
+                _ObjvM.Edit();
+            }
+
+            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public int ReleasedToPharmacy(int CycleId)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+                ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
+                _Objm.IsReleased = true;
+
+                _Objm.Edit();
+
+                finalResult = 1;
 
 
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
+
+
+        public int ReleasedToDoctor(int CycleId)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+                ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
+                _Objm.IsReleased = false;
+                _Objm.IsPending = true;
+
+                _Objm.Edit();
+
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
+
+
+        public int FinalApproved(int CycleId, int NoteId)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+                ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
+                _Objm.IsReleased = false;
+                _Objm.IsPending = false;
+                _Objm.IsApproved = true;
+
+                _Objm.Edit();
+
+                finalResult = 1;
+                PatientDoseVM ObjVm = new PatientDoseVM();
+                List<PatientDoseVM> _Doselist = ObjVm.SelectAll(NoteId, CycleId);
+                foreach(var item in _Doselist)
+                {
+                    item.IsApproved = true;
+                    item.Edit();
+                }
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
 
     }
     }

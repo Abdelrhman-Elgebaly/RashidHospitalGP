@@ -13,8 +13,8 @@ namespace Hospital.DAL
 
         [Key]
         public int ID { get; set; }
-        public Nullable<int> Patient_ID { get; set; }
-       
+        public int Patient_ID { get; set; }
+
         public Nullable<int> NurseNote_ID { get; set; }
 
         public Nullable<int>Template_ID{ get; set; }
@@ -27,6 +27,13 @@ namespace Hospital.DAL
 
         public string Fluid_Vol { get; set; }
         public string Unit_Value { get; set; }
+        public int Pharmacy_Condition { get; set; }
+        public string Pharmacist_Note { get; set; }
+
+        public bool IsEditByDoctor { get; set; }
+        public bool IsEditByPharmacy { get; set; }
+        public bool IsApproved { get; set; }
+        public int MainDrugId { get; set; }
 
     }
 }

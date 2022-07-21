@@ -12,7 +12,7 @@
         text-align: left;
     }
 </style>
-@using (Html.BeginForm("NCreate", "ChemoTherapyCyclePackage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "ChemoCycleNuresNote", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(model => model.Patient_ID)
     @Html.HiddenFor(model => model.CycleId)
@@ -92,4 +92,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
 
