@@ -28,12 +28,15 @@ namespace RashidHospital.Models
         public int Template_ID { get; set; }
         public string Protocol_Name { get; set; }
         public Nullable<int> Frequency { get; set; }
+        [Required]
+        [RegularExpression(@"[0-9]+(,[0-9]+)*",
+                            ErrorMessage = "Please enter a valid Cycle Days")]
         public string Cycle_days { get; set; }
         public Nullable<int> Maximum_cycles { get; set; }
         public string Emetogenic_Level_Value { get; set; }
         public Nullable<int> Emetogenic_Level { get; set; }
 
-        public Nullable<int> FN_risk { get; set; }
+        public Nullable<double> FN_risk { get; set; }
         public string Link { get; set; }
         public string Date_Created { get; set; }
         public string Created_By { get; set; }
@@ -48,6 +51,7 @@ namespace RashidHospital.Models
         public List<DateTime> cycleDates { get; set; }
         public int ProtocolId { get; set; }
         public int DiseaseId { get; set; }
+        public Nullable<bool>  IsDeleted { get; set; }
 
 
         internal override ChemoTherapyTemplate Convert(ChemoTherapyTemplateVM Obj)
@@ -79,6 +83,7 @@ namespace RashidHospital.Models
                     Disease = Obj.Disease,
                     ProtocolId = Obj.ProtocolId,
                     DiseaseId = Obj.DiseaseId,
+                    IsDeleted = Obj.IsDeleted,
 
 
 
@@ -130,7 +135,8 @@ namespace RashidHospital.Models
                     DiseaseId = Obj.DiseaseId,
                     Disease = clinicObj?.DiseaseName,
                     Protocol_Name = cplinicObj?.ProtocolName,
-                   
+                    IsDeleted = Obj.IsDeleted,
+
                 };
                
 

@@ -32,7 +32,7 @@ namespace RashidHospital.Models
         public string Note { get; set; }
 
 
-        public int Value { get; set; }
+        public double Value { get; set; }
         internal override ChemoTherapyCycleInvestigation Convert(ChemoTherapyCycleInvestigationVM Obj)
         {
             if (Obj == null)

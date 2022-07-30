@@ -104,9 +104,9 @@
                             @Html.DisplayFor(modelItem => item.Note)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Drug_ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Drug_ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
+                            @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
+                           
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID }, new { onclick = "return confirm('Are You Sure From Duplicated... ?')" })
                         </td>
                     </tr>
                     }
@@ -206,8 +206,7 @@
                     @Html.DisplayFor(modelItem => item.Note)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Drug_ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Drug_ID }) |
+                    @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
                 </td>
 
@@ -311,8 +310,7 @@
                     @Html.DisplayFor(modelItem => item.Note)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Drug_ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Drug_ID }) |
+                    @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
                 </td>
 

@@ -28,7 +28,7 @@ namespace RashidHospital.Models
                             ErrorMessage = "Please enter a valid Mobile")]
         public string PhoneNumber1 { get; set; }
 
-      
+
         [RegularExpression(@"(201)[0-9]{9}",
                             ErrorMessage = "Please enter a valid Mobile")]
 

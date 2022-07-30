@@ -40,40 +40,7 @@ namespace RashidHospital.Controllers
             return View(_list);
         }
  
-        [HttpGet]
 
-        public ActionResult Indext()
-
-        {
-
-            EmployeeModel employeeModel = new EmployeeModel();
-            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
-            ChemoTherapyTemplate _BClass = new ChemoTherapyTemplate();
-            List<ChemoTherapyTemplate> dbList = _BClass.GetAll<ChemoTherapyTemplate>().ToList();
-            employeeModel.EmployeeList = dbList;
-
-            //Here i have adding donw dummy value as id
-
-            //In this we will create 5 rows
-
-
-
-            return View(employeeModel);
-
-        }
-        [HttpPost]
-
-        public ActionResult Indext(EmployeeModel employeeModel)
-
-        {
-
-            //Now save the department id in the database as required
-
-            //Rebind the employee table data again 
-
-            return View(employeeModel);
-
-        }
         public ActionResult Create()
         {
             fillCreateBag();
@@ -131,21 +98,57 @@ namespace RashidHospital.Controllers
         }
 
 
-        public ActionResult Duplicate(int? Id)
+
+        public ActionResult Test()
         {
-            var result = _context.ChemoTherapyTemplate.Find(Id);
-            if (result != null)
+            fillCreateBag();
+
+         
+
+            ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
+
+        
+
+            fillCreateBag();
+            return View(radioTherapyVMVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Test(ChemoTherapyTemplateVM input)
+        {
+            // fillCreateBag();
+
+            if (ModelState.IsValid)
             {
-                _context.ChemoTherapyTemplate.Add(result);
-                _context.SaveChanges();
+
+
+                List<string> tokens = input.Cycle_days.Split(',').ToList();
+                List<int> intlist = new List<int>();
+
+                foreach (String str in tokens)
+                {
+                    intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
+                }
+                input.CycleDays = intlist;
+                string[] array = new string[1000];
+
+                array = intlist.ConvertAll(x => x.ToString()).ToArray();
+                input.Cycle_days = string.Join("/", array);
+
+                input.Protocol_Name = input.Protocol_Name;
+                input.Disease = input.Disease;
+                input.Create();
+
+                return RedirectToAction("Index");
             }
-            return RedirectToAction(nameof(Index));
+            //  fillCreateBag();
+
+            return View(input);
         }
 
-    
 
 
-       
+
 
 
 
@@ -182,9 +185,86 @@ namespace RashidHospital.Controllers
 
         }
 
+        public ActionResult Edit(int Id)
+        {
+            fillCreateBag();
+
+
+            ChemoTherapyTemplateVM chemoTherapyTemplateVM = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM chemoTherapyTemplateVM1 = chemoTherapyTemplateVM.SelectObject(Id);
+
+
+            fillCreateBag();
+            return View(chemoTherapyTemplateVM1);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ChemoTherapyTemplateVM input)
+        {
+            // fillCreateBag();
+
+            if (ModelState.IsValid)
+            {
+
+
+                List<string> tokens = input.Cycle_days.Split(',').ToList();
+                List<int> intlist = new List<int>();
+
+                foreach (String str in tokens)
+                {
+                    intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
+                }
+                input.CycleDays = intlist;
+                string[] array = new string[1000];
+
+                array = intlist.ConvertAll(x => x.ToString()).ToArray();
+                input.Cycle_days = string.Join("/", array);
+
+                input.Protocol_Name = input.Protocol_Name;
+                input.Disease = input.Disease;
+                input.Edit();
+
+                return RedirectToAction("Index");
+            }
+            //  fillCreateBag();
+
+            return View(input);
+        }
 
 
 
+        public ActionResult Duplicate(int? Id)
+        {
+            var result = _context.ChemoTherapyTemplate.Find(Id);
+            if (result != null)
+            {
+                _context.ChemoTherapyTemplate.Add(result);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
+
+        [HttpPost]
+        public int Delete(int Id)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyTemplateVM _resultVM = new ChemoTherapyTemplateVM();
+                ChemoTherapyTemplateVM DeleteObject = _resultVM.SelectObject(Id);
+               // DeleteObject.IsDeleted = true;
+                DeleteObject.Delete();
+
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
     }
 }

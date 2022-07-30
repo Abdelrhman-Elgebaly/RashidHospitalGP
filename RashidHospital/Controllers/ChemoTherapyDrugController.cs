@@ -158,8 +158,101 @@ namespace RashidHospital.Controllers
             DrugsVM drugs = new DrugsVM();
             ViewBag.Drugs = drugs.DrugsSelectList();
 
-
         }
+
+
+
+        public ActionResult Edit(int Id )
+        {
+
+            fillCreateBag();
+
+            //  int _patientID = Convert.ToInt32(patientID);
+            ChemoTherapyDrugVM chemoTherapyDrugVM = new ChemoTherapyDrugVM();
+            ChemoTherapyDrugVM chemoTherapyDrugVM1 = chemoTherapyDrugVM.SelectObject(Id);
+            fillCreateBag();
+
+       
+
+
+
+            fillCreateBag();
+
+
+            return View(chemoTherapyDrugVM1);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ChemoTherapyDrugVM input)
+        {
+            fillCreateBag();
+
+            if (ModelState.IsValid)
+            {
+                fillCreateBag();
+
+
+
+                List<string> tokens = input.Days.Split(',').ToList();
+                List<int> intlist = new List<int>();
+
+                foreach (String str in tokens)
+                {
+                    intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
+                }
+
+                string[] array = new string[1000];
+
+                array = intlist.ConvertAll(x => x.ToString()).ToArray();
+                input.Days = string.Join("/", array);
+
+
+
+
+
+
+
+
+
+
+                input.Edit();
+
+                return RedirectToAction("Index", new { templateID = input.Template_ID });
+            }
+            fillCreateBag();
+
+            return View(input);
+        }
+
+
+
+
+
+        [HttpPost]
+        public int Delete(int id)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyDrugVM _resultVM = new ChemoTherapyDrugVM();
+                ChemoTherapyDrugVM DeleteObject = _resultVM.SelectObject(id);
+                // DeleteObject.IsDeleted = true;
+                DeleteObject.Delete();
+
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
+
+
+
+
 
     }
 }

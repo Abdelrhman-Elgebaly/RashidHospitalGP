@@ -23,7 +23,7 @@ namespace RashidHospital.Models
         public Nullable<int> Template_ID { get; set; }
         public string Days { get; set; }
         public string Test_Name { get; set; }
-        public Nullable<int> Value { get; set; }
+        public Nullable<double> Value { get; set; }
         public string rule { get; set; }
         //   public virtual ChemoTherapy_Template ChemoTherapy_Template { get; set; }
         public int Test_Type { get; set; }
@@ -88,6 +88,19 @@ namespace RashidHospital.Models
         {
             _Obj = Convert(this);
             _Obj.AddNew();
+        }
+
+
+        public void Edit()
+        {
+            _Obj = Convert(this);
+            _Obj.Edit();
+        }
+
+        public void Delete()
+        {
+            _Obj = Convert(this);
+            _Obj.Delete();
         }
 
         public List<ChemoTherapyPreLabVM> SelectAllByTemplateID(int templateId)

@@ -26,7 +26,7 @@ namespace RashidHospital.Models
         public string Days { get; set; }
         public Nullable<int> Sequence_Number { get; set; }
         public string Drug_Name { get; set; }
-        public int Drug_Dose { get; set; }
+        public double Drug_Dose { get; set; }
         public string Fluid_Type_Value { get; set; }
         public string Fluid_Vol { get; set; }
         public string Unit_Value { get; set; }

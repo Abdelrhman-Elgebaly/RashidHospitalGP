@@ -489,8 +489,6 @@
     <Content Include="Views\ChemoTherapyPreLab\Create.cshtml" />
     <Content Include="Views\ChemoTherapyPreInvestigations\Index.cshtml" />
     <Content Include="Views\ChemoTherapyPreInvestigations\Create.cshtml" />
-    <Content Include="Views\ChemoTherapyTemplate\ViewTemplate.cshtml" />
-    <Content Include="Views\ChemoTherapyTemplate\InsertDate.cshtml" />
     <Content Include="Views\ChemoTherapy\ApplyTemplate.cshtml" />
     <Content Include="Views\ChemoTherapy\InsertDate.cshtml" />
     <Content Include="Views\NurseNote\Index.cshtml" />
@@ -514,7 +512,6 @@
     <Content Include="Views\ChemoTherapyCyclePackage\CreateLab.cshtml" />
     <Content Include="Views\PatientDose\Test.cshtml" />
     <Content Include="Views\PatientDose\Summery.cshtml" />
-    <Content Include="Views\ChemoTherapyTemplate\Test.cshtml" />
     <Content Include="Views\ClinicalPharmacy\IndexCurrent.cshtml" />
     <Content Include="Views\ClinicalPharmacy\Pending.cshtml" />
     <Content Include="Views\ClinicalPharmacy\FinalApproved.cshtml" />
@@ -526,11 +523,14 @@
     <Content Include="Views\ChemoCycleNuresNote\Create.cshtml" />
     <Content Include="Views\ChemoCycleToxicty\Index.cshtml" />
     <Content Include="Views\ChemoCycleToxicty\Create.cshtml" />
-    <Content Include="Views\ChemoTherapyTemplate\Indext.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\View.cshtml" />
     <Content Include="Views\NurseNote\_EditNote.cshtml" />
     <Content Include="Views\ClinicalPharmacy\_EditDrugCondition.cshtml" />
     <Content Include="Views\ChemoCycleNuresNote\_EditNote.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\Edit.cshtml" />
+    <Content Include="Views\ChemoTherapyPreLab\Edit.cshtml" />
+    <Content Include="Views\ChemoTherapyPreInvestigations\Edit.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

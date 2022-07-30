@@ -29,7 +29,7 @@ namespace RashidHospital.Models
         public string Therapy_Type { get; set; }
         //
         public string Drug_Name { get; set; }
-        public int Drug_Dose { get; set; }
+        public double Drug_Dose { get; set; }
         
         public string Fluid_Vol { get; set; }
         public string Unit_Value { get; set; }

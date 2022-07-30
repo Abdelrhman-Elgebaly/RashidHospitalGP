@@ -28,7 +28,7 @@ namespace RashidHospital.Models
         //public virtual ChemoTherapy_Template ChemoTherapy_Template { get; set; }
         public int Rule_Type { get; set; } = 1;
         public string Rule_TypeValue { get; set; }
-        public int Value { get; set; }
+        public double Value { get; set; }
 
         internal override ChemoTherapyPreInvestigations Convert(ChemoTherapyPreInvestigationsVM Obj)
         {
@@ -79,7 +79,17 @@ namespace RashidHospital.Models
             _Obj = Convert(this);
             _Obj.AddNew();
         }
+        public void Edit()
+        {
+            _Obj = Convert(this);
+            _Obj.Edit();
+        }
 
+        public void Delete()
+        {
+            _Obj = Convert(this);
+            _Obj.Delete();
+        }
         public List<ChemoTherapyPreInvestigationsVM> SelectAllByTemplateID(int templateId)
         {
             ChemoTherapyPreInvestigationsVM _Obj = new ChemoTherapyPreInvestigationsVM();

@@ -21,7 +21,7 @@ namespace Hospital.DAL
 
         public Nullable<int> Rule_Type { get; set; }
         public int TemplateId { get; set; }
-        public int Value { get; set; }
+        public double Value { get; set; }
         public string Note { get; set; }
 
 
