@@ -26,10 +26,17 @@ namespace RashidHospital.Controllers
         public JsonResult GetProrocolList(int DiseaseId)
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            List<protocol> ProtocolList = _context.protocols.Where(x => x.DiseaseId == DiseaseId).ToList();
-            return Json(ProtocolList, JsonRequestBehavior.AllowGet);
+            //   List<protocol> ProtocolList = _context.protocols.Where(x => x.DiseaseId == DiseaseId).ToList();
+
+              protocolVM protocol = new protocolVM();
+             ViewBag.ProtocolList = protocol.ProtocolSelectList(DiseaseId);
+             return Json(ViewBag.ProtocolList, JsonRequestBehavior.AllowGet);
+
+
 
         }
+
+
         public ActionResult Index()
         {
            
@@ -92,9 +99,9 @@ namespace RashidHospital.Controllers
             ChemoTherapyTemplateVM results = new ChemoTherapyTemplateVM();
             ViewBag.ELevel = results.GetELevelSelectList();
             DiseaseVM disease = new DiseaseVM();
-           ViewBag.DiseaseList = disease.DiseaseSelectList();
-           protocolVM protocol = new protocolVM();
-            ViewBag.ProtocolList = protocol.ProtocolSelectList();
+            ViewBag.DiseaseList = disease.DiseaseSelectList();
+           //protocolVM protocol = new protocolVM();
+           // ViewBag.ProtocolList = protocol.ProtocolSelectList();
         }
 
 
@@ -103,13 +110,18 @@ namespace RashidHospital.Controllers
         {
             fillCreateBag();
 
-         
+          //  List<Disease> DiseaseList = _context.Diseases.ToList();
+          //  ViewBag.DiseaseList = new SelectList(DiseaseList, "DiseaseId", "DiseaseName");
+
 
             ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
 
         
 
             fillCreateBag();
+
+
+
             return View(radioTherapyVMVM);
         }
         [HttpPost]

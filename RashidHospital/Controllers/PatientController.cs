@@ -188,5 +188,32 @@ namespace RashidHospital.Controllers
             PatientVM _objVM = _Obj.SelectObject(PatientId);
             ViewBag.PatientInfo = ViewBagsHelper.getPatientInfo(PatientId);
             return View(_objVM); }
+
+
+        public JsonResult Treatment(int pid)
+        {
+            if (pid == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+
+            PatientVM _Obj = new PatientVM();
+            PatientVM _objVM = _Obj.SelectObject(pid);
+            if (_objVM == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("Treatment", _objVM) }, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
+
+
+
     }
 }

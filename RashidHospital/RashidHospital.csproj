@@ -531,6 +531,10 @@
     <Content Include="Views\ChemoTherapyPreLab\Edit.cshtml" />
     <Content Include="Views\ChemoTherapyPreInvestigations\Edit.cshtml" />
     <Content Include="Views\ChemoTherapyTemplate\Test.cshtml" />
+    <Content Include="Views\Patient\Treatment.cshtml" />
+    <Content Include="Views\ChemoTherapyCycleDay\Test.cshtml" />
+    <Content Include="Views\ChemoTherapyProtocol\Edit.cshtml" />
+    <Content Include="Views\ChemoTherapyCyclesDates\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

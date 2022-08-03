@@ -10,7 +10,7 @@ namespace Hospital.DAL
         {
             public List<ChemoTherapyCyclePackage> GetLabPackageByCycleID(int CycleID)
         {
-            List<ChemoTherapyCyclePackage> medicalList = _Db.ChemoTherapyCyclePackages.Where(a => a.Cycle_ID == CycleID).ToList();
+            List<ChemoTherapyCyclePackage> medicalList = _Db.ChemoTherapyCyclePackages.Where(a => a.Cycle_ID == CycleID).Distinct().ToList();
             return medicalList;
 
         }

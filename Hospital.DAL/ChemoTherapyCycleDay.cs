@@ -24,6 +24,7 @@ namespace Hospital.DAL
         public bool IsApproved { get; set; }
 
         public bool IsStart { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
 
 
     }

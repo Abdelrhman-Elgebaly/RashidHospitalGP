@@ -21,7 +21,7 @@ namespace Hospital.DAL
         public Nullable<bool> IsApproved { get; set; }
       
         public int Test_Type { get; set; }
-        public Nullable<int> Actual_Value { get; set; }
+        public Nullable<double> Actual_Value { get; set; }
 
         public int Rule_Type { get; set; }
         public int TemplateId { get; set; }

@@ -90,31 +90,35 @@
                     <table id="example1" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
-                            
+                                <th>Disese</th>
                                 <th>Protocol</th>
                                 <th>Cycles</th>
-                              
+
                                 <th class="text-center" width="110px">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                
-                                    <tr>
-                                       
-                                        <td class="adjustContent">@item.ProtocolName</td>
-                                        <td class="adjustContent">@item.Cycles_Number</td>
-                        
 
-                                        <td class="adjustContent text-center">
+                            <tr>
+                                <td class="adjustContent">@item.DiseaseName</td>
 
-                                            @Html.ActionLink("Open", "Index", "ChemoTherapyCyclesDates", new { PatientId = item.Patient_ID, templateID = item.ID }, null) 
+                                <td class="adjustContent">@item.ProtocolName</td>
+                                <td class="adjustContent">@item.Cycles_Number</td>
 
 
-                                        </td>
-                                    </tr>
-                                
+                                <td class="adjustContent text-center">
+                                    <a class="btn btn-success adjust-actions" title="Open" onclick="openCyclesDatesModal(@item.Patient_ID,@item.ID)">
+                                        <i class="fa fa-address-book-o"></i>
+                                    </a>
+
+                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openEditModel(@item.Patient_ID,@item.ID )">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
 
                             }
                         </tbody>
@@ -222,10 +226,11 @@
 		});
 		function openCreatelModal(patientID) {
             window.location.href = '/ChemoTherapyProtocol/Create?PatientId=' + patientID;
-		};
+        };
 
-		function OpenDetailsModal(ResultId) {
-		    window.location.href = '/LabResualt/Details?ResultId=' + ResultId;
+       
+        function openCyclesDatesModal(PatientId, templateID) {
+            window.location.href = '/ChemoTherapyCyclesDates/Index?PatientId=' + PatientId + '&templateID=' + templateID;
 		};
             //delete
             function OpenDeleteModal(AccountId) {
@@ -282,13 +287,18 @@
 			})
         }
 
-        function openEditModel(Id) {
+
+
+    </script>
+    <script>
+        function openEditModel(PatientId, Id) {
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("_Edit", "LabResualt")",
+                url: "@Url.Action("Edit", "ChemoTherapyProtocol")",
                 cache: false,
-                data: { Id: Id },
-                 success: function (result) {
+                data: { PatientId: PatientId , Id: Id},
+            success: function (result) {
                 if (result.IsRedirect) {
                     window.location.href = result.RedirectUrl;
                 }
@@ -302,10 +312,6 @@
             },
 			})
         }
-
-    </script>
-    <script>
-
 
         function openViewProfileModal(patientID) {
             window.location.href = '/Patient/View?patientID=' + patientID;
@@ -362,23 +368,23 @@
 
     </script>
     <script>
-    function openReqestModal(patientID){
-        window.location.href ='/LabRequest/Index?PatientId='+patientID;
-    }
-    function openResultModal(patientID){
-        window.location.href ='/LabResualt/Index?patientID='+patientID;
-    }
+        function openReqestModal(patientID) {
+            window.location.href = '/LabRequest/Index?PatientId=' + patientID;
+        }
+        function openResultModal(patientID) {
+            window.location.href = '/LabResualt/Index?patientID=' + patientID;
+        }
 
-    function openRadiologyResultModal(patientID){
-        window.location.href ='/RadiologyResult/Index?patientID='+patientID;
-    }
-    function openRadiologyRequestModal(patientID){
-        window.location.href ='/RadiologyRequest/Index?patientID='+patientID;
-    }
-    function openPathologyModal(patientID){
-        window.location.href ='/Pathology/Index?patientID='+patientID;
+        function openRadiologyResultModal(patientID) {
+            window.location.href = '/RadiologyResult/Index?patientID=' + patientID;
+        }
+        function openRadiologyRequestModal(patientID) {
+            window.location.href = '/RadiologyRequest/Index?patientID=' + patientID;
+        }
+        function openPathologyModal(patientID) {
+            window.location.href = '/Pathology/Index?patientID=' + patientID;
 
-    }
+        }
 
     </script>
 }

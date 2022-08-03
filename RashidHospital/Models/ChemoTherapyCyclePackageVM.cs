@@ -26,7 +26,7 @@ namespace RashidHospital.Models
         public Nullable<bool> IsApproved { get; set; }
 
         public int Test_Type { get; set; }
-        public Nullable<int> Actual_Value { get; set; }
+        public Nullable<double> Actual_Value { get; set; }
 
         public int Rule_Type { get; set; }
         public string Test_TypeValue { get; set; }

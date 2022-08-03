@@ -50,11 +50,11 @@ namespace RashidHospital.Controllers
             {
                 input.Date = DateTime.Now;
 
-
-                // Guid userId = Guid.Parse(User.Identity.GetUserId());
-                //double x = Convert.ToDouble((input.Weight * input.Height) / 3600);
                 var x = (input.Weight * input.Height) / 3600;
                 input.SA = Math.Sqrt(Convert.ToDouble(x));
+                double test = Convert.ToDouble(input.SA);
+                input.SA = Math.Round(test, 2);
+
                 input.Create();
                 return RedirectToAction("Index", new { Id = input.CycleId, pid = input.Patient_ID });
             }

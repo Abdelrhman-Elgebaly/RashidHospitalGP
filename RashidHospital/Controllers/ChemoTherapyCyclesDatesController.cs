@@ -58,7 +58,20 @@ namespace RashidHospital.Controllers
 
         }
 
+        public JsonResult Edit(int PatientId, int TemplateId)
+        {
+            if (PatientId == null && TemplateId == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
 
+
+            }
+            fillCreateBag(PatientId, TemplateId);
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("Edit", null) }, JsonRequestBehavior.AllowGet);
+
+            //  return View();
+
+        }
         private void fillBag(int patientID, int TemplateId)
         {
             PatientVM _patientvm = new PatientVM();
@@ -128,6 +141,23 @@ namespace RashidHospital.Controllers
         public JsonResult AddResult(int Cycles_Number, int PatientId, DateTime Date, int TemplateId)
         {
 
+            //Rescuedule
+            ChemoTherapyCyclesDatesVM chemoTherapyCyclesDatesVM = new ChemoTherapyCyclesDatesVM();
+            List<ChemoTherapyCyclesDatesVM> List = chemoTherapyCyclesDatesVM.SelectAllByTemplateId(TemplateId);
+
+            foreach(var item in List)
+            {
+
+                ChemoTherapyCycleDayVM chemoTherapyCycleDayVM = new ChemoTherapyCycleDayVM();
+                List<ChemoTherapyCycleDayVM> DatesList = chemoTherapyCycleDayVM.SelectAllByMainCycleId(item.ID);
+                foreach (var item2 in DatesList)
+                {
+                    item2.Delete();
+                }
+
+                    item.Delete();
+            }
+            // Start 
 
             ChemoTherapyProtocolVM _cObj = new ChemoTherapyProtocolVM();
             ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(TemplateId);

@@ -34,6 +34,7 @@ namespace RashidHospital.Models
         public string Protocol { get; set; }
         public string Note { get; set; }
         public bool IsStart { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
 
         internal override ChemoTherapyCycleDay Convert(ChemoTherapyCycleDayVM Obj)
         {
@@ -53,6 +54,7 @@ namespace RashidHospital.Models
                     IsPending = Obj.IsPending,
                     IsApproved = Obj.IsApproved,
                     IsStart = Obj.IsStart,
+                    IsDeleted = Obj.IsDeleted,
 
 
 
@@ -89,6 +91,7 @@ namespace RashidHospital.Models
             ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(DbObj.TemplateId);
             pl.Disease = _cobjVM.DiseaseName;
             pl.Protocol = _cobjVM.ProtocolName;
+            pl.IsDeleted = Obj.IsDeleted;
 
             return pl;
         }

@@ -190,10 +190,10 @@ namespace RashidHospital.Models
             }).ToList();
         }
 
-        public List<SelectListItem> ProtocolSelectList()
+        public List<SelectListItem> ProtocolSelectList(int DiseaseId)
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
-            List<ChemoTherapyTemplateVM> CliniList = SelectAll();
+            List<ChemoTherapyTemplateVM> CliniList = SelectAll().Where(x => x.DiseaseId == DiseaseId).ToList();
 
             foreach (ChemoTherapyTemplateVM Obj in CliniList)
             {

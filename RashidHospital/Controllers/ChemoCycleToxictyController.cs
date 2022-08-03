@@ -33,9 +33,10 @@ namespace RashidHospital.Controllers
      
         public ActionResult Create(int Id, string pid)
         {
+            ddlViewBags();
             int _patientID = Convert.ToInt32(pid);
             fillBag(Id, _patientID);
-
+            ddlViewBags();
             ToxictyVM toxictyVM = new ToxictyVM();
             toxictyVM.PatientID = _patientID;
             fillBag(Id, _patientID);

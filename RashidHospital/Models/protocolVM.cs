@@ -81,11 +81,10 @@ namespace RashidHospital.Models
             return ClinicObject;
         }
 
-        public List<SelectListItem> ProtocolSelectList()
+        public List<SelectListItem> ProtocolSelectList(int DiseaseId)
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
-            List<protocolVM> CliniList = SelectAll();
-
+            List<protocolVM> CliniList = SelectAll().Where(x => x.DiseaseId == DiseaseId).ToList();
             foreach (protocolVM Obj in CliniList)
             {
                 SelectListItem _item = new SelectListItem();

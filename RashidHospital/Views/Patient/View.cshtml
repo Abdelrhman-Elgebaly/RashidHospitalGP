@@ -52,21 +52,14 @@
         Appointment
     </a>
 
-    <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxictyModal(@Model.Id)">
-        Toxicty
-    </a>
-
-    <a class="btn btn-success adjust-actions" title="Patient" onclick="openRadioTherapyModal(@Model.Id)">
-        RadioTherapy
-    </a>
     <a class="btn btn-success adjust-actions" title="Patient" onclick="openNurseNoteModal(@Model.Id)">
         Nurse Notes
     </a>
- 
-    <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@Model.Id)">
-        ChemoTherapy
+
+  
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openTreatment(@Model.Id)">
+        Treatment
     </a>
-    
 
 
     @{
@@ -216,7 +209,20 @@
         </div>
     </div>
 </div>
-
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Patient Treatment</h4>
+            </div>
+            <div id="EditBody"></div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/intlTelInput.min.js"></script>
@@ -296,16 +302,42 @@
 
         function TestModal(patientID) {
 
-         
-            window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID ;
-          
+
+            window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID;
+
         }
-     
+
         function openNurseNoteModal(patientID) {
             window.location.href = '/NurseNote/index?patientID=' + patientID;
         }
-        
 
+
+        
+        function openTreatment(pid) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Treatment", "Patient")",
+                cache: false,
+                data: { pid: pid },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
     </script>
+
+
+
+
+   
 }
 

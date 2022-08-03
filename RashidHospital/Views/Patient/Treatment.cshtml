@@ -1,0 +1,138 @@
+﻿@model RashidHospital.Models.PatientVM
+<div class="modal-body">
+
+
+    <div class="box-body">
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openRadioTherapyModal(@Model.Id)">
+            RadioTherapy
+        </a>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxictyModal(@Model.Id)">
+            Toxicty
+        </a>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@Model.Id)">
+            ChemoTherapy
+        </a>
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $('input:radio.form-control').prop('disbled', true);
+    </script>
+    <script>
+
+      //openEditDiagnoseModal
+    function openEditDiagnoseModal(patientID) {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("_EditDiagnose", "Patient")",
+            cache: false,
+            data: { patientID: patientID },
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#editDiagnoseBody").html(result.Content);
+                    $("#DiagnoseModel").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+        })
+    };
+
+    function openCallBoardagainModal(callBoardId){
+        window.location.href ='/CallBoard/Edit?Id='+callBoardId;
+
+    }
+    </script>
+    <script>
+
+
+        function openViewProfileModal(patientID) {
+            window.location.href = '/Patient/View?patientID=' + patientID;
+
+        }
+
+        function openReqandRestModal(patientID) {
+            window.location.href = '/Patient/RequestsandResults?patientID=' + patientID;
+
+        }
+
+        function openAppointmentModal(patientID) {
+            window.location.href = '/Appointment/Create?PatientId=' + patientID;
+
+        }
+        function openConditionModal(patientID) {
+            window.location.href = '/MedicalCondition/index?patientID=' + patientID;
+        }
+
+        function openRecordsModal(patientID) {
+            window.location.href = '/MedicalRecord/index?patientID=' + patientID;
+        }
+
+        function openToxictyModal(patientID) {
+            window.location.href = '/Toxicty/index?patientID=' + patientID;
+        }
+
+        function openRadioTherapyModal(patientID) {
+            window.location.href = '/RadioTherapy/index?patientID=' + patientID;
+        }
+
+        function openChemoTherapyModal(patientID, chemotherapyID) {
+
+            if (chemotherapyID == null) {
+                window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+            } else {
+                window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID + '&templateID=' + chemotherapyID;
+            }
+        }
+
+        function TestModal(patientID) {
+
+
+            window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID;
+
+        }
+
+        function openNurseNoteModal(patientID) {
+            window.location.href = '/NurseNote/index?patientID=' + patientID;
+        }
+
+
+
+        function openTreatment(pid) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Treatment", "Patient")",
+                cache: false,
+                data: { pid: pid },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+    </script>
+
+
+
+
+
+}

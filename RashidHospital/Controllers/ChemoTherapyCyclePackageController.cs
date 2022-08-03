@@ -263,7 +263,23 @@ namespace RashidHospital.Controllers
             {
 
                 ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
-                cc.Cycle_ID = CycleId;
+                List<ChemoTherapyCyclePackageVM> LabList = cc.SelectAllByCycleID(CycleId);
+
+                //Prevent Duplications
+
+                int count = 0;
+                foreach (var item in LabList)
+                {
+                    if (itemm3.Test == item.Test_Type)
+                    {
+                        count = 1;
+                    }
+
+                }
+
+                if (count == 0)
+                {
+                    cc.Cycle_ID = CycleId;
                 cc.Actual_Value = 0;
                 cc.Test_Type = itemm3.Test;
                 cc.Test_Value = itemm3.Value;
@@ -271,7 +287,7 @@ namespace RashidHospital.Controllers
                cc.Patient_ID = PatientId;
        
                 cc.Create();
-
+                }
             }
 
 
@@ -285,34 +301,50 @@ namespace RashidHospital.Controllers
         }
 
 
-        public JsonResult AddLabResult(int CycleId, int PatientId, int Test_Type,int Test_Value)
+        public JsonResult AddLabResult(int CycleId, int PatientId, int Test_Type, double Test_Value)
 
+{
 
+            string noResult = "Search Result Not Found";
 
+            //Prevent Duplications
 
-        { 
+            ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
+            List<ChemoTherapyCyclePackageVM> LabList = cc.SelectAllByCycleID(CycleId);
 
-                ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
+            int count = 0;
+            foreach (var item in LabList){ 
+                if (Test_Type == item.Test_Type)
+                {
+                    count = 1;
+                }
+                
+            }
+            if(count == 0) {
 
                 cc.Cycle_ID = CycleId;
-            cc.Actual_Value = 0;
-            cc.Rule_Type = 5;
-            cc.Rule_TypeValue = null; 
+                cc.Actual_Value = 0;
+                cc.Rule_Type = 5;
+                cc.Rule_TypeValue = null;
 
-            cc.Test_Type = Test_Type;
+                cc.Test_Type = Test_Type;
                 cc.Test_Value = Test_Value;
-               
+
                 cc.Patient_ID = PatientId;
-                  
+
                 cc.Create();
-
-            
-
+            }
 
 
 
 
 
+            if (count == 1)
+            {
+                ViewBag.Message = noResult;
+
+
+            }
 
 
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);

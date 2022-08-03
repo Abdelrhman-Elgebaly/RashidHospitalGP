@@ -79,6 +79,19 @@ namespace RashidHospital.Models
             _Obj.AddNew();
         }
 
+
+        public void Edit()
+        {
+            _Obj = Convert(this);
+            _Obj.Edit();
+        }
+
+        public void Delete()
+        {
+            _Obj = Convert(this);
+            _Obj.Delete();
+        }
+
         public List<ChemoTherapyProtocolVM> SelectAllByPatientID(int PatientId)
         {
             ChemoTherapyProtocolVM _Obj = new ChemoTherapyProtocolVM();

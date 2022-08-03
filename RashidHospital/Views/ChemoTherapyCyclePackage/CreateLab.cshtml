@@ -35,7 +35,10 @@
 
     <div class="modal-body">
         <div class="box-body">
-
+            @if (ViewBag.Message != null)
+{
+   <span>@ViewBag.Message</span>
+}
             <div class="form-group">
                 @Html.Label("Test", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -48,7 +51,7 @@
             <div class="form-group">
                 @Html.Label("Value", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Test_Value, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Test_Value, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                     @Html.ValidationMessageFor(model => model.Test_Value, "", new { @class = "text-danger" })
                 </div>
             </div>

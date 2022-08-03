@@ -68,6 +68,22 @@
         </center>
     }
 
+
+    if (Model.Item2.Count() != 0)
+    {
+
+        <center>
+
+
+            <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openEditModel(@ViewBag.PatientId,@ViewBag.TemplateId )">
+                Reschedule Start Date
+            </a>
+        </center>
+    }
+
+
+
+
 }
 
 
@@ -90,23 +106,23 @@
 
             @foreach (var item in Model.Item2)
             {
-            <tr>
-
-              
-
-                <td class="adjustContent">@item.Date.ToString("dd/MM/yyyy")</td>
+                <tr>
 
 
-                <td>
 
-                    <center>
+                    <td class="adjustContent">@item.Date.ToString("dd/MM/yyyy")</td>
 
-                        <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                    </center>
-                </td>
-            </tr>
+
+                    <td>
+
+                        <center>
+
+                            <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
+                </tr>
             }
 
         </tbody>
@@ -114,7 +130,22 @@
 </div>
 
 
-
+<!--Edit Modal-->
+<div class="modal fade" id="EditModel2" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    Reschedule Start Date
+                </h4>
+            </div>
+            <div id="EditBody2"></div>
+        </div>
+    </div>
+</div>
 <!--Edit Modal-->
 <div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
@@ -129,7 +160,6 @@
         </div>
     </div>
 </div>
-
 <!--Create Modal-->
 <div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
@@ -193,6 +223,30 @@
     },
     })
     }
+
+
+      function openEditModel(PatientId, TemplateId) {
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Edit", "ChemoTherapyCyclesDates")",
+                cache: false,
+                data: { PatientId: PatientId, TemplateId: TemplateId},
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody2").html(result.Content);
+                    $("#EditModel2").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
 
 
 

@@ -17,7 +17,7 @@ namespace Hospital.DAL
         public Nullable<int> Patient_ID { get; set; }
        
         public string Inves_Type { get; set; }
-        public Nullable<int> Actual_Value { get; set; }
+        public Nullable<double> Actual_Value { get; set; }
 
         public Nullable<int> Rule_Type { get; set; }
         public int TemplateId { get; set; }

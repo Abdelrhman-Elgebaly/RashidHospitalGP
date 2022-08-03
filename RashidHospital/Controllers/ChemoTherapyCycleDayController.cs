@@ -62,7 +62,35 @@ namespace RashidHospital.Controllers
 
             return Json(new { IsRedirect = false, Content = RenderRazorViewToString("_TestPopUp", DatesList) }, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public int Omit(int Id)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyCycleDayVM _resultVM = new ChemoTherapyCycleDayVM();
+                ChemoTherapyCycleDayVM DeleteObject = _resultVM.SelectObject(Id);
+                 DeleteObject.IsDeleted = true;
+               // DeleteObject.Delete();
 
-       
-    }
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
+
+
+
+        public ActionResult Test(int Id)
+        {
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> DatesList = _Obj.SelectAllByMainCycleId(Id).OrderBy(a => a.Date).ToList();
+            return View(DatesList);
+        }
+        }
 }
