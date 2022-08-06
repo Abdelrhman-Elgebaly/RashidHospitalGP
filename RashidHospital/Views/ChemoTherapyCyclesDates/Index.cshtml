@@ -117,9 +117,12 @@
 
                         <center>
 
-                            <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
-                                <i class="fa fa-edit"></i>
+                            <a class="btn btn-success adjust-actions" title="Open" onclick="openTestPopUp(@item.ID)">
+                                <i class="fa fa-address-book-o"></i>
                             </a>
+
+                            @Html.ActionLink("Test", "Test", "ChemoTherapyCycleDay", new { Id=item.ID }, null)
+
                         </center>
                     </td>
                 </tr>

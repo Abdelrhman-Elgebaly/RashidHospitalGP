@@ -208,56 +208,58 @@
 
 
     </center>
-
-    <div class="box-header">
-        <h3 class="box-title">
-            <a href="@Url.Action("Create", "ChemoCycleToxicty", new {Id = ViewBag.CycleId ,pid = ViewBag.PatientId } )" class="btn btn-primary">
-                Add New Toxicty
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-            </a>
-        </h3>
-    </div>
-    <hr />
-    <div class="box-body">
-        <table id="example1" class="table table-bordered table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Grade</th>
-                    <th>Condition</th>
-                    <th>Description</th>
-                    <th>Note</th>
-                    <th>Signutre</th>
-                    <th class="text-center" width="110px">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+    @if (User.IsInAnyRoles("Pharmacist") == false)
+    {
+        <div class="box-header">
+            <h3 class="box-title">
+                <a href="@Url.Action("Create", "ChemoCycleToxicty", new { Id = ViewBag.CycleId, pid = ViewBag.PatientId })" class="btn btn-primary">
+                    Add New Toxicty
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </a>
+            </h3>
+        </div>
+    }
+        <hr />
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                <thead>
                     <tr>
-                        <td class="adjustContent">@item.ToxictyDate.ToShortDateString()</td>
-                        <td class="adjustContent">@item.ToxictyTypeName</td>
-                        <td class="adjustContent">@item.Grade</td>
-                        <td class="adjustContent">@item.Condition</td>
-                        <td class="adjustContent">@item.Description</td>
-                        <td class="adjustContent">@item.Note</td>
-                        <td class="adjustContent">@item.DoctorName</td>
-
-                        <td class="adjustContent text-center">
-
-                            <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenDeleteModal(@item.Id)">
-                                <i class="fa fa-ban"></i>
-                            </a>
-                        </td>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Grade</th>
+                        <th>Condition</th>
+                        <th>Description</th>
+                        <th>Note</th>
+                        <th>Signutre</th>
+                        <th class="text-center" width="110px">Actions</th>
                     </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="adjustContent">@item.ToxictyDate.ToShortDateString()</td>
+                            <td class="adjustContent">@item.ToxictyTypeName</td>
+                            <td class="adjustContent">@item.Grade</td>
+                            <td class="adjustContent">@item.Condition</td>
+                            <td class="adjustContent">@item.Description</td>
+                            <td class="adjustContent">@item.Note</td>
+                            <td class="adjustContent">@item.DoctorName</td>
 
-                }
-            </tbody>
-        </table>
-    </div>
+                            <td class="adjustContent text-center">
 
-</section>
+                                <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenDeleteModal(@item.Id)">
+                                    <i class="fa fa-ban"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </section>
 <center>
 
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>

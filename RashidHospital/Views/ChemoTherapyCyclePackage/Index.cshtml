@@ -193,18 +193,20 @@
     </div>
 
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateLabModel(@ViewBag.CycleId,@ViewBag.PatientId )">
-        Add Lab
-    </a>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId,@ViewBag.PatientId )">
-        Add Lab By Package
-    </a>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    @if (User.IsInAnyRoles("Pharmacist") == false)
+    {
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateLabModel(@ViewBag.CycleId,@ViewBag.PatientId )">
+            Add Lab
+        </a>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.CycleId,@ViewBag.PatientId )">
+            Add Lab By Package
+        </a>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
-
-</center>
+    }
+    </center>
 
 <div class="box-body">
     <table id="example1" class="table table-bordered table-striped" style="width:100%">

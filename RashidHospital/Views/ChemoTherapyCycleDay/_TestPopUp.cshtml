@@ -29,7 +29,7 @@
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
-        
+
 
             @foreach (var item in Model)
             {
@@ -46,7 +46,9 @@
 
 
                             @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-
+                            <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@item.ID)">
+                                Re DATE
+                            </a>
                         </td>
                     </tr>
                 }
@@ -62,12 +64,13 @@
                         <td>
                             <center>
 
+                                <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="OpenStartModal(@item.ID,@item.Patient_ID)">
+                                    Start
+                                </a>
 
-                                <button onclick="OpenStartModal(@item.ID,@item.Patient_ID)">Start</button>
-                                <button onclick="OpenOmitModal(@item.ID)">Omit</button>
-                                <button onclick="OpenOmitModal(@item.ID)">Reschedule</button>
-                                @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-
+                                <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@item.ID)">
+                                    Re DATE
+                                </a>
                             </center>
 
                         </td>
@@ -76,6 +79,20 @@
             }
 
         </table>
+    </div>
+</div>
+<!--Create Modal-->
+<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Start Date</h4>
+            </div>
+            <div id="CreateBody"></div>
+        </div>
     </div>
 </div>
 <div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
@@ -158,6 +175,44 @@
           window.location.href = '/ChemoTherapyCyclePackage/Index?Id=' + Id + '&pid=' + pid;
 
         }
+
+
+
+
+
+          function openCreateModel(Id) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("_Rescuedele", "ChemoTherapyCycleDay")",
+    cache: false,
+        data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#CreateBody").html(result.Content);
+    $("#CreateModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     </script>
 

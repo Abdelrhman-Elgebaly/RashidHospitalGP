@@ -20,6 +20,10 @@ namespace RashidHospital.Controllers
     {
         public ActionResult Index(int Id, string pid)
         {
+
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(Id);
+            ViewBag.SelectedNote = _Objm.SelectedNnote;
             int _patientID = Convert.ToInt32(pid);
             fillBag(Id, _patientID);
 

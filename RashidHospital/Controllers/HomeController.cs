@@ -6,7 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Hospital.DAL;
+using Microsoft.AspNet.Identity;
+using RashidHospital.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 namespace RashidHospital.Controllers
 {
     [Authorize]
@@ -38,6 +46,9 @@ namespace RashidHospital.Controllers
             Guid userId = Guid.Parse(User.Identity.GetUserId());
             var user = UserManager.FindById(userId);
 
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllPending().OrderBy(a => a.Date).ToList();
+            ViewBag.count = _List.Count();
             if (user.IsActive == false)
             {
                 AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

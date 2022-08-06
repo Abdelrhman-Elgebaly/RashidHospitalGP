@@ -202,137 +202,159 @@
 
 
 
+    @if (User.IsInAnyRoles("Pharmacist") == false)
+    {
 
+        <div class="box-header">
+            <h3 class="box-title">
+                <a href="@Url.Action("Create", "ChemoCycleNuresNote", new { Id = ViewBag.CycleId, pid = ViewBag.PatientId })" class="btn btn-primary">
+                    Create new Nurse Note
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </a>
+            </h3>
+        </div>
+    }
+        <hr />
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Temperature</th>
+                        <th>Pulse</th>
+                        <th>BP</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>SA</th>
+                        <th>Date</th>
+                        <th> Pharmacist Note</th>
+                        <th>Actions</th>
+                        <th class="text-center" width="110px">Select</th>
+                    </tr>
+                </thead>
 
-    <div class="box-header">
-        <h3 class="box-title">
-            <a href="@Url.Action("Create", "ChemoCycleNuresNote", new {Id = ViewBag.CycleId ,pid = ViewBag.PatientId } )" class="btn btn-primary">
-                Create new Nurse Note
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-            </a>
-        </h3>
-    </div>
-    <hr />
-    <div class="box-body">
-        <table id="example1" class="table table-bordered table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Temperature</th>
-                    <th>Pulse</th>
-                    <th>BP</th>
-                    <th>Weight</th>
-                    <th>Height</th>
-                    <th>SA</th>
-                    <th>Date</th>
-                    <th> Pharmacist Note</th>
-                    <th>Actions</th>
-                    <th class="text-center" width="110px">Select</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    if (item.IsSelected == true)
+                <tbody>
+                    @foreach (var item in Model)
                     {
-                        <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
-                            <td class="adjustContent">@item.Temperature</td>
-                            <td class="adjustContent">@item.Pulse</td>
-                            <td class="adjustContent">@item.BP</td>
-                            <td class="adjustContent">@item.Weight</td>
-                            <td class="adjustContent">@item.Height</td>
-                            <td class="adjustContent">@item.SA</td>
-                            <td class="adjustContent">@item.Date</td>
+                        if (item.IsSelected == true)
+                        {
+                            <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+                                <td class="adjustContent">@item.Temperature</td>
+                                <td class="adjustContent">@item.Pulse</td>
+                                <td class="adjustContent">@item.BP</td>
+                                <td class="adjustContent">@item.Weight</td>
+                                <td class="adjustContent">@item.Height</td>
+                                <td class="adjustContent">@item.SA</td>
+                                <td class="adjustContent">@item.Date</td>
 
-                            @if (item.Pharmacist_Note == null)
-                            {
+                                @if (item.Pharmacist_Note == null)
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td bgcolor="darkseagreen">
+                                        @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                    </td>
+                                }
+
+
+
+
+
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+
+                                    <center>
+
+                                        <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </center>
                                 </td>
-                            }
-                            else
-                            {
-                                <td bgcolor="darkseagreen">
-                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
-                                </td>
-                            }
+                                @if (User.IsInAnyRoles("Pharmacist") == false)
+                                {
+                                    <td class="adjustContent text-center">
+
+                                        <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Index?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
+                                            <i class="fa fa-check"></i>
+                                        </a>
+
+                                    </td>
+                                }
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="adjustContent">@item.Temperature</td>
+                                <td class="adjustContent">@item.Pulse</td>
+                                <td class="adjustContent">@item.BP</td>
+                                <td class="adjustContent">@item.Weight</td>
+                                <td class="adjustContent">@item.Height</td>
+                                <td class="adjustContent">@item.SA</td>
+                                <td class="adjustContent">@item.Date</td>
+
+                                @if (item.Pharmacist_Note == null)
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td bgcolor="darkseagreen">
+                                        @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                    </td>
+                                }
 
 
 
 
 
-                            <td>
-
-                                <center>
-
-                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </center>
-                            </td>
-
-                            <td class="adjustContent text-center">
-
-                                <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Test?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
-                                    <i class="fa fa-check"></i>
-                                </a>
-
-                            </td>
-                        </tr>
-                    }
-                    else
-                    {
-                        <tr>
-                            <td class="adjustContent">@item.Temperature</td>
-                            <td class="adjustContent">@item.Pulse</td>
-                            <td class="adjustContent">@item.BP</td>
-                            <td class="adjustContent">@item.Weight</td>
-                            <td class="adjustContent">@item.Height</td>
-                            <td class="adjustContent">@item.SA</td>
-                            <td class="adjustContent">@item.Date</td>
-
-                            @if (item.Pharmacist_Note == null)
-                            {
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+
+                                    <center>
+
+                                        <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </center>
                                 </td>
-                            }
-                            else
-                            {
-                                <td bgcolor="darkseagreen">
-                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
-                                </td>
-                            }
+                                @if (User.IsInAnyRoles("Pharmacist") == false)
+                                {
+                                    <td class="adjustContent text-center">
 
+                                        <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Index?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
+                                            <i class="fa fa-check"></i>
+                                        </a>
 
-
-
-
-                            <td>
-
-                                <center>
-
-                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </center>
-                            </td>
-
-                            <td class="adjustContent text-center">
-
-                                <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Test?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
-                                    <i class="fa fa-check"></i>
-                                </a>
-
-                            </td>
-                        </tr>
+                                    </td>
+                                }
+                            </tr>
+                        }
                     }
-                }
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
 
-</section>
+            @if (User.IsInAnyRoles("Pharmacist"))
+            {
+                <center>
+
+
+
+
+
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openDoseModal(@ViewBag.SelectedNote,@ViewBag.CycleId,@ViewBag.PatientId )">
+                        Next  >>
+                    </a>
+                   
+                </center>
+            }
+            </div>
+
+    </section>
 
 
 <!--Edit Modal-->
@@ -384,8 +406,8 @@
     })
         }
 
-        function openToxictyModal(cycleID,patientID) {
-            window.location.href = '/ChemoCycleToxicty/Index?Id=' + cycleID + '&pid=' + patientID;
+        function openDoseModal(NoteId, CycleId, pid) {
+            window.location.href = '/PatientDose/Index?NoteId=' + NoteId + '&CycleId=' + CycleId + '&pid=' + pid;
         }
 
 

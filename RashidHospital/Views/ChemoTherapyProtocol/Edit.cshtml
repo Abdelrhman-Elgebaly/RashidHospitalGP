@@ -43,30 +43,39 @@
 
 
                 <div class="form-group">
-                    <div class="form-group">
-                        @Html.Label("ProtocoL ", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("Template_ID", new SelectList(ViewBag.ProtocolList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2 ", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.Template_ID, "", new { @class = "text-danger" })
-                        </div>
+                    @Html.Label("Disease ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("DiseaseId", new SelectList(ViewBag.DeasesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2 ", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.DiseaseId, "", new { @class = "text-danger" })
                     </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    @Html.Label("Protocol ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Template_ID", new SelectList("", "Value", "Text"), htmlAttributes: new { @class = "form-control select2 ", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.Template_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
 
 
 
-                    <div class="form-group" style="float:right;">
-                        <div class="col-md-12">
+                <div class="form-group" style="float:right;">
+                    <div class="col-md-12">
 
 
-                            <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
-                            <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
-                            @*onclick="location.href='@Url.Action("Index", "LabResualt", new { @PatientId = (int)ViewBag.PatientId })'"*@
-                        </div>
+                        <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
+                        <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
+                        @*onclick="location.href='@Url.Action("Index", "LabResualt", new { @PatientId = (int)ViewBag.PatientId })'"*@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
-    </div>
+   
 }
 
 
@@ -97,6 +106,23 @@
     });
 </script>
 <script>
+    $(document).ready(function () {
+        $("#DiseaseId").change(function () {
+
+            $.get("/ChemoTherapyProtocol/GetProrocolList", {
+                DiseaseId: $("#DiseaseId").val()
+            }, function (data) {
+                $("#Template_ID").empty();
+                $.each(data, function (index, item) {
+                    $("#Template_ID").append($("<option>").text(item.Text).val(item.Value))
+                });
+            });
+
+        })
+
+    });
+</script>
+<script>
 
 
     $("body").on("click", "#btnSaveandExit", function () {
@@ -113,7 +139,7 @@
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "Template_ID": Template_ID, "Id": ID },
+            data: { "Template_ID": Template_ID, "Id": ID, "DiseaseId": DiseaseId},
             success: function (result) {
                 $("#CreateModel").modal("hide");
                 window.location.reload();

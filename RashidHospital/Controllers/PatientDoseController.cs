@@ -27,112 +27,17 @@ namespace RashidHospital.Controllers
             ViewBag.DoctorId = userID;
 
         }
-        /*
-        public ActionResult Index(string patientID, int noteId)
-        {
-            int _patientID = Convert.ToInt32(patientID);
-            fillBag(_patientID);
-            PatientVM _Obj = new PatientVM();
-            PatientVM _objVM = _Obj.SelectObject(_patientID);
+      
+      
+     
 
-
-
-            int _templateID = Convert.ToInt32(_objVM.ChemoTherapyId);
-            //  fillBag(_templateID);
-
-            ChemoTherapyDrugVM ObjVm = new ChemoTherapyDrugVM();
-          
-            List<ChemoTherapyDrugVM> _list = ObjVm.SelectAllByTemplateId(_templateID);
-
-            NurseNoteVM _nObj = new NurseNoteVM();
-            NurseNoteVM _nobjVM = _nObj.SelectObject(noteId);
-
-
-           
-           
-           
-
-
-         
-                var tuple = new Tuple<NurseNoteVM, List<ChemoTherapyDrugVM>>(_nobjVM, _list);
-
-                return View(tuple);
-
-            
-
-            }
-
-        */
-        public ActionResult Calculate(int id, int noteId, string patientID)
-        {
-
-            ChemoTherapyDrugVM _Obj = new ChemoTherapyDrugVM();
-            ChemoTherapyDrugVM ObjVm = _Obj.SelectObject(id);
-
-            NurseNoteVM _nObj = new NurseNoteVM();
-            NurseNoteVM _nobjVM = _nObj.SelectObject(noteId);
-
-            int _patientID = Convert.ToInt32(patientID);
-            fillBag(id, noteId, _patientID);
-            PatientVM _pObj = new PatientVM();
-            PatientVM _pobjVM = _pObj.SelectObject(_patientID);
-
-
-
-
-            if (ObjVm.Unit == 1)
-            {
-                _nobjVM.Dose_Calculated = ObjVm.Drug_Dose * _nobjVM.SA;
-                _nobjVM.Edit();
-                
-            }
-
-            else if (ObjVm.Unit == 2)
-            {
-                _nobjVM.Dose_Calculated = ObjVm.Drug_Dose * _nobjVM.Weight;
-                _nobjVM.Edit();
-
-            }
-
-            else if (ObjVm.Unit == 5)
-            {
-                int age = DateTime.Now.Year - _pobjVM.BirthDate.Year;
-                var weight = _nobjVM.Weight;
-                var serum_creatinine = 8;
-
-                var creat_clearance = (140 - age) * weight / (72 * serum_creatinine);
-
-
-
-                if (_pobjVM.Gender == "Male")
-
-                {
-
-                    _nobjVM.Dose_Calculated = ObjVm.Drug_Dose * (creat_clearance + 25);
-                    _nobjVM.Edit();
-                }
-                if (_pobjVM.Gender == "Female")
-                {
-                    creat_clearance = creat_clearance * 0.85;
-                    _nobjVM.Dose_Calculated = ObjVm.Drug_Dose * (creat_clearance + 25);
-                    _nobjVM.Edit();
-
-                }
-
-            }
-
-
-                return RedirectToAction("Index", new { patientID = _patientID, noteId = noteId });
-
-
-        }
-
-
-        public ActionResult  Test(int NoteId, int CycleId,int pid)
+        public ActionResult  Index(int NoteId, int CycleId,int pid)
         {
             CalculateDose(NoteId, CycleId,pid);
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
             ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
+            _Objm.SelectedNnote = NoteId;
+            _Objm.Edit();
             fillBag(NoteId, CycleId, pid);
 
             ChemoTherapyProtocolVM _Labresults = new ChemoTherapyProtocolVM();
@@ -150,12 +55,14 @@ namespace RashidHospital.Controllers
           
 
 
-         //  var tuple = new Tuple<List<PatientDoseVM>, List<ChemoTherapyDrugVM> , ChemoTherapyProtocolVM>(_Doselist, _Druglist, _Objmp);
 
             return View(_Doselist);
         }
         public ActionResult Summery(int NoteId, int CycleId, int pid)
         {
+
+            fillBag(NoteId, CycleId, pid);
+
             // Patient Info
             PatientVM _pObj = new PatientVM();
             PatientVM _pobjVM = _pObj.SelectObject(pid);
@@ -175,7 +82,6 @@ namespace RashidHospital.Controllers
             }
             var tuple = new Tuple<PatientVM, ChemoTherapyCycleDayVM, List<PatientDoseVM>>(_pobjVM, _Objm, _Doselist);
 
-            fillBag(NoteId, CycleId, pid);
 
 
             return View(tuple);
@@ -186,14 +92,7 @@ namespace RashidHospital.Controllers
         {
             PatientDoseVM pObjVm = new PatientDoseVM();
             List<PatientDoseVM> _Doselist = pObjVm.SelectAll(NoteId, CycleId);
-/*
-            foreach (var item in _Doselist)
-            {
-                item.Delete();
-            }
 
-            
-*/
                         if (_Doselist.Count == 0) {
                 ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
                 ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
@@ -370,7 +269,7 @@ namespace RashidHospital.Controllers
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
 
         }
-
+        //Dr Role
         public int ReleasedToPharmacy(int CycleId)
         {
             int finalResult = 0;
@@ -379,7 +278,53 @@ namespace RashidHospital.Controllers
                 ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
                 ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
                 _Objm.IsReleased = true;
+                _Objm.IsPending = false;
+                _Objm.Edit();
 
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
+
+        public int ApprovedAfterPending(int CycleId)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+                ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
+                _Objm.IsReleased = true;
+                _Objm.IsPending = false;
+                _Objm.DrStatues = "Approved";
+                _Objm.Edit();
+
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
+
+        public int DisApprovedAfterPending(int CycleId)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+                ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
+                _Objm.IsReleased = true;
+                _Objm.IsPending = false;
+                _Objm.DrStatues = "disApproved";
                 _Objm.Edit();
 
                 finalResult = 1;
@@ -394,6 +339,8 @@ namespace RashidHospital.Controllers
         }
 
 
+
+        //Pharmacy Role
         public int ReleasedToDoctor(int CycleId)
         {
             int finalResult = 0;
@@ -417,8 +364,8 @@ namespace RashidHospital.Controllers
             return finalResult;
         }
 
-
-        public int FinalApproved(int CycleId, int NoteId)
+        [HttpPost]
+        public int FinalApproved(int CycleId)
         {
             int finalResult = 0;
             try
@@ -430,15 +377,17 @@ namespace RashidHospital.Controllers
                 _Objm.IsApproved = true;
 
                 _Objm.Edit();
-
-                finalResult = 1;
+                int NoteId = Convert.ToInt32(_Objm.SelectedNnote);
                 PatientDoseVM ObjVm = new PatientDoseVM();
                 List<PatientDoseVM> _Doselist = ObjVm.SelectAll(NoteId, CycleId);
-                foreach(var item in _Doselist)
+                foreach (var item in _Doselist)
                 {
                     item.IsApproved = true;
                     item.Edit();
                 }
+               
+                finalResult = 1;
+             
 
             }
             catch (Exception e)

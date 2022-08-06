@@ -18,7 +18,7 @@ namespace Hospital.DAL
         public Nullable<int> NurseNote_ID { get; set; }
 
         public Nullable<int>Template_ID{ get; set; }
-        public Nullable<int>Cycle_ID { get; set; }
+        public int Cycle_ID { get; set; }
         public Nullable<double> Dose_Calculated { get; set; }
         public string Therapy_Type { get; set; }
 

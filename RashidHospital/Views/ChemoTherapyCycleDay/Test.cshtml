@@ -15,79 +15,111 @@
     }
 </style>
 
-        <table id="example1" class="table table-bordered table-striped" style="width:100%">
-            <thead>
-                <tr>
+<table id="example1" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
 
-                    <th>Date</th>
+            <th>Date</th>
 
 
 
-                    <th class="text-center">Actions</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            if (item.IsDeleted == null)
+            {
+                <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+
+                    <td>
+
+                        <a href="#" class="btn btn-primary" id="DeactivateBtn">EXPORT TO EXCEL</a>
+
+                        <button onclick="OpenStartModal(@item.ID,@item.Patient_ID)">View</button>
+                        @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var item in Model)
+            }
+            else
+            {
+                if (item.IsDeleted == true)
                 {
-                    if (item.IsStart == true)
-                    {
-                        <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+                    <tr style='color:red;text-decoration:line-through'>
 
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
 
-                            <td>
+                        <td>
 
-                                <a href="#" class="btn btn-primary" id="DeactivateBtn">EXPORT TO EXCEL</a>
+                            <a href="#" class="btn btn-primary" id="DeactivateBtn">EXPORT TO EXCEL</a>
 
-                                <button onclick="OpenStartModal(@item.ID,@item.Patient_ID)">View</button>
-                                @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                            <button onclick="OpenStartModal(@item.ID,@item.Patient_ID)">View</button>
+                            @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
 
-                            </td>
-                        </tr>
-                    }
-                    else if (item.IsDeleted == true)
-                    {
-            <tr style='color:red;text-decoration:line-through'>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td class="adjustContent text-center">
-                </td>
-            </tr>
-                    }
-
-                    else
-                    {
-
-                        <tr>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                            </td>
-
-                            <td>
-
-
-                                <button onclick="OpenStartModal(@item.ID,@item.Patient_ID)">Start</button>
-                                <button onclick="OpenOmitModal(@item.ID)">Omit</button>
-                                @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-                                <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenOmitModal(@item.ID)">
-                                    <i class="fa fa-ban"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-
+                        </td>
+                    </tr>
                 }
 
-            </tbody>
-        </table>
 
+                else
+                {
+
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+
+                        <td>
+
+
+                            <button onclick="OpenStartModal(@item.ID,@item.Patient_ID)">Start</button>
+                            <button onclick="OpenOmitModal(@item.ID)">Omit</button>
+                            @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                            <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenOmitModal(@item.ID)">
+                                <i class="fa fa-ban"></i>
+                            </a>
+
+
+                            <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@item.ID)">
+                                Re DATE
+                            </a>
+
+
+                        </td>
+                    </tr>
+                }
+
+            }
+        }
+
+    </tbody>
+</table>
+<!--Create Modal-->
+<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Start Date</h4>
+            </div>
+            <div id="CreateBody"></div>
+        </div>
+    </div>
+</div>
 <div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -168,6 +200,44 @@
           window.location.href = '/ChemoTherapyCyclePackage/Index?Id=' + Id + '&pid=' + pid;
 
         }
+
+
+
+
+
+          function openCreateModel(Id) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("_Rescuedele", "ChemoTherapyCycleDay")",
+    cache: false,
+        data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#CreateBody").html(result.Content);
+    $("#CreateModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     </script>
 

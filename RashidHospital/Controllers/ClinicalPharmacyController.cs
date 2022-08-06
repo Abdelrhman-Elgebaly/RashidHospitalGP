@@ -19,15 +19,33 @@ namespace RashidHospital.Controllers
         public ActionResult IndexCurrent()
         {
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().OrderBy(a => a.Date).ToList();
+            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().Where(a => a.Date == DateTime.Now).ToList();
 
 
 
             return View(_List);
         }
 
+        public ActionResult IndexCurrentAll()
+        {
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().OrderBy(a => a.Date == DateTime.Now).ToList();
 
+
+
+            return View(_List);
+        }
         public ActionResult Pending()
+        {
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllPending().Where(a => a.Date == DateTime.Now).ToList();
+
+
+
+            return View(_List);
+        }
+
+        public ActionResult PendingAll()
         {
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
             List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllPending().OrderBy(a => a.Date).ToList();
@@ -36,7 +54,7 @@ namespace RashidHospital.Controllers
 
             return View(_List);
         }
-
+        //Where(a => a.Date == DateTime.Now).ToList();
 
         public ActionResult FinalApproved()
         {
@@ -51,15 +69,20 @@ namespace RashidHospital.Controllers
         public ActionResult ClinicalPharmacy()
         {
             PatientDoseVM _Obj = new PatientDoseVM();
-            List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved();
-
-
+            List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved().Where(a => a.Date == DateTime.Now).ToList();
 
             return View(_List);
         }
 
 
 
+        public ActionResult ClinicalPharmacyAll()
+        {
+            PatientDoseVM _Obj = new PatientDoseVM();
+            List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved();
+
+            return View(_List);
+        }
 
         public string RenderRazorViewToString(string viewName, object model)
         {
@@ -76,15 +99,17 @@ namespace RashidHospital.Controllers
         public JsonResult _EditDrugCondition(int Id)
         {
             ViewBag.Id = Id;
+          
+
             if (Id == null)
             {
                 return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
 
             }
             ViewBag.Id = Id;
-            
-            PatientDoseVM results = new PatientDoseVM();
-         //   ViewBag.OrderList = results.GetOrderSelectList();
+            DiseaseVM disease = new DiseaseVM();
+            ViewBag.OrderList = disease.DiseaseSelectList();
+           
             PatientDoseVM _Obj = new PatientDoseVM();
             PatientDoseVM _ObjvM = _Obj.SelectObject(Id);
             //if (_objVM == null)

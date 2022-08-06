@@ -135,14 +135,14 @@ namespace RashidHospital.Controllers
         }
 
         [HttpPost]
-        public JsonResult EditResult(int Template_ID, int Id)
+        public JsonResult EditResult(int Template_ID, int Id, int DiseaseId)
         {
           
                 ChemoTherapyProtocolVM chemoTherapyProtocolVM = new ChemoTherapyProtocolVM();
                 ChemoTherapyProtocolVM chemoTherapyProtocolVM1 = chemoTherapyProtocolVM.SelectObject(Id);
                 chemoTherapyProtocolVM1.Template_ID = Template_ID;
               
-                chemoTherapyProtocolVM1.DiseaseId = 1;
+                chemoTherapyProtocolVM1.DiseaseId = DiseaseId;
 
                 chemoTherapyProtocolVM1.Edit();
         

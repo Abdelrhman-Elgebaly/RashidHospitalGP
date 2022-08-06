@@ -15,9 +15,9 @@ namespace Hospital.DAL
         public int ID { get; set; }
         public Nullable<int> MainCycle_ID { get; set; }
         public int Patient_ID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-       
-         public int TemplateId { get; set; }
+        public DateTime Date { get; set; }
+
+        public int TemplateId { get; set; }
 
         public bool IsReleased { get; set; }
         public bool IsPending { get; set; }
@@ -25,6 +25,9 @@ namespace Hospital.DAL
 
         public bool IsStart { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> SelectedNnote { get; set; }
+        public string DrStatues { get; set; }
+        public string Note { get; set; }
 
 
     }

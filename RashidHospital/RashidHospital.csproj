@@ -535,6 +535,10 @@
     <Content Include="Views\ChemoTherapyCycleDay\Test.cshtml" />
     <Content Include="Views\ChemoTherapyProtocol\Edit.cshtml" />
     <Content Include="Views\ChemoTherapyCyclesDates\Edit.cshtml" />
+    <Content Include="Views\ChemoTherapyCycleDay\_Rescuedele.cshtml" />
+    <Content Include="Views\ClinicalPharmacy\IndexCurrentAll.cshtml" />
+    <Content Include="Views\ClinicalPharmacy\PendingAll.cshtml" />
+    <Content Include="Views\ClinicalPharmacy\ClinicalPharmacyAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

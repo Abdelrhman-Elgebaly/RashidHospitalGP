@@ -50,6 +50,18 @@ namespace Hospital.DAL
 
         }
 
+        public List<ChemoTherapyCycleDay> GetCyclesByTemplateId(int TemplateId)
+        {
+            List<ChemoTherapyCycleDay> medicalList = _Db.ChemoTherapyCycleDays.Where(a => a.TemplateId == TemplateId).ToList();
+
+            //  medicalList.Find(PatientId);
+
+            return medicalList;
+
+        }
+
+
+
 
     }
 }

@@ -106,59 +106,6 @@ namespace RashidHospital.Controllers
 
 
 
-        public ActionResult Test()
-        {
-            fillCreateBag();
-
-          //  List<Disease> DiseaseList = _context.Diseases.ToList();
-          //  ViewBag.DiseaseList = new SelectList(DiseaseList, "DiseaseId", "DiseaseName");
-
-
-            ChemoTherapyTemplateVM radioTherapyVMVM = new ChemoTherapyTemplateVM();
-
-        
-
-            fillCreateBag();
-
-
-
-            return View(radioTherapyVMVM);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Test(ChemoTherapyTemplateVM input)
-        {
-            // fillCreateBag();
-
-            if (ModelState.IsValid)
-            {
-
-
-                List<string> tokens = input.Cycle_days.Split(',').ToList();
-                List<int> intlist = new List<int>();
-
-                foreach (String str in tokens)
-                {
-                    intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
-                }
-                input.CycleDays = intlist;
-                string[] array = new string[1000];
-
-                array = intlist.ConvertAll(x => x.ToString()).ToArray();
-                input.Cycle_days = string.Join("/", array);
-
-                input.Protocol_Name = input.Protocol_Name;
-                input.Disease = input.Disease;
-                input.Create();
-
-                return RedirectToAction("Index");
-            }
-            //  fillCreateBag();
-
-            return View(input);
-        }
-
-
 
 
 
@@ -196,6 +143,8 @@ namespace RashidHospital.Controllers
             ViewBag.DoctorId = userID;
 
         }
+
+
 
         public ActionResult Edit(int Id)
         {

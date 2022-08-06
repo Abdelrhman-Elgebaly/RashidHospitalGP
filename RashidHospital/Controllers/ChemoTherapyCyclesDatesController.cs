@@ -17,12 +17,17 @@ namespace RashidHospital.Controllers
 
         // GET: CycleStartDate
 
-
+       
         public ActionResult Index(int PatientId, string templateID)
         {
 
             //Assign Template to patient 
             int TemplateID = Convert.ToInt32(templateID);
+
+            ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
+            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateID).OrderBy(a => a.Date).ToList();
+
+        
             ChemoTherapyProtocolVM _cObj = new ChemoTherapyProtocolVM();
             ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(TemplateID);
 
@@ -32,8 +37,8 @@ namespace RashidHospital.Controllers
 
             //Start Dates 
 
-            ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
-            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateID).OrderBy(a => a.Date).ToList();
+  
+
             fillBag(PatientId, TemplateID);
 
             var tuple = new Tuple<ChemoTherapyTemplateVM, List<ChemoTherapyCyclesDatesVM>>(_objVM, OrderList);
@@ -141,7 +146,7 @@ namespace RashidHospital.Controllers
         public JsonResult AddResult(int Cycles_Number, int PatientId, DateTime Date, int TemplateId)
         {
 
-            //Rescuedule
+            //Rescuedule Sart date
             ChemoTherapyCyclesDatesVM chemoTherapyCyclesDatesVM = new ChemoTherapyCyclesDatesVM();
             List<ChemoTherapyCyclesDatesVM> List = chemoTherapyCyclesDatesVM.SelectAllByTemplateId(TemplateId);
 
@@ -320,6 +325,9 @@ namespace RashidHospital.Controllers
                 }
 
             }
+
+
+
 
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
         }

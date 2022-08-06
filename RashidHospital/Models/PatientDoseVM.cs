@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +7,16 @@ using Hospital.DAL;
 using RashidHospital.Helper;
 using static RashidHospital.Helper.Enum;
 using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Hospital.DAL;
+using RashidHospital.Models;
+using System.Text.RegularExpressions;
+
+using Microsoft.AspNet.Identity;
 //NurseNoteController
 namespace RashidHospital.Models
 {
@@ -20,17 +29,17 @@ namespace RashidHospital.Models
         public int Patient_ID { get; set; }
         public int MainDrugId { get; set; }
 
-        
+
         public Nullable<int> NurseNote_ID { get; set; }
 
         public Nullable<int> Template_ID { get; set; }
-        public Nullable<int> Cycle_ID { get; set; }
+        public int Cycle_ID { get; set; }
         public Nullable<double> Dose_Calculated { get; set; }
         public string Therapy_Type { get; set; }
         //
         public string Drug_Name { get; set; }
         public double Drug_Dose { get; set; }
-        
+
         public string Fluid_Vol { get; set; }
         public string Unit_Value { get; set; }
         public int Pharmacy_Condition { get; set; }
@@ -46,8 +55,8 @@ namespace RashidHospital.Models
         public string Fluid_Type_Value { get; set; }
         public string Duration { get; set; }
         public string Pharmacy_Condition_Value { get; set; }
+        public DateTime Date;
 
-        
 
 
         internal override PatientDose Convert(PatientDoseVM Obj)
@@ -66,18 +75,18 @@ namespace RashidHospital.Models
                     Dose_Calculated = Obj.Dose_Calculated,
                     Therapy_Type = Obj.Therapy_Type,
                     Drug_Name = Obj.Drug_Name,
-                Drug_Dose = Obj.Drug_Dose,
-                Unit_Value = Obj.Unit_Value,
-                Fluid_Vol = Obj.Fluid_Vol,
+                    Drug_Dose = Obj.Drug_Dose,
+                    Unit_Value = Obj.Unit_Value,
+                    Fluid_Vol = Obj.Fluid_Vol,
                     Pharmacy_Condition = Obj.Pharmacy_Condition,
-                    Pharmacist_Note=Obj.Pharmacist_Note,
+                    Pharmacist_Note = Obj.Pharmacist_Note,
 
                     IsEditByDoctor = Obj.IsEditByDoctor,
                     IsEditByPharmacy = Obj.IsEditByPharmacy,
                     IsApproved = Obj.IsApproved,
                     MainDrugId = Obj.MainDrugId,
 
-                    
+
                 };
             }
             return _Obj;
@@ -86,9 +95,11 @@ namespace RashidHospital.Models
 
         internal override PatientDoseVM Convert(PatientDose DbObj)
         {
+
+     
             PatientDoseVM pl = new PatientDoseVM();
-          //  var Site = (DrugOrder)DbObj?.Pharmacy_Condition;
-          //  var enumType = EnumHelper<DrugOrder>.GetDisplayValue(Site);
+            //  var Site = (DrugOrder)DbObj?.Pharmacy_Condition;
+            //  var enumType = EnumHelper<DrugOrder>.GetDisplayValue(Site);
             pl.ID = DbObj.ID;
             pl.Patient_ID = DbObj.Patient_ID;
             pl.NurseNote_ID = DbObj.NurseNote_ID;
@@ -106,7 +117,9 @@ namespace RashidHospital.Models
             pl.IsEditByPharmacy = DbObj.IsEditByPharmacy;
             pl.IsApproved = DbObj.IsApproved;
             pl.MainDrugId = DbObj.MainDrugId;
-          //  pl.Pharmacy_Condition_Value = enumType.ToString();
+            pl.Pharmacy_Condition = DbObj.Pharmacy_Condition;
+
+            //  pl.Pharmacy_Condition_Value = enumType.ToString();
             PatientVM Obj = new PatientVM();
 
             PatientVM Objm = Obj.SelectObject(DbObj.Patient_ID);
@@ -120,6 +133,11 @@ namespace RashidHospital.Models
             pl.Fluid_Type_Value = dObjm.Fluid_Type_Value;
             pl.Duration = dObjm.Duration;
 
+            ChemoTherapyCycleDayVM cc = new ChemoTherapyCycleDayVM();
+
+            ChemoTherapyCycleDayVM ccm = cc.SelectObject(DbObj.Cycle_ID);
+
+            pl.Date = ccm.Date;
             return pl;
         }
 
@@ -140,14 +158,14 @@ namespace RashidHospital.Models
             _Obj.Delete();
         }
 
-        
+
         public List<PatientDoseVM> SelectAll(int NoteId, int CycleId)
         {
             PatientDose _BClass = new PatientDose();
             List<PatientDose> dbList = _BClass.GetAllPatientDoses(NoteId, CycleId).ToList();
             return dbList.Select(z => Convert(z)).ToList();
         }
-        
+
         public PatientDoseVM SelectObject(int Id)
         {
             PatientDose _BClass = new PatientDose();
@@ -162,16 +180,16 @@ namespace RashidHospital.Models
             List<PatientDose> dbList = _BClass.GetAllFinalApproved().ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
-/*
-        public List<SelectListItem> GetOrderSelectList()
-        {
-            return System.Enum.GetValues(typeof(DrugOrder)).Cast<DrugOrder>().Select(v => new SelectListItem
-            {
-                Text = EnumHelper<DrugOrder>.GetDisplayValue(v),
-                Value = ((int)v).ToString()
-            }).ToList();
-        }
-*/
+        /*
+                public List<SelectListItem> GetOrderSelectList()
+                {
+                    return System.Enum.GetValues(typeof(DrugOrder)).Cast<DrugOrder>().Select(v => new SelectListItem
+                    {
+                        Text = EnumHelper<DrugOrder>.GetDisplayValue(v),
+                        Value = ((int)v).ToString()
+                    }).ToList();
+                }
+        */
 
 
     }

@@ -23,7 +23,7 @@ namespace RashidHospital.Models
 
         public Nullable<int> MainCycle_ID { get; set; }
         public int Patient_ID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public DateTime Date { get; set; }
         public int TemplateId { get; set; }
         public bool IsReleased { get; set; }
         public bool IsPending { get; set; }
@@ -35,6 +35,9 @@ namespace RashidHospital.Models
         public string Note { get; set; }
         public bool IsStart { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> SelectedNnote { get; set; }
+        //
+        public string DrStatues { get; set; }
 
         internal override ChemoTherapyCycleDay Convert(ChemoTherapyCycleDayVM Obj)
         {
@@ -48,15 +51,16 @@ namespace RashidHospital.Models
                     Patient_ID = Obj.Patient_ID,
                     Date = Obj.Date,
                     MainCycle_ID = Obj.MainCycle_ID,
-                 TemplateId = Obj.TemplateId,
+                    TemplateId = Obj.TemplateId,
 
                     IsReleased = Obj.IsReleased,
                     IsPending = Obj.IsPending,
                     IsApproved = Obj.IsApproved,
                     IsStart = Obj.IsStart,
                     IsDeleted = Obj.IsDeleted,
-
-
+                    SelectedNnote = Obj.SelectedNnote,
+                    DrStatues = Obj.DrStatues,
+                    Note = Obj.Note,
 
                 };
             }
@@ -81,6 +85,10 @@ namespace RashidHospital.Models
             pl.IsPending = DbObj.IsPending;
             pl.IsApproved = DbObj.IsApproved;
             pl.IsStart = DbObj.IsStart;
+            pl.IsDeleted = DbObj.IsDeleted;
+            pl.SelectedNnote = DbObj.SelectedNnote;
+            pl.DrStatues = DbObj.DrStatues;
+            pl.Note = DbObj.Note;
 
             PatientVM Obj = new PatientVM();
             
@@ -91,7 +99,7 @@ namespace RashidHospital.Models
             ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(DbObj.TemplateId);
             pl.Disease = _cobjVM.DiseaseName;
             pl.Protocol = _cobjVM.ProtocolName;
-            pl.IsDeleted = Obj.IsDeleted;
+        
 
             return pl;
         }
@@ -155,7 +163,13 @@ namespace RashidHospital.Models
             return ClinicObject;
         }
 
-
+        public List<ChemoTherapyCycleDayVM> SelectAllByTemplateId(int TemplateId)
+        {
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            ChemoTherapyCycleDay _BClass = new ChemoTherapyCycleDay();
+            List<ChemoTherapyCycleDay> dbList = _BClass.GetCyclesByTemplateId(TemplateId).ToList();
+            return dbList.Select(z => _Obj.Convert(z)).ToList();
+        }
 
 
     }
