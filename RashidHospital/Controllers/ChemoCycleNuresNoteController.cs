@@ -110,7 +110,7 @@ namespace RashidHospital.Controllers
             }
         }
 
-        public JsonResult AddNote(int Id, string Note, int SA)
+        public JsonResult AddNote(int Id, string Note, double SA)
 
         {
 

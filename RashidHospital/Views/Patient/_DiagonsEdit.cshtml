@@ -1,4 +1,5 @@
-﻿@model RashidHospital.Models.PatientVM
+﻿
+@model RashidHospital.Models.PatientVM
 <link href="~/Content/build/css/intlTelInput.min.css" rel="stylesheet" />
 
 
@@ -46,6 +47,7 @@
     });
 </script>
 <script>
+
     $("#editDiagnosForm").submit(function (e) {
 		e.preventDefault();
 			$("#btnSubmit").attr("disabled", true).text('Loading...');
@@ -62,7 +64,9 @@
 					else if (result == "Error500") {
 						window.location.href = '@Url.Action("Error500", "Home")';
 					}
+
 				},
 			})
+
 	});
 </script>

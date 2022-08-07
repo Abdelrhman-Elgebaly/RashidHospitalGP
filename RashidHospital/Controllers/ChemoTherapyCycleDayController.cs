@@ -118,11 +118,13 @@ namespace RashidHospital.Controllers
 
 
         [HttpPost]
-        public JsonResult RescuedeleDates(int Id, DateTime Date)
+        public JsonResult RescuedeleDates(int Id, DateTime Date , string Reason)
         {
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
             ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(Id);
-
+            _Objm.Reason = Reason;
+            _Objm.IsRescuedeled = true;
+            _Objm.Edit();
 
 
               var prevDate = _Objm.Date;

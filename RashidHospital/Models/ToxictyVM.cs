@@ -28,6 +28,10 @@ namespace RashidHospital.Models
         public DateTime ModifiedDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public string DoctorName { get; set; }
+
+        public Nullable<bool> IsEditByPharmacy { get; set; }
+
+
         public virtual ToxictyType ToxictyTypes { get; set; }
 
         internal override Toxicty Convert(ToxictyVM Obj)
@@ -52,8 +56,10 @@ namespace RashidHospital.Models
                     ModifiedBy = Obj.ModifiedBy,
                     ToxictyDate=Obj.ToxictyDate,
                     Pharmacist_Note = Obj.Pharmacist_Note,
+                    IsEditByPharmacy = Obj.IsEditByPharmacy,
 
-    };
+
+                };
             }
             return _Obj;
         }
@@ -83,6 +89,7 @@ namespace RashidHospital.Models
                     ToxictyTypeName =Obj.ToxictyTypes.Name,
                     DoctorName = Obj.AspNetUser.FirstName + " " + Obj.AspNetUser.SecondName + "  " + Obj.AspNetUser.ThirdName,
                     Pharmacist_Note = Obj.Pharmacist_Note,
+                    IsEditByPharmacy = Obj.IsEditByPharmacy,
 
 
                 };

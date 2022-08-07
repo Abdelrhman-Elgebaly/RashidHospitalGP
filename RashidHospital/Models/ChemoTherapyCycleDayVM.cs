@@ -38,7 +38,11 @@ namespace RashidHospital.Models
         public Nullable<int> SelectedNnote { get; set; }
         //
         public string DrStatues { get; set; }
+        public string Reason { get; set; }
+        public Nullable<bool> IsRescuedeled { get; set; }
+        public Nullable<int> CycleNumber { get; set; }
 
+        
         internal override ChemoTherapyCycleDay Convert(ChemoTherapyCycleDayVM Obj)
         {
             if (Obj == null)
@@ -61,7 +65,9 @@ namespace RashidHospital.Models
                     SelectedNnote = Obj.SelectedNnote,
                     DrStatues = Obj.DrStatues,
                     Note = Obj.Note,
-
+                    Reason = Obj.Reason,
+                    IsRescuedeled = Obj.IsRescuedeled,
+                    CycleNumber = Obj.CycleNumber,
                 };
             }
             return _Obj;
@@ -89,7 +95,10 @@ namespace RashidHospital.Models
             pl.SelectedNnote = DbObj.SelectedNnote;
             pl.DrStatues = DbObj.DrStatues;
             pl.Note = DbObj.Note;
-
+            pl.Reason = DbObj.Reason;
+            pl.IsRescuedeled = DbObj.IsRescuedeled;
+            pl.CycleNumber = DbObj.CycleNumber;
+            
             PatientVM Obj = new PatientVM();
             
             PatientVM Objm = Obj.SelectObject(DbObj.Patient_ID);
@@ -99,7 +108,7 @@ namespace RashidHospital.Models
             ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(DbObj.TemplateId);
             pl.Disease = _cobjVM.DiseaseName;
             pl.Protocol = _cobjVM.ProtocolName;
-        
+         
 
             return pl;
         }

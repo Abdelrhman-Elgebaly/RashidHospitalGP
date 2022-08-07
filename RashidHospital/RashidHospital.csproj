@@ -302,6 +302,7 @@
     <Content Include="Content\loginStyle.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\skin-purple.min.css" />
+    <Content Include="Content\ChemoWizard.css" />
     <Content Include="Content\taskedInWeb.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -539,6 +540,7 @@
     <Content Include="Views\ClinicalPharmacy\IndexCurrentAll.cshtml" />
     <Content Include="Views\ClinicalPharmacy\PendingAll.cshtml" />
     <Content Include="Views\ClinicalPharmacy\ClinicalPharmacyAll.cshtml" />
+    <Content Include="Views\ChemoCycleToxicty\_EditNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

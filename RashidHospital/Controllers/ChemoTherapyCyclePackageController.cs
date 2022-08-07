@@ -380,7 +380,12 @@ namespace RashidHospital.Controllers
             _ObjvM.Note = Note;
             _ObjvM.Actual_Value = Actual_Value;
             _ObjvM.Edit();
-            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+            if(User.IsInAnyRoles("Pharmacist"))
+                {
+                _ObjvM.IsEditByPharmacy = true;
+                _ObjvM.Edit();
+            }
+                return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
 
         }
 

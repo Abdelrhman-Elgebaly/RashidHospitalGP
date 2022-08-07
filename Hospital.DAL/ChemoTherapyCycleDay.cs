@@ -28,6 +28,11 @@ namespace Hospital.DAL
         public Nullable<int> SelectedNnote { get; set; }
         public string DrStatues { get; set; }
         public string Note { get; set; }
+        public string Reason { get; set; }
+        public Nullable<bool> IsRescuedeled { get; set; }
+
+        public Nullable<int> CycleNumber { get; set; }
+
 
 
     }

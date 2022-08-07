@@ -187,10 +187,10 @@ namespace RashidHospital.Controllers
 
                 if (Cycles_Number != 0 || PatientId != 0)
                 {
-                    ChemoTherapyCyclesDatesVM _labresults = new ChemoTherapyCyclesDatesVM();
+                    ChemoTherapyCyclesDatesVM cycleDates = new ChemoTherapyCyclesDatesVM();
 
-                    _labresults.Patient_ID = PatientId;
-                    _labresults.TemplateId = TemplateId;
+                    cycleDates.Patient_ID = PatientId;
+                    cycleDates.TemplateId = TemplateId;
 
 
 
@@ -202,10 +202,10 @@ namespace RashidHospital.Controllers
                     }
 
 
-                    _labresults.Date = Date;
-                    _labresults.Cycles_Number = Cycles_Number;
+                    cycleDates.Date = Date;
+                    cycleDates.Cycles_Number = Cycles_Number;
                     //  _labresults.ID = PatientId;
-                    _labresults.Create();
+                    cycleDates.Create();
                 }
 
 
@@ -246,18 +246,19 @@ namespace RashidHospital.Controllers
 
                 foreach (var item in intlist)
                 {
-                    ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
+                    ChemoTherapyCycleDayVM _cycleDay = new ChemoTherapyCycleDayVM();
                     AppointmentVM appointment = new AppointmentVM();
-                    _labresults22.Patient_ID = PatientId;
-                    _labresults22.TemplateId = TemplateId;
+                    _cycleDay.CycleNumber = item;
+                    _cycleDay.Patient_ID = PatientId;
+                    _cycleDay.TemplateId = TemplateId;
                     appointment.PatientId = PatientId;
-                    _labresults22.MainCycle_ID = itemm.ID;
+                    _cycleDay.MainCycle_ID = itemm.ID;
                     appointment.ReturnUrl = System.Web.HttpContext.Current.Request.UrlReferrer?.ToString();
-                    _labresults22.Date = itemm.Date.AddDays(item - 1);
+                    _cycleDay.Date = itemm.Date.AddDays(item - 1);
                     appointment.AppointmentDate = itemm.Date.AddDays(item - 1);
                     appointment.ClinicId = 1004;
                     appointment.Create();
-                    _labresults22.Create();
+                    _cycleDay.Create();
 
 
 

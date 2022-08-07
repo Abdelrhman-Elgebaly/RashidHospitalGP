@@ -28,8 +28,9 @@ namespace RashidHospital.Models
         public Nullable<int> CycleId { get; set; }
         public string Pharmacist_Note { get; set; }
         public Nullable<bool> IsSelected { get; set; }
+        public Nullable<bool> IsEditByPharmacy { get; set; }
 
-        
+
         internal override NurseNote Convert(NurseNoteVM Obj)
         {
             if (Obj == null)
@@ -51,7 +52,7 @@ namespace RashidHospital.Models
                     Dose_Calculated = Obj.Dose_Calculated,
                     Pharmacist_Note=Obj.Pharmacist_Note,
                     IsSelected = Obj.IsSelected,
-
+                    IsEditByPharmacy = Obj.IsEditByPharmacy,
                 };
             }
             return _Obj;
@@ -75,6 +76,8 @@ namespace RashidHospital.Models
             pl.Dose_Calculated = DbObj.Dose_Calculated;
             pl.Pharmacist_Note = DbObj.Pharmacist_Note;
             pl.IsSelected = DbObj.IsSelected;
+            pl.IsEditByPharmacy = DbObj.IsEditByPharmacy;
+
             return pl;
         }
 

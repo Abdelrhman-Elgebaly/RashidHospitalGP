@@ -5,171 +5,11 @@
 }
 
 <link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
-<style>
-    .columns {
-        float: left;
-        position: relative;
-        margin-right: 41px;
-        background-color: azure;
-        padding-right: 59px;
-        column-count: 2;
-        width: 1000px;
-    }
+<link href="~/Content/ChemoWizard.css" rel="stylesheet" />
 
-    .form-wizard {
-        margin: 0 auto;
-        display: block;
-        margin-bottom: 25px;
-    }
 
-        .form-wizard .nav li {
-            box-shadow: 0 5px 3px -3px #ddd;
-        }
-
-            .form-wizard .nav li + li {
-                margin-left: 0px;
-            }
-
-            .form-wizard .nav li:first-child a {
-                padding-left: 10px;
-            }
-
-            .form-wizard .nav li:last-child a {
-                border-right: 1px solid #000;
-            }
-
-            .form-wizard .nav li:last-child:after, .form-wizard .nav li:last-child:before {
-                border-width: 0;
-            }
-
-            .form-wizard .nav li:last-child:hover:after, .form-wizard .nav li:last-child:hover:before {
-                border-width: 0;
-            }
-
-            .form-wizard .nav li:last-child:hover a {
-                border-right: 1px solid #000;
-            }
-
-            .form-wizard .nav li a {
-                border-radius: 0;
-                padding-left: 30px;
-                background: #fff;
-                border: 1px solid #000;
-                color: teal;
-                border-right: 0;
-            }
-
-                .form-wizard .nav li a:hover, .form-wizard .nav li a:active, .form-wizard .nav li a:focus {
-                    background: teal;
-                    color: white;
-                }
-
-            .form-wizard .nav li:after, .form-wizard .nav li:before {
-                content: "";
-                border-color: transparent transparent transparent #000;
-                border-style: solid;
-                border-width: 20px;
-                position: absolute;
-                display: block;
-                top: 0;
-                z-index: 1;
-            }
-
-            .form-wizard .nav li:after {
-                border-left-color: #fff;
-                top: 1px;
-                right: -39px;
-            }
-
-            .form-wizard .nav li:before {
-                border-width: 21px;
-                right: -41px;
-            }
-
-            .form-wizard .nav li.completed a {
-                border-radius: 0;
-                padding-left: 30px;
-                background: #A9A9A9;
-                border: 1px solid #000;
-                border-right: 0;
-                color: teal;
-                cursor: pointer;
-            }
-
-            .form-wizard .nav li.completed:after, .form-wizard .nav li.completed:before {
-                content: "";
-                border-color: transparent transparent transparent #000;
-                border-style: solid;
-                border-width: 20px;
-                position: absolute;
-                display: block;
-                top: 0;
-                right: -40px;
-                z-index: 1;
-            }
-
-            .form-wizard .nav li.completed:after {
-                border-left-color: #fff;
-                top: 1px;
-                right: -39px;
-            }
-
-            .form-wizard .nav li.completed:before {
-                border-width: 21px;
-                right: -41px;
-            }
-
-            .form-wizard .nav li.current a {
-                border-radius: 0;
-                padding-left: 30px;
-                background: #4B2259;
-                border: 1px solid #000;
-                border-right: 0;
-                color: white;
-                cursor: pointer;
-            }
-
-            .form-wizard .nav li.current:after, .form-wizard .nav li.current:before {
-                content: "";
-                border-color: transparent transparent transparent #000;
-                border-style: solid;
-                border-width: 20px;
-                position: absolute;
-                display: block;
-                top: 0;
-                right: -40px;
-                z-index: 1;
-            }
-
-            .form-wizard .nav li.current:after {
-                border-left-color: #4B2259;
-                top: 1px;
-                right: -39px;
-            }
-
-            .form-wizard .nav li.current:before {
-                border-width: 21px;
-                right: -41px;
-            }
-
-            .form-wizard .nav li.current:last-child a {
-                border-right: 1px solid #000;
-            }
-
-            .form-wizard .nav li.current:last-child:after, .form-wizard .nav li.current:last-child:before {
-                border-width: 0;
-            }
-
-            .form-wizard .nav li.current:last-child:hover:after, .form-wizard .nav li.current:last-child:hover:before {
-                border-width: 0;
-            }
-
-            .form-wizard .nav li.current:last-child:hover a {
-                border-right: 1px solid #000;
-            }
-</style>
 <section class="content-header">
-    <h2>Toxicty</h2>
+    <h2>3.Toxicty</h2>
     @Html.Raw(ViewBag.PatientInfo)
 </section>
 
@@ -212,54 +52,75 @@
     {
         <div class="box-header">
             <h3 class="box-title">
-                <a href="@Url.Action("Create", "ChemoCycleToxicty", new { Id = ViewBag.CycleId, pid = ViewBag.PatientId })" class="btn btn-primary">
+                <a href="@Url.Action("Create", "ChemoCycleToxicty", new { Id = ViewBag.CycleId, pid = ViewBag.PatientId },null)" class="btn btn-primary">
                     Add New Toxicty
                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 </a>
             </h3>
         </div>
     }
-        <hr />
-        <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Name</th>
-                        <th>Grade</th>
-                        <th>Condition</th>
-                        <th>Description</th>
-                        <th>Note</th>
-                        <th>Signutre</th>
-                        <th class="text-center" width="110px">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
+    <hr />
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Grade</th>
+                    <th>Condition</th>
+                    <th>Description</th>
+                    <th>Note</th>
+                    <th>Signutre</th>
+                    <th class="text-center" width="110px">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="adjustContent">@item.ToxictyDate.ToShortDateString()</td>
+                    <td class="adjustContent">@item.ToxictyTypeName</td>
+                    <td class="adjustContent">@item.Grade</td>
+                    <td class="adjustContent">@item.Condition</td>
+                    <td class="adjustContent">@item.Description</td>
+                    @if (item.IsEditByPharmacy == true)
                     {
-                        <tr>
-                            <td class="adjustContent">@item.ToxictyDate.ToShortDateString()</td>
-                            <td class="adjustContent">@item.ToxictyTypeName</td>
-                            <td class="adjustContent">@item.Grade</td>
-                            <td class="adjustContent">@item.Condition</td>
-                            <td class="adjustContent">@item.Description</td>
-                            <td class="adjustContent">@item.Note</td>
-                            <td class="adjustContent">@item.DoctorName</td>
 
-                            <td class="adjustContent text-center">
 
-                                <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenDeleteModal(@item.Id)">
-                                    <i class="fa fa-ban"></i>
-                                </a>
-                            </td>
-                        </tr>
-
+                        <td bgcolor="darkseagreen">
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
                     }
-                </tbody>
-            </table>
-        </div>
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    }
 
-    </section>
+                    <td class="adjustContent">@item.DoctorName</td>
+
+                    <td class="adjustContent text-center">
+
+                        <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenDeleteModal(@item.Id)">
+                            <i class="fa fa-ban"></i>
+                        </a>
+
+                        <center>
+
+                            <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.Id)">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
+                </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+</section>
 <center>
 
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -307,6 +168,20 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div id="NoteBody"></div>
+        </div>
+    </div>
 </div>
 @section scripts {
     <script src="~/Scripts/jquery.dataTables.js"></script>
@@ -395,25 +270,25 @@
     </script>
 
     <script>
-    function openReqestModal(patientID){
-        window.location.href ='/LabRequest/Index?PatientId='+patientID;
-    }
-    function openResultModal(patientID){
-        window.location.href ='/LabResualt/Index?patientID='+patientID;
-    }
+        function openReqestModal(patientID) {
+            window.location.href = '/LabRequest/Index?PatientId=' + patientID;
+        }
+        function openResultModal(patientID) {
+            window.location.href = '/LabResualt/Index?patientID=' + patientID;
+        }
 
-    function openRadiologyResultModal(patientID){
-        window.location.href ='/RadiologyResult/Index?patientID='+patientID;
-    }
-    function openRadiologyRequestModal(patientID){
-        window.location.href ='/RadiologyRequest/Index?patientID='+patientID;
-    }
-    function openPathologyModal(patientID){
-        window.location.href ='/Pathology/Index?patientID='+patientID;
+        function openRadiologyResultModal(patientID) {
+            window.location.href = '/RadiologyResult/Index?patientID=' + patientID;
+        }
+        function openRadiologyRequestModal(patientID) {
+            window.location.href = '/RadiologyRequest/Index?patientID=' + patientID;
+        }
+        function openPathologyModal(patientID) {
+            window.location.href = '/Pathology/Index?patientID=' + patientID;
 
         }
 
-        function openNurseNoteModal(cycleID,patientID) {
+        function openNurseNoteModal(cycleID, patientID) {
             window.location.href = '/ChemoCycleNuresNote/Index?Id=' + cycleID + '&pid=' + patientID;
         }
 
@@ -447,6 +322,38 @@
                 },
                 })
             });
+
+
+
+                    function openTestPopUp(Id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_EditNote", "ChemoCycleToxicty")",
+                cache: false,
+                data: { Id: Id },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#NoteBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
+
+
+
+
+
+
+
     </script>
 }
 

@@ -25,6 +25,7 @@ namespace Hospital.DAL
         public Nullable<int> CycleId { get; set; }
         public string Pharmacist_Note { get; set; }
         public Nullable<bool> IsSelected { get; set; }
+        public Nullable<bool> IsEditByPharmacy { get; set; }
 
     }
 }

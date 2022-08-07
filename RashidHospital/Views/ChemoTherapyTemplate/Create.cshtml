@@ -5,7 +5,25 @@
 <style>
     .form-horizontal .control-label {
         text-align: left;
+        .form-control
+
+    {
+        margin-bottom: 4px;
     }
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 5000px;
+    }
+
+
+
+   
 </style>
 @using (Html.BeginForm("Create", "ChemoTherapyTemplate", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {

@@ -87,8 +87,14 @@ namespace RashidHospital.Controllers
 
         }
 
-        public JsonResult _EditDiagnose(int patientID) {
-          
+        public JsonResult _EditDiagnose(int patientID)
+        {
+            if (patientID == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            FillDiagnoseViewBags();
 
             PatientVM _Obj = new PatientVM();
             PatientVM _objVM = _Obj.SelectObject(patientID);
@@ -105,11 +111,11 @@ namespace RashidHospital.Controllers
         {
             try
             {
-               
-                    vm.ModifiedDate = DateTime.Now;
-                    vm.Edit();
-                    return "Success"; // succcess
-                
+
+                vm.ModifiedDate = DateTime.Now;
+                vm.Edit();
+                return "Success"; // succcess
+
             }
             catch (Exception e)
             {
@@ -118,13 +124,14 @@ namespace RashidHospital.Controllers
         }
 
         [HttpPost]
-        public string EditDiagnosePatient(PatientVM vm) {
+        public string EditDiagnosePatient(PatientVM vm)
+        {
             try
             {
                 PatientVM _Obj = new PatientVM();
                 PatientVM _objVM = _Obj.SelectObject(vm.Id);
-             _objVM.BirthDate = vm.BirthDate;
-             _objVM.ModifiedDate = DateTime.Now;
+                _objVM.DiagnoseId = vm.DiagnoseId;
+                _objVM.ModifiedDate = DateTime.Now;
                 _objVM.Edit();
                 return "Success"; // succcess
             }
@@ -135,6 +142,7 @@ namespace RashidHospital.Controllers
 
             }
         }
+
 
         [HttpPost]
         public int DeletePatient(int PatientId)

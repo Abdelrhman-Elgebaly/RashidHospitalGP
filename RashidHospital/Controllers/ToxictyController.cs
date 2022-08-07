@@ -38,8 +38,8 @@ namespace RashidHospital.Controllers
             {
                 input.CreatedDate = DateTime.Now;
                 input.ModifiedDate = DateTime.Now;
-                Guid userId = Guid.Parse(User.Identity.GetUserId());
-                input.DoctorId = userId;
+             Guid userId = Guid.Parse(User.Identity.GetUserId());
+               input.DoctorId = userId;
                 input.Create();
                 return RedirectToAction("Index", new { patientID = input.PatientID });
             }

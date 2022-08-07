@@ -33,6 +33,9 @@ namespace RashidHospital.Models
 
 
         public double Value { get; set; }
+
+        public Nullable<bool> IsEditByPharmacy { get; set; }
+
         internal override ChemoTherapyCycleInvestigation Convert(ChemoTherapyCycleInvestigationVM Obj)
         {
             if (Obj == null)
@@ -51,7 +54,10 @@ namespace RashidHospital.Models
                     TemplateId = Obj.TemplateId,
                     Value =Obj.Value,
                     Note =Obj.Note,
-                };
+                    IsEditByPharmacy = Obj.IsEditByPharmacy,
+                           
+
+    };
             }
             return _Obj;
         }
@@ -81,6 +87,7 @@ namespace RashidHospital.Models
             pl.TemplateId = DbObj.TemplateId;
             pl.Value = DbObj.Value;
             pl.Note = DbObj.Note;
+            pl.IsEditByPharmacy = DbObj.IsEditByPharmacy;
             return pl;
         }
 

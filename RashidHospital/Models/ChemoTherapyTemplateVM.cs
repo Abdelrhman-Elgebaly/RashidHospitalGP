@@ -210,13 +210,33 @@ namespace RashidHospital.Models
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
             List<ChemoTherapyTemplateVM> CliniList = SelectAll();
-
+          
             foreach (ChemoTherapyTemplateVM Obj in CliniList)
             {
                 SelectListItem _item = new SelectListItem();
-                _item.Text = Obj.Disease;
-                _item.Value = Obj.DiseaseId.ToString();
-                listItems.Add(_item);
+
+                int count = 0;
+                foreach (var item in listItems)
+                {
+                    if (item.Text == Obj.Disease)
+                    {
+                        count = 1;
+                    }
+
+                }
+
+                if (count == 0)
+
+
+                {
+                    _item.Text = Obj.Disease;
+                    _item.Value = Obj.DiseaseId.ToString();
+                    listItems.Add(_item);
+
+                }
+
+
+            
             }
 
             return listItems;

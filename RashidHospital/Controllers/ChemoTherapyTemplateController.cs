@@ -227,5 +227,18 @@ namespace RashidHospital.Controllers
             }
             return finalResult;
         }
+
+        public ActionResult Test()
+        {
+
+            ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
+
+            List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
+
+            return View(_list);
+        }
+
+
+
     }
 }

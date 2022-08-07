@@ -54,7 +54,6 @@ namespace RashidHospital.Controllers
 
             return View(_List);
         }
-        //Where(a => a.Date == DateTime.Now).ToList();
 
         public ActionResult FinalApproved()
         {

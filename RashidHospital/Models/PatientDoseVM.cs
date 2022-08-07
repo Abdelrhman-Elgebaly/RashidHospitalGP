@@ -55,7 +55,8 @@ namespace RashidHospital.Models
         public string Fluid_Type_Value { get; set; }
         public string Duration { get; set; }
         public string Pharmacy_Condition_Value { get; set; }
-        public DateTime Date;
+        public Nullable<DateTime> Date { get; set; }
+
 
 
 
@@ -85,6 +86,8 @@ namespace RashidHospital.Models
                     IsEditByPharmacy = Obj.IsEditByPharmacy,
                     IsApproved = Obj.IsApproved,
                     MainDrugId = Obj.MainDrugId,
+
+                    Date = Obj.Date,
 
 
                 };
@@ -118,7 +121,7 @@ namespace RashidHospital.Models
             pl.IsApproved = DbObj.IsApproved;
             pl.MainDrugId = DbObj.MainDrugId;
             pl.Pharmacy_Condition = DbObj.Pharmacy_Condition;
-
+            pl.Date = DbObj.Date;
             //  pl.Pharmacy_Condition_Value = enumType.ToString();
             PatientVM Obj = new PatientVM();
 
@@ -133,11 +136,7 @@ namespace RashidHospital.Models
             pl.Fluid_Type_Value = dObjm.Fluid_Type_Value;
             pl.Duration = dObjm.Duration;
 
-            ChemoTherapyCycleDayVM cc = new ChemoTherapyCycleDayVM();
-
-            ChemoTherapyCycleDayVM ccm = cc.SelectObject(DbObj.Cycle_ID);
-
-            pl.Date = ccm.Date;
+      
             return pl;
         }
 

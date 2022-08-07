@@ -23,6 +23,7 @@ namespace Hospital.DAL
         public int TemplateId { get; set; }
         public double Value { get; set; }
         public string Note { get; set; }
+        public Nullable<bool> IsEditByPharmacy { get; set; }
 
 
     }

@@ -26,6 +26,8 @@ namespace Hospital.DAL
         public DateTime CreatedDate { get; set; }
         public int PatientID { get; set; }
         public DateTime ToxictyDate { get; set; }
+        public Nullable<bool> IsEditByPharmacy { get; set; }
+
         public virtual ToxictyType ToxictyTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual Patient Patient { get; set; }

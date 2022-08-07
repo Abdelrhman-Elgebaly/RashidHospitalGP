@@ -195,6 +195,9 @@ namespace RashidHospital.Controllers
                     ObjVm.Fluid_Vol = item.Fluid_Vol;
                     ObjVm.MainDrugId = item.Drug_ID;
                     ObjVm.Patient_ID = pid;
+                    ObjVm.Date = _Objm.Date;
+
+
                     ObjVm.Create();
 
                 }

@@ -1,11 +1,5 @@
-﻿@model RashidHospital.Models.ChemoTherapyCycleDayVM
+﻿@model RashidHospital.Models.ToxictyVM
 
-
-
-
-@{
-    ViewBag.Title = "Create";
-}
 <style>
     .form-control {
         margin-bottom: 4px;
@@ -21,40 +15,27 @@
         width: 1000px;
     }
 </style>
-
 @using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.HiddenFor(model => model.ID)
-
+    @Html.Hidden("Id", (int)ViewBag.Id)
 
 
     <div class="modal-header">
 
         @*@Html.Raw(ViewBag.PatientInfo)*@
     </div>
-
     <div class="modal-body">
         <div class="box-body">
 
-
-
-            <div class="form-group">
-                @Html.Label(" Date", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
-
-                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-                </div>
-            </div>
+       
 
             <div class="form-group">
-                @Html.Label("Reason", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                    @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+                    @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
                 </div>
             </div>
-
 
             <div class="form-group" style="float:right;">
                 <div class="col-md-12">
@@ -67,11 +48,7 @@
             </div>
         </div>
     </div>
-
-
 }
-
-
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 
@@ -121,17 +98,18 @@
 
     $("body").on("click", "#btnSaveandExit", function () {
 
-        var ID = $("#ID").val();
-        var Date = $("#Date").val();
-        var Reason = $("#Reason").val();
 
-        
+        var Id = $("#Id").val();
+        var Note = $("#Note").val();
+       
+
+
         $.ajax({
-            url: "/ChemoTherapyCycleDay/RescuedeleDates",
+            url: "/ChemoCycleToxicty/AddNote",
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "Id": ID, "Date": Date, "Reason": Reason },
+            data: { "Id": Id, "Note": Note },
             success: function (result) {
                 $("#CreateModel").modal("hide");
                 window.location.reload();
@@ -140,5 +118,4 @@
         });
     })
 </script>
-
 

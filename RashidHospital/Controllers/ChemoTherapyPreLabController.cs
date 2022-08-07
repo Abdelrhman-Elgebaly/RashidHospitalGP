@@ -16,6 +16,7 @@ namespace RashidHospital.Controllers
   
         public ActionResult Index(string templateID)
         {
+            fillCreateBag();
             int _templateID = Convert.ToInt32(templateID);
             fillBag(_templateID);
             ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
@@ -158,6 +159,28 @@ namespace RashidHospital.Controllers
             return finalResult;
         }
 
+        [HttpPost]
+        public int TestLab(int id, int Test)
+        {
+            int finalResult = 0;
+            try
+            {
+                ChemoTherapyPreLabVM _resultVM = new ChemoTherapyPreLabVM();
+                ChemoTherapyPreLabVM DeleteObject = _resultVM.SelectObject(id);
+                DeleteObject.Test_Type = Test;
+                // DeleteObject.IsDeleted = true;
+                DeleteObject.Edit();
+
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
 
 
 

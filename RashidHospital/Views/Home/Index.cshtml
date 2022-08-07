@@ -30,19 +30,22 @@
                 <div class="box-header">
                     <h3 class="box-title">Alexandria Clinical Oncology Department</h3>
                 </div>
+                @if (User.IsInAnyRoles("Doctor"))
+                {
                 <div class="box-header">
                     <a class="btn btn-success adjust-actions" title="Patient" onclick="openPendingModal()">
                         @ViewBag.count Pending ChemoTherapy Cycles
 
                     </a>
                 </div>
-                    <div class="box-body">
+                }
+                <div class="box-body">
 
 
-                        <img src="~/Content/img/IMG-20200515-WA0013.jpg" style="width:auto;height:auto;" />
+                    <img src="~/Content/img/IMG-20200515-WA0013.jpg" style="width:auto;height:auto;" />
 
-                    </div>
                 </div>
+            </div>
             </div>
     </div>
 
