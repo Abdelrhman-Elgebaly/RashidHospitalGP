@@ -377,6 +377,7 @@ namespace RashidHospital.Controllers
                 ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
                 _Objm.IsReleased = false;
                 _Objm.IsPending = false;
+                _Objm.IsStart = false;
                 _Objm.IsApproved = true;
 
                 _Objm.Edit();

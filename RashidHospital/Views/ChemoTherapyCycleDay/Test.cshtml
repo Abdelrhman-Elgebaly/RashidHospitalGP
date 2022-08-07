@@ -41,11 +41,16 @@
 
                     <td>
 
-                        <a href="#" class="btn btn-primary" id="DeactivateBtn">EXPORT TO EXCEL</a>
+                     
 
                         <button onclick="OpenStartModal(@item.ID,@item.Patient_ID)">View</button>
                         @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-
+                        <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@item.ID)">
+                            Re DATE
+                        </a>
+                        <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenOmitModal(@item.ID)">
+                            <i class="fa fa-ban"></i>
+                        </a>
                     </td>
                 </tr>
             }
@@ -66,7 +71,9 @@
 
                             <button onclick="OpenStartModal(@item.ID,@item.Patient_ID)">View</button>
                             @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-
+                            <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenOmitModal(@item.ID)">
+                                <i class="fa fa-ban"></i>
+                            </a>
                         </td>
                     </tr>
                 }

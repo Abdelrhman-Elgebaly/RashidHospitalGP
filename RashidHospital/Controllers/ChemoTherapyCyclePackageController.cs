@@ -27,6 +27,7 @@ namespace RashidHospital.Controllers
             ChemoTherapyCycleDayVM _dObj = new ChemoTherapyCycleDayVM();
             ChemoTherapyCycleDayVM _cObjVM = _dObj.SelectObject(Id);
             _cObjVM.IsStart = true;
+            _cObjVM.IsRescuedeled = false;
             _cObjVM.Edit();
             //
 

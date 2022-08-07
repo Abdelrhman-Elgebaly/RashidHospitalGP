@@ -20,6 +20,17 @@ namespace RashidHospital.Controllers
             fillBag(PatientId);
             ChemoTherapyProtocolVM _Labresults = new ChemoTherapyProtocolVM();
             List<ChemoTherapyProtocolVM> OrderList = _Labresults.SelectAllByPatientID(PatientId);
+            foreach (var item in OrderList) {
+
+
+                ChemoTherapyCycleDayVM chemoTherapyCycleDayVM = new ChemoTherapyCycleDayVM();
+                List<ChemoTherapyCycleDayVM> chemoTherapyCycleDayVMs = chemoTherapyCycleDayVM.SelectAllByTemplateId(item.ID);
+                chemoTherapyCycleDayVMs =  chemoTherapyCycleDayVMs.Where(a => a.IsApproved == true).ToList();
+                item.Cycles_Number = chemoTherapyCycleDayVMs.Count();
+                item.Edit();
+            }
+   
+
             fillBag(PatientId);
             return View(OrderList);
         }

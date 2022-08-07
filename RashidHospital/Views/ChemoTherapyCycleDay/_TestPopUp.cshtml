@@ -24,7 +24,14 @@
 
                     <th>Date</th>
 
-
+                    @foreach (var item in Model)
+                    {
+                        if (item.IsRescuedeled == true)
+                        {
+                            <th>Reason</th>
+                        }
+                       
+                    }
 
                     <th class="text-center">Actions</th>
                 </tr>
@@ -35,46 +42,101 @@
             {
                 if (item.IsStart == true)
                 {
-                    <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+        <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
 
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+         
+            <td>
 
-                        <td>
-
-
-                            @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-                            <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@item.ID)">
-                                Re DATE
-                            </a>
-                        </td>
-                    </tr>
+                <center>
+                    @Html.ActionLink("View", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                    </center>
+</td>
+        </tr>
                 }
+
+
+                else if (item.IsApproved == true)
+                {
+        <tr style="background-color: #B22222; color: black; font-weight: bold; ">
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+
+           
+
+
+            <td>
+
+                <center>
+
+                    @Html.ActionLink("View", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                    </center>
+</td>
+        </tr>
+                }
+
+                else if (item.IsRescuedeled == true)
+                {
+        <tr style="background-color: #FFD700; color: black; font-weight: bold;">
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+
+            <td>
+
+                <center>
+                    @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                    </center>
+</td>
+        </tr>
+                }
+
+
+                else if (item.IsDeleted == true)
+                {
+        <tr style='color:red;text-decoration:line-through'>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+          
+
+        </tr>
+                }
+
+
                 else
                 {
 
-                    <tr>
+        <tr>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+          
+            <td>
+                <center>
+                    @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
 
-                        <td>
-                            <center>
 
-                                <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="OpenStartModal(@item.ID,@item.Patient_ID)">
-                                    Start
-                                </a>
+                </center>
 
-                                <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@item.ID)">
-                                    Re DATE
-                                </a>
-                            </center>
-
-                        </td>
-                    </tr>
+            </td>
+        </tr>
                 }
             }
 
