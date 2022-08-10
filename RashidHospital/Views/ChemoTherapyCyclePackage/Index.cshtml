@@ -51,7 +51,7 @@
     <table id="example1" class="table table-bordered table-striped" style="width:100%">
         <thead>
             <tr>
-
+             
                 <th>Lab</th>
                 <th>Value</th>
                 <th>Actual Value</th>
@@ -61,18 +61,19 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tblbody">
 
             @foreach (var item in Model.Item2)
             {
             <tr>
-
+               
                 <td>
                     @Html.DisplayFor(modelItem => item.Test_TypeValue)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Test_Value)
 
+                <td class="PatientName">
+                    <span>@item.Test_Value</span>
+                    <input type="text" value="@item.Test_Value" style="display:none" />
                 </td>
 
 
@@ -158,7 +159,11 @@
 
                         <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
                             <i class="fa fa-edit"></i>
+
                         </a>
+
+
+                     
                     </center>
                 </td>
 
@@ -214,7 +219,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Pharmacist Note</h4>
+                <h4 class="modal-title">Edit</h4>
             </div>
             <div id="NoteBody"></div>
         </div>
@@ -310,4 +315,25 @@
 
 
     </script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -29,7 +29,7 @@
 
         <div class="box-body">
             <div class="form-group">
-                @Html.LabelFor(model => model.Dose_Calculated, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Dose", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextAreaFor(model => model.Dose_Calculated, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Dose_Calculated, "", new { @class = "text-danger" })
@@ -46,7 +46,7 @@
 
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Pharmacist_Note, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Note", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextAreaFor(model => model.Pharmacist_Note, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Pharmacist_Note, "", new { @class = "text-danger" })

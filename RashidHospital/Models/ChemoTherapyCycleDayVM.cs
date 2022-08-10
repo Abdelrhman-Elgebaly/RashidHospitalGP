@@ -41,8 +41,13 @@ namespace RashidHospital.Models
         public string Reason { get; set; }
         public Nullable<bool> IsRescuedeled { get; set; }
         public Nullable<int> CycleNumber { get; set; }
+        //
+        public Guid? DoctorId { get; set; }
+        public Guid? PharmacistId { get; set; }
+        public string DoctorName { get; set; }
+        public string PharmacistName { get; set; }
 
-        
+
         internal override ChemoTherapyCycleDay Convert(ChemoTherapyCycleDayVM Obj)
         {
             if (Obj == null)
@@ -68,6 +73,9 @@ namespace RashidHospital.Models
                     Reason = Obj.Reason,
                     IsRescuedeled = Obj.IsRescuedeled,
                     CycleNumber = Obj.CycleNumber,
+                    DoctorId = Obj.DoctorId,
+                    PharmacistId = Obj.PharmacistId,
+
                 };
             }
             return _Obj;
@@ -98,7 +106,29 @@ namespace RashidHospital.Models
             pl.Reason = DbObj.Reason;
             pl.IsRescuedeled = DbObj.IsRescuedeled;
             pl.CycleNumber = DbObj.CycleNumber;
-            
+            pl.DoctorId = DbObj?.DoctorId;
+            pl.PharmacistId = DbObj?.PharmacistId;
+            if (DbObj.DoctorId != null)
+            {
+                AspNetUser user = new AspNetUser();
+                AspNetUser _user = user.Getobject(DbObj.DoctorId);
+                pl.DoctorName = _user?.FirstName + " " + _user?.SecondName + " " + _user?.ThirdName;
+            }
+            if (DbObj.PharmacistId != null)
+            {
+                AspNetUser user = new AspNetUser();
+                AspNetUser _user = user.Getobject(DbObj.PharmacistId);
+                pl.PharmacistName = _user?.FirstName + " " + _user?.SecondName + " " + _user?.ThirdName;
+            }
+
+
+
+
+
+
+
+
+            //
             PatientVM Obj = new PatientVM();
             
             PatientVM Objm = Obj.SelectObject(DbObj.Patient_ID);
@@ -109,6 +139,8 @@ namespace RashidHospital.Models
             pl.Disease = _cobjVM.DiseaseName;
             pl.Protocol = _cobjVM.ProtocolName;
          
+
+
 
             return pl;
         }

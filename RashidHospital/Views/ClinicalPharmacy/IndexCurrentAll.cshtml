@@ -51,6 +51,7 @@
                         <th>Patient Name</th>
                         <th>Disease</th>
                         <th>Protocol </th>
+                        <th>Signature</th>
 
                         <th>Dr Statues </th>
                         <th> Actions</th>
@@ -59,30 +60,34 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PatientName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Disease)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Protocol)
-                            </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Disease)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Protocol)
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DrStatues)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoctorName)
+                        </td>
 
-                            <td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DrStatues)
+                        </td>
 
-                                @Html.ActionLink("Open", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null) |
-                                @Html.ActionLink("File Record", "View", "Patient", new { patientID = item.Patient_ID }, null)
-                                <a class="btn btn-success adjust-actions" title="Approved" onclick="OpenApproved(@item.ID)">
-                                    <i class="fa fa-check"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        <td>
+
+                            @Html.ActionLink("Open", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null) |
+                            @Html.ActionLink("File Record", "View", "Patient", new { patientID = item.Patient_ID }, null)
+                            <a class="btn btn-success adjust-actions" title="Approved" onclick="OpenApproved(@item.ID)">
+                                <i class="fa fa-check"></i>
+                            </a>
+                        </td>
+                    </tr>
 
                     }
                 </tbody>
@@ -145,7 +150,7 @@
             window.location.href = '/ClinicalPharmacy/Pending';
         }
         function openFinalAppModal() {
-            window.location.href = '/ClinicalPharmacy/FinalApproved';
+            window.location.href = '/ClinicalPharmacy/ClinicalPharmacy';
         }
 
 

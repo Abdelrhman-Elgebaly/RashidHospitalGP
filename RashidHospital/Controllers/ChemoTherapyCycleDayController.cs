@@ -16,20 +16,7 @@ namespace RashidHospital.Controllers
     {
 
         // GET: ChemoTherapyCycleDay
-        public ActionResult Index(int MainCycleId)
-        {
-
-       
-
-            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> DatesList = _Obj.SelectAllByMainCycleId(MainCycleId).OrderBy(a => a.Date).ToList();
-         
-
-        
-            return View(DatesList);
-
-            // return View(OrderList);
-        }
+   
 
 
         public string RenderRazorViewToString(string viewName, object model)
@@ -48,13 +35,17 @@ namespace RashidHospital.Controllers
 
         public JsonResult _TestPopUp(int Id)
         {
+
+
+            ViewBag.MainCycleId = Id;
             if (Id == null)
             {
                 return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
 
             }
+            ViewBag.MainCycleId = Id;
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> DatesList = _Obj.SelectAllByMainCycleId(Id).OrderBy(a => a.Date).ToList();
+            List<ChemoTherapyCycleDayVM> DatesList = _Obj.SelectAllByMainCycleId(Id).ToList();
             //if (_objVM == null)
             //{
             //    return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
@@ -67,8 +58,14 @@ namespace RashidHospital.Controllers
 
         public ActionResult Test(int Id)
         {
+            ChemoTherapyCyclesDatesVM chemoTherapyCyclesDates = new ChemoTherapyCyclesDatesVM();
+
+            ChemoTherapyCyclesDatesVM Obj = chemoTherapyCyclesDates.SelectObject(Id);
+            ViewBag.Date = Obj.Date.Date;
+            ViewBag.pid = Obj.Patient_ID;
+            ViewBag.tid = Obj.TemplateId;
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> DatesList = _Obj.SelectAllByMainCycleId(Id).OrderBy(a => a.Date).ToList();
+            List<ChemoTherapyCycleDayVM> DatesList = _Obj.SelectAllByMainCycleId(Id).ToList();
             return View(DatesList);
         }
 
@@ -79,11 +76,59 @@ namespace RashidHospital.Controllers
             int finalResult = 0;
             try
             {
-                ChemoTherapyCycleDayVM _resultVM = new ChemoTherapyCycleDayVM();
-                ChemoTherapyCycleDayVM DeleteObject = _resultVM.SelectObject(Id);
+                ChemoTherapyCycleDayVM cycle = new ChemoTherapyCycleDayVM();
+                ChemoTherapyCycleDayVM DeleteObject = cycle.SelectObject(Id);
                 DeleteObject.IsDeleted = true;
 
                  DeleteObject.Edit();
+
+// Omit in appoitment
+                AppointmentVM appointmntVm = new AppointmentVM();
+                List<AppointmentVM> AppointmentList = appointmntVm.SelectAllByPatientId(DeleteObject.Patient_ID);
+                foreach (var item in AppointmentList)
+                {
+
+                    if (item.AppointmentDate.Date == DeleteObject.Date.Date)
+                    {
+
+
+                        Guid userId = Guid.Parse(User.Identity.GetUserId());
+                        item.ModifiedBy = userId;
+                        item.IsDeleted = true;
+                        item.Edit();
+
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 finalResult = 1;
 
@@ -169,9 +214,13 @@ namespace RashidHospital.Controllers
 
                     if (itemm.AppointmentDate.Date == item.Date.Date )
                     {
-                        itemm.AppointmentDate=  itemm.AppointmentDate.AddDays(diffOfDates.Days);
+                        if (itemm.AppointmentDate >= prevDate)
+                        {
 
-                        itemm.Edit();
+                            itemm.AppointmentDate = itemm.AppointmentDate.AddDays(diffOfDates.Days);
+
+                            itemm.Edit();
+                        }
                     }
 
                 }

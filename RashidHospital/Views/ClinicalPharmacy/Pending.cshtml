@@ -56,7 +56,8 @@
                         <th>Patient Name</th>
                         <th>Disease</th>
                         <th>Protocol </th>
-                        <th>Pharmacist Note </th>
+
+                        <th>Signature</th>
 
 
                         <th> Actions</th>
@@ -65,28 +66,28 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PatientName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Disease)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Protocol)
-                            </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Disease)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Protocol)
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Note)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PharmacistName)
+                        </td>
 
-                            <td>
+                        <td>
 
-                                @Html.ActionLink("Open", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null) |
-                                @Html.ActionLink("File Record", "View", "Patient", new { patientID = item.Patient_ID }, null)
+                            @Html.ActionLink("Open", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null) |
+                            @Html.ActionLink("File Record", "View", "Patient", new { patientID = item.Patient_ID }, null)
 
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
 
                     }
                 </tbody>
@@ -119,7 +120,7 @@
 
     <script>
         function openFinalModal() {
-            window.location.href = '/ClinicalPharmacy/FinalApproved';
+            window.location.href = '/ClinicalPharmacy/ClinicalPharmacy';
         }
         function openCurrentModal() {
             window.location.href = '/ClinicalPharmacy/IndexCurrent';

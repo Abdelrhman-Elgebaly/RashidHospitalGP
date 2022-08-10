@@ -541,6 +541,7 @@
     <Content Include="Views\ClinicalPharmacy\PendingAll.cshtml" />
     <Content Include="Views\ClinicalPharmacy\ClinicalPharmacyAll.cshtml" />
     <Content Include="Views\ChemoCycleToxicty\_EditNote.cshtml" />
+    <Content Include="Views\ChemoTherapyProtocol\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -549,6 +550,7 @@
     <Folder Include="Html\AdminLTE-3.0.0\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\CycleStartDate\" />
+    <Folder Include="Views\TblPatients\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

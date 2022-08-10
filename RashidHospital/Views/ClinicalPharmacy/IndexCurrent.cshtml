@@ -51,6 +51,7 @@
                         <th>Patient Name</th>
                         <th>Disease</th>
                         <th>Protocol </th>
+                        <th>Signature</th>
 
                         <th>Dr Statues </th>
                         <th> Actions</th>
@@ -69,7 +70,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Protocol)
                         </td>
-
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoctorName)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DrStatues)
                         </td>
@@ -145,7 +148,7 @@
             window.location.href = '/ClinicalPharmacy/Pending';
         }
         function openFinalAppModal() {
-            window.location.href = '/ClinicalPharmacy/FinalApproved';
+            window.location.href = '/ClinicalPharmacy/ClinicalPharmacy';
         }
 
 

@@ -372,7 +372,7 @@ namespace RashidHospital.Controllers
 
         }
 
-        public JsonResult AddNote(int Id, string Note, int Actual_Value)
+        public JsonResult AddNote(int Id, string Note, double Actual_Value)
 
         {
 
@@ -386,7 +386,14 @@ namespace RashidHospital.Controllers
                 _ObjvM.IsEditByPharmacy = true;
                 _ObjvM.Edit();
             }
-                return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+
+            if (User.IsInAnyRoles("Doctor"))
+            {
+                _ObjvM.IsEditByPharmacy = false;
+                _ObjvM.Edit();
+            }
+            _ObjvM.Edit();
+            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
 
         }
 

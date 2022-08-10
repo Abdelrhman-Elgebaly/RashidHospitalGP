@@ -11,7 +11,7 @@
 </section>
 <section class="content-header">
     <h2>
-        Clinical Pharmacy
+        Clinical Pharmacy (Final Approved)
     </h2>
 </section>
 
@@ -111,12 +111,20 @@
 
                             <td>
 
-                                <center>
+                                @Html.DropDownList("DD", new List<SelectListItem>
 
-                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </center>
+             {
+
+new SelectListItem { Value = "1", Text = "Ordered" },
+        new SelectListItem { Value = "2", Text = "Cleared" },
+        new SelectListItem { Value = "3", Text = "Hold" },
+        new SelectListItem { Value = "4", Text = "Cancelled" },
+        new SelectListItem { Value = "5", Text = "Finalized" },
+
+
+             }, "Select Order "
+                 )
+
                             </td>
                         </tr>
 

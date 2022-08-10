@@ -41,24 +41,23 @@
         </div>
 
 
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+       
 
 
 
-
+        @* @if (User.IsInAnyRoles("Pharmacist") == false)
+        {
+            <div class="box-header">
+                <h3 class="box-title">
+                    <a href="@Url.Action("Create", "ChemoCycleToxicty", new { Id = ViewBag.CycleId, pid = ViewBag.PatientId },null)" class="btn btn-primary">
+                        Add New Toxicty
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    </a>
+                </h3>
+            </div>
+        }*@
     </center>
-    @if (User.IsInAnyRoles("Pharmacist") == false)
-    {
-        <div class="box-header">
-            <h3 class="box-title">
-                <a href="@Url.Action("Create", "ChemoCycleToxicty", new { Id = ViewBag.CycleId, pid = ViewBag.PatientId },null)" class="btn btn-primary">
-                    Add New Toxicty
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                </a>
-            </h3>
-        </div>
-    }
+   
     <hr />
     <div class="box-body">
         <table id="example1" class="table table-bordered table-striped" style="width:100%">

@@ -32,7 +32,8 @@ namespace Hospital.DAL
         public Nullable<bool> IsRescuedeled { get; set; }
 
         public Nullable<int> CycleNumber { get; set; }
-
+        public Guid? DoctorId { get; set; }
+        public Guid? PharmacistId { get; set; }
 
 
     }

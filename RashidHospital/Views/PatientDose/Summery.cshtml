@@ -5,9 +5,10 @@
 
 
 <section class="content-header">
-    <h2>6.Cycle Summery</h2>
+    <h2>6.Summery</h2>
     @Html.Raw(ViewBag.PatientInfo)
 </section>
+    
 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
 
@@ -26,494 +27,530 @@
         </ul>
     </div>
 </center>
-<section class="content-header">
-    <h2>Cycle Info</h2>
-    @Html.Raw(ViewBag.PatientInfo)
-</section>
-<div class="box-body">
+<div id="id">
+    <section class="content-header">
+        <h2>Cycle Summery</h2>
+
+    </section>
+
+    <div class="box-body">
 
 
-    <div class="form-group">
-        @Html.Label("Patient Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => Model.Item1.NameArabic, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => Model.Item1.NameArabic, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Patient Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Item1.NameArabic, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => Model.Item1.NameArabic, "", new { @class = "text-danger" })
+            </div>
         </div>
+
+
+        <div class="form-group">
+            @Html.Label("Protocol", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Item2.Protocol, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => Model.Item2.Protocol, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Cycle Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Item2.Date, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => Model.Item2.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.Label("Cycle Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Item2.CycleNumber, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => Model.Item2.CycleNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
     </div>
 
 
-    <div class="form-group">
-        @Html.Label("Protocol", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => Model.Item2.Protocol, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => Model.Item2.Protocol, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.Label("Cycle Date", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => Model.Item2.Date, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => Model.Item2.Date, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        @Html.Label("Cycle Number", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => Model.Item2.CycleNumber, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => Model.Item2.CycleNumber, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-</div>
-
-
-
-
-
-
-
-
-<style>
-    h2 {
-        color: #4B2259;
-    }
-</style>
-
-
-<section class="content-header">
-    <h2>Pre Therapy </h2>
-
-</section>
-<div class="box-body">
-    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
-        <thead>
-            <!--column names -->
-            <tr>
-                <th>
-                    sequence
-                </th>
-                <th>
-                    Drug Name
-                </th>
-
-                <th>
-                    Calculated Patient Dose
-                </th>
-                <th>Unit </th>
-                <th>Route </th>
-                <th>
-                    Fluid volume
-                </th>
-                <th>
-                    fluid type
-                </th>
-                <th>
-                    Duration/min
-                </th>
-
-            </tr>
-
-            @foreach (var item in Model.Item3)
-            {
-                if (item.Therapy_Type == "pre")
-                {
-        <tr>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Sequence_Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Drug_Name)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Dose_Calculated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Unit_Value)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Route_Value)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Fluid_Vol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-
-
-
-
-        </tr>
-                }
-            }
-
-    </table>
-</div>
-<section class="content-header">
-    <h2> Therapy </h2>
-
-</section>
-<div class="box-body">
-    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
-        <thead>
-            <!--column names -->
-            <tr>
-                <th>
-                    sequence
-                </th>
-                <th>
-                    Drug Name
-                </th>
-
-                <th>
-                    Calculated Patient Dose
-                </th>
-                <th>Unit </th>
-                <th>Route </th>
-                <th>
-                    Fluid volume
-                </th>
-                <th>
-                    fluid type
-                </th>
-                <th>
-                    Duration/min
-                </th>
-
-            </tr>
-
-            @foreach (var item in Model.Item3)
-            {
-                if (item.Therapy_Type == "Therapy")
-                {
-                    <tr>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Sequence_Number)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Name)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Unit_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Route_Value)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duration)
-                        </td>
-
-
-
-
-                    </tr>
-                }
-            }
-
-</table>
-</div>
-<section class="content-header">
-    <h2>Post Therapy </h2>
-
-</section>
-<div class="box-body">
-    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
-        <thead>
-            <!--column names -->
-            <tr>
-                <th>
-                    sequence
-                </th>
-                <th>
-                    Drug Name
-                </th>
-
-                <th>
-                    Calculated Patient Dose
-                </th>
-                <th>Unit </th>
-                <th>Route </th>
-                <th>
-                    Fluid volume
-                </th>
-                <th>
-                    fluid type
-                </th>
-                <th>
-                    Duration/min
-                </th>
-
-            </tr>
-
-            @foreach (var item in Model.Item3)
-            {
-                if (item.Therapy_Type == "post")
-                {
-                    <tr>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Sequence_Number)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Name)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Unit_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Route_Value)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duration)
-                        </td>
-
-
-
-
-                    </tr>
-                }
-            }
-
-</table>
-</div>
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-
-
-<center>
-
-    <a class="btn btn-success adjust-actions" title="Approve" onclick="window.print();">
-        Print Summery
-    </a>
-
-</center>
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-<center>
-
-    @if (User.IsInAnyRoles("Doctor"))
-    {
-
-        if (Model.Item2.IsReleased == false & Model.Item2.IsPending == false)
-        {
-            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenReleasedModal(@ViewBag.CycleId)">
-                Released to Pharmacy
-            </a>
+    <style>
+        h2 {
+            color: #4B2259;
         }
+    </style>
 
 
-        if (Model.Item2.IsReleased == true)
-        {
-            <h2>Cycle Releasd successfully!</h2>
-        }
+    <section class="content-header">
+        <h2>Pre Therapy </h2>
 
-        if (Model.Item2.IsPending == true)
-        {
-            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenApprovedAfterPendingModal(@ViewBag.CycleId)">
-                Approved to Pharmacy
-            </a>
-            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpendisApprovedAfterPendingModal(@ViewBag.CycleId)">
-                Cancel Approval
-            </a>
-        }
+    </section>
+    <div id="id" class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+            <thead>
+                <!--column names -->
+                <tr>
+                    <th>
+                        sequence
+                    </th>
+                    <th>
+                        Drug Name
+                    </th>
+
+                    <th>
+                        Calculated Patient Dose
+                    </th>
+                    <th>Unit </th>
+                    <th>Route </th>
+                    <th>
+                        Fluid volume
+                    </th>
+                    <th>
+                        fluid type
+                    </th>
+                    <th>
+                        Duration/min
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model.Item3)
+                {
+                    if (item.Therapy_Type == "pre")
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sequence_Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Route_Value)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration)
+                            </td>
 
 
-    }
 
-    @if (User.IsInAnyRoles("Pharmacist"))
-    {
-        <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenReleasedModalToDoctor(@ViewBag.CycleId)">
-            Released to Doctor
+
+                        </tr>
+                    }
+                }
+
+        </table>
+    </div>
+    <section class="content-header">
+        <h2> Therapy </h2>
+
+    </section>
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+            <thead>
+                <!--column names -->
+                <tr>
+                    <th>
+                        sequence
+                    </th>
+                    <th>
+                        Drug Name
+                    </th>
+
+                    <th>
+                        Calculated Patient Dose
+                    </th>
+                    <th>Unit </th>
+                    <th>Route </th>
+                    <th>
+                        Fluid volume
+                    </th>
+                    <th>
+                        fluid type
+                    </th>
+                    <th>
+                        Duration/min
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model.Item3)
+                {
+                    if (item.Therapy_Type == "Therapy")
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sequence_Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Route_Value)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration)
+                            </td>
+
+
+
+
+                        </tr>
+                    }
+                }
+
+        </table>
+    </div>
+    <section class="content-header">
+        <h2>Post Therapy </h2>
+
+    </section>
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+            <thead>
+                <!--column names -->
+                <tr>
+                    <th>
+                        sequence
+                    </th>
+                    <th>
+                        Drug Name
+                    </th>
+
+                    <th>
+                        Calculated Patient Dose
+                    </th>
+                    <th>Unit </th>
+                    <th>Route </th>
+                    <th>
+                        Fluid volume
+                    </th>
+                    <th>
+                        fluid type
+                    </th>
+                    <th>
+                        Duration/min
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model.Item3)
+                {
+                    if (item.Therapy_Type == "post")
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sequence_Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Route_Value)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration)
+                            </td>
+
+
+
+
+                        </tr>
+                    }
+                }
+
+        </table>
+    </div>
+
+</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
+
+    <center>
+
+      
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="printFunction()">
+            Print Summery
         </a>
-        if (Model.Item2.IsPending == true)
+    </center>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <center>
+
+        @if (User.IsInAnyRoles("Doctor"))
         {
-            <h2>Cycle Releasd successfully!</h2>
+
+            if (Model.Item2.IsReleased == false & Model.Item2.IsPending == false)
+            {
+                <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenReleasedModal(@ViewBag.CycleId)">
+                    Released to Pharmacy
+                </a>
+            }
+
+
+            if (Model.Item2.IsReleased == true)
+            {
+                <h2>Cycle Releasd successfully!</h2>
+            }
+
+            if (Model.Item2.IsPending == true)
+            {
+                <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenApprovedAfterPendingModal(@ViewBag.CycleId)">
+                    Approved to Pharmacy
+                </a>
+                <a class="btn btn-success adjust-actions" title="Patient" onclick="OpendisApprovedAfterPendingModal(@ViewBag.CycleId)">
+                    Cancel Approval
+                </a>
+            }
+
+
         }
 
-        <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenApproved(@ViewBag.CycleId)">
-            Final Approved
-        </a>
-        if (Model.Item2.IsApproved == true)
+        @if (User.IsInAnyRoles("Pharmacist"))
         {
-            <h2>Cycle Approved successfully!</h2>
+            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenReleasedModalToDoctor(@ViewBag.CycleId)">
+                Released to Doctor
+            </a>
+            if (Model.Item2.IsPending == true)
+            {
+                <h2>Cycle Releasd successfully!</h2>
+            }
+
+            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenApproved(@ViewBag.CycleId)">
+                Final Approved
+            </a>
+            if (Model.Item2.IsApproved == true)
+            {
+                <h2>Cycle Approved successfully!</h2>
+            }
         }
-    }
-</center>
+    </center>
 
-<!--Deactivate Modal-->
-<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body" style="margin: auto;">
-                <input hidden id="CycleId" />
-                <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                <br />
-                <h4 class="text-center">Are you sure to Release Cycle ? </h4>
-                <p class="text-center text-danger" id="ErrorMsg"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!--Deactivate Modal-->
+    <div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin: auto;">
+                    <input hidden id="CycleId" />
+                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                    <br />
+                    <h4 class="text-center">Are you sure to Release Cycle ? </h4>
+                    <p class="text-center text-danger" id="ErrorMsg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+                    <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!--Deactivate Modal2-->
-<div class="modal" id="deactivateModal2" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body" style="margin: auto;">
-                <input hidden id="CycleId" />
-                <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                <br />
-                <h4 class="text-center">Are you sure to Release Cycle ? </h4>
-                <p class="text-center text-danger" id="ErrorMsg"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!--Deactivate Modal2-->
+    <div class="modal" id="deactivateModal2" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin: auto;">
+                    <input hidden id="CycleId" />
+                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                    <br />
+                    <h4 class="text-center">Are you sure to Release Cycle ? </h4>
+                    <p class="text-center text-danger" id="ErrorMsg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                <button type="button" class="btn btn-primary" id="DeactivateBtn2">Yes</button>
+                    <button type="button" class="btn btn-primary" id="DeactivateBtn2">Yes</button>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!--Deactivate Modal3-->
-<div class="modal" id="deactivateModal3" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body" style="margin: auto;">
-                <input hidden id="CycleId" />
-                <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                <br />
-                <h4 class="text-center">Are you sure to Approved Cycle ? </h4>
-                <p class="text-center text-danger" id="ErrorMsg"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!--Deactivate Modal3-->
+    <div class="modal" id="deactivateModal3" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin: auto;">
+                    <input hidden id="CycleId" />
+                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                    <br />
+                    <h4 class="text-center">Are you sure to Approved Cycle ? </h4>
+                    <p class="text-center text-danger" id="ErrorMsg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                <button type="button" class="btn btn-primary" id="DeactivateBtn3">Yes</button>
+                    <button type="button" class="btn btn-primary" id="DeactivateBtn3">Yes</button>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!--Deactivate Modal4-->
-<div class="modal" id="deactivateModal4" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body" style="margin: auto;">
-                <input hidden id="CycleId" />
-                <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                <br />
-                <h4 class="text-center">Are you sure to Approve ? </h4>
-                <p class="text-center text-danger" id="ErrorMsg"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!--Deactivate Modal4-->
+    <div class="modal" id="deactivateModal4" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin: auto;">
+                    <input hidden id="CycleId" />
+                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                    <br />
+                    <h4 class="text-center">Are you sure to Approve ? </h4>
+                    <p class="text-center text-danger" id="ErrorMsg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                <button type="button" class="btn btn-primary" id="DeactivateBtn4">Yes</button>
+                    <button type="button" class="btn btn-primary" id="DeactivateBtn4">Yes</button>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!--Deactivate Modal4-->
-<div class="modal" id="deactivateModal5" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body" style="margin: auto;">
-                <input hidden id="CycleId" />
-                <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                <br />
-                <h4 class="text-center">Are you sure to disApprove ? </h4>
-                <p class="text-center text-danger" id="ErrorMsg"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!--Deactivate Modal4-->
+    <div class="modal" id="deactivateModal5" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin: auto;">
+                    <input hidden id="CycleId" />
+                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                    <br />
+                    <h4 class="text-center">Are you sure to disApprove ? </h4>
+                    <p class="text-center text-danger" id="ErrorMsg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                <button type="button" class="btn btn-primary" id="DeactivateBtn5">Yes</button>
+                    <button type="button" class="btn btn-primary" id="DeactivateBtn5">Yes</button>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/intlTelInput.min.js"></script>
-    <script>
-        $('input:radio.form-control').prop('disbled', true);
-    </script>
-    <script>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="~/Scripts/intlTelInput.min.js"></script>
+        <script>
+            $('input:radio.form-control').prop('disbled', true);
+        </script>
+        <script>
 
 
 
+        function printFunction() {
+            var divContents = document.getElementById("id").innerHTML;
+            var prnt = window.open('', '', 'height=500, width=500');
+            prnt.document.write(divContents);
+            prnt.document.close();
+            prnt.print();
+        }
+        function getPDF() {
+
+            var HTML_Width = $(".canvas_div_pdf").width();
+            var HTML_Height = $(".canvas_div_pdf").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + (top_left_margin * 2);
+            var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
 
+            html2canvas($(".canvas_div_pdf")[0], { allowTaint: true }).then(function (canvas) {
+                canvas.getContext('2d');
+
+                console.log(canvas.height + "  " + canvas.width);
+
+
+                var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+
+
+                for (var i = 1; i <= totalPDFPages; i++) {
+                    pdf.addPage(PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                }
+
+                pdf.save("HTML-Document.pdf");
+            });
+        };
 
 
         function OpenReleasedModal(CycleId) {
@@ -667,9 +704,9 @@
             });
 
 
-    </script>
-}
+        </script>
+    }
 
 
 
-        }
+    }

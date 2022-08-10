@@ -72,7 +72,7 @@ namespace Hospital.DAL
         public virtual DbSet<ChemoTherapyCycleInvestigation> ChemoTherapyCycleInvestigations { get; set; }
         public virtual DbSet<Drugs> Drugs { get; set; }
 
-
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -256,6 +256,8 @@ namespace RashidHospital.Controllers
 
                 _ObjvM.Pharmacist_Note = Note;
                 _ObjvM.IsEditByDoctor = true;
+                _ObjvM.IsEditByPharmacy = false;
+
                 _ObjvM.Edit();
             }
             if (User.IsInAnyRoles("Pharmacist"))
@@ -266,6 +268,8 @@ namespace RashidHospital.Controllers
                 _ObjvM.Fluid_Vol = Fluid;
                 _ObjvM.Pharmacist_Note = Note;
                 _ObjvM.IsEditByPharmacy = true;
+                _ObjvM.IsEditByDoctor = false;
+
                 _ObjvM.Edit();
             }
 
@@ -282,6 +286,8 @@ namespace RashidHospital.Controllers
                 ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
                 _Objm.IsReleased = true;
                 _Objm.IsPending = false;
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                _Objm.DoctorId = userId;
                 _Objm.Edit();
 
                 finalResult = 1;
@@ -353,7 +359,8 @@ namespace RashidHospital.Controllers
                 ChemoTherapyCycleDayVM _Objm = _Obj.SelectObject(CycleId);
                 _Objm.IsReleased = false;
                 _Objm.IsPending = true;
-
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                _Objm.PharmacistId = userId;
                 _Objm.Edit();
 
                 finalResult = 1;
@@ -400,6 +407,27 @@ namespace RashidHospital.Controllers
             }
             return finalResult;
         }
+
+
+        /*
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult Export(string GridHtml)
+        {
+            using (MemoryStream stream = new System.IO.MemoryStream())
+            {
+                StringReader sr = new StringReader(GridHtml);
+                Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                pdfDoc.Close();
+                return File(stream.ToArray(), "application/pdf", "Grid.pdf");
+            }
+        }
+
+        */
+
 
     }
     }

@@ -18,9 +18,11 @@ namespace RashidHospital.Controllers
         // GET: ClinicalPharmacy
         public ActionResult IndexCurrent()
         {
-            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().Where(a => a.Date == DateTime.Now).ToList();
+            Guid userId = Guid.Parse(User.Identity.GetUserId());
 
+
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().Where(a =>  a.PharmacistId == userId || a.PharmacistId == null && a.Date == DateTime.Now).ToList();
 
 
             return View(_List);
@@ -28,8 +30,10 @@ namespace RashidHospital.Controllers
 
         public ActionResult IndexCurrentAll()
         {
+            Guid userId = Guid.Parse(User.Identity.GetUserId());
+
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().OrderBy(a => a.Date == DateTime.Now).ToList();
+            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().Where(a => a.PharmacistId == userId || a.PharmacistId == null).ToList();
 
 
 
@@ -37,19 +41,47 @@ namespace RashidHospital.Controllers
         }
         public ActionResult Pending()
         {
+
+            Guid userId = Guid.Parse(User.Identity.GetUserId());
+
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllPending().Where(a => a.Date == DateTime.Now).ToList();
+            List<ChemoTherapyCycleDayVM> _List = null;
+            if (User.IsInAnyRoles("Doctor"))
+            {
 
+                 _List = _Obj.SelectAllPending().Where(a => a.Date == DateTime.Now && a.DoctorId == userId).ToList();
+            }
+            
+             else if (User.IsInAnyRoles("Pharmacist"))
 
+            {
 
+                _List = _Obj.SelectAllPending().Where(a => a.Date == DateTime.Now && a.PharmacistId == userId).ToList();
+            }
             return View(_List);
         }
 
         public ActionResult PendingAll()
         {
-            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllPending().OrderBy(a => a.Date).ToList();
 
+            Guid userId = Guid.Parse(User.Identity.GetUserId());
+
+
+            ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> _List = null;
+
+            if (User.IsInAnyRoles("Doctor"))
+            {
+
+                _List = _Obj.SelectAllPending().Where(a => a.DoctorId == userId).ToList();
+            }
+
+            else if (User.IsInAnyRoles("Pharmacist"))
+
+            {
+
+                _List = _Obj.SelectAllPending().Where(a =>  a.PharmacistId == userId).ToList();
+            }
 
 
             return View(_List);

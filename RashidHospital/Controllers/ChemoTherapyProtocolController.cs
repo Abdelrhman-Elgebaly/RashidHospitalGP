@@ -18,10 +18,11 @@ namespace RashidHospital.Controllers
         public ActionResult Index(int PatientId)
         {
             fillBag(PatientId);
-            ChemoTherapyProtocolVM _Labresults = new ChemoTherapyProtocolVM();
-            List<ChemoTherapyProtocolVM> OrderList = _Labresults.SelectAllByPatientID(PatientId);
-            foreach (var item in OrderList) {
+            ChemoTherapyProtocolVM protocol = new ChemoTherapyProtocolVM();
+            List<ChemoTherapyProtocolVM> list = protocol.SelectAllByPatientID(PatientId);
 
+            // calculate cycles finished
+            foreach (var item in list) {
 
                 ChemoTherapyCycleDayVM chemoTherapyCycleDayVM = new ChemoTherapyCycleDayVM();
                 List<ChemoTherapyCycleDayVM> chemoTherapyCycleDayVMs = chemoTherapyCycleDayVM.SelectAllByTemplateId(item.ID);
@@ -32,7 +33,7 @@ namespace RashidHospital.Controllers
    
 
             fillBag(PatientId);
-            return View(OrderList);
+            return View(list);
         }
         private void fillBag(int patientID)
         {
@@ -162,5 +163,36 @@ namespace RashidHospital.Controllers
         }
 
 
-    }
+
+        public JsonResult View(int Id)
+        {
+            fillCreateBag();
+            if (Id == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+
+            ChemoTherapyProtocolVM protocol = new ChemoTherapyProtocolVM();
+            ChemoTherapyProtocolVM obj = protocol.SelectObject(Id);
+            ChemoTherapyCycleDayVM chemoTherapyCycleDayVM = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> chemoTherapyCycleDayVMs = chemoTherapyCycleDayVM.SelectAllByTemplateId(Id);
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("View", chemoTherapyCycleDayVMs) }, JsonRequestBehavior.AllowGet);
+
+            //  return View();
+
+        }
+
+
+
+
+
+    
+
+
+
+
+
+
+        }
 }

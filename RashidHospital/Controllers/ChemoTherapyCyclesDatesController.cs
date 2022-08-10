@@ -18,14 +18,14 @@ namespace RashidHospital.Controllers
         // GET: CycleStartDate
 
        
-        public ActionResult Index(int PatientId, string templateID)
+        public ActionResult Index(int PatientId, int TemplateID)
         {
 
             //Assign Template to patient 
-            int TemplateID = Convert.ToInt32(templateID);
+     
 
             ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
-            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateID).OrderBy(a => a.Date).ToList();
+            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateID).ToList();
 
         
             ChemoTherapyProtocolVM _cObj = new ChemoTherapyProtocolVM();
@@ -150,17 +150,31 @@ namespace RashidHospital.Controllers
             ChemoTherapyCyclesDatesVM chemoTherapyCyclesDatesVM = new ChemoTherapyCyclesDatesVM();
             List<ChemoTherapyCyclesDatesVM> List = chemoTherapyCyclesDatesVM.SelectAllByTemplateId(TemplateId);
 
-            foreach(var item in List)
+            foreach(var cycleDate in List)
             {
 
                 ChemoTherapyCycleDayVM chemoTherapyCycleDayVM = new ChemoTherapyCycleDayVM();
-                List<ChemoTherapyCycleDayVM> DatesList = chemoTherapyCycleDayVM.SelectAllByMainCycleId(item.ID);
-                foreach (var item2 in DatesList)
+                List<ChemoTherapyCycleDayVM> DatesList = chemoTherapyCycleDayVM.SelectAllByMainCycleId(cycleDate.ID);
+                foreach (var cycleDay in DatesList)
                 {
-                    item2.Delete();
+
+                    AppointmentVM appointmntVm = new AppointmentVM();
+                    List<AppointmentVM> AppointmentList = appointmntVm.SelectAllByPatientId(PatientId);
+                    foreach (var appoitment in AppointmentList)
+                    {
+
+                        if (appoitment.AppointmentDate == cycleDay.Date)
+                        {
+                            appoitment.Delete();
+
+                        }
+
+                    }
+
+                            cycleDay.Delete();
                 }
 
-                    item.Delete();
+                    cycleDate.Delete();
             }
             // Start 
 
@@ -257,6 +271,8 @@ namespace RashidHospital.Controllers
                     _cycleDay.Date = itemm.Date.AddDays(item - 1);
                     appointment.AppointmentDate = itemm.Date.AddDays(item - 1);
                     appointment.ClinicId = 1004;
+                    Guid userId = Guid.Parse(User.Identity.GetUserId());
+                    appointment.DoctorId = userId;
                     appointment.Create();
                     _cycleDay.Create();
 

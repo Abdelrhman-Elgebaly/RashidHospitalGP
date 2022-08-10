@@ -15,23 +15,25 @@
     }
 </style>
 <div class="modal-body">
-
-
+ 
+  
     <div class="box-body">
+
+        <center>
+
+            @Html.ActionLink("Reschedule or Omit", "Test", "ChemoTherapyCycleDay", new { Id = ViewBag.MainCycleId }, null)
+
+
+        </center>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
         <table id="example1" class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
 
                     <th>Date</th>
 
-                    @foreach (var item in Model)
-                    {
-                        if (item.IsRescuedeled == true)
-                        {
-                            <th>Reason</th>
-                        }
-                       
-                    }
+                    <th></th>
 
                     <th class="text-center">Actions</th>
                 </tr>
@@ -42,101 +44,106 @@
             {
                 if (item.IsStart == true)
                 {
-        <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+                    <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-         
-            <td>
-
-                <center>
-                    @Html.ActionLink("View", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-                    </center>
-</td>
-        </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <center>
+                                @Html.ActionLink("View", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                            </center>
+                        </td>
+                    </tr>
                 }
 
 
                 else if (item.IsApproved == true)
                 {
-        <tr style="background-color: #B22222; color: black; font-weight: bold; ">
+                    <tr style="background-color: #B22222; color: black; font-weight: bold; ">
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
 
 
-           
+                        <td>
+                        </td>
 
 
-            <td>
+                        <td>
 
-                <center>
+                            <center>
 
-                    @Html.ActionLink("View", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-                    </center>
-</td>
-        </tr>
+                                @Html.ActionLink("View", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                            </center>
+                        </td>
+                    </tr>
                 }
 
                 else if (item.IsRescuedeled == true)
                 {
-        <tr style="background-color: #FFD700; color: black; font-weight: bold;">
+                    <tr style="background-color: #FFD700; color: black; font-weight: bold;">
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Reason)
-            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reason)
+                        </td>
 
-            <td>
+                        <td>
 
-                <center>
-                    @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
-                    </center>
-</td>
-        </tr>
+                            <center>
+                                @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                            </center>
+                        </td>
+                    </tr>
                 }
 
 
                 else if (item.IsDeleted == true)
                 {
-        <tr style='color:red;text-decoration:line-through'>
+                    <tr style='color:red;text-decoration:line-through'>
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-          
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
 
-        </tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
                 }
 
 
                 else
                 {
 
-        <tr>
+                    <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-          
-            <td>
-                <center>
-                    @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <center>
+                                @Html.ActionLink("Start", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null)
 
 
-                </center>
+                            </center>
 
-            </td>
-        </tr>
+                        </td>
+                    </tr>
                 }
             }
 
@@ -233,8 +240,8 @@
                 })
             });
 
-        function OpenStartModal(Id, pid) {
-          window.location.href = '/ChemoTherapyCyclePackage/Index?Id=' + Id + '&pid=' + pid;
+        function OpenResModal(Id) {
+            window.location.href = '/ChemoTherapyCycleDay/Test?Id=' + Id;
 
         }
 

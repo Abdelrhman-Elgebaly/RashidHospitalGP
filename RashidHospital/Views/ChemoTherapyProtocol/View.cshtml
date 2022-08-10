@@ -14,32 +14,47 @@
         width: 1000px;
     }
 </style>
+<div class="modal-body">
 
 
-<section class="content-header">
-    <h2>Main Cycle</h2>
-    <h1>@ViewBag.Date</h1> 
-</section>
-
-<table id="example1" class="table table-bordered table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>Cycle</th>
-            <th>Date</th>
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                 
+                    <th>Cycle</th>
+                    <th>Date</th>
 
 
+                </tr>
+            </thead>
 
-            <th class="text-center">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
 
-        @foreach (var item in Model)
-        {
-            if (item.IsDeleted == null)
+            @foreach (var item in Model)
             {
-        <tr style=" color: black; font-weight: bold;">
+                if (item.IsStart == true)
+                {
+        <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
 
+         
+            <td>
+                Day
+                @Html.DisplayFor(modelItem => item.CycleNumber)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+        </tr>
+                }
+
+
+                else if (item.IsApproved == true)
+                {
+        <tr style="background-color: #B22222; color: black; font-weight: bold; ">
+
+         
             <td>
                 Day
                 @Html.DisplayFor(modelItem => item.CycleNumber)
@@ -48,54 +63,71 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
 
-            <td>
-
-                <center>
 
 
-                    <a class="btn btn-success adjust-actions" title="" onclick="openCreateModel(@item.ID)">
-                        Reschedule
-                    </a>
-                    <a class="btn btn-success adjust-actions" title="" onclick="OpenOmitModal(@item.ID)">
-                        Omit
-                    </a>
-                </center>
-            </td>
+
+
         </tr>
-            }
-            else
-            {
-                if (item.IsDeleted == true)
+                }
+
+                else if (item.IsRescuedeled == true)
                 {
-    <tr style='color:red;text-decoration:line-through'>
+        <tr style="background-color: #FFD700; color: black; font-weight: bold;">
+         
+            <td>
+                Day
+                @Html.DisplayFor(modelItem => item.CycleNumber)
+            </td>
 
-        <td>
-            Day
-            @Html.DisplayFor(modelItem => item.CycleNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
 
-        <td>
-        </td>
-    </tr>
+
+        </tr>
                 }
 
 
+                else if (item.IsDeleted == true)
+                {
+        <tr style='color:red;text-decoration:line-through'>
+          
+            <td>
+                Day
+                @Html.DisplayFor(modelItem => item.CycleNumber)
+            </td>
+            <td>
+                Day
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            @*<span class="sometext">@Html.DisplayFor(modelItem => tag.Name) some text </span>*@
+
+        </tr>
+                }
 
 
+                else
+                {
+
+        <tr style="  color: black; font-weight: bold;">
+
+           
+            <td>
+                Day
+                @Html.DisplayFor(modelItem => item.CycleNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+
+        </tr>
+                }
             }
-        }
 
-    </tbody>
-</table>
-<center>
-
-    <a class="btn btn-success adjust-actions" title="" onclick="OpenModal(@ViewBag.pid,@ViewBag.tid)">
-        Back to All
-    </a>
-</center>
+        </table>
+    </div>
+</div>
 <!--Create Modal-->
 <div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
@@ -149,7 +181,7 @@
                         "paging": true,
                         "lengthChange": false,
                         "searching": true,
-                      
+                        "order": [[0, "desc"]],
                         "info": true,
                         "autoWidth": false,
                         "scrollX": true,
@@ -186,12 +218,12 @@
                 })
             });
 
-        function OpenModal(PatientId, TemplateID) {
-            window.location.href = '/ChemoTherapyCyclesDates/Index?PatientId=' + PatientId + '&TemplateID=' + TemplateID;
+        function OpenStartModal(Id, pid) {
+          window.location.href = '/ChemoTherapyCyclePackage/Index?Id=' + Id + '&pid=' + pid;
 
         }
 
-        
+
 
 
 

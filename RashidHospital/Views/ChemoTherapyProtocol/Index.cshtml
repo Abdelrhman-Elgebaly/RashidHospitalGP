@@ -101,23 +101,34 @@
                             @foreach (var item in Model)
                             {
 
-                            <tr>
-                                <td class="adjustContent">@item.DiseaseName</td>
+                                <tr>
+                                    <td class="adjustContent">@item.DiseaseName</td>
 
-                                <td class="adjustContent">@item.ProtocolName</td>
-                                <td class="adjustContent">@item.Cycles_Number</td>
+                                    <td class="adjustContent">
+                                        @item.ProtocolName
+                                                                       
+
+                                                                    </td>
+                                    <td class="adjustContent">
+                                        @item.Cycles_Number
+                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+                                        <a class="btn btn-success adjust-actions" title="Open" onclick="openViewModel(@item.ID)">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
+                                    </td>
 
 
-                                <td class="adjustContent text-center">
-                                    <a class="btn btn-success adjust-actions" title="Open" onclick="openCyclesDatesModal(@item.Patient_ID,@item.ID)">
-                                        <i class="fa fa-address-book-o"></i>
-                                    </a>
+                                    <td class="adjustContent text-center">
+                                        <a class="btn btn-success adjust-actions" title="Open" onclick="openCyclesDatesModal(@item.Patient_ID,@item.ID)">
+                                            <i class="fa fa-address-book-o"></i>
+                                        </a>
 
-                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openEditModel(@item.Patient_ID,@item.ID )">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                        <a class="btn btn-success adjust-actions" title="Edit" onclick="openEditModel(@item.Patient_ID,@item.ID )">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
 
 
                             }
@@ -155,6 +166,20 @@
                 <h4 class="modal-title">Add new Protocol</h4>
             </div>
             <div id="CreateBody"></div>
+        </div>
+    </div>
+</div>
+<!--View Modal-->
+<div class="modal fade" id="ViewModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Protocol Cycles</h4>
+            </div>
+            <div id="ViewBody"></div>
         </div>
     </div>
 </div>
@@ -228,7 +253,7 @@
             window.location.href = '/ChemoTherapyProtocol/Create?PatientId=' + patientID;
         };
 
-       
+
         function openCyclesDatesModal(PatientId, templateID) {
             window.location.href = '/ChemoTherapyCyclesDates/Index?PatientId=' + PatientId + '&templateID=' + templateID;
 		};
@@ -305,6 +330,27 @@
                 else {
                     $("#EditBody").html(result.Content);
                     $("#EditModel").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+        function openViewModel( Id) {
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("View", "ChemoTherapyProtocol")",
+                cache: false,
+                data: {  Id: Id},
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#ViewBody").html(result.Content);
+                    $("#ViewModel").modal("show")
                 }
             },
             error: function (result) {

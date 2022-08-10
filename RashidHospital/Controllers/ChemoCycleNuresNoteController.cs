@@ -29,6 +29,22 @@ namespace RashidHospital.Controllers
 
             NurseNoteVM ObjVm = new NurseNoteVM();
             List<NurseNoteVM> _list = ObjVm.SelectAllByPatientId(_patientID);
+            foreach(var item in _list)
+            {
+                if (item.ID == _Objm.SelectedNnote)
+                {
+                    item.IsSelected = true;
+                    item.Edit();
+                }
+                else
+                {
+                    item.IsSelected = false;
+                    item.Edit();
+                }
+            }
+
+
+
             return View(_list);
         }
 
