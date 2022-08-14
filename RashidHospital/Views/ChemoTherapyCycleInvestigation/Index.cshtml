@@ -69,7 +69,8 @@
 
                     <div class="col-md-10">
 
-                        @Html.EditorFor(modelItem => item.Actual_Value, new { htmlAttributes = new { @class = "form-control", } })
+                        @Html.DisplayFor(modelItem => item.Actual_Value)
+
                         @{
                             if (item.Rule_Type == 1)
                             {
