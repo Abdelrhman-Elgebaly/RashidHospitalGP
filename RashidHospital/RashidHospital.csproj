@@ -250,6 +250,7 @@
     <Compile Include="Models\DeleteTasksObject.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DiseaseVM.cs" />
+    <Compile Include="Models\DrugOrderVM.cs" />
     <Compile Include="Models\DrugsVM.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
@@ -542,6 +543,9 @@
     <Content Include="Views\ClinicalPharmacy\ClinicalPharmacyAll.cshtml" />
     <Content Include="Views\ChemoCycleToxicty\_EditNote.cshtml" />
     <Content Include="Views\ChemoTherapyProtocol\View.cshtml" />
+    <Content Include="Views\LabPackage\Edit.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\_AddProtocl.cshtml" />
+    <Content Include="Views\ChemoTherapyTemplate\AddProtocl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -550,6 +554,7 @@
     <Folder Include="Html\AdminLTE-3.0.0\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\CycleStartDate\" />
+    <Folder Include="Views\Protocol\" />
     <Folder Include="Views\TblPatients\" />
   </ItemGroup>
   <ItemGroup>

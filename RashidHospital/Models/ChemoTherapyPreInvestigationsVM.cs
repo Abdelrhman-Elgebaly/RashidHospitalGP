@@ -68,7 +68,6 @@ namespace RashidHospital.Models
             pl.Rule_Type = DbObj.Rule_Type;
             pl.Rule_TypeValue = enumType2.ToString();
 
-
             return pl;
         }
 

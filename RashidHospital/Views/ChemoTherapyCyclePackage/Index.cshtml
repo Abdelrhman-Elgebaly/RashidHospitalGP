@@ -51,7 +51,6 @@
     <table id="example1" class="table table-bordered table-striped" style="width:100%">
         <thead>
             <tr>
-             
                 <th>Lab</th>
                 <th>Value</th>
                 <th>Actual Value</th>
@@ -66,7 +65,9 @@
             @foreach (var item in Model.Item2)
             {
             <tr>
-               
+
+                
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Test_TypeValue)
                 </td>
@@ -83,7 +84,7 @@
 
                     <div class="col-md-10">
 
-                        @Html.EditorFor(modelItem => item.Actual_Value, new { htmlAttributes = new { @class = "form-control", } })
+                        @Html.DisplayFor(modelItem => item.Actual_Value)
                         @{
                             if (item.Rule_Type == 1)
                             {
@@ -163,7 +164,7 @@
                         </a>
 
 
-                     
+
                     </center>
                 </td>
 
@@ -312,6 +313,15 @@
             },
 			})
         }
+
+
+
+
+
+
+
+
+
 
 
     </script>

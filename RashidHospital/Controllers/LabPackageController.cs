@@ -35,7 +35,15 @@ namespace RashidHospital.Controllers
             int _PackageId = Convert.ToInt32(PackageId);
             fillBag(_PackageId);
 
+           PackageVM objVm = new PackageVM();
+
+            PackageVM Package = objVm.SelectObject(_PackageId);
+            ViewBag.PackageName = Package.Name;
+
+
+
             LabPackageVM ObjVm = new LabPackageVM();
+           
             List<LabPackageVM> _list = ObjVm.SelectAllByPackageID(_PackageId);
           
 
@@ -52,6 +60,23 @@ namespace RashidHospital.Controllers
             }
             fillCreateBag(PackageId);
             return Json(new { IsRedirect = false, Content = RenderRazorViewToString("Create", null) }, JsonRequestBehavior.AllowGet);
+
+            //  return View();
+
+        }
+
+        public JsonResult Edit(int PackageId , int Id)
+        {
+            if (Id == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+
+            }
+            LabPackageVM results = new LabPackageVM();
+            LabPackageVM obj = results.SelectObject(Id);
+            fillCreateBag(PackageId);
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("Edit", obj) }, JsonRequestBehavior.AllowGet);
 
             //  return View();
 
@@ -96,7 +121,7 @@ namespace RashidHospital.Controllers
             }
         }
         [HttpPost]
-        public JsonResult AddResult(int Package_ID, int Test,  int Value, int Rule)
+        public JsonResult AddResult(int Package_ID, int Test,  double Value, int Rule)
         {
             if (Package_ID != 0  || Test != 0)
             {
@@ -112,6 +137,53 @@ namespace RashidHospital.Controllers
 
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult EditResult(int Package_ID, int Test, double Value, int Rule, int Id)
+        {
+            if (Package_ID != 0 || Test != 0)
+            {
+
+                LabPackageVM results = new LabPackageVM();
+                LabPackageVM obj = results.SelectObject(Id);
+                obj.Package_ID = Package_ID;
+                obj.Test = Test;
+                obj.Value = Value;
+                obj.Rule = Rule;
+
+
+                obj.Edit();
+            }
+
+            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public int Delete(int ID)
+        {
+            int finalResult = 0;
+            try
+            {
+                LabPackageVM _resultVM = new LabPackageVM();
+                LabPackageVM DeleteObject = _resultVM.SelectObject(ID);
+              
+                DeleteObject.Delete();
+
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
+
+
+
+
+
 
 
 

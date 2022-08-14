@@ -30,6 +30,7 @@ namespace Hospital.DAL
         public string Note { get; set; }
         public string Reason { get; set; }
         public Nullable<bool> IsRescuedeled { get; set; }
+        public Nullable<int> CycleDay { get; set; }
 
         public Nullable<int> CycleNumber { get; set; }
         public Guid? DoctorId { get; set; }

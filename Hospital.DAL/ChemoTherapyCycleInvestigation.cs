@@ -24,6 +24,7 @@ namespace Hospital.DAL
         public double Value { get; set; }
         public string Note { get; set; }
         public Nullable<bool> IsEditByPharmacy { get; set; }
+        public int preId { get; set; }
 
 
     }

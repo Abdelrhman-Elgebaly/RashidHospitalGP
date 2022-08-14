@@ -57,6 +57,8 @@ namespace RashidHospital.Models
         public string Pharmacy_Condition_Value { get; set; }
         public Nullable<DateTime> Date { get; set; }
 
+        public string Days { get; set; }
+    
 
 
 
@@ -89,7 +91,8 @@ namespace RashidHospital.Models
 
                     Date = Obj.Date,
 
-
+                    Pharmacy_Condition_Value = Obj.Pharmacy_Condition_Value,
+                    
                 };
             }
             return _Obj;
@@ -111,22 +114,24 @@ namespace RashidHospital.Models
             pl.Dose_Calculated = DbObj.Dose_Calculated;
             pl.Therapy_Type = DbObj.Therapy_Type;
             //
-            pl.Drug_Name = DbObj.Drug_Name;
-            pl.Drug_Dose = DbObj.Drug_Dose;
-            pl.Unit_Value = DbObj.Unit_Value;
-            pl.Fluid_Vol = DbObj.Fluid_Vol;
+         
             pl.Pharmacist_Note = DbObj.Pharmacist_Note;
             pl.IsEditByDoctor = DbObj.IsEditByDoctor;
             pl.IsEditByPharmacy = DbObj.IsEditByPharmacy;
             pl.IsApproved = DbObj.IsApproved;
             pl.MainDrugId = DbObj.MainDrugId;
             pl.Pharmacy_Condition = DbObj.Pharmacy_Condition;
+            pl.Pharmacy_Condition_Value = DbObj.Pharmacy_Condition_Value;
+        
+
             pl.Date = DbObj.Date;
-            //  pl.Pharmacy_Condition_Value = enumType.ToString();
             PatientVM Obj = new PatientVM();
 
             PatientVM Objm = Obj.SelectObject(DbObj.Patient_ID);
             pl.PatientName = Objm.Name;
+
+        
+
 
             ChemoTherapyDrugVM dObj = new ChemoTherapyDrugVM();
 
@@ -135,8 +140,13 @@ namespace RashidHospital.Models
             pl.Route_Value = dObjm.Route_Value;
             pl.Fluid_Type_Value = dObjm.Fluid_Type_Value;
             pl.Duration = dObjm.Duration;
+            pl.Days = dObjm.Days;
 
-      
+            pl.Drug_Name = dObjm.Drug_Name;
+            pl.Drug_Dose = dObjm.Drug_Dose;
+            pl.Unit_Value = dObjm.Unit_Value;
+            pl.Fluid_Vol = dObjm.Fluid_Vol;
+
             return pl;
         }
 
@@ -179,16 +189,7 @@ namespace RashidHospital.Models
             List<PatientDose> dbList = _BClass.GetAllFinalApproved().ToList();
             return dbList.Select(z => _Obj.Convert(z)).ToList();
         }
-        /*
-                public List<SelectListItem> GetOrderSelectList()
-                {
-                    return System.Enum.GetValues(typeof(DrugOrder)).Cast<DrugOrder>().Select(v => new SelectListItem
-                    {
-                        Text = EnumHelper<DrugOrder>.GetDisplayValue(v),
-                        Value = ((int)v).ToString()
-                    }).ToList();
-                }
-        */
+   
 
 
     }

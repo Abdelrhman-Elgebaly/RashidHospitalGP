@@ -99,6 +99,8 @@ namespace RashidHospital.Controllers
 
         public ActionResult ClinicalPharmacy()
         {
+
+
             PatientDoseVM _Obj = new PatientDoseVM();
             List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved().Where(a => a.Date == DateTime.Now).ToList();
 
@@ -109,10 +111,20 @@ namespace RashidHospital.Controllers
 
         public ActionResult ClinicalPharmacyAll()
         {
-            PatientDoseVM _Obj = new PatientDoseVM();
-            List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved();
 
-            return View(_List);
+            /*
+                   PatientDoseVM _Obj = new PatientDoseVM();
+                   List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved();
+                   return View(_List);
+              */
+            DrugOrderVM Obj = new DrugOrderVM();
+
+            ViewBag.OrderList = Obj.OrderSelectList();
+            PatientDoseVM _Obj = new PatientDoseVM();
+                       List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved();
+                       return View(_List);
+             
+
         }
 
         public string RenderRazorViewToString(string viewName, object model)
@@ -138,9 +150,15 @@ namespace RashidHospital.Controllers
 
             }
             ViewBag.Id = Id;
-            DiseaseVM disease = new DiseaseVM();
-            ViewBag.OrderList = disease.DiseaseSelectList();
-           
+
+
+
+
+            DrugOrderVM Obj = new DrugOrderVM();
+
+            ViewBag.OrderList = Obj.OrderSelectList();
+
+
             PatientDoseVM _Obj = new PatientDoseVM();
             PatientDoseVM _ObjvM = _Obj.SelectObject(Id);
             //if (_objVM == null)
@@ -158,14 +176,32 @@ namespace RashidHospital.Controllers
             
                 PatientDoseVM _Obj = new PatientDoseVM();
                 PatientDoseVM _ObjvM = _Obj.SelectObject(Id);
-                _ObjvM.Pharmacy_Condition = condition;
-              
-                _ObjvM.Edit();
+           
+            _ObjvM.Pharmacy_Condition = condition;
+            _ObjvM.Edit();
+            DrugOrderVM Obj = new DrugOrderVM();
+            DrugOrderVM orderVM = Obj.SelectObject(condition);
+            _ObjvM.Pharmacy_Condition_Value = orderVM.Name;
+          
+            _ObjvM.Edit();
             
 
             return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
 
         }
+
+        public void fillBag(int filterID)
+        {
+            ViewBag.filterID = 1;
+
+
+        }
+
+    
+
+
+
+
 
 
 

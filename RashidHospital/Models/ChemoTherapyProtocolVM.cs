@@ -50,7 +50,8 @@ namespace RashidHospital.Models
         internal override ChemoTherapyProtocolVM Convert(ChemoTherapyProtocol DbObj)
         {
 
-
+            ChemoTherapyTemplateVM chemoVm = new ChemoTherapyTemplateVM();
+            ChemoTherapyTemplateVM chemoObj = chemoVm.SelectObject(DbObj.Template_ID);
             ChemoTherapyProtocolVM pl = new ChemoTherapyProtocolVM();
 
 
@@ -62,8 +63,7 @@ namespace RashidHospital.Models
             pl.Cycles_Number = DbObj.Cycles_Number;
             
             pl.Template_ID = DbObj.Template_ID;
-            ChemoTherapyTemplateVM chemoVm = new ChemoTherapyTemplateVM();
-            ChemoTherapyTemplateVM chemoObj = chemoVm.SelectObject(DbObj.Template_ID);
+
             pl.ProtocolId = chemoObj.ProtocolId;
             pl.DiseaseName = chemoObj.Disease;
            pl.ProtocolName = chemoObj.Protocol_Name;

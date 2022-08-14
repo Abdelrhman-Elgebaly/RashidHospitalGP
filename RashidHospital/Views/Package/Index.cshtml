@@ -25,6 +25,8 @@
             Add new Package
         </a>
     </div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 </center>
 <div class="box-body">
     <table id="example1" class="table table-bordered table-striped" style="width:100%">
@@ -44,16 +46,14 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.ActionLink("Open", "Index", "LabPackage", new { PackageId = item.ID }, null) |
+                        @Html.ActionLink("Open", "Index", "LabPackage", new { PackageId = item.ID }, null) 
 
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                     
                     </td>
                 </tr>
             }
 
-            }
+
         </tbody>
     </table>
 </div>

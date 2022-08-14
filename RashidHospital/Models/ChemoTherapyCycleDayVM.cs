@@ -41,6 +41,8 @@ namespace RashidHospital.Models
         public string Reason { get; set; }
         public Nullable<bool> IsRescuedeled { get; set; }
         public Nullable<int> CycleNumber { get; set; }
+        public Nullable<int> CycleDay { get; set; }
+
         //
         public Guid? DoctorId { get; set; }
         public Guid? PharmacistId { get; set; }
@@ -73,6 +75,7 @@ namespace RashidHospital.Models
                     Reason = Obj.Reason,
                     IsRescuedeled = Obj.IsRescuedeled,
                     CycleNumber = Obj.CycleNumber,
+                    CycleDay = Obj.CycleDay,
                     DoctorId = Obj.DoctorId,
                     PharmacistId = Obj.PharmacistId,
 
@@ -106,6 +109,8 @@ namespace RashidHospital.Models
             pl.Reason = DbObj.Reason;
             pl.IsRescuedeled = DbObj.IsRescuedeled;
             pl.CycleNumber = DbObj.CycleNumber;
+            pl.CycleDay = DbObj.CycleDay;
+
             pl.DoctorId = DbObj?.DoctorId;
             pl.PharmacistId = DbObj?.PharmacistId;
             if (DbObj.DoctorId != null)

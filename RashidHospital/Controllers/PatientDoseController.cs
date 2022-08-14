@@ -429,6 +429,33 @@ namespace RashidHospital.Controllers
         */
 
 
+        [HttpPost]
+        public int Omit(int Id)
+        {
+            int finalResult = 0;
+            try
+            {
+                PatientDoseVM _resultVM = new PatientDoseVM();
+                PatientDoseVM DeleteObject = _resultVM.SelectObject(Id);
+                // DeleteObject.IsDeleted = true;
+        
+                DeleteObject.Delete();
+
+
+                finalResult = 1;
+
+
+            }
+            catch (Exception e)
+            {
+                finalResult = 6;
+            }
+            return finalResult;
+        }
+
+
+
+
     }
     }
 

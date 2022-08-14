@@ -177,7 +177,16 @@ namespace RashidHospital.Controllers
             ChemoTherapyProtocolVM obj = protocol.SelectObject(Id);
             ChemoTherapyCycleDayVM chemoTherapyCycleDayVM = new ChemoTherapyCycleDayVM();
             List<ChemoTherapyCycleDayVM> chemoTherapyCycleDayVMs = chemoTherapyCycleDayVM.SelectAllByTemplateId(Id);
-            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("View", chemoTherapyCycleDayVMs) }, JsonRequestBehavior.AllowGet);
+
+
+    
+
+
+         
+
+
+
+                return Json(new { IsRedirect = false, Content = RenderRazorViewToString("View", chemoTherapyCycleDayVMs) }, JsonRequestBehavior.AllowGet);
 
             //  return View();
 

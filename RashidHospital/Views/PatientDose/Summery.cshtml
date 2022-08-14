@@ -3,47 +3,56 @@
 <link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
 <link href="~/Content/ChemoWizard.css" rel="stylesheet" />
 
+<style>
+    .foo {
+        width: 2000px;
+    }
+</style>
 
 <section class="content-header">
-    <h2>6.Summery</h2>
+    <h2> 6.Summery</h2>
     @Html.Raw(ViewBag.PatientInfo)
 </section>
-    
-<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div> &nbsp;&nbsp;&nbsp;&nbsp;</div>
 
 
 <center>
 
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div> &nbsp;&nbsp;&nbsp;&nbsp;</div>
     <div class="form-wizard centered-pills">
         <ul class="nav nav-pills">
-            <li role="presentation" class="complete"><a href="#">1. Lab Validation</a></li>
-            <li role="presentation" class="complete"><a href="#">2.   Predeined Investigation</a></li>
-            <li role="presentation" class="complete"><a href="#">3. Toxicty</a></li>
-            <li role="presentation" class="complete"><a href="#">4.  Nurse Note</a></li>
-            <li role="presentation" class="complete"><a href="#">5.  Dose Calculation</a></li>
+            <li role="presentation" class="complete"> <a href="#"> 1. Lab Validation</a> </li>
+            <li role="presentation" class="complete"> <a href="#"> 2. Predeined Investigation</a> </li>
+            <li role="presentation" class="complete"> <a href="#"> 3. Toxicty</a> </li>
+            <li role="presentation" class="complete"> <a href="#"> 4. Nurse Note</a> </li>
+            <li role="presentation" class="complete"> <a href="#"> 5. Dose Calculation</a> </li>
 
-            <li role="presentation" class="current"><a href="#">6. Summary</a></li>
+            <li role="presentation" class="current"> <a href="#"> 6. Summary</a> </li>
         </ul>
     </div>
 </center>
+
 <div id="id">
-    <section class="content-header">
-        <h2>Cycle Summery</h2>
-
-    </section>
-
+    <center>
+        <section class="content-header">
+            <h2> ChemoTherapy Cycle Summery</h2>
+            <div> &nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </section>
+    </center>
     <div class="box-body">
+
+
 
 
         <div class="form-group">
             @Html.Label("Patient Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => Model.Item1.NameArabic, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => Model.Item1.NameArabic, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => Model.Item2.Protocol, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div> &nbsp;&nbsp;&nbsp;&nbsp;</div>
 
         <div class="form-group">
             @Html.Label("Protocol", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -52,6 +61,7 @@
                 @Html.ValidationMessageFor(model => Model.Item2.Protocol, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div> &nbsp;&nbsp;&nbsp;&nbsp;</div>
 
         <div class="form-group">
             @Html.Label("Cycle Date", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -60,6 +70,7 @@
                 @Html.ValidationMessageFor(model => Model.Item2.Date, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div> &nbsp;&nbsp;&nbsp;&nbsp;</div>
 
 
         <div class="form-group">
@@ -91,7 +102,10 @@
                 <!--column names -->
                 <tr>
                     <th>
-                        sequence
+                        Days
+                    </th>
+                    <th>
+                        Sequence
                     </th>
                     <th>
                         Drug Name
@@ -106,7 +120,7 @@
                         Fluid volume
                     </th>
                     <th>
-                        fluid type
+                        Fluid Type
                     </th>
                     <th>
                         Duration/min
@@ -119,7 +133,9 @@
                     if (item.Therapy_Type == "pre")
                     {
                         <tr>
-
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Days)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Sequence_Number)
                             </td>
@@ -166,7 +182,10 @@
                 <!--column names -->
                 <tr>
                     <th>
-                        sequence
+                        Days
+                    </th>
+                    <th>
+                        Sequence
                     </th>
                     <th>
                         Drug Name
@@ -181,7 +200,7 @@
                         Fluid volume
                     </th>
                     <th>
-                        fluid type
+                        Fluid Type
                     </th>
                     <th>
                         Duration/min
@@ -194,7 +213,9 @@
                     if (item.Therapy_Type == "Therapy")
                     {
                         <tr>
-
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Days)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Sequence_Number)
                             </td>
@@ -241,7 +262,10 @@
                 <!--column names -->
                 <tr>
                     <th>
-                        sequence
+                        Days
+                    </th>
+                    <th>
+                        Sequence
                     </th>
                     <th>
                         Drug Name
@@ -256,7 +280,7 @@
                         Fluid volume
                     </th>
                     <th>
-                        fluid type
+                        Fluid Type
                     </th>
                     <th>
                         Duration/min
@@ -269,7 +293,9 @@
                     if (item.Therapy_Type == "post")
                     {
                         <tr>
-
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Days)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Sequence_Number)
                             </td>
@@ -308,216 +334,226 @@
     </div>
 
 </div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
 
 
-    <center>
+<center>
 
-      
-        <a class="btn btn-success adjust-actions" title="Patient" onclick="printFunction()">
-            Print Summery
+
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="printFunction()">
+        Print Summery
+    </a>
+</center>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<center>
+
+    @if (User.IsInAnyRoles("Doctor"))
+    {
+
+        if (Model.Item2.IsReleased == false & Model.Item2.IsPending == false)
+        {
+            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenReleasedModal(@ViewBag.CycleId)">
+                Released to Pharmacy
+            </a>
+        }
+
+
+        if (Model.Item2.IsReleased == true)
+        {
+            <h2>Cycle Releasd successfully!</h2>
+            <a class="btn btn-success adjust-actions" title="" onclick="OpenModal(@Model.Item1.Id,@Model.Item2.TemplateId)">
+                Back to View
+            </a>
+        }
+
+        if (Model.Item2.IsPending == true)
+        {
+            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenApprovedAfterPendingModal(@ViewBag.CycleId)">
+                Approved to Pharmacy
+            </a>
+            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpendisApprovedAfterPendingModal(@ViewBag.CycleId)">
+                Cancel Approval
+            </a>
+        }
+
+
+    }
+
+    @if (User.IsInAnyRoles("Pharmacist"))
+    {
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenReleasedModalToDoctor(@ViewBag.CycleId)">
+            Released to Doctor
         </a>
-    </center>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <center>
-
-        @if (User.IsInAnyRoles("Doctor"))
+        if (Model.Item2.IsPending == true)
         {
-
-            if (Model.Item2.IsReleased == false & Model.Item2.IsPending == false)
-            {
-                <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenReleasedModal(@ViewBag.CycleId)">
-                    Released to Pharmacy
-                </a>
-            }
-
-
-            if (Model.Item2.IsReleased == true)
-            {
-                <h2>Cycle Releasd successfully!</h2>
-            }
-
-            if (Model.Item2.IsPending == true)
-            {
-                <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenApprovedAfterPendingModal(@ViewBag.CycleId)">
-                    Approved to Pharmacy
-                </a>
-                <a class="btn btn-success adjust-actions" title="Patient" onclick="OpendisApprovedAfterPendingModal(@ViewBag.CycleId)">
-                    Cancel Approval
-                </a>
-            }
-
-
+            <h2>Cycle Releasd successfully!</h2>
+            <a class="btn btn-success adjust-actions" title="" onclick="OpenModal(@Model.Item1.Id,@Model.Item2.TemplateId)">
+                Back to View
+            </a>
         }
 
-        @if (User.IsInAnyRoles("Pharmacist"))
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenApproved(@ViewBag.CycleId)">
+            Final Approved
+        </a>
+        if (Model.Item2.IsApproved == true)
         {
-            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenReleasedModalToDoctor(@ViewBag.CycleId)">
-                Released to Doctor
+            <h2>Cycle Approved successfully!</h2>
+            <a class="btn btn-success adjust-actions" title="" onclick="OpenModal(@Model.Item1.Id,@Model.Item2.TemplateId)">
+                Back to View
             </a>
-            if (Model.Item2.IsPending == true)
-            {
-                <h2>Cycle Releasd successfully!</h2>
-            }
-
-            <a class="btn btn-success adjust-actions" title="Patient" onclick="OpenApproved(@ViewBag.CycleId)">
-                Final Approved
-            </a>
-            if (Model.Item2.IsApproved == true)
-            {
-                <h2>Cycle Approved successfully!</h2>
-            }
         }
-    </center>
+    }
+</center>
 
-    <!--Deactivate Modal-->
-    <div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="margin: auto;">
-                    <input hidden id="CycleId" />
-                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                    <br />
-                    <h4 class="text-center">Are you sure to Release Cycle ? </h4>
-                    <p class="text-center text-danger" id="ErrorMsg"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                    <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
-                </div>
+<!--Deactivate Modal-->
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!--Deactivate Modal2-->
-    <div class="modal" id="deactivateModal2" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="margin: auto;">
-                    <input hidden id="CycleId" />
-                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                    <br />
-                    <h4 class="text-center">Are you sure to Release Cycle ? </h4>
-                    <p class="text-center text-danger" id="ErrorMsg"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                    <button type="button" class="btn btn-primary" id="DeactivateBtn2">Yes</button>
-                </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="CycleId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure to Release Cycle ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
             </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!--Deactivate Modal3-->
-    <div class="modal" id="deactivateModal3" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="margin: auto;">
-                    <input hidden id="CycleId" />
-                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                    <br />
-                    <h4 class="text-center">Are you sure to Approved Cycle ? </h4>
-                    <p class="text-center text-danger" id="ErrorMsg"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <button type="button" class="btn btn-primary" id="DeactivateBtn3">Yes</button>
-                </div>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
             </div>
-            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
     </div>
-    <!--Deactivate Modal4-->
-    <div class="modal" id="deactivateModal4" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="margin: auto;">
-                    <input hidden id="CycleId" />
-                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                    <br />
-                    <h4 class="text-center">Are you sure to Approve ? </h4>
-                    <p class="text-center text-danger" id="ErrorMsg"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!-- /.modal-dialog -->
+</div>
+<!--Deactivate Modal2-->
+<div class="modal" id="deactivateModal2" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="CycleId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure to Release Cycle ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <button type="button" class="btn btn-primary" id="DeactivateBtn4">Yes</button>
-                </div>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn2">Yes</button>
             </div>
-            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
     </div>
-    <!--Deactivate Modal4-->
-    <div class="modal" id="deactivateModal5" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="margin: auto;">
-                    <input hidden id="CycleId" />
-                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
-                    <br />
-                    <h4 class="text-center">Are you sure to disApprove ? </h4>
-                    <p class="text-center text-danger" id="ErrorMsg"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!-- /.modal-dialog -->
+</div>
+<!--Deactivate Modal3-->
+<div class="modal" id="deactivateModal3" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="CycleId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure to Approved Cycle ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                    <button type="button" class="btn btn-primary" id="DeactivateBtn5">Yes</button>
-                </div>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn3">Yes</button>
             </div>
-            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
     </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script src="~/Scripts/intlTelInput.min.js"></script>
-        <script>
-            $('input:radio.form-control').prop('disbled', true);
-        </script>
-        <script>
+    <!-- /.modal-dialog -->
+</div>
+<!--Deactivate Modal4-->
+<div class="modal" id="deactivateModal4" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="CycleId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure to Approve ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-primary" id="DeactivateBtn4">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--Deactivate Modal4-->
+<div class="modal" id="deactivateModal5" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="CycleId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure to disApprove ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-primary" id="DeactivateBtn5">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $('input:radio.form-control').prop('disbled', true);
+    </script>
+    <script>
 
 
 
         function printFunction() {
             var divContents = document.getElementById("id").innerHTML;
-            var prnt = window.open('', '', 'height=500, width=500');
+        var prnt = window.open('', '', 'height=1500, width=1000');
             prnt.document.write(divContents);
             prnt.document.close();
             prnt.print();
+            prnt.document.close();
         }
         function getPDF() {
 
@@ -704,8 +740,20 @@
             });
 
 
-        </script>
-    }
+
+
+        function OpenModal(PatientId, TemplateID) {
+            window.location.href = '/ChemoTherapyCyclesDates/Index?PatientId=' + PatientId + '&TemplateID=' + TemplateID;
+
+        }
+
+
+
+
+
+
+    </script>
+}
 
 
 

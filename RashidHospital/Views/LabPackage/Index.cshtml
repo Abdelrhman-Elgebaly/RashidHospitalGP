@@ -15,13 +15,18 @@
         width: 1000px;
     }
 </style>
+
+
 <center>
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+    <h2> @ViewBag.PackageName Package</h2>
     <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
     <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PackageId )">
         Add new Lab
     </a>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 </center>
 <div class="box-body">
     <table id="example1" class="table table-bordered table-striped" style="width:100%">
@@ -44,29 +49,32 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+            <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Test_TypeValue)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Value)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rule_TypeValue)
-                    </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Test_TypeValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rule_TypeValue)
+                </td>
 
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                    </td>
-                </tr>
+                <td>
+                    <center>
+                        <a class="btn btn-success adjust-actions" title="Edit" onclick="openEditModel(@item.Package_ID,@item.ID )">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                   
+                    </center>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
 </div>
-   
+
 <!--Create Modal-->
 <div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
@@ -81,6 +89,46 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="EditModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit Lab</h4>
+            </div>
+            <div id="EditBody"></div>
+        </div>
+    </div>
+</div>
+<!--Deactivate Modal-->
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Delete this Lab? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 @section scripts {
     <script src="~/Scripts/jquery.dataTables.js"></script>
     <script src="~/Scripts/dataTables.bootstrap4.js"></script>
@@ -113,34 +161,7 @@
 		function OpenDetailsModal(ResultId) {
 		    window.location.href = '/LabResualt/Details?ResultId=' + ResultId;
 		};
-            //delete
-            function OpenDeleteModal(AccountId) {
-                $("#AccountId").val(AccountId);
-                $("#deactivateModal").modal("show");
-            };
-
-            $("#DeactivateBtn").click(function () {
-                var AccountId = $("#AccountId").val();
-                $("#ErrorMsg").html("");
-                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
-                $.ajax({
-                    type: "Post",
-                    url: "@Url.Action("Delete", "LabResualt")",
-                    cache: false,
-                    data: { ID: AccountId },
-                dataType: "json",
-                success: function (result) {
-                    if (result == 1) {
-                        $("#deactivateModal").modal("hide");
-                        location.reload();
-                    }
-                    else if (result == 6) {
-                        $("#ErrorMsg").html("An error occurred, please try again ");
-                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
-                    }
-                },
-                })
-            });
+            
 
 
     </script>
@@ -166,7 +187,67 @@
                 window.location.href = '@Url.Action("Error404", "Home")';
             },
 			})
-    }
+        }
+
+
+          function openEditModel(PackageId,Id) {
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Edit", "LabPackage")",
+                cache: false,
+                data: { PackageId: PackageId  , Id:Id},
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody").html(result.Content);
+                    $("#EditModel").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
+        //delete
+            function OpenDeleteModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Delete", "LabPackage")",
+                    cache: false,
+                    data: { ID: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+
+
+
+
+
+
+
 
     </script>
 }

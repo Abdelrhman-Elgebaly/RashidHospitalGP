@@ -165,7 +165,8 @@ namespace RashidHospital.Controllers
 
                         if (appoitment.AppointmentDate == cycleDay.Date)
                         {
-                            appoitment.Delete();
+                            appoitment.IsDeleted = true;
+                            appoitment.Edit();
 
                         }
 
@@ -257,12 +258,14 @@ namespace RashidHospital.Controllers
 
 
                 //Cycle days
-
+         
                 foreach (var item in intlist)
                 {
                     ChemoTherapyCycleDayVM _cycleDay = new ChemoTherapyCycleDayVM();
                     AppointmentVM appointment = new AppointmentVM();
-                    _cycleDay.CycleNumber = item;
+                    _cycleDay.CycleDay = item;
+                   
+             
                     _cycleDay.Patient_ID = PatientId;
                     _cycleDay.TemplateId = TemplateId;
                     appointment.PatientId = PatientId;
@@ -287,7 +290,7 @@ namespace RashidHospital.Controllers
             // Lab Package
 
 
-
+           
 
             foreach (var itemm in OrderList)
             {
@@ -296,11 +299,15 @@ namespace RashidHospital.Controllers
 
                 ChemoTherapyCycleDayVM _Labresultsv = new ChemoTherapyCycleDayVM();
                 List<ChemoTherapyCycleDayVM> OrderListv = _Labresultsv.SelectAllByMainCycleId(itemm.ID);
-
+             
                 foreach (var item in OrderListv)
                 {
+
+                   
+
                     ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
                     List<ChemoTherapyPreLabVM> _list = ObjVm.SelectAllByTemplateID(_objVM.Template_ID);
+
                     foreach (var itemm3 in _list)
                     {
 
@@ -323,6 +330,7 @@ namespace RashidHospital.Controllers
                     {
 
                         ChemoTherapyCycleInvestigationVM cc = new ChemoTherapyCycleInvestigationVM();
+                        cc.preId = itemm4.ID;
                         cc.Cycle_ID = item.ID;
                         cc.Actual_Value = null;
                         cc.Inves_Type = itemm4.Test_Name;
@@ -336,189 +344,23 @@ namespace RashidHospital.Controllers
 
 
 
-
+                    
 
 
                 }
 
             }
 
+            ChemoTherapyCycleDayVM chemoTherapyCycleDayVM1 = new ChemoTherapyCycleDayVM();
+            List<ChemoTherapyCycleDayVM> chemoTherapyCycleDayVMs = chemoTherapyCycleDayVM1.SelectAllByTemplateId(TemplateId);
 
 
-
-            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
-        }
-
-
-        /*
-        public JsonResult TestResult(int Cycles_Number, int PatientId, DateTime Date, int TemplateId)
-        {
-
-
-            ChemoTherapyProtocolVM _cObj = new ChemoTherapyProtocolVM();
-            ChemoTherapyProtocolVM _cobjVM = _cObj.SelectObject(TemplateId);
-
-
-            int TemplateID = Convert.ToInt32(_cobjVM.Template_ID);
-
-            ChemoTherapyTemplateVM _Obj = new ChemoTherapyTemplateVM();
-            ChemoTherapyTemplateVM _objVM = _Obj.SelectObject(TemplateID);
-
-            int Frequency = Convert.ToInt32(_objVM.Frequency);
-
-
-
-
-
-
-
-            //1- CreateMainCycleDates
-            CreateMainCycleDates(Cycles_Number: Cycles_Number, PatientId: PatientId, TemplateId : TemplateId, Date : Date, Frequency: Frequency);
-
-
-            //2- CreateSubCycleDaysDates
-
-
-
-            ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
-            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateId);
-
-
-
-            List<string> tokens = _objVM.Cycle_days.Split('/').ToList();
-            List<int> intlist = new List<int>();
-
-            foreach (String str in tokens)
+            int index = 1;
+            foreach (var item in chemoTherapyCycleDayVMs)
             {
-                intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
-            }
-
-
-
-
-            foreach (var itemm in OrderList)
-            {
-
-
-                //Cycle days
-
-                foreach (var item in intlist)
-                {
-                    ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
-                    AppointmentVM appointment = new AppointmentVM();
-                    _labresults22.Patient_ID = PatientId;
-                    _labresults22.TemplateId = TemplateId;
-                    appointment.PatientId = PatientId;
-                    _labresults22.MainCycle_ID = itemm.ID;
-                    appointment.ReturnUrl = System.Web.HttpContext.Current.Request.UrlReferrer?.ToString();
-                    _labresults22.Date = itemm.Date.AddDays(item - 1);
-                    appointment.AppointmentDate = itemm.Date.AddDays(item - 1);
-                    appointment.ClinicId = 1004;
-                    appointment.Create();
-                    _labresults22.Create();
-
-
-
-                }
-
-
-
-            }
-
-            // Lab Package
-
-
-
-
-            foreach (var itemm in OrderList)
-            {
-
-
-
-                ChemoTherapyCycleDayVM _Labresultsv = new ChemoTherapyCycleDayVM();
-                List<ChemoTherapyCycleDayVM> OrderListv = _Labresultsv.SelectAllByMainCycleId(itemm.ID);
-
-                foreach (var item in OrderListv)
-                {
-                    ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
-                    List<ChemoTherapyPreLabVM> _list = ObjVm.SelectAllByTemplateID(_objVM.Template_ID);
-                    foreach (var itemm3 in _list)
-                    {
-
-                        ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
-                        cc.Cycle_ID = item.ID;
-                        cc.Actual_Value = null;
-                        cc.Test_Type = itemm3.Test_Type;
-                        cc.Test_Value = itemm3.Value;
-                        cc.Rule_Type = itemm3.Rule_Type;
-                        cc.Patient_ID = item.Patient_ID;
-                        cc.TemplateId = TemplateId;
-
-                        cc.Create();
-
-                    }
-
-                    ChemoTherapyPreInvestigationsVM ObjVmi = new ChemoTherapyPreInvestigationsVM();
-                    List<ChemoTherapyPreInvestigationsVM> _listi = ObjVmi.SelectAllByTemplateID(_objVM.Template_ID);
-                    foreach (var itemm4 in _listi)
-                    {
-
-                        ChemoTherapyCycleInvestigationVM cc = new ChemoTherapyCycleInvestigationVM();
-                        cc.Cycle_ID = item.ID;
-                        cc.Actual_Value = null;
-                        cc.Inves_Type = itemm4.Test_Name;
-                        cc.Value = itemm4.Value;
-                        cc.Rule_Type = itemm4.Rule_Type;
-                        cc.Patient_ID = item.Patient_ID;
-                        cc.TemplateId = TemplateId;
-                        cc.Create();
-
-                    }
-
-
-
-
-
-
-                }
-
-            }
-
-            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
-        }
-
-*/
-        public JsonResult CreateMainCycleDates( int Cycles_Number, int PatientId, int TemplateId, DateTime Date , int Frequency)
-        {
-
-
-            for (int i = 0; i < Cycles_Number; i++)
-            {
-
-                if (Cycles_Number != 0 || PatientId != 0)
-                {
-                    ChemoTherapyCyclesDatesVM _labresults = new ChemoTherapyCyclesDatesVM();
-
-                    _labresults.Patient_ID = PatientId;
-                    _labresults.TemplateId = TemplateId;
-
-
-
-                    if (i != 0)
-                    {
-                        double x = Convert.ToDouble(Frequency);
-                        DateTime newDate = Date.AddDays(x);
-                        Date = newDate;
-                    }
-
-
-                    _labresults.Date = Date;
-                    _labresults.Cycles_Number = Cycles_Number;
-                    //  _labresults.ID = PatientId;
-                    _labresults.Create();
-                }
-
-
+                item.CycleNumber = index;
+                index++;
+                item.Edit();
 
             }
 
@@ -527,70 +369,7 @@ namespace RashidHospital.Controllers
         }
 
 
-
-
-
-        /*
-        public JsonResult CreateSubCycleDaysDatesWithAppoitment()
-        {
-
-
-
-            ChemoTherapyCyclesDatesVM _Labresults = new ChemoTherapyCyclesDatesVM();
-            List<ChemoTherapyCyclesDatesVM> OrderList = _Labresults.SelectAllByTemplateId(TemplateId);
-
-
-
-            List<string> tokens = _objVM.Cycle_days.Split('/').ToList();
-            List<int> intlist = new List<int>();
-
-            foreach (String str in tokens)
-            {
-                intlist.Add(Convert.ToInt32(Regex.Replace(str, "[^0-9]+", string.Empty)));
-            }
-
-
-
-
-            foreach (var itemm in OrderList)
-            {
-
-
-                //Cycle days
-
-                foreach (var item in intlist)
-                {
-                    ChemoTherapyCycleDayVM _labresults22 = new ChemoTherapyCycleDayVM();
-                    AppointmentVM appointment = new AppointmentVM();
-                    _labresults22.Patient_ID = PatientId;
-                    _labresults22.TemplateId = TemplateId;
-                    appointment.PatientId = PatientId;
-                    _labresults22.MainCycle_ID = itemm.ID;
-                    appointment.ReturnUrl = System.Web.HttpContext.Current.Request.UrlReferrer?.ToString();
-                    _labresults22.Date = itemm.Date.AddDays(item - 1);
-                    appointment.AppointmentDate = itemm.Date.AddDays(item - 1);
-                    appointment.ClinicId = 1004;
-                    appointment.Create();
-                    _labresults22.Create();
-
-
-
-                }
-
-
-
-            }
-
-
-
-            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
-        }
-
-
-        */
-
-
-
+     
 
 
 

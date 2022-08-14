@@ -35,6 +35,7 @@ namespace Hospital.DAL
         public bool IsApproved { get; set; }
         public int MainDrugId { get; set; }
         public Nullable<DateTime> Date { get; set; }
-
+        public string Pharmacy_Condition_Value { get; set; }
+        
     }
 }

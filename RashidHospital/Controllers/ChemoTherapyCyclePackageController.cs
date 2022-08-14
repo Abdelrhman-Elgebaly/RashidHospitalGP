@@ -17,9 +17,13 @@ namespace RashidHospital.Controllers
         public ActionResult Index(int Id, int pid)
         {
 
-          //  GetProtocolPreLab(Id);
-           
-           ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
+         //   GetProtocolPreLab(Id);
+
+
+
+
+                    //
+                    ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
 
             List<ChemoTherapyCyclePackageVM> LabList = _Obj.SelectAllByCycleID(Id);
 
@@ -52,16 +56,7 @@ namespace RashidHospital.Controllers
 
 
 
-            ChemoTherapyCyclePackageVM _Obj = new ChemoTherapyCyclePackageVM();
-            List<ChemoTherapyCyclePackageVM> LabList = _Obj.SelectAllByCycleID(Id);
-            /*
-            foreach (var item in LabList)
-            {
-                if (item.PreProtocol == 1 ) {
-                item.Delete();
-                }
-            }
-          */
+     
             ChemoTherapyCycleDayVM _dObj = new ChemoTherapyCycleDayVM();
             ChemoTherapyCycleDayVM _cObjVM = _dObj.SelectObject(Id);
 
@@ -80,41 +75,54 @@ namespace RashidHospital.Controllers
 
 
 
+            ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
+            List<ChemoTherapyCyclePackageVM> LabList = cc.SelectAllByCycleID(Id);
 
             ChemoTherapyPreLabVM ObjVm = new ChemoTherapyPreLabVM();
                     List<ChemoTherapyPreLabVM> _list = ObjVm.SelectAllByTemplateID(_objVMt.Template_ID);
-
-            foreach (var item in LabList)
+            List<int> dif = new List<int>();
+            foreach (var item in _list)
             {
-                foreach (var itemm3 in _list)
+                foreach (var itemm3 in LabList)
 
 
                 {
-
-
-                    if (item.Test_Type != itemm3.Test_Type) { 
-                    ChemoTherapyCyclePackageVM cc = new ChemoTherapyCyclePackageVM();
-                    cc.Cycle_ID = Id;
-                    cc.Actual_Value = 7;
-                    cc.Test_Type = itemm3.Test_Type;
-                    cc.Test_Value = itemm3.Value;
-                    cc.Rule_Type = itemm3.Rule_Type;
-                    cc.PreProtocol = 1;
-
-                    cc.Create();
+                 
+                    if (item.Test_Type != itemm3.Test_Type) {
+                        dif.Add(_list.IndexOf(item));
                     }
+
+                
+
+
                 }
 
             }
 
 
+            List<ChemoTherapyPreLabVM> labList = ObjVm.SelectAllByTemplateID(_objVMt.Template_ID);
 
-       
+           
+            foreach (var item in dif)
+            {
+
+               
 
 
+                 cc.Cycle_ID = Id;
+                cc.Actual_Value = 0;
+                cc.Test_Type = labList[item].Test_Type;
+                cc.Test_Value = labList[item].Value;
+                cc.Rule_Type = labList[item].Rule_Type;
+                cc.Patient_ID = _cobjVM.Patient_ID;
+
+                cc.Create();
 
 
-                    return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            return Json(new { IsRedirect = true }, JsonRequestBehavior.AllowGet);
 
         }
 

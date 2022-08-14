@@ -1,7 +1,5 @@
-﻿@model RashidHospital.Models.ChemoTherapyCyclesDatesVM
-
-
-
+﻿
+@model RashidHospital.Models.LabPackageVM
 
 @{
     ViewBag.Title = "Create";
@@ -24,37 +22,39 @@
 
 @using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.Hidden("PatientId", (int)ViewBag.PatientId)
-    @Html.Hidden("TemplateId", (int)ViewBag.TemplateId)
+    @Html.Hidden("Package_ID", (int)ViewBag.PackageId)
+    @Html.HiddenFor(model => model.ID)
 
 
-  <div class="modal-header">
-
-    @*@Html.Raw(ViewBag.PatientInfo)*@
+    <div class="modal-header">
+        @*@Html.Raw(ViewBag.PatientInfo)*@
     </div>
 
     <div class="modal-body">
         <div class="box-body">
-
             <div class="form-group">
-                @Html.Label("Cycles Number", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Test", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Cycles_Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                    @Html.ValidationMessageFor(model => model.Cycles_Number, "", new { @class = "text-danger" })
+                    @Html.DropDownList("Test", new SelectList(ViewBag.LabTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.Test, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
-                @Html.Label(" Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Value", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
-
-                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Rule, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Rule", new SelectList(ViewBag.RuleTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.Rule, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group" style="float:right;">
                 <div class="col-md-12">
-
 
                     <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
                     <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
@@ -63,8 +63,6 @@
             </div>
         </div>
     </div>
-    
-
 }
 
 
@@ -78,9 +76,10 @@
 <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
 
 
+
 <script type="text/javascript">
 
-    $("#Date").datepicker({
+    $("#ResualtDate").datepicker({
         format: 'dd-mm-yyyy',
         autoclose: true,
         orientation: 'bottom left'
@@ -100,7 +99,6 @@
         var LabType = $("#LabType option:selected").val();
         var PatientId = $("#PatientId").val();
 
-
         $("#Unit").val('');
         $("#Note").val('');
         $.ajax({
@@ -116,17 +114,21 @@
     })
 
     $("body").on("click", "#btnSaveandExit", function () {
-        var Cycles_Number = $("#Cycles_Number").val();
+        var Value = $("#Value").val();
 
-        var PatientId = $("#PatientId").val();
-        var Date = $("#Date").val();
-        var TemplateId = $("#TemplateId").val();
+        var Test = $("#Test  option:selected").val();
+        var Rule = $("#Rule  option:selected").val();
+        var Package_ID = $("#Package_ID ").val();
+        var ID = $("#ID ").val();
+
+        $("#Value").val('');
+
         $.ajax({
-            url: "/ChemoTherapyCyclesDates/AddResult",
+            url: "/LabPackage/EditResult",
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "Cycles_Number": Cycles_Number, "PatientId": PatientId, "Date": Date, "TemplateId": TemplateId },
+            data: { "Package_ID": Package_ID, "Test": Test, "Value": Value, "Rule": Rule, "Id" : ID },
             success: function (result) {
                 $("#CreateModel").modal("hide");
                 window.location.reload();
@@ -135,4 +137,5 @@
         });
     })
 </script>
+
 

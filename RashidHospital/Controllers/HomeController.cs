@@ -47,7 +47,9 @@ namespace RashidHospital.Controllers
             var user = UserManager.FindById(userId);
 
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllPending().Where(a => a.Date == DateTime.Now).ToList();
+            List<ChemoTherapyCycleDayVM> _List = null;
+
+            _List = _Obj.SelectAllPending().Where(a => a.Date == DateTime.Now && a.DoctorId == userId).ToList();
             ViewBag.count = _List.Count();
             if (user.IsActive == false)
             {

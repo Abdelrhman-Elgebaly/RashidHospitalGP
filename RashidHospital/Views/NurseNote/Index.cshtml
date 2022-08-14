@@ -46,10 +46,8 @@
                     <th>Height</th>
                     <th>SA</th>
                     <th>Date</th>
-                    <th> Pharmacist Note</th>
-                    <th>Actions</th>
-
-                    <th class="text-center" width="110px">Select</th>
+                 
+                 
                 </tr>
             </thead>
 
@@ -58,7 +56,7 @@
                 {
                     if (item.IsSelected == true)
                     {
-                        <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+                        <tr>
                             <td class="adjustContent">@item.Temperature</td>
                             <td class="adjustContent">@item.Pulse</td>
                             <td class="adjustContent">@item.BP</td>
@@ -67,43 +65,7 @@
                             <td class="adjustContent">@item.SA</td>
                             <td class="adjustContent">@item.Date</td>
 
-                            @if (item.Pharmacist_Note == null)
-                            {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
-                                </td>
-                            }
-                            else
-                            {
-                                <td bgcolor="darkseagreen">
-                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
-                                </td>
-                            }
-
-
-
-
-
-                            <td>
-
-                                <center>
-
-                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </center>
-                            </td>
-
-
-
-
-                            <td class="adjustContent text-center">
-
-                                <a class="btn btn-success adjust-actions" title="Approve" href="/PatientDose/Index?patientID=@item.Patient_ID&noteId=@item.ID">
-                                    <i class="fa fa-check"></i>
-                                </a>
-
-                            </td>
+                          
                         </tr>
                     }
                     else
@@ -117,42 +79,7 @@
                             <td class="adjustContent">@item.SA</td>
                             <td class="adjustContent">@item.Date</td>
 
-                            @if (item.Pharmacist_Note == null)
-                            {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
-                                </td>
-                            }
-                            else
-                            {
-                                <td bgcolor="darkseagreen">
-                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
-                                </td>
-                            }
-
-
-
-
-
-                            <td>
-
-                                <center>
-
-                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </center>
-                            </td>
-
-
-
-                            <td class="adjustContent text-center">
-
-                                <a class="btn btn-success adjust-actions" title="Approve" href="/PatientDose/Index?patientID=@item.Patient_ID&noteId=@item.ID">
-                                    <i class="fa fa-check"></i>
-                                </a>
-
-                            </td>
+                         
                         </tr>
                     }
                 }

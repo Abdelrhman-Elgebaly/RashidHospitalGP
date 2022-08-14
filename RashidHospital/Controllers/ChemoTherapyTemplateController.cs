@@ -228,15 +228,40 @@ namespace RashidHospital.Controllers
             return finalResult;
         }
 
-        public ActionResult Test()
+
+
+        public ActionResult AddProtocl()
         {
+            fillCreateBag();
 
-            ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
 
-            List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
+            protocolVM radioTherapyVMVM = new protocolVM();
 
-            return View(_list);
+
+
+            fillCreateBag();
+            return View(radioTherapyVMVM);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddProtocl(protocolVM input)
+        {
+            // fillCreateBag();
+
+            if (ModelState.IsValid)
+            {
+
+
+                input.Create();
+
+                return RedirectToAction("Index");
+            }
+            //  fillCreateBag();
+
+            return View(input);
+        }
+
+
 
 
 

@@ -30,7 +30,15 @@
                     Packages
                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 </a>
+
+                <a href="@Url.Action("AddProtocl", "ChemoTherapyTemplate")" class="btn btn-primary">
+                  Protocol List
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </a>
             </h3>
+
+
+        
         </div>
 
         <div class="box-body">
@@ -45,7 +53,7 @@
                         <th>Emetogenic Level</th>
                         <th>FN risk</th>
                         <th>Link</th>
-                   
+
                         <th> Actions</th>
                     </tr>
                 </thead>
@@ -55,35 +63,35 @@
 
                         if (item.IsDeleted == true)
                         {
-                    <tr style='color:red;text-decoration:line-through'>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Disease)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Protocol_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Frequency)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Cycle_days)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Maximum_cycles)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Emetogenic_Level_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FN_risk)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Link)
-                        </td>
+                            <tr style='color:red;text-decoration:line-through'>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Disease)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Protocol_Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Frequency)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cycle_days)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Maximum_cycles)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Emetogenic_Level_Value)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FN_risk)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Link)
+                                </td>
 
-                        <td class="adjustContent text-center">
-                        </td>
-                    </tr>
+                                <td class="adjustContent text-center">
+                                </td>
+                            </tr>
                         }
                         else
                         {
@@ -125,14 +133,14 @@
 
                                     @Html.ActionLink("Edit", "Edit", new { Id = item.Template_ID }) |
                                     @Html.ActionLink("Duplicate", "Duplicate", new { Id = item.Template_ID }, new { onclick = "return confirm('Are You Sure From Duplicated... ?')" }) |
-                
+
                                     <button onclick="OpenDeleteModal(@item.Template_ID)">Delete</button>
-                                   
+
                                 </td>
                             </tr>
                         }
                     }
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -162,12 +170,26 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+<!--Create Modal-->
+<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add new Protocol to List</h4>
+            </div>
+            <div id="CreateBody"></div>
+        </div>
+    </div>
+</div>
 
-            @section scripts {
-                <script src="~/Scripts/jquery.dataTables.js"></script>
-                <script src="~/Scripts/dataTables.bootstrap4.js"></script>
-                <script src="~/Scripts/intlTelInput.min.js"></script>
-                <script>
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
                     $(function () {
                         $("#loading").fadeOut();
                     });
@@ -215,7 +237,36 @@
 
 
 
-                </script>
+
+             function openCreateModel() {
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_AddProtocl", "ChemoTherapyTemplate")",
+                cache: false,
+               
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#CreateBody").html(result.Content);
+                    $("#CreateModel").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
+
+
+
+
+
+    </script>
 
 
 
@@ -228,4 +279,4 @@
 
 
 
-            }
+}

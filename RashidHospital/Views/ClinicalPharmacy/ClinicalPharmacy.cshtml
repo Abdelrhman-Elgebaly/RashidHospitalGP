@@ -28,7 +28,15 @@
 
                 <div class="box-header">
 
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openCurrentModal()">
+                        Current Patients
 
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openPendingModal()">
+                        Pending Doctor Approved
+
+                    </a>
 
 
                 </div>
@@ -37,6 +45,33 @@
         </div>
 
         <div class="box-body">
+
+            <center>
+
+
+                <div class="col-md-10">
+
+                    <p> Filter</p>
+                    <select id="orders">
+                        <option selected value="Click Here"></option>
+                        <option>Ordered</option>
+                        <option>Hold</option>
+                        <option>Cleared</option>
+                        <option>Finalized</option>
+                        <option>Dispensed</option>
+                        <option>Cancelled</option>
+
+
+                    </select>
+                </div>
+
+
+
+
+            </center>
+
+
+
             <table id="example1" class="table table-bordered table-striped" style="width:100%">
                 <thead>
                     <tr>
@@ -67,7 +102,8 @@
 
 
                         <th> Order Status</th>
-                        <th>Select Order</th>
+                      
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,22 +145,18 @@
                                 @Html.DisplayFor(modelItem => item.Pharmacy_Condition_Value)
                             </td>
 
+                         
+
                             <td>
-                    @Html.DropDownList("DD", new List<SelectListItem>
 
-               {
+                                <center>
 
-  new SelectListItem { Value = "1", Text = "Ordered" },
-          new SelectListItem { Value = "2", Text = "Cleared" },
-          new SelectListItem { Value = "3", Text = "Hold" },
-          new SelectListItem { Value = "4", Text = "Cancelled" },
-          new SelectListItem { Value = "5", Text = "Finalized" },
- 
+                                    <a class="btn btn-success adjust-actions" title="Open" onclick="openTestPopUp(@item.ID)">
+                                        <i class="fa fa-address-book-o"></i>
+                                    </a>
 
-               }, "Select Order "
-                   )
-        
-                              
+
+                                </center>
                             </td>
                         </tr>
 
@@ -206,7 +238,26 @@
 
     </script>
 
+    <script>
+        function openPendingModal() {
+            window.location.href = '/ClinicalPharmacy/Pending';
+        }
+        function openCurrentModal() {
+            window.location.href = '/ClinicalPharmacy/IndexCurrent';
+        }
 
+        $(document).ready(function () {
+            var table = $("#example1").DataTable();
+
+            $("#orders").change(function () {
+                console.log('Groing for folter : ' + this.value);
+                table.search(this.value).draw();
+            });
+
+        });
+
+
+    </script>
 
 
 }

@@ -21,7 +21,7 @@
         <table id="example1" class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
-                 
+                    <th></th>
                     <th>Cycle</th>
                     <th>Date</th>
 
@@ -36,10 +36,12 @@
                 {
         <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
 
-         
+            <td>
+                @Html.DisplayFor(modelItem => item.CycleNumber)
+            </td>
             <td>
                 Day
-                @Html.DisplayFor(modelItem => item.CycleNumber)
+                @Html.DisplayFor(modelItem => item.CycleDay)
             </td>
 
             <td>
@@ -54,11 +56,15 @@
                 {
         <tr style="background-color: #B22222; color: black; font-weight: bold; ">
 
-         
+
             <td>
-                Day
                 @Html.DisplayFor(modelItem => item.CycleNumber)
             </td>
+            <td>
+                Day
+                @Html.DisplayFor(modelItem => item.CycleDay)
+            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
@@ -73,10 +79,13 @@
                 else if (item.IsRescuedeled == true)
                 {
         <tr style="background-color: #FFD700; color: black; font-weight: bold;">
-         
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CycleNumber)
+            </td>
             <td>
                 Day
-                @Html.DisplayFor(modelItem => item.CycleNumber)
+                @Html.DisplayFor(modelItem => item.CycleDay)
             </td>
 
             <td>
@@ -91,13 +100,16 @@
                 else if (item.IsDeleted == true)
                 {
         <tr style='color:red;text-decoration:line-through'>
-          
+
             <td>
-                Day
                 @Html.DisplayFor(modelItem => item.CycleNumber)
             </td>
             <td>
                 Day
+                @Html.DisplayFor(modelItem => item.CycleDay)
+            </td>
+
+            <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             @*<span class="sometext">@Html.DisplayFor(modelItem => tag.Name) some text </span>*@
@@ -111,11 +123,14 @@
 
         <tr style="  color: black; font-weight: bold;">
 
-           
             <td>
-                Day
                 @Html.DisplayFor(modelItem => item.CycleNumber)
             </td>
+            <td>
+                Day
+                @Html.DisplayFor(modelItem => item.CycleDay)
+            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>

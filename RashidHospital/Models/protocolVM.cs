@@ -11,11 +11,11 @@ using System.Linq;
 using System.Web;
 using Hospital.DAL;
 using System.Web.Mvc;
-
 namespace RashidHospital.Models
 {
     public class protocolVM : BusinessBaseClass<protocol, protocolVM>
     {
+        [Key]
         public int ProtocolID { get; set; }
         public string ProtocolName { get; set; }
         public Nullable<int> DiseaseId { get; set; }

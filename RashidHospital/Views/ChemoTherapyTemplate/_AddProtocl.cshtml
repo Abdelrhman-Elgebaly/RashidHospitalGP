@@ -1,0 +1,178 @@
+﻿@model RashidHospital.Models.protocolVM
+<style>
+    .form-control {
+        margin-bottom: 4px;
+    }
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+
+@using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
+{
+
+
+    <div class="modal-header">
+        @*@Html.Raw(ViewBag.PatientInfo)*@
+    </div>
+
+    <div class="modal-body">
+        <div class="box-body">
+
+            <div class="form-group">
+                @Html.Label("Disease ", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("DiseaseId", new SelectList(ViewBag.DiseaseList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2 ", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.DiseaseId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Protocol", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProtocolName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.ProtocolName, " ", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="float:right;">
+                <div class="col-md-12">
+
+
+                    <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
+                    @*onclick="location.href='@Url.Action("Index", "LabResualt", new { @PatientId = (int)ViewBag.PatientId })'"*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+    <div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin: auto;">
+                    <input hidden id="AccountId" />
+                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                    <br />
+                    <h4 class="text-center">Are you sure you want to Omit this Cycle? </h4>
+                    <p class="text-center text-danger" id="ErrorMsg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    @section scripts {
+        <script src="~/Scripts/jquery.dataTables.js"></script>
+        <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+        <script src="~/Scripts/intlTelInput.min.js"></script>
+        <script>
+                    $(function () {
+                        $("#loading").fadeOut();
+                    });
+
+                    $('#example1').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": true,
+                        "order": [[0, "desc"]],
+                        "info": true,
+                        "autoWidth": false,
+                        "scrollX": true,
+                    });
+
+
+
+ //delete
+            function OpenOmitModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Omit", "ChemoTherapyCycleDay")",
+                    cache: false,
+                    data: { Id: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+
+        function OpenResModal(Id) {
+            window.location.href = '/ChemoTherapyCycleDay/Test?Id=' + Id;
+
+        }
+
+
+
+
+
+        $("body").on("click", "#btnSaveandExit", function () {
+
+           // var DiseaseId = $("#DiseaseId option:selected").val();
+            var ProtocolName = $("#ProtocolName").val();
+            var DiseaseId: $("#DiseaseId").val()
+            $.ajax({
+                url: "/ChemoTherapyTemplate/AddProtocl",
+                type: "post",
+                dataType: "json",
+                contextType: "application/json",
+                data: { "DiseaseId": DiseaseId, "protocol": ProtocolName },
+                success: function (result) {
+                    $("#CreateModel").modal("hide");
+                    window.location.reload();
+
+                }
+            });
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </script>
+
+
+    }
+

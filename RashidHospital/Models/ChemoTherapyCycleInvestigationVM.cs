@@ -21,6 +21,7 @@ namespace RashidHospital.Models
         public int ID { get; set; }
         public Nullable<int> Cycle_ID { get; set; }
         public Nullable<int> Patient_ID { get; set; }
+        public int preId { get; set; }
 
         public string Inves_Type { get; set; }
         public Nullable<double> Actual_Value { get; set; }
@@ -55,9 +56,11 @@ namespace RashidHospital.Models
                     Value =Obj.Value,
                     Note =Obj.Note,
                     IsEditByPharmacy = Obj.IsEditByPharmacy,
-                           
+                    preId=Obj.preId,
 
-    };
+
+
+                };
             }
             return _Obj;
         }
@@ -65,11 +68,15 @@ namespace RashidHospital.Models
 
         internal override ChemoTherapyCycleInvestigationVM Convert(ChemoTherapyCycleInvestigation DbObj)
         {
+
+            ChemoTherapyPreInvestigationsVM preInvestigationsVM = new ChemoTherapyPreInvestigationsVM();
+            ChemoTherapyPreInvestigationsVM Obj = preInvestigationsVM.SelectObject(DbObj.preId);
+
             ChemoTherapyCycleInvestigationVM pl = new ChemoTherapyCycleInvestigationVM();
 
            
 
-            var Site2 = (Rule)DbObj?.Rule_Type;
+            var Site2 = (Rule)Obj?.Rule_Type;
             var enumType2 = EnumHelper<Rule>.GetDisplayValue(Site2);
 
             pl.ID = DbObj.ID;
@@ -77,15 +84,14 @@ namespace RashidHospital.Models
             pl.Patient_ID = DbObj.Patient_ID;
          
             pl.Cycle_ID = DbObj.Cycle_ID;
-       
-            pl.Rule_Type = DbObj.Rule_Type;
+            pl.preId = DbObj.preId;
+            pl.Rule_Type = Obj.Rule_Type;
             pl.Rule_TypeValue = enumType2.ToString();
-     
-
-                 pl.Inves_Type = DbObj.Inves_Type;
+          
+                 pl.Inves_Type = Obj.Test_Name;
             pl.Actual_Value = DbObj.Actual_Value;
             pl.TemplateId = DbObj.TemplateId;
-            pl.Value = DbObj.Value;
+            pl.Value = Obj.Value;
             pl.Note = DbObj.Note;
             pl.IsEditByPharmacy = DbObj.IsEditByPharmacy;
             return pl;

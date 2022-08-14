@@ -110,6 +110,7 @@
     <Compile Include="Bussiness\Clinic.cs" />
     <Compile Include="Bussiness\ChemoTherapyCyclesDates.cs" />
     <Compile Include="Bussiness\Disease.cs" />
+    <Compile Include="Bussiness\DrugOrder.cs" />
     <Compile Include="Bussiness\Drugs.cs" />
     <Compile Include="Bussiness\Fixation.cs" />
     <Compile Include="Bussiness\IHCType.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Department.cs" />
     <Compile Include="Diagons.cs" />
     <Compile Include="Disease.cs" />
+    <Compile Include="DrugOrder.cs" />
     <Compile Include="Drugs.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Fixation.cs" />

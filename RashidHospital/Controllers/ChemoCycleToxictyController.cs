@@ -223,7 +223,7 @@ namespace RashidHospital.Controllers
 
             ToxictyVM _Obj = new ToxictyVM();
             ToxictyVM _ObjvM = _Obj.SelectObject(Id);
-            _ObjvM.Note = Note;
+            _ObjvM.Pharmacist_Note = Note;
            
             _ObjvM.Edit();
             if (User.IsInAnyRoles("Pharmacist"))
