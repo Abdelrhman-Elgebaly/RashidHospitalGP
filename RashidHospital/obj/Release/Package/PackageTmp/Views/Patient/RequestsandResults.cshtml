@@ -45,6 +45,18 @@
             Appointment
         </a>
 
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openRadioTherapyModal(@Model.Id)">
+            RadioTherapy
+        </a>
+
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxictyModal(@Model.Id)">
+            Toxicty
+        </a>
+
+        <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@Model.Id)">
+            ChemoTherapy
+        </a>
+
     </div>
     <hr />
     <div class="modal-body">
@@ -157,6 +169,32 @@
             },
         })
         };
-   
+
+
+
+
+        function openToxictyModal(patientID) {
+            window.location.href = '/Toxicty/index?patientID=' + patientID;
+        }
+
+        function openRadioTherapyModal(patientID) {
+            window.location.href = '/RadioTherapy/index?patientID=' + patientID;
+        }
+
+        function openChemoTherapyModal(patientID, chemotherapyID) {
+
+            if (chemotherapyID == null) {
+                window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+            } else {
+                window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID + '&templateID=' + chemotherapyID;
+            }
+        }
+
+        function TestModal(patientID) {
+
+
+            window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID;
+
+        }
     </script>
  }

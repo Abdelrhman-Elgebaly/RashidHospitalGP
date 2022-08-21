@@ -1,0 +1,200 @@
+﻿
+@model IEnumerable<RashidHospital.Models.ChemoTherapyCycleDayVM>
+
+<section class="content-header">
+    <h1>
+        @Html.ActionLink(
+    "View All ",                                                  // linkText
+    "IndexCurrentAll",                                    // actionName
+    "ClinicalPharmacy")
+    </h1>
+</section>
+<section class="content-header">
+    <h2>
+        Current Patients
+    </h2>
+</section>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+
+                <div class="box-header">
+
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openPendingModal()">
+                        Pending Doctor Approved
+
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openFinalAppModal()">
+                        Final Approved
+
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Disease</th>
+                        <th>Protocol </th>
+                        <th>Signature</th>
+
+                        <th>Dr Statues </th>
+                        <th> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Disease)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Protocol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoctorName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DrStatues)
+                        </td>
+
+                        <td>
+
+                            @Html.ActionLink("Open", "Index", "ChemoTherapyCyclePackage", new { Id = item.ID, pid = item.Patient_ID }, null) |
+                            @Html.ActionLink("File Record", "View", "Patient", new { patientID = item.Patient_ID }, null)
+                            <a class="btn btn-success adjust-actions" title="Approved" onclick="OpenApproved(@item.ID)">
+                                <i class="fa fa-check"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!--Deactivate Modal3-->
+<div class="modal" id="deactivateModal3" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="CycleId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure to Approved Cycle ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-primary" id="DeactivateBtn3">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $(function () {
+            $("#loading").fadeOut();
+        });
+
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "order": [[0, "desc"]],
+            "info": true,
+            "autoWidth": false,
+            "scrollX": true,
+        });
+
+
+
+    </script>
+
+    <script>
+        function openPendingModal() {
+            window.location.href = '/ClinicalPharmacy/Pending';
+        }
+        function openFinalAppModal() {
+            window.location.href = '/ClinicalPharmacy/ClinicalPharmacy';
+        }
+
+
+    </script>
+
+    <script>
+
+    function OpenApproved(CycleId) {
+    $("#CycleId").val(CycleId);
+
+    $("#deactivateModal3").modal("show");
+    };
+
+
+
+    $("#DeactivateBtn3").click(function () {
+    var CycleId = $("#CycleId").val();
+
+    $("#ErrorMsg").html("");
+    $("#DeactivateBtn3").attr("disabled", true).text('Loading...');
+    $.ajax({
+    type: "Post",
+    url: "@Url.Action("FinalApproved", "PatientDose")",
+    cache: false,
+    data: { CycleId: CycleId},
+    dataType: "json",
+    success: function (result) {
+    if (result == 1) {
+    $("#deactivateModal3").modal("hide");
+    location.reload();
+    }
+    else if (result == 6) {
+    $("#ErrorMsg").html("An error occurred, please try again ");
+    $("#DeactivateBtn3").attr("disabled", false).text('Yes');
+    }
+    },
+    })
+    });
+
+
+    </script>
+
+
+
+
+
+
+    /**/
+}

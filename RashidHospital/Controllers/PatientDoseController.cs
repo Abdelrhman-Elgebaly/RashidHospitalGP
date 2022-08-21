@@ -248,7 +248,8 @@ namespace RashidHospital.Controllers
         public JsonResult AddNote(int Id, string Note, int Dose , string Fluid)
 
         {
-            if (User.IsInAnyRoles("Doctor")) {
+            if(User.IsInAnyRoles("Pharmacist") == false)
+    {
                 PatientDoseVM _Obj = new PatientDoseVM();
                 PatientDoseVM _ObjvM = _Obj.SelectObject(Id);
                 _ObjvM.Dose_Calculated = Dose;
@@ -437,7 +438,7 @@ namespace RashidHospital.Controllers
             {
                 PatientDoseVM _resultVM = new PatientDoseVM();
                 PatientDoseVM DeleteObject = _resultVM.SelectObject(Id);
-                // DeleteObject.IsDeleted = true;
+        
         
                 DeleteObject.Delete();
 

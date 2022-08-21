@@ -1,0 +1,283 @@
+﻿@model IEnumerable<RashidHospital.Models.NurseNoteVM>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="~/Content/ChemoWizard.css" rel="stylesheet" />
+
+
+<section class="content-header">
+    <h2>4.Nurse Note</h2>
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<center>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div class="form-wizard centered-pills">
+        <ul class="nav nav-pills">
+            <li role="presentation" class="complete"><a href="#">1. Lab Validation</a></li>
+            <li role="presentation" class="complete"><a href="#">2.   Predeined Investigation</a></li>
+            <li role="presentation" class="complete"><a href="#">3. Toxicty</a></li>
+            <li role="presentation" class="current"><a href="#">4.  Nurse Note</a></li>
+            <li role="presentation" class="complete"><a href="#">5.  Dose Calculation</a></li>
+
+            <li role="presentation"><a href="#">6. Summary</a></li>
+        </ul>
+    </div>
+
+
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
+
+
+</center>
+<section class="content">
+
+
+
+
+
+
+    @if (User.IsInAnyRoles("Pharmacist") == false)
+    {
+
+        <div class="box-header">
+            <h3 class="box-title">
+                <a href="@Url.Action("Create", "ChemoCycleNuresNote", new { Id = ViewBag.CycleId, pid = ViewBag.PatientId })" class="btn btn-primary">
+                    Create new Nurse Note
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </a>
+            </h3>
+        </div>
+    }
+    <hr />
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Temperature</th>
+                    <th>Pulse</th>
+                    <th>BP</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>SA</th>
+                    <th>Date</th>
+                    <th> Pharmacist </th>
+                    <th>Actions</th>
+                    <th class="text-center" width="110px">Select</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.IsSelected == true)
+                    {
+                <tr style="background-color: darkseagreen; color: black; font-weight: bold;">
+                    <td class="adjustContent">@item.Temperature</td>
+                    <td class="adjustContent">@item.Pulse</td>
+                    <td class="adjustContent">@item.BP</td>
+                    <td class="adjustContent">@item.Weight</td>
+                    <td class="adjustContent">@item.Height</td>
+                    <td class="adjustContent">@item.SA</td>
+                    <td class="adjustContent">@item.Date</td>
+
+                    @if (item.IsEditByPharmacy == true)
+                    {
+
+
+                        <td bgcolor="darkseagreen">
+                            @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                        </td>
+                    }
+
+
+
+
+
+
+                    <td>
+
+                        <center>
+
+                            <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
+                    @if (User.IsInAnyRoles("Pharmacist") == false)
+                    {
+                        <td class="adjustContent text-center">
+
+                            <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Index?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
+                                <i class="fa fa-check"></i>
+                            </a>
+
+                        </td>
+                    }
+                </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="adjustContent">@item.Temperature</td>
+                            <td class="adjustContent">@item.Pulse</td>
+                            <td class="adjustContent">@item.BP</td>
+                            <td class="adjustContent">@item.Weight</td>
+                            <td class="adjustContent">@item.Height</td>
+                            <td class="adjustContent">@item.SA</td>
+                            <td class="adjustContent">@item.Date</td>
+
+                            @if (item.Pharmacist_Note == null)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                </td>
+                            }
+                            else
+                            {
+                                <td bgcolor="brown">
+                                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                                </td>
+                            }
+
+
+
+
+
+                            <td>
+
+                                <center>
+
+                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </center>
+                            </td>
+                            @if (User.IsInAnyRoles("Pharmacist") == false)
+                            {
+                                <td class="adjustContent text-center">
+
+                                    <a class="btn btn-success adjust-actions" title="Select" href="/PatientDose/Index?NoteId=@item.ID&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        @if (User.IsInAnyRoles("Pharmacist"))
+        {
+            <center>
+
+
+
+
+
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openDoseModal(@ViewBag.SelectedNote,@ViewBag.CycleId,@ViewBag.PatientId )">
+                    Next  >>
+                </a>
+
+            </center>
+        }
+    </div>
+
+</section>
+
+
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div id="NoteBody"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+
+
+    <script>
+        function openCreatelModal(Id) {
+            window.location.href = '/ChemoTherapyCyclePackage/Create?Id=' + Id;
+        };
+        function openCreateModel(Id) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("Create", "ChemoTherapyCyclePackage")",
+    cache: false,
+        data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#CreateBody").html(result.Content);
+    $("#CreateModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+        }
+
+        function openDoseModal(NoteId, CycleId, pid) {
+            window.location.href = '/PatientDose/Index?NoteId=' + NoteId + '&CycleId=' + CycleId + '&pid=' + pid;
+        }
+
+
+
+                function openTestPopUp(Id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_EditNote", "ChemoCycleNuresNote")",
+                cache: false,
+                data: { Id: Id },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#NoteBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
+    </script>
+
+}
+

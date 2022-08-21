@@ -82,10 +82,6 @@ namespace RashidHospital.Models
         public string Signature { get; set; }
         public Guid? ModifiedBy { get; set; }
 
-        public Nullable<int> ChemoTherapyId { get; set; }
-        [Required]
-        public DateTime StartDate { get; set; } = DateTime.Today;
-        public List<DateTime> cycleDates { get; set; }
 
         internal override Patient Convert(PatientVM Obj)
         {
@@ -117,8 +113,7 @@ namespace RashidHospital.Models
                     DiagnoseId = Obj.DiagnoseId,
                     CreatedBy = Obj.CreatedBy,
                     ModifiedBy = Obj.ModifiedBy,
-                    ChemoTherapyId = Obj.ChemoTherapyId,
-                    StartDate = Obj.StartDate,
+               
                 };
             }
             return _Obj;
@@ -156,8 +151,7 @@ namespace RashidHospital.Models
                 AspNetUser user = _signutre.Where(a => a.Id == DbObj.CreatedBy).FirstOrDefault();
                 patient.Signature = user?.FirstName + " " + user?.SecondName + user?.ThirdName;
                 patient.ModifiedBy = DbObj.ModifiedBy;
-                patient.ChemoTherapyId = DbObj.ChemoTherapyId;
-                patient.StartDate = DbObj.StartDate;
+          
 
 
             }

@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "View";
+}
+
+
+@model RashidHospital.Models.RadioTherapyVM
+<link href="~/Content/build/css/intlTelInput.min.css" rel="stylesheet" />
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+
+    .form-control {
+        margin-bottom: 3px !important;
+    }
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+<form method="post" id="editEmpForm">
+    @Html.HiddenFor(model => model.PatientID)
+
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        
+        @if (ViewBag.Error != null)
+        {<h5>@ViewBag.Error </h5>}
+        <h5> @Html.ValidationSummary("", new { @class = "text-danger" })</h5>
+        <hr />
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("RTX Site", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RTXSite", new SelectList(ViewBag.RTXSite, "Value", "Text"), htmlAttributes: new { @class = "form-control select2 ", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.RTXSite, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("RTXType", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RTXType", new SelectList(ViewBag.RTXType, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.RTXType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Fixation", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FixationString, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.Fixation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("TotalDose", htmlAttributes: new { @class = "control-label col-md-2", @disabled = "disabled" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TotalDose, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TotalDose, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("FractionNumber", htmlAttributes: new { @class = "control-label col-md-2", @disabled = "disabled" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FractionNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FractionNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Result", htmlAttributes: new { @class = "control-label col-md-2", @disabled = "disabled" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DoseFractionNumberResult, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DoseFractionNumberResult, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Type Of Technique", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TypeOfTechnique", new SelectList(ViewBag.TypeOfTechnique, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.TypeOfTechnique, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("CocomittantChemoTherapy", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.RadioButtonFor(model => model.CocomittantChemoTherapy, true) Yes
+                    @Html.RadioButtonFor(model => model.CocomittantChemoTherapy, false) No
+                    @Html.ValidationMessageFor(model => model.CocomittantChemoTherapy, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" id="fileToUpload" name="fileUploded" />
+                    <span class="field-validation-error" id="spanfile"></span>
+                </div>
+
+            </div>
+            <div class="form-group">
+                @Html.Label("Note", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="float:right">
+                <div class="col-md-12">
+                    <button type="submit" value="Create" class="btn btn-default">Create</button>
+
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+                    <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "Toxicty",new { @patientID = (int)ViewBag.PatientId})'" />
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

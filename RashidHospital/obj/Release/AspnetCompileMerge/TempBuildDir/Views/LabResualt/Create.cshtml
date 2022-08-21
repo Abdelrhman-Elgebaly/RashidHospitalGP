@@ -82,6 +82,7 @@
 <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
 
 
+
 <script type="text/javascript">
 
     $("#ResualtDate").datepicker({
@@ -103,6 +104,7 @@
         var Unit = $("#Unit").val();
         var LabType = $("#LabType option:selected").val();
         var PatientId = $("#PatientId").val();
+        
         $("#Unit").val('');
         $("#Note").val('');
         $.ajax({
@@ -122,6 +124,7 @@
         var Unit = $("#Unit").val();
         var LabType = $("#LabType option:selected").val();
         var PatientId = $("#PatientId").val();
+        var ResualtDate = $("#ResualtDate").val();
         $("#Unit").val('');
         $("#Note").val('');
         $.ajax({
@@ -129,7 +132,7 @@
             type: "post",
             dataType: "json",
             contextType: "application/json",
-            data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId },
+            data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId, "ResualtDate": ResualtDate},
             success: function (result) {
                 $("#CreateModel").modal("hide");
                 window.location.reload();

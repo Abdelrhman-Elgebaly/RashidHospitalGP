@@ -1,0 +1,145 @@
+﻿@model RashidHospital.Models.ChemoTherapyCyclePackageVM
+
+
+
+
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    .form-control {
+        margin-bottom: 4px;
+    }
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+
+@using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.Hidden("CycleId", (int)ViewBag.CycleId)
+    @Html.Hidden("PatientId", (int)ViewBag.PatientId)
+
+
+    <div class="modal-header">
+
+        @*@Html.Raw(ViewBag.PatientInfo)*@
+    </div>
+
+    <div class="modal-body">
+        <div class="box-body">
+            @if (ViewBag.Message != null)
+{
+   <span>@ViewBag.Message</span>
+}
+            <div class="form-group">
+                @Html.Label("Test", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Test_Type", new SelectList(ViewBag.LabTypesList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.Test_Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("Value", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Test_Value, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Test_Value, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group" style="float:right;">
+                <div class="col-md-12">
+
+
+                    <input type="button" class="btn btn-info" value="Save and exit" id="btnSaveandExit" />
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Clear</button>
+                    @*onclick="location.href='@Url.Action("Index", "LabResualt", new { @PatientId = (int)ViewBag.PatientId })'"*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+
+    $("#Date").datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        orientation: 'bottom left'
+    });
+
+
+</script>
+<script>
+    $(".select2").select2({
+        tags: true
+    });
+</script>
+<script>
+    $("body").on("click", "#AddResult", function () {
+        var Result = $("#Note").val();
+        var Unit = $("#Unit").val();
+        var LabType = $("#LabType option:selected").val();
+        var PatientId = $("#PatientId").val();
+
+
+        $("#Unit").val('');
+        $("#Note").val('');
+        $.ajax({
+            url: "/LabResualt/AddResult",
+            type: "post",
+            dataType: "json",
+            contextType: "application/json",
+            data: { "LabType": LabType, "Unit": Unit, "Result": Result, "PatientId": PatientId },
+            traditional: true,
+            success: function (result) {
+            }
+        });
+    })
+
+    $("body").on("click", "#btnSaveandExit", function () {
+        var CycleId = $("#CycleId").val();
+
+        var PatientId = $("#PatientId").val();
+        var Test_Type = $("#Test_Type").val();
+        var Test_Value = $("#Test_Value").val();
+        $.ajax({
+            url: "/ChemoTherapyCyclePackage/AddLabResult",
+            type: "post",
+            dataType: "json",
+            contextType: "application/json",
+            data: { "CycleId": CycleId, "PatientId": PatientId, "Test_Type": Test_Type, "Test_Value": Test_Value},
+            success: function (result) {
+                $("#CreateModel").modal("hide");
+                window.location.reload();
+
+            }
+        });
+    })
+</script>
+
+
+

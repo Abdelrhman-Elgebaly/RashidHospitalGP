@@ -1,0 +1,266 @@
+﻿
+@model IEnumerable<RashidHospital.Models.PatientDoseVM>
+
+<section class="content-header">
+    <h1>
+        @Html.ActionLink(
+    "View All ",                                                  // linkText
+    "ClinicalPharmacyAll",                                    // actionName
+    "ClinicalPharmacy")
+    </h1>
+</section>
+<section class="content-header">
+    <h2>
+        Clinical Pharmacy (Final Approved)
+    </h2>
+</section>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+
+                <div class="box-header">
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openCurrentModal()">
+                        Current Patients
+
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openPendingModal()">
+                        Pending Doctor Approved
+
+                    </a>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="box-body">
+
+            <center>
+
+
+                <div class="col-md-10">
+
+                    <p> Filter</p>
+                    <select id="orders">
+                        <option selected value="Click Here"></option>
+                        <option>Ordered</option>
+                        <option>Hold</option>
+                        <option>Cleared</option>
+                        <option>Finalized</option>
+                        <option>Dispensed</option>
+                        <option>Cancelled</option>
+
+
+                    </select>
+                </div>
+
+
+
+
+            </center>
+
+
+
+            <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Type</th>
+                        <th>
+                            sequence
+                        </th>
+                        <th>
+                            Drug name
+                        </th>
+                        <th>
+                            Dose Calculated
+                        </th>
+                        <th>Unit </th>
+                        <th>Route </th>
+                        <th>
+                            Fluid volume
+                        </th>
+                        <th>
+                            fluid type
+                        </th>
+                        <th>
+                            Duration/min
+                        </th>
+
+
+
+
+                        <th> Order Status</th>
+                      
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Therapy_Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sequence_Number)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Route_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pharmacy_Condition_Value)
+                            </td>
+
+                         
+
+                            <td>
+
+                                <center>
+
+                                    <a class="btn btn-success adjust-actions" title="Open" onclick="openTestPopUp(@item.ID)">
+                                        <i class="fa fa-address-book-o"></i>
+                                    </a>
+
+
+                                </center>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Select Order</h4>
+            </div>
+            <div id="NoteBody"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $(function () {
+            $("#loading").fadeOut();
+        });
+
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "order": [[0, "desc"]],
+            "info": true,
+            "autoWidth": false,
+            "scrollX": true,
+        });
+    </script>
+
+
+
+    <script>
+        function openPendingModal() {
+            window.location.href = '/ClinicalPharmacy/Pending';
+        }
+        function openCurrentModal() {
+            window.location.href = '/ClinicalPharmacy/IndexCurrent';
+        }
+
+
+    </script>
+    <script>
+    function openTestPopUp(Id) {
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("_EditDrugCondition", "ClinicalPharmacy")",
+    cache: false,
+    data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#NoteBody").html(result.Content);
+    $("#TestPopUp").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    }
+
+    </script>
+
+    <script>
+        function openPendingModal() {
+            window.location.href = '/ClinicalPharmacy/Pending';
+        }
+        function openCurrentModal() {
+            window.location.href = '/ClinicalPharmacy/IndexCurrent';
+        }
+
+        $(document).ready(function () {
+            var table = $("#example1").DataTable();
+
+            $("#orders").change(function () {
+                console.log('Groing for folter : ' + this.value);
+                table.search(this.value).draw();
+            });
+
+        });
+
+
+    </script>
+
+
+}
+
+
+

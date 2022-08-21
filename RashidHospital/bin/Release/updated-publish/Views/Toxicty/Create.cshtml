@@ -1,0 +1,131 @@
+﻿@model RashidHospital.Models.ToxictyVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+</style>
+@using (Html.BeginForm("Create", "Toxicty", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.PatientID)
+
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <h4>
+            Create a new Toxicty.
+
+        </h4>
+        @if (ViewBag.Error != null)
+        {<h5>@ViewBag.Error </h5>}
+        <h5> @Html.ValidationSummary("", new { @class = "text-danger" })</h5>
+        <hr />
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("Toxicty Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ToxictyTypeId", new SelectList(ViewBag.ToxictyTypeList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2 ", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.ToxictyTypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Grade", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Grade", new SelectList(ViewBag.ToxictyGrade, "Value", "Text"), htmlAttributes: new { @class = "form-control ", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Grade, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Condition", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Condition", new SelectList(ViewBag.ToxictyCondition, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Condition, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Toxicty Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    @Html.EditorFor(model => model.ToxictyDate, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.ToxictyDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Note", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="float:right">
+                <div class="col-md-12">
+                    <button type="submit" value="Create" class="btn btn-default">Create</button>
+
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+                    <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "Toxicty",new { @patientID = (int)ViewBag.PatientId})'" />
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/select2.min.js"></script>
+
+    <script>
+        $(".select2").select2({
+            tags: true
+        });
+
+    </script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script>
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#Grade").change(function () {
+                var ToxictyTypeId = $("#ToxictyTypeId option:selected").val();
+                var GradeId = $('option:selected', this).val();
+                $.ajax({
+				type: "Post",
+				url: "@Url.Action("getDescription", "Toxicty")",
+				cache: false,
+                    data: { "ToxictyTypeId": ToxictyTypeId, "GradeId": GradeId },
+                    success: function (result) {
+                        if (result == "Error500") {
+                            window.location.href = '@Url.Action("Error500", "Home")';
+                        } else {
+                            $("#Description").val(result.data);
+
+                        }
+                    },
+			})
+            });
+        });
+
+    </script>
+}

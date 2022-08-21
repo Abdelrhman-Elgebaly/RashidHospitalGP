@@ -31,8 +31,8 @@
             <thead>
                 <!--column names -->
                 <tr>
-                   
-                  
+
+
                     <th>
                         @Html.DisplayNameFor(model => model.Days)
                     </th>
@@ -70,45 +70,48 @@
                 {
                     if (item.Therapy_Type == "pre")
                     {
-                    <tr>
-                      
-                      
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Days)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Sequence_Number)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Drug_Dose)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Unit_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Route_Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duration)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Note)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
-                           
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID }, new { onclick = "return confirm('Are You Sure From Duplicated... ?')" })
-                        </td>
-                    </tr>
+                        <tr>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Days)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sequence_Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Dose)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Route_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
+
+
+
+
+                                <button onclick="OpenDeleteModal(@item.Drug_ID)">Delete</button>
+                            </td>
+                        </tr>
                     }
                 }
 
@@ -173,44 +176,44 @@
                 {
                     if (item.Therapy_Type == "Therapy")
                     {
-            <tr>
+                        <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Days)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sequence_Number)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Drug_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Drug_Dose)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Unit_Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Route_Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
-                </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Days)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sequence_Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Dose)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Route_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
+                                <button onclick="OpenDeleteModal(@item.Drug_ID)">Delete</button>
+                            </td>
 
-            </tr>
+                        </tr>
                     }
                 }
 
@@ -272,52 +275,118 @@
                 </tr>
 
 
-               
+
                 @foreach (var item in Model)
                 {
                     if (item.Therapy_Type == "post")
                     {
-            <tr>
+                        <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Days)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sequence_Number)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Drug_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Drug_Dose)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Unit_Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fluid_Vol)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Route_Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Drug_ID })
-                </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Days)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sequence_Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Drug_Dose)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Route_Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { Id = item.Drug_ID }) |
+                                <button onclick="OpenDeleteModal(@item.Drug_ID)">Delete</button>
+                            </td>
 
-            </tr>
+                        </tr>
                     }
                 }
 
 
-</table>
+        </table>
     </div>
+    <div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin: auto;">
+                    <input hidden id="AccountId" />
+                    <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                    <br />
+                    <h4 class="text-center">Are you sure you want to Delete this? </h4>
+                    <p class="text-center text-danger" id="ErrorMsg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    @section scripts {
+        <script src="~/Scripts/jquery.dataTables.js"></script>
+        <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+        <script src="~/Scripts/intlTelInput.min.js"></script>
+        <script>
+              
+
+
+ //delete
+            function OpenDeleteModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Delete", "ChemoTherapyDrug")",
+                    cache: false,
+                    data: { Id: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+
+        </script>
+
+    }

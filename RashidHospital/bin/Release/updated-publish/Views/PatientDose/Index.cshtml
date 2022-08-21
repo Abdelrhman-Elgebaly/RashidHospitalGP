@@ -1,0 +1,453 @@
+﻿@model IEnumerable<RashidHospital.Models.PatientDoseVM>
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="~/Content/ChemoWizard.css" rel="stylesheet" />
+
+
+
+<section class="content-header">
+    <h2>Patient Dose</h2>
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<center>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div class="form-wizard centered-pills">
+        <ul class="nav nav-pills">
+            <li role="presentation" class="complete"><a href="#">1. Lab Validation</a></li>
+            <li role="presentation" class="complete"><a href="#">2.   Predeined Investigation</a></li>
+            <li role="presentation" class="complete"><a href="#">3. Toxicty</a></li>
+            <li role="presentation" class="complete"><a href="#">4.  Nurse Note</a></li>
+            <li role="presentation" class="current"><a href="#">5.  Dose Calculation</a></li>
+
+            <li role="presentation"><a href="#">6. Summary</a></li>
+        </ul>
+    </div>
+</center>
+<section class="content-header">
+    <style>
+        h2 {
+            color: #4B2259;
+        }
+    </style>
+    <h2>Pre Therapy</h2>
+</section>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+                <th>
+                    Drug Name
+                </th>
+                <th>
+                    Unit
+                </th>
+                <th>
+                    Dose
+                </th>
+                <th>
+                    Calculated Patient Dose
+                </th>
+                <th>
+                    Fluid Volume
+                </th>
+                <th>Note</th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                if (item.Therapy_Type == "pre")
+                {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit_Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Dose)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="#FF8C00">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="#FF8C00">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            <td>
+                <center>
+
+                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                        <i class="fa fa-edit"></i>
+                    </a>
+
+                    <button onclick="OpenDeleteModal(@item.ID)">Omit</button>
+
+                </center>
+
+            </td>
+        </tr>
+                }
+            }
+
+    </table>
+</div>
+<section class="content-header">
+    <h2> Therapy</h2>
+</section>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+                <th>
+                    Drug Name
+                </th>
+                <th>
+                    Unit
+                </th>
+                <th>
+                    Dose
+                </th>
+                <th>
+                    Calculated Patient Dose
+                </th>
+                <th>
+                    Fluid Volume
+                </th>
+                <th>Note</th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                if (item.Therapy_Type == "Therapy")
+                {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit_Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Dose)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="#FF8C00">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="#FF8C00">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            <td>
+                <center>
+
+                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <button onclick="OpenDeleteModal(@item.ID)">Omit</button>
+
+                </center>
+
+            </td>
+        </tr>
+                }
+            }
+
+    </table>
+</div>
+<section class="content-header">
+    <h2> Post Therapy</h2>
+</section>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%" width="100%" border=1>
+        <thead>
+            <!--column names -->
+            <tr>
+                <th>
+                    Drug Name
+                </th>
+                <th>
+                    Unit
+                </th>
+                <th>
+                    Dose
+                </th>
+                <th>
+                    Calculated Patient Dose
+                </th>
+                <th>
+                    Fluid Volume
+                </th>
+                <th>Note</th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                if (item.Therapy_Type == "post")
+                {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit_Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_Dose)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="#FF8C00">
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Fluid_Vol)
+            </td>
+            @if (item.IsEditByDoctor == true)
+            {
+                <td bgcolor="yellow">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else if (item.IsEditByPharmacy == true)
+            {
+                <td bgcolor="#FF8C00">
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pharmacist_Note)
+                </td>
+            }
+            <td>
+                <center>
+
+                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <button onclick="OpenDeleteModal(@item.ID)">Omit</button>
+
+                </center>
+
+            </td>
+        </tr>
+                }
+            }
+
+    </table>
+</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<center>
+
+    <a class="btn btn-success adjust-actions" title="Approve" href="/PatientDose/Summery?NoteId=@ViewBag.NoteId&CycleId=@ViewBag.CycleId&pid=@ViewBag.PatientId">
+        Next  >>
+    </a>
+
+</center>
+
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> Edit </h4>
+            </div>
+            <div id="NoteBody"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Omit this? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@section Scripts {
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+
+    <script>
+    function openTestPopUp(Id) {
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("_EditNote", "PatientDose")",
+    cache: false,
+    data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#NoteBody").html(result.Content);
+    $("#TestPopUp").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    }
+
+
+
+
+                    function OpenDeleteModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Omit", "PatientDose")",
+                    cache: false,
+                    data: { Id: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+
+
+
+
+
+    </script>
+
+}
+

@@ -53,7 +53,7 @@ namespace RashidHospital.Controllers
                 string[] array = new string[1000];
 
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();
-                input.Days = string.Join("/", array);
+                input.Days = string.Join(",", array);
 
              
                 input.Create();
@@ -122,7 +122,7 @@ namespace RashidHospital.Controllers
                 string[] array = new string[1000];
 
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();
-                input.Days = string.Join("/", array);
+                input.Days = string.Join(",", array);
 
 
                 input.Edit();

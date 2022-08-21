@@ -65,6 +65,9 @@ namespace RashidHospital.Controllers
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 vm.DoctorID = userId;
                 vm.RecordDate = DateTime.Now;
+                vm.Complain = vm.Complain.Replace(".", "." + System.Environment.NewLine + "\n");
+                vm.Diagnose = vm.Diagnose.Replace(".", "." + System.Environment.NewLine + "\n");
+                vm.Recommendation = vm.Recommendation.Replace(".", "." + System.Environment.NewLine + "\n");
                 vm.Edit();
                 return "Success"; // succcess
             }
@@ -104,6 +107,14 @@ namespace RashidHospital.Controllers
                     patient = patient.SelectObject(obj.PatientID);
                     patient.LastVisitDate = DateTime.Now.ToShortDateString();
                     patient.Edit();
+
+
+                    obj.Complain = obj.Complain.Replace(".", ".\n");
+                    obj.Diagnose = obj.Diagnose.Replace(".", ".\n");
+                    obj.Recommendation = obj.Recommendation.Replace(".", ".\n");
+
+
+
                     obj.Create();
                     return RedirectToAction("Index", new RouteValueDictionary(
                                                      new { action = "Index", patientID = patientId }));
@@ -217,6 +228,25 @@ namespace RashidHospital.Controllers
             return View(retObject);
 
         }
+
+
+        public JsonResult Treatment(string pid)
+        {
+            if (pid == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+
+            }
+            int _patientID = Convert.ToInt32(pid);
+            PatientVM _Obj = new PatientVM();
+            PatientVM _objVM = _Obj.SelectObject(_patientID);
+            if (_objVM == null)
+            {
+                return Json(new { IsRedirect = true, RedirectUrl = Url.Action("Error500", "Home") }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { IsRedirect = false, Content = RenderRazorViewToString("Treatment", _objVM) }, JsonRequestBehavior.AllowGet);
+        }
+
 
 
     }

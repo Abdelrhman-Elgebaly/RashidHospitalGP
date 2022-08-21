@@ -1,0 +1,259 @@
+﻿@model RashidHospital.Models.RadioTherapyVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+</style>
+@using (Html.BeginForm("Create", "RadioTherapy", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.PatientID)
+
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <h4>
+            Create a new Radio Therapy.
+
+        </h4>
+        @if (ViewBag.Error != null)
+        {<h5>@ViewBag.Error </h5>}
+        <h5> @Html.ValidationSummary("", new { @class = "text-danger" })</h5>
+        <hr />
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("RTX Site", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RTXSite", new SelectList(ViewBag.RTXSite, "Value", "Text"), htmlAttributes: new { @class = "form-control select2 ", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.RTXSite, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("RTXType", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RTXType", new SelectList(ViewBag.RTXType, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.RTXType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Fixation", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Fixation", new SelectList(ViewBag.Fixation, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @required = "required", @multiple = "multiple" })
+                    @Html.ValidationMessageFor(model => model.Fixation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("TotalDose", htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TotalDose, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TotalDose, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("FractionNumber", htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FractionNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FractionNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Result", htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DoseFractionNumberResult, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DoseFractionNumberResult, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Type Of Technique", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TypeOfTechnique", new SelectList(ViewBag.TypeOfTechnique, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.TypeOfTechnique, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("CocomittantChemoTherapy", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.RadioButtonFor(model => model.CocomittantChemoTherapy, true) Yes
+                    @Html.RadioButtonFor(model => model.CocomittantChemoTherapy, false) No
+                    @Html.ValidationMessageFor(model => model.CocomittantChemoTherapy, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" id="fileToUpload" name="fileUploded" />
+                    <span class="field-validation-error" id="spanfile"></span>
+                </div>
+
+            </div>
+            <div class="form-group">
+                @Html.Label("Note", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="float:right">
+                <div class="col-md-12">
+                    <button type="submit" value="Create" class="btn btn-default">Create</button>
+
+                    <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+                    <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "Toxicty",new { @patientID = (int)ViewBag.PatientId})'" />
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/select2.min.js"></script>
+    <script>
+        $(".select2").select2({
+            tags: true
+        });
+
+    </script>
+
+    <script>
+        //get file size
+        function GetFileSize(fileid) {
+            try {
+                var fileSize = 0;
+                //for IE
+                if ($.browser.msie) {
+                    //before making an object of ActiveXObject,
+                    //please make sure ActiveX is enabled in your IE browser
+                    var objFSO = new ActiveXObject("Scripting.FileSystemObject"); var filePath = $("#" + fileid)[0].value;
+                    var objFile = objFSO.getFile(filePath);
+                    var fileSize = objFile.size; //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+                //for FF, Safari, Opeara and Others
+                else {
+                    fileSize = $("#" + fileid)[0].files[0].size //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+                return fileSize;
+            }
+            catch (e) {
+                alert("Error is :" + e);
+            }
+        }
+
+        //get file path from client system
+        function getNameFromPath(strFilepath) {
+            var objRE = new RegExp(/([^\/\\]+)$/);
+            var strName = objRE.exec(strFilepath);
+
+            if (strName == null) {
+                return null;
+            }
+            else {
+                return strName[0];
+            }
+        }
+
+        $("#btnSubmit").live("click", function () {
+            if ($('#fileToUpload').val() == "") {
+                $("#spanfile").html("Please upload file");
+                return false;
+            }
+            else {
+                return checkfile();
+            }
+        });
+
+        function checkfile() {
+            var file = getNameFromPath($("#fileToUpload").val());
+            if (file != null) {
+                var extension = file.substr((file.lastIndexOf('.') + 1));
+                // alert(extension);
+                switch (extension) {
+                    case 'jpg':
+                    case 'png':
+                    case 'gif':
+                    case 'pdf':
+                    case 'doc':
+                    case 'docx':
+                        flag = true;
+                        break;
+                    default:
+                        flag = false;
+                }
+            }
+            if (flag == false) {
+                $("#spanfile").text("You can upload only jpg,png,gif,pdf,doc,docx extension file");
+                return false;
+            }
+            else {
+                var size = GetFileSize('fileToUpload');
+                if (size > 3) {
+                    $("#spanfile").text("You can upload file up to 3 MB");
+                    return false;
+                }
+                else {
+                    $("#spanfile").text("");
+                }
+            }
+        }
+
+        $(function () {
+            $("#fileToUpload").change(function () {
+                checkfile();
+            });
+        });
+    </script>
+
+
+
+
+    <script>
+
+        $("#TotalDose").on("input", function (e) {
+            var TotalDose=  $(this).val();
+            var FractionNumber = $("#FractionNumber").val();
+            var result = TotalDose / FractionNumber;
+            $("#DoseFractionNumberResult").val(result);
+        });
+        $("#FractionNumber").on("input", function (e) {
+            var FractionNumber = $(this).val();
+            var TotalDose = $("#TotalDose").val();
+            var result = TotalDose / FractionNumber;
+            $("#DoseFractionNumberResult").val(result);
+        });
+        @*$(function () {
+            $("#Grade").change(function () {
+                var ToxictyTypeId = $("#ToxictyTypeId option:selected").val();
+                var GradeId = $('option:selected', this).val();
+                $.ajax({
+				type: "Post",
+				url: "@Url.Action("getDescription", "Toxicty")",
+				cache: false,
+                    data: { "ToxictyTypeId": ToxictyTypeId, "GradeId": GradeId },
+                    success: function (result) {
+                        if (result == "Error500") {
+                            window.location.href = '@Url.Action("Error500", "Home")';
+                        } else {
+                            $("#Description").val(result.data);
+
+                        }
+                    },
+			})
+            });
+        });*@
+
+    </script>
+}
+

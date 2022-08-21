@@ -1,0 +1,135 @@
+﻿@model IEnumerable<RashidHospital.Models.ChemoTherapyTemplateVM>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Protocol_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Frequency)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cycle_days)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Maximum_cycles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emetogenic_Level_Value)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emetogenic_Level)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FN_risk)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Link)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created_By)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Modified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modified_By)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Instruction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Day)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Entered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disease)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProtocolId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiseaseId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Protocol_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Frequency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cycle_days)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Maximum_cycles)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emetogenic_Level_Value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emetogenic_Level)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FN_risk)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Link)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created_By)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Modified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Modified_By)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Instruction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Day)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Entered)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Disease)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProtocolId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiseaseId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Template_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Template_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Template_ID })
+        </td>
+    </tr>
+}
+
+</table>

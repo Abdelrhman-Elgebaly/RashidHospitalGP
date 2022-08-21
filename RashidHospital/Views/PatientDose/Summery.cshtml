@@ -349,7 +349,7 @@
 <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 <center>
 
-    @if (User.IsInAnyRoles("Doctor"))
+    @if (User.IsInAnyRoles("Pharmacist") == false)
     {
 
         if (Model.Item2.IsReleased == false & Model.Item2.IsPending == false)

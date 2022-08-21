@@ -1,0 +1,167 @@
+﻿
+@model IEnumerable<RashidHospital.Models.PatientDoseVM>
+
+
+<section class="content-header">
+    <h1>
+        Final Approved
+    </h1>
+</section>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+
+                <div class="box-header">
+
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openCurrentModal()">
+                        Current Patients
+
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openPendingModal()">
+                        Pending Doctor Approved
+
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Type</th>
+                        <th>
+                            sequence
+                        </th>
+                        <th>
+                            Drug name
+                        </th>
+                        <th>
+                            Dose Calculated
+                        </th>
+                        <th>Unit </th>
+                        <th>Route </th>
+                        <th>
+                            Fluid volume
+                        </th>
+                        <th>
+                            fluid type
+                        </th>
+                        <th>
+                            Duration/min
+                        </th>
+                        
+
+                        
+
+                        <th> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Therapy_Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sequence_Number)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drug_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Dose_Calculated)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit_Value)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Route_Value)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fluid_Vol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fluid_Type_Value)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Duration)
+                        </td>
+
+                        <td>
+
+                            @Html.ActionLink("Open", "Index", "ChemoTherapyDrug", new { templateID = item.ID }, null) |
+                            @Html.ActionLink("File Record", "Index", "ChemoTherapyPreLab", new { templateID = item.Patient_ID }, null)
+
+                        </td>
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $(function () {
+            $("#loading").fadeOut();
+        });
+
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "order": [[0, "desc"]],
+            "info": true,
+            "autoWidth": false,
+            "scrollX": true,
+        });
+    </script>
+
+
+
+    <script>
+        function openPendingModal() {
+            window.location.href = '/ClinicalPharmacy/Pending';
+        }
+        function openCurrentModal() {
+            window.location.href = '/ClinicalPharmacy/IndexCurrent';
+        }
+
+
+    </script>
+
+
+
+
+
+
+
+
+}
+
+

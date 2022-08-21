@@ -1,0 +1,505 @@
+﻿@model IEnumerable<RashidHospital.Models.MedicalRecordVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+<section class="content-header">
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
+
+<section class="content">
+
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openViewProfileModal(@ViewBag.PatientId)">
+                        Patient Profile
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openEditDiagnoseModal(@ViewBag.PatientId)">
+                        Patient Diagnosis
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="History" onclick="openConditionModal(@ViewBag.PatientId)">
+                        Patient History
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Visits" onclick="openRecordsModal(@ViewBag.PatientId)">
+                        Patient Visit
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openReqandRestModal(@ViewBag.PatientId)">
+                        Requests and Results
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@ViewBag.PatientId)">
+                        Appointment
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openRadioTherapyModal(@ViewBag.PatientId)">
+                        RadioTherapy
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxictyModal(@ViewBag.PatientId)">
+                        Toxicty
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@ViewBag.PatientId)">
+                        ChemoTherapy
+                    </a>
+                    @{
+                        var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
+                        if (Callboard != null)
+                        {
+                            <a class="btn btn-success adjust-actions" title="Patient" onclick="openCallBoardagainModal(@Callboard)">
+                                Close file and return to call board
+                            </a>
+                        }
+                    }
+                    <br />
+                    <hr />
+                    <br />
+                    <h3 class="box-title">@Html.ActionLink("Add New Visit", "Create", "MedicalRecord", new { PatientId = ViewBag.PatientId }, null)</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Complaint</th>
+                                <th>Note</th>
+                                <th>Recommendation</th>
+                                <th>Flag</th>
+
+                                <th>Signutre</th>
+                                <th class="text-center" width="110px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.IsDeleted == true)
+                                {
+                                    <tr style='color:red;text-decoration:line-through'>
+                                        <td class="adjustContent">@item.RecordDate</td>
+                                        <td class="adjustContent">@item.ClinicName</td>
+                                        <td class="adjustContent">@item.Complain</td>
+                                        <td class="adjustContent">@item.Diagnose</td>
+                                        <td class="adjustContent">@item.Recommendation</td>
+                                        <td class="adjustContent">@item.Flag</td>
+
+                                        <td class="adjustContent">@item.DoctorName</td>
+
+                                        <td class="adjustContent text-center">
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    if (item.Flag == true)
+                                    {
+                                        <tr style="background-color:darkseagreen;color:black;font-weight:bold;">
+                                            <td class="adjustContent">@item.RecordDate</td>
+                                            <td class="adjustContent">@item.ClinicName</td>
+                                            <td class="adjustContent">@item.Complain</td>
+                                            <td class="adjustContent">@item.Diagnose</td>
+                                            <td class="adjustContent">@item.Recommendation</td>
+                                            <td class="adjustContent">@item.Flag</td>
+
+                                            <td class="adjustContent">@item.DoctorName</td>
+
+                                            <td class="adjustContent text-center">
+
+                                                @if (ViewBag.DoctorId == item.DoctorID.ToString())
+                                                {
+                                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openEditModal(@item.Id)">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                }
+                                                <a class="btn btn-success adjust-actions" title="View" onclick="openvisitViewModal(@item.Id)">
+                                                    <i class="fa fa-vcard"></i>
+                                                </a>
+                                                @*<a class="btn btn-default adjust-actions " title="View" onclick="OpenAttenedModal(@item.Id)">
+                                                        <i class="fa fa-list"></i>
+                                                    </a>*@
+                                                <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenDeleteModal(@item.Id)">
+                                                    <i class="fa fa-ban"></i>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td class="adjustContent">@item.RecordDate</td>
+                                            <td class="adjustContent">@item.ClinicName</td>
+                                            <td class="adjustContent">@item.Complain</td>
+                                            <td class="adjustContent">@item.Diagnose</td>
+                                            <td class="adjustContent">@item.Recommendation</td>
+                                            <td class="adjustContent">@item.Flag</td>
+
+                                            <td class="adjustContent">@item.DoctorName</td>
+
+                                            <td class="adjustContent text-center">
+
+                                                @if (ViewBag.DoctorId == item.DoctorID.ToString())
+                                                {
+                                                    <a class="btn btn-success adjust-actions" title="Edit" onclick="openEditModal(@item.Id)">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                }
+                                                <a class="btn btn-success adjust-actions" title="View" onclick="openvisitViewModal(@item.Id)">
+                                                    <i class="fa fa-id-card"></i>
+                                                </a>
+                                                @*<a class="btn btn-default adjust-actions " title="View" onclick="OpenAttenedModal(@item.Id)">
+                                                        <i class="fa fa-list"></i>
+                                                    </a>*@
+                                                <a class="btn btn-danger banBtn adjust-actions" title="Delete" onclick="OpenDeleteModal(@item.Id)">
+                                                    <i class="fa fa-ban"></i>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Edit Modal-->
+<div class="modal fade" id="clinicModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div id="editClinicBody"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Patient Treatment</h4>
+            </div>
+            <div id="EditBody"></div>
+        </div>
+    </div>
+</div>
+
+<!--Deactivate Modal-->
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Delete this? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!--openEditDiagnoseModal-->
+<div class="modal fade" id="DiagnoseModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit Patient</h4>
+            </div>
+            <div id="editDiagnoseBody"></div>
+        </div>
+    </div>
+</div>
+<!--Attened Modal-->
+<div class="modal" id="AttenedModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">are you sure the patient have finished the visit? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="AttenedBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/Date_eu.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script src="~/Scripts/natural.js"></script>
+
+    <script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		$('#example1').DataTable({
+		    "paging": true,
+		    "lengthChange": false,
+		    "searching": true,
+            "ordering": true,
+		    "info": true,
+		    "autoWidth": false,
+            "scrollX": true,
+            "columnDefs": [
+                { "targets": 0, "type": "date-eu" }
+                 //{
+                 //    "targets": [0],
+                 //    type: 'natural-nohtml'
+
+                 //}
+             ]
+		});
+
+
+		function openEditModal(ClinicID) {
+		    $.ajax({
+		        type: "GET",
+		        url: "@Url.Action("_Edit", "MedicalRecord")",
+		        cache: false,
+		        data: { Id: ClinicID },
+		    success: function (result) {
+		        if (result.IsRedirect) {
+		            window.location.href = result.RedirectUrl;
+		        }
+		        else {
+		            $("#editClinicBody").html(result.Content);
+		            $("#clinicModel").modal("show")
+		        }
+		    },
+		    error: function (result) {
+		        window.location.href = '@Url.Action("Error404", "Home")';
+		    },
+			})
+		}
+
+
+		function OpenDeleteModal(AccountId) {
+		    $("#AccountId").val(AccountId);
+		    $("#deactivateModal").modal("show");
+		}
+
+		$("#DeactivateBtn").click(function () {
+		    var AccountId = $("#AccountId").val();
+		    $("#ErrorMsg").html("");
+		    $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+		    $.ajax({
+		        type: "Post",
+		        url: "@Url.Action("Delete", "MedicalRecord")",
+		        cache: false,
+		    data: { Id: AccountId },
+		    dataType: "json",
+		    success: function (result) {
+		        if (result == 1) {
+		            $("#deactivateModal").modal("hide");
+		            location.reload();
+
+		        }
+		        else if (result == 6) {
+		            $("#ErrorMsg").html("An error occurred, please try again ");
+		            $("#DeactivateBtn").attr("disabled", false).text('Yes');
+		        }
+		    },
+		    })
+		});
+
+
+
+        function OpenAttenedModal(AccountId) {
+            $("#AccountId").val(AccountId);
+            $("#AttenedModal").modal("show");
+        }
+
+        $("#AttenedBtn").click(function () {
+            var AccountId = $("#AccountId").val();
+            $("#ErrorMsg").html("");
+            $("#AttenedBtn").attr("disabled", true).text('Loading...');
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("Attened", "MedicalRecord")",
+                cache: false,
+            data: { Id: AccountId },
+            dataType: "json",
+            success: function (result) {
+                if (result == 1) {
+                    $("#AttenedModal").modal("hide");
+                    location.reload();
+
+                }
+                else if (result == 6) {
+                    $("#ErrorMsg").html("An error occurred, please try again ");
+                    $("#AttenedBtn").attr("disabled", false).text('Yes');
+                }
+            },
+            })
+        });
+
+
+
+               function openTreatment(pid) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Treatment", "Patient")",
+                cache: false,
+                data: { pid: pid },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
+
+
+
+    function openViewProfileModal(patientID) {
+    window.location.href = '/Patient/View?patientID=' + patientID;
+
+    }
+
+    function openReqandRestModal(patientID) {
+    window.location.href = '/Patient/RequestsandResults?patientID=' + patientID;
+
+    }
+
+    function openAppointmentModal(patientID) {
+    window.location.href = '/Appointment/Create?PatientId=' + patientID;
+
+    }
+    function openConditionModal(patientID) {
+    window.location.href = '/MedicalCondition/index?patientID=' + patientID;
+    }
+
+    function openRecordsModal(patientID) {
+    window.location.href = '/MedicalRecord/index?patientID=' + patientID;
+    }
+    function openvisitViewModal(Id) {
+    window.location.href = '/MedicalRecord/View?id=' + Id;
+
+    }
+
+        function openToxictyModal(patientID) {
+            window.location.href = '/Toxicty/index?patientID=' + patientID;
+        }
+
+        function openRadioTherapyModal(patientID) {
+            window.location.href = '/RadioTherapy/index?patientID=' + patientID;
+        }
+
+        function openChemoTherapyModal(patientID, chemotherapyID) {
+
+            if (chemotherapyID == null) {
+                window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+            } else {
+                window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID + '&templateID=' + chemotherapyID;
+            }
+        }
+
+        function TestModal(patientID) {
+
+
+            window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID;
+
+        }
+
+    function openCallBoardagainModal(callBoardId) {
+    window.location.href = '/CallBoard/Edit?Id=' + callBoardId;
+
+    }
+    </script>
+    <script>
+
+        //openEditDiagnoseModal
+        function openEditDiagnoseModal(patientID) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_EditDiagnose", "Patient")",
+                cache: false,
+            data: { patientID: patientID },
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#editDiagnoseBody").html(result.Content);
+                    $("#DiagnoseModel").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+        })
+        };
+
+    </script>
+}

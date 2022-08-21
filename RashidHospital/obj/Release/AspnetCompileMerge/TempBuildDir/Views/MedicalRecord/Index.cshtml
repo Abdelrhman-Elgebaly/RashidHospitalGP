@@ -48,6 +48,17 @@
                     <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@ViewBag.PatientId)">
                         Appointment
                     </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openRadioTherapyModal(@ViewBag.PatientId)">
+                        RadioTherapy
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxictyModal(@ViewBag.PatientId)">
+                        Toxicty
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@ViewBag.PatientId)">
+                        ChemoTherapy
+                    </a>
                     @{
                         var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
                         if (Callboard != null)
@@ -191,6 +202,19 @@
     </div>
 </div>
 
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Patient Treatment</h4>
+            </div>
+            <div id="EditBody"></div>
+        </div>
+    </div>
+</div>
 
 <!--Deactivate Modal-->
 <div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
@@ -257,9 +281,11 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
 @section scripts {
     <script src="~/Scripts/jquery.dataTables.js"></script>
     <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/Date_eu.js"></script>
     <script src="~/Scripts/intlTelInput.min.js"></script>
     <script src="~/Scripts/natural.js"></script>
 
@@ -272,15 +298,17 @@
 		    "paging": true,
 		    "lengthChange": false,
 		    "searching": true,
-		    "order": [[  0, "desc" ]],
+            "ordering": true,
 		    "info": true,
 		    "autoWidth": false,
             "scrollX": true,
-             "columnDefs": [
-                {
-                     type: 'natural-nohtml',
-                    "targets": [0]
-                 }
+            "columnDefs": [
+                { "targets": 0, "type": "date-eu" }
+                 //{
+                 //    "targets": [0],
+                 //    type: 'natural-nohtml'
+
+                 //}
              ]
 		});
 
@@ -367,41 +395,87 @@
             })
         });
 
-    </script>
-    <script>
 
 
-        function openViewProfileModal(patientID) {
-            window.location.href = '/Patient/View?patientID=' + patientID;
-
-        }
-
-        function openReqandRestModal(patientID) {
-            window.location.href = '/Patient/RequestsandResults?patientID=' + patientID;
-
-        }
-
-        function openAppointmentModal(patientID) {
-            window.location.href = '/Appointment/Create?PatientId=' + patientID;
-
-        }
-        function openConditionModal(patientID) {
-            window.location.href = '/MedicalCondition/index?patientID=' + patientID;
-        }
-
-        function openRecordsModal(patientID) {
-            window.location.href = '/MedicalRecord/index?patientID=' + patientID;
-        }
-        function openvisitViewModal(Id) {
-            window.location.href = '/MedicalRecord/View?id=' + Id;
-
+               function openTreatment(pid) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Treatment", "Patient")",
+                cache: false,
+                data: { pid: pid },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
         }
 
 
-        function openCallBoardagainModal(callBoardId) {
-            window.location.href = '/CallBoard/Edit?Id=' + callBoardId;
+
+
+
+    function openViewProfileModal(patientID) {
+    window.location.href = '/Patient/View?patientID=' + patientID;
+
+    }
+
+    function openReqandRestModal(patientID) {
+    window.location.href = '/Patient/RequestsandResults?patientID=' + patientID;
+
+    }
+
+    function openAppointmentModal(patientID) {
+    window.location.href = '/Appointment/Create?PatientId=' + patientID;
+
+    }
+    function openConditionModal(patientID) {
+    window.location.href = '/MedicalCondition/index?patientID=' + patientID;
+    }
+
+    function openRecordsModal(patientID) {
+    window.location.href = '/MedicalRecord/index?patientID=' + patientID;
+    }
+    function openvisitViewModal(Id) {
+    window.location.href = '/MedicalRecord/View?id=' + Id;
+
+    }
+
+        function openToxictyModal(patientID) {
+            window.location.href = '/Toxicty/index?patientID=' + patientID;
+        }
+
+        function openRadioTherapyModal(patientID) {
+            window.location.href = '/RadioTherapy/index?patientID=' + patientID;
+        }
+
+        function openChemoTherapyModal(patientID, chemotherapyID) {
+
+            if (chemotherapyID == null) {
+                window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+            } else {
+                window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID + '&templateID=' + chemotherapyID;
+            }
+        }
+
+        function TestModal(patientID) {
+
+
+            window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID;
 
         }
+
+    function openCallBoardagainModal(callBoardId) {
+    window.location.href = '/CallBoard/Edit?Id=' + callBoardId;
+
+    }
     </script>
     <script>
 

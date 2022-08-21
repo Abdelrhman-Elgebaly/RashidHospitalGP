@@ -128,7 +128,7 @@ namespace RashidHospital.Controllers
                 string[] array = new string[1000];
 
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();
-                input.Days = string.Join("/", array);
+                input.Days = string.Join(",", array);
 
 
 
@@ -204,7 +204,7 @@ namespace RashidHospital.Controllers
                 string[] array = new string[1000];
 
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();
-                input.Days = string.Join("/", array);
+                input.Days = string.Join(",", array);
 
 
 
@@ -229,13 +229,13 @@ namespace RashidHospital.Controllers
 
 
         [HttpPost]
-        public int Delete(int id)
+        public int Delete(int Id)
         {
             int finalResult = 0;
             try
             {
                 ChemoTherapyDrugVM _resultVM = new ChemoTherapyDrugVM();
-                ChemoTherapyDrugVM DeleteObject = _resultVM.SelectObject(id);
+                ChemoTherapyDrugVM DeleteObject = _resultVM.SelectObject(Id);
                 // DeleteObject.IsDeleted = true;
                 DeleteObject.Delete();
 

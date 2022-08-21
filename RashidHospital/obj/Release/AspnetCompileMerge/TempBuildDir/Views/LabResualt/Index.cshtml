@@ -50,6 +50,17 @@
                     <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@ViewBag.PatientId)">
                         Appointment
                     </a>
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openRadioTherapyModal(@ViewBag.PatientId)">
+                        RadioTherapy
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openToxictyModal(@ViewBag.PatientId)">
+                        Toxicty
+                    </a>
+
+                    <a class="btn btn-success adjust-actions" title="Patient" onclick="TestModal(@ViewBag.PatientId)">
+                        ChemoTherapy
+                    </a>
                     @{
                         var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
                         if (Callboard != null)
@@ -81,11 +92,11 @@
                     </div>
                     <hr />
                     <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PatientId )">
-                            Add new Lab  
-                      </a> 
-                    
-                                  
-                 </div>
+                        Add new Lab
+                    </a>
+
+
+                </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped" style="width:100%">
                         <thead>
@@ -401,6 +412,32 @@
     }
     function openPathologyModal(patientID){
         window.location.href ='/Pathology/Index?patientID='+patientID;
+
+    }
+
+
+
+    function openToxictyModal(patientID) {
+        window.location.href = '/Toxicty/index?patientID=' + patientID;
+    }
+
+    function openRadioTherapyModal(patientID) {
+        window.location.href = '/RadioTherapy/index?patientID=' + patientID;
+    }
+
+    function openChemoTherapyModal(patientID, chemotherapyID) {
+
+        if (chemotherapyID == null) {
+            window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+        } else {
+            window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID + '&templateID=' + chemotherapyID;
+        }
+    }
+
+    function TestModal(patientID) {
+
+
+        window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID;
 
     }
 

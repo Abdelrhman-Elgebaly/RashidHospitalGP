@@ -30,14 +30,14 @@
                 <div class="box-header">
                     <h3 class="box-title">Alexandria Clinical Oncology Department</h3>
                 </div>
-                @if (User.IsInAnyRoles("Doctor"))
+                @if (User.IsInAnyRoles("Pharmacist") == false)
                 {
-                <div class="box-header">
-                    <a class="btn btn-success adjust-actions" title="Patient" onclick="openPendingModal()">
-                        @ViewBag.count Pending ChemoTherapy Cycles
+                    <div class="box-header">
+                        <a class="btn btn-success adjust-actions" title="Patient" onclick="openPendingModal()">
+                            @ViewBag.count Pending ChemoTherapy Cycles
 
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 }
                 <div class="box-body">
 

@@ -395,8 +395,8 @@ namespace RashidHospital.Controllers
                 _ObjvM.Edit();
             }
 
-            if (User.IsInAnyRoles("Doctor"))
-            {
+            if(User.IsInAnyRoles("Pharmacist") == false)
+    {
                 _ObjvM.IsEditByPharmacy = false;
                 _ObjvM.Edit();
             }

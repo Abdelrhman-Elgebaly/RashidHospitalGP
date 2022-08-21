@@ -242,7 +242,7 @@ namespace RashidHospital.Controllers
 
 
 
-            List<string> tokens = _objVM.Cycle_days.Split('/').ToList();
+            List<string> tokens = _objVM.Cycle_days.Split(',').ToList();
             List<int> intlist = new List<int>();
 
             foreach (String str in tokens)

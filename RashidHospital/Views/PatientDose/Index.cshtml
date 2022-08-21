@@ -123,7 +123,8 @@
                         <i class="fa fa-edit"></i>
                     </a>
 
-                
+                    <button onclick="OpenDeleteModal(@item.ID)">Omit</button>
+
                 </center>
 
             </td>
@@ -222,6 +223,7 @@
                     <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
                         <i class="fa fa-edit"></i>
                     </a>
+                    <button onclick="OpenDeleteModal(@item.ID)">Omit</button>
 
                 </center>
 
@@ -321,6 +323,7 @@
                     <a class="btn btn-success adjust-actions" title="Edit" onclick="openTestPopUp(@item.ID)">
                         <i class="fa fa-edit"></i>
                     </a>
+                    <button onclick="OpenDeleteModal(@item.ID)">Omit</button>
 
                 </center>
 
@@ -410,20 +413,22 @@
     }
 
 
-         function OpenDeleteModal(ID) {
-                $("#ID").val(ID);
+
+
+                    function OpenDeleteModal(AccountId) {
+                $("#AccountId").val(AccountId);
                 $("#deactivateModal").modal("show");
             };
 
             $("#DeactivateBtn").click(function () {
-                var ID = $("#ID").val();
+                var AccountId = $("#AccountId").val();
                 $("#ErrorMsg").html("");
                 $("#DeactivateBtn").attr("disabled", true).text('Loading...');
                 $.ajax({
                     type: "Post",
                     url: "@Url.Action("Omit", "PatientDose")",
                     cache: false,
-                    data: { Id: ID },
+                    data: { Id: AccountId },
                 dataType: "json",
                 success: function (result) {
                     if (result == 1) {
@@ -437,10 +442,6 @@
                 },
                 })
             });
-
-
-
-
 
 
 

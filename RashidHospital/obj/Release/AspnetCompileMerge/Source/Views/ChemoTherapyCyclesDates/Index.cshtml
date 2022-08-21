@@ -1,0 +1,262 @@
+﻿@model Tuple<RashidHospital.Models.ChemoTherapyTemplateVM, List<RashidHospital.Models.ChemoTherapyCyclesDatesVM>>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+<section class="content-header">
+    <h2>ChemoTherapy</h2>
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Protocol_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Protocol_Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Frequency, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Frequency, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Frequency, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Cycle_days, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Cycle_days, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Cycle_days, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Item1.Maximum_cycles, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => Model.Item1.Maximum_cycles, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => Model.Item1.Maximum_cycles, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+@{
+
+    if (Model.Item2.Count() == 0)
+    {
+
+        <center>
+
+
+            <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openCreateModel(@ViewBag.PatientId,@ViewBag.TemplateId )">
+                CYCLES START DATE
+            </a>
+        </center>
+    }
+
+
+    if (Model.Item2.Count() != 0)
+    {
+
+        <center>
+
+
+            <a class="btn btn-success adjust-actions" title="Edit Medical" onclick="openEditModel(@ViewBag.PatientId,@ViewBag.TemplateId )">
+                Reschedule Start Date
+            </a>
+        </center>
+    }
+
+
+
+
+}
+
+
+
+
+<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+
+                <th>Date</th>
+
+
+
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Item2)
+            {
+                <tr>
+
+
+
+                    <td class="adjustContent">@item.Date.ToString("dd/MM/yyyy")</td>
+
+
+                    <td>
+
+                        <center>
+
+                            <a class="btn btn-success adjust-actions" title="Open" onclick="openTestPopUp(@item.ID)">
+                                <i class="fa fa-address-book-o"></i>
+                            </a>
+
+
+                        </center>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+<!--Edit Modal-->
+<div class="modal fade" id="EditModel2" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    Reschedule Start Date
+                </h4>
+            </div>
+            <div id="EditBody2"></div>
+        </div>
+    </div>
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Cycle Days</h4>
+            </div>
+            <div id="EditBody"></div>
+        </div>
+    </div>
+</div>
+<!--Create Modal-->
+<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Start Date</h4>
+            </div>
+            <div id="CreateBody"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+    <script>
+        function openTestPopUp(Id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_TestPopUp", "ChemoTherapyCycleDay")",
+                cache: false,
+                data: { Id: Id },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
+
+        function openCreateModel(PatientId, TemplateId) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("Create", "ChemoTherapyCyclesDates")",
+    cache: false,
+        data: { PatientId: PatientId, TemplateId: TemplateId },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#CreateBody").html(result.Content);
+    $("#CreateModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    }
+
+
+      function openEditModel(PatientId, TemplateId) {
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Edit", "ChemoTherapyCyclesDates")",
+                cache: false,
+                data: { PatientId: PatientId, TemplateId: TemplateId},
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody2").html(result.Content);
+                    $("#EditModel2").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+
+}

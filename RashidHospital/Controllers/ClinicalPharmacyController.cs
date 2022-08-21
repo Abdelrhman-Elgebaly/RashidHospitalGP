@@ -22,7 +22,7 @@ namespace RashidHospital.Controllers
 
 
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
-            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().Where(a =>  a.PharmacistId == userId || a.PharmacistId == null && a.Date == DateTime.Now).ToList();
+            List<ChemoTherapyCycleDayVM> _List = _Obj.SelectAllReleased().Where(a =>  a.PharmacistId == userId || a.PharmacistId == null && a.Date.Day == DateTime.Now.Day && a.Date.Month == DateTime.Now.Month && a.Date.Year == DateTime.Now.Year).ToList();
 
 
             return View(_List);
@@ -49,14 +49,14 @@ namespace RashidHospital.Controllers
             if (User.IsInAnyRoles("Doctor"))
             {
 
-                 _List = _Obj.SelectAllPending().Where(a => a.Date == DateTime.Now && a.DoctorId == userId).ToList();
+                 _List = _Obj.SelectAllPending().Where(a => a.Date.Day == DateTime.Now.Day && a.Date.Month == DateTime.Now.Month && a.Date.Year == DateTime.Now.Year && a.DoctorId == userId).ToList();
             }
             
              else if (User.IsInAnyRoles("Pharmacist"))
 
             {
 
-                _List = _Obj.SelectAllPending().Where(a => a.Date == DateTime.Now && a.PharmacistId == userId).ToList();
+                _List = _Obj.SelectAllPending().Where(a => a.Date.Day == DateTime.Now.Day && a.Date.Month == DateTime.Now.Month && a.Date.Year == DateTime.Now.Year && a.PharmacistId == userId).ToList();
             }
             return View(_List);
         }
@@ -102,7 +102,7 @@ namespace RashidHospital.Controllers
 
 
             PatientDoseVM _Obj = new PatientDoseVM();
-            List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved().Where(a => a.Date == DateTime.Now).ToList();
+            List<PatientDoseVM> _List = _Obj.SelectAllFinalApproved().Where(a => a.Date?.Day == DateTime.Now.Day && a.Date?.Month == DateTime.Now.Month && a.Date?.Year == DateTime.Now.Year).ToList();
 
             return View(_List);
         }

@@ -21,8 +21,11 @@ namespace RashidHospital.Controllers
             ChemoTherapyProtocolVM protocol = new ChemoTherapyProtocolVM();
             List<ChemoTherapyProtocolVM> list = protocol.SelectAllByPatientID(PatientId);
 
-            // calculate cycles finished
-            foreach (var item in list) {
+         
+
+
+                // calculate cycles finished
+                foreach (var item in list) {
 
                 ChemoTherapyCycleDayVM chemoTherapyCycleDayVM = new ChemoTherapyCycleDayVM();
                 List<ChemoTherapyCycleDayVM> chemoTherapyCycleDayVMs = chemoTherapyCycleDayVM.SelectAllByTemplateId(item.ID);

@@ -18,5 +18,14 @@ namespace Hospital.DAL
             return list;
 
         }
+
+
+
+        public List<ChemoTherapyProtocol> SelectAll()
+        {
+            List<ChemoTherapyProtocol> list = _Db.ChemoTherapyProtocols.ToList();
+            return list;
+
+        }
     }
 }

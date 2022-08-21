@@ -1,0 +1,235 @@
+﻿@model IEnumerable<RashidHospital.Models.ChemoTherapyCycleDayVM>
+<style>
+    .form-control {
+        margin-bottom: 4px;
+    }
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+
+
+<section class="content-header">
+    <h2>Main Cycle</h2>
+    <h1>@ViewBag.Date</h1> 
+</section>
+
+<table id="example1" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Cycle</th>
+            <th>Date</th>
+
+
+
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            if (item.IsDeleted == null)
+            {
+        <tr style=" color: black; font-weight: bold;">
+
+            <td>
+                Day
+                @Html.DisplayFor(modelItem => item.CycleDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+            <td>
+
+                <center>
+
+
+                    <a class="btn btn-success adjust-actions" title="" onclick="openCreateModel(@item.ID)">
+                        Reschedule
+                    </a>
+                    <a class="btn btn-success adjust-actions" title="" onclick="OpenOmitModal(@item.ID)">
+                        Omit
+                    </a>
+                </center>
+            </td>
+        </tr>
+            }
+            else
+            {
+                if (item.IsDeleted == true)
+                {
+    <tr style='color:red;text-decoration:line-through'>
+
+        <td>
+            Day
+            @Html.DisplayFor(modelItem => item.CycleDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+
+        <td>
+        </td>
+    </tr>
+                }
+
+
+
+
+            }
+        }
+
+    </tbody>
+</table>
+<center>
+
+    <a class="btn btn-success adjust-actions" title="" onclick="OpenModal(@ViewBag.pid,@ViewBag.tid)">
+        Back to All
+    </a>
+</center>
+<!--Create Modal-->
+<div class="modal fade" id="CreateModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Start Date</h4>
+            </div>
+            <div id="CreateBody"></div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="deactivateModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Omit this Cycle? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+                    $(function () {
+                        $("#loading").fadeOut();
+                    });
+
+                    $('#example1').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": true,
+                      
+                        "info": true,
+                        "autoWidth": false,
+                        "scrollX": true,
+                    });
+
+
+
+ //delete
+            function OpenOmitModal(AccountId) {
+                $("#AccountId").val(AccountId);
+                $("#deactivateModal").modal("show");
+            };
+
+            $("#DeactivateBtn").click(function () {
+                var AccountId = $("#AccountId").val();
+                $("#ErrorMsg").html("");
+                $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+                $.ajax({
+                    type: "Post",
+                    url: "@Url.Action("Omit", "ChemoTherapyCycleDay")",
+                    cache: false,
+                    data: { Id: AccountId },
+                dataType: "json",
+                success: function (result) {
+                    if (result == 1) {
+                        $("#deactivateModal").modal("hide");
+                        location.reload();
+                    }
+                    else if (result == 6) {
+                        $("#ErrorMsg").html("An error occurred, please try again ");
+                        $("#DeactivateBtn").attr("disabled", false).text('Yes');
+                    }
+                },
+                })
+            });
+
+        function OpenModal(PatientId, TemplateID) {
+            window.location.href = '/ChemoTherapyCyclesDates/Index?PatientId=' + PatientId + '&TemplateID=' + TemplateID;
+
+        }
+
+        
+
+
+
+          function openCreateModel(Id) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("_Rescuedele", "ChemoTherapyCycleDay")",
+    cache: false,
+        data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#CreateBody").html(result.Content);
+    $("#CreateModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+}

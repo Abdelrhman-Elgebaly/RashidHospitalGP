@@ -1,0 +1,154 @@
+﻿
+@model RashidHospital.Models.RadiologyRequestVM
+<link href="~/Content/build/css/intlTelInput.min.css" rel="stylesheet" />
+<style>
+       .columns{
+    float: left;
+    position: relative;
+    margin-right: 41px;
+    background-color: azure;
+    padding-right: 59px;
+  column-count: 2;
+    width:1000px;
+}
+    
+</style>
+
+@using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.PateintID)
+    @Html.HiddenFor(model => model.CreatedBy)
+
+    @*<div class="modal-header">
+        @Html.Raw(ViewBag.PatientInfo)
+
+
+    </div>*@
+    <div class="modal-body">
+       
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ProcedureType", new SelectList(ViewBag.ProcedureTypeList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.ProcedureType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Site, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Site", new SelectList(ViewBag.SiteSelectList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" })
+                    @Html.ValidationMessageFor(model => model.Site, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RequestDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", @type = "date"} })
+                    @Html.ValidationMessageFor(model => model.RequestDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Contrast, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <label>
+                        @Html.RadioButtonFor(model => model.Contrast, true, new { htmlAttributes = new { @class = "form-control", @required = "required" } }) Yes
+                    </label>
+                          <label>
+                        @Html.RadioButtonFor(model => model.Contrast, false, new { htmlAttributes = new { @class = "form-control", @required = "required" } }) No
+                    </label>
+
+                    @Html.ValidationMessageFor(model => model.Contrast, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="btnSubmit">save add more</button>
+            <button type="button" class="btn btn-default" id="btnSaveandExit">save and exit</button>
+
+            <button type="reset" class="btn btn-primary" id="btnCancel">close</button>
+
+        </div>
+    </div>
+}
+<style>
+    textarea {
+        width: 400px;
+        height: 200px;
+    }
+    .form-control {
+    margin-bottom:3px;
+    }
+</style>
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
+
+<script>
+    
+        $(".select2").select2({
+        tags: true
+    });
+</script>
+
+<script>
+
+    $("body").on("click", "#btnSubmit", function () {
+        var ProcedureType = $("#ProcedureType option:selected").val();
+        var Site = $("#Site option:selected").val();
+        var RequestDate = $("#RequestDate").val();
+        var Note = $("#Note").val();
+        var Contrast = $("input[name='Contrast']:checked").val();
+        var PateintID = $("#PateintID").val();
+
+			$.ajax({
+				type: "Post",
+				url: "@Url.Action("Create", "RadiologyRequest")",
+				cache: false,
+				data: { "ProcedureType": ProcedureType, "Site": Site, "RequestDate": RequestDate, "Note": Note, "Contrast": Contrast,  "PateintID": PateintID },
+				success: function (result) {
+					if (result == "Success") {
+					    //$("#create").modal("hide");
+						//location.reload();
+					}
+					else if (result == "Error500") {
+						window.location.href = '@Url.Action("Error500", "Home")';
+					}
+
+				},
+			})
+
+    });
+
+    $("body").on("click", "#btnSaveandExit", function () {
+        var ProcedureType = $("#ProcedureType option:selected").val();
+        var Site = $("#Site option:selected").val();
+        var RequestDate = $("#RequestDate").val();
+        var Note = $("#Note").val();
+        var Contrast = $("input[name='Contrast']:checked").val();
+        var PateintID = $("#PateintID").val();
+
+        $.ajax({
+            type: "Post",
+            url: "@Url.Action("Create", "RadiologyRequest")",
+            cache: false,
+        data: { "ProcedureType": ProcedureType, "Site": Site, "RequestDate": RequestDate, "Note": Note, "Contrast": Contrast,  "PateintID": PateintID },
+        success: function (result) {
+                $("#create").modal("hide");
+                window.location.reload();
+            
+
+        },
+        })
+
+    });
+</script>
+
+

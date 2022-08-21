@@ -43,6 +43,8 @@ namespace RashidHospital.Controllers
             ChemoTherapyTemplateVM ObjVm = new ChemoTherapyTemplateVM();
 
             List<ChemoTherapyTemplateVM> _list = ObjVm.SelectAll();
+          
+
 
             return View(_list);
         }
@@ -81,7 +83,7 @@ namespace RashidHospital.Controllers
                 string[] array = new string[1000];
 
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();
-                input.Cycle_days = string.Join("/", array);
+                input.Cycle_days = string.Join(",", array);
 
                 input.Protocol_Name = input.Protocol_Name;
                 input.Disease = input.Disease;
@@ -179,10 +181,9 @@ namespace RashidHospital.Controllers
                 string[] array = new string[1000];
 
                 array = intlist.ConvertAll(x => x.ToString()).ToArray();
-                input.Cycle_days = string.Join("/", array);
+                input.Cycle_days = string.Join(",", array);
 
-                input.Protocol_Name = input.Protocol_Name;
-                input.Disease = input.Disease;
+             
                 input.Edit();
 
                 return RedirectToAction("Index");
@@ -214,7 +215,10 @@ namespace RashidHospital.Controllers
             {
                 ChemoTherapyTemplateVM _resultVM = new ChemoTherapyTemplateVM();
                 ChemoTherapyTemplateVM DeleteObject = _resultVM.SelectObject(Id);
-               // DeleteObject.IsDeleted = true;
+                // DeleteObject.IsDeleted = true;
+
+
+
                 DeleteObject.Delete();
 
                 finalResult = 1;

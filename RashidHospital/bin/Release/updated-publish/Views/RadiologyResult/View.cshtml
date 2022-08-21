@@ -1,0 +1,110 @@
+﻿
+@model RashidHospital.Models.RadiologyResultVM
+<link href="~/Content/build/css/intlTelInput.min.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "View";
+}
+
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+<h2>View</h2>
+@using (Html.BeginForm(new { @class = "form-horizontal", role = "form" }))
+{ 
+    @Html.HiddenFor(model => model.PateintID)
+    @Html.HiddenFor(model => model.CreatedBy)
+    <div class="modal-header">
+            @Html.Raw(ViewBag.PatientInfo)
+
+
+        </div>
+<div class="modal-body">
+    <div class="box-body">
+        <div class="form-group">
+            @Html.Label("Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProcedureType", new SelectList(ViewBag.ProcedureTypeList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2" , @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.ProcedureType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Site, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Site", new SelectList(ViewBag.SiteSelectList, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.Site, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RadiologyDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form -control", @type = "date", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.RadiologyDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recist, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Recist", new SelectList(ViewBag.RadiologyRacist, "Value", "Text"), htmlAttributes: new { @class = "form-control select2", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.Recist, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.T, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.T, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.T, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.N, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.N, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.N, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.M, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.M, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.M, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contrast, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label>
+                    @Html.RadioButtonFor(model => model.Contrast, true, new { htmlAttributes = new { @class = "form-control", @required = "required", @disabled = "disabled" } })Yes
+                </label>
+                <label>
+                    @Html.RadioButtonFor(model => model.Contrast, false, new { htmlAttributes = new { @class = "form-control", @required = "required", @disabled = "disabled" } })No
+                </label>
+
+                @Html.ValidationMessageFor(model => model.Contrast, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="modal-footer" style="float:right;">
+            <button type="button" class="btn btn-default" id="btnSaveandExit"  onclick="location.href='@Url.Action("Index", "RadiologyResult" , new { patientID = ViewBag.PatientId})'"> exit</button>
+
+
+        </div>
+    </div>
+
+</div>
+}
