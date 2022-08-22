@@ -46,10 +46,10 @@ namespace RashidHospital.Controllers
 
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
             List<ChemoTherapyCycleDayVM> _List = null;
-            if (User.IsInAnyRoles("Doctor"))
+            if (User.IsInAnyRoles("Pharmacist") == false)
             {
 
-                 _List = _Obj.SelectAllPending().Where(a => a.Date.Day == DateTime.Now.Day && a.Date.Month == DateTime.Now.Month && a.Date.Year == DateTime.Now.Year && a.DoctorId == userId).ToList();
+                _List = _Obj.SelectAllPending().Where(a => a.Date.Day == DateTime.Now.Day && a.Date.Month == DateTime.Now.Month && a.Date.Year == DateTime.Now.Year && a.DoctorId == userId).ToList();
             }
             
              else if (User.IsInAnyRoles("Pharmacist"))
@@ -70,7 +70,7 @@ namespace RashidHospital.Controllers
             ChemoTherapyCycleDayVM _Obj = new ChemoTherapyCycleDayVM();
             List<ChemoTherapyCycleDayVM> _List = null;
 
-            if (User.IsInAnyRoles("Doctor"))
+            if (User.IsInAnyRoles("Pharmacist") == false)
             {
 
                 _List = _Obj.SelectAllPending().Where(a => a.DoctorId == userId).ToList();

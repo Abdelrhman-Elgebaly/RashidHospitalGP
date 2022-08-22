@@ -1,0 +1,343 @@
+﻿@model RashidHospital.Models.PatientVM
+
+@{
+    ViewBag.Title = "Patient File";
+}
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+
+    .form-control {
+        margin-bottom: 3px !important;
+    }
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+<div class="modal-body">
+    <div class="modal-header">
+        @Html.Raw(ViewBag.PatientInfo)
+
+
+    </div>
+
+    <hr />
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openViewProfileModal(@Model.Id)">
+        Patient Profile
+    </a>
+
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openEditDiagnoseModal(@Model.Id)">
+        Patient Diagnosis
+    </a>
+
+    <a class="btn btn-success adjust-actions" title="History" onclick="openConditionModal(@Model.Id)">
+        Patient History
+    </a>
+    <a class="btn btn-success adjust-actions" title="Visits" onclick="openRecordsModal(@Model.Id)">
+        Patient Visit
+    </a>
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openReqandRestModal(@Model.Id)">
+        Requests and Results
+    </a>
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openAppointmentModal(@Model.Id)">
+        Appointment
+    </a>
+
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openNurseNoteModal(@Model.Id)">
+        Nurse Notes
+    </a>
+
+
+    <a class="btn btn-success adjust-actions" title="Patient" onclick="openTreatment(@Model.Id)">
+        Treatment
+    </a>
+
+
+    @{
+        var Callboard = HttpContext.Current.Request.QueryString["CallBoard"];
+        if (Callboard != null)
+        {
+            <a class="btn btn-success adjust-actions" title="Patient" onclick="openCallBoardagainModal(@Callboard)">
+                Close file and return to call board
+            </a>
+        }
+    }
+
+    <hr />
+    <div class="box-body">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Arabic Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NameArabic, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.NameArabic, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Birth Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form -control ", @disabled = "disabled" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Phone 1", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber1, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Phone 2", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber2, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Phone 3", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber3, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("National ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NationalID, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+
+                @foreach (var gender in Model.Genders)
+                {
+                    @Html.RadioButtonFor(model => model.Gender, gender, new { htmlAttributes = new { @class = "form-control", disabled = "true" } }) @gender<br />
+                }
+
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            @Html.Label("MaritaStatus", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+
+                @foreach (var gender in Model.MaritalStatusList)
+                {
+                    @Html.RadioButtonFor(model => model.MaritalStatus, gender, new { htmlAttributes = new { @class = "form-control", disabled = "true" } }) @gender<br />
+                }
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("No Of Children", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoOfChildren, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.PatientUnitName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+
+            </div>
+            <div class="form-group">
+                @Html.Label("Diagnosis Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    @Html.EditorFor(model => model.DiagnoseName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!--openEditDiagnoseModal-->
+<div class="modal fade" id="DiagnoseModel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit Patient</h4>
+            </div>
+            <div id="editDiagnoseBody"></div>
+        </div>
+    </div>
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Patient Treatment</h4>
+            </div>
+            <div id="EditBody"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+    <script>
+        $('input:radio.form-control').prop('disbled', true);
+    </script>
+    <script>
+
+      //openEditDiagnoseModal
+    function openEditDiagnoseModal(patientID) {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("_EditDiagnose", "Patient")",
+            cache: false,
+            data: { patientID: patientID },
+            success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#editDiagnoseBody").html(result.Content);
+                    $("#DiagnoseModel").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+        })
+    };
+
+    function openCallBoardagainModal(callBoardId){
+        window.location.href ='/CallBoard/Edit?Id='+callBoardId;
+
+    }
+    </script>
+    <script>
+
+
+        function openViewProfileModal(patientID) {
+            window.location.href = '/Patient/View?patientID=' + patientID;
+
+        }
+
+        function openReqandRestModal(patientID) {
+            window.location.href = '/Patient/RequestsandResults?patientID=' + patientID;
+
+        }
+
+        function openAppointmentModal(patientID) {
+            window.location.href = '/Appointment/Create?PatientId=' + patientID;
+
+        }
+        function openConditionModal(patientID) {
+            window.location.href = '/MedicalCondition/index?patientID=' + patientID;
+        }
+
+        function openRecordsModal(patientID) {
+            window.location.href = '/MedicalRecord/index?patientID=' + patientID;
+        }
+
+        function openToxictyModal(patientID) {
+            window.location.href = '/Toxicty/index?patientID=' + patientID;
+        }
+
+        function openRadioTherapyModal(patientID) {
+            window.location.href = '/RadioTherapy/index?patientID=' + patientID;
+        }
+
+        function openChemoTherapyModal(patientID, chemotherapyID) {
+
+            if (chemotherapyID == null) {
+                window.location.href = '/ChemoTherapy/Index/index?patientID=' + patientID;
+            } else {
+                window.location.href = '/ChemoTherapyCyclesDates/Index?patientID=' + patientID + '&templateID=' + chemotherapyID;
+            }
+        }
+
+        function TestModal(patientID) {
+
+
+            window.location.href = '/ChemoTherapyProtocol/Index?patientID=' + patientID;
+
+        }
+
+        function openNurseNoteModal(patientID) {
+            window.location.href = '/NurseNote/index?patientID=' + patientID;
+        }
+
+
+
+        function openTreatment(pid) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Treatment", "Patient")",
+                cache: false,
+                data: { pid: pid },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#EditBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+    </script>
+
+
+
+
+
+}
+

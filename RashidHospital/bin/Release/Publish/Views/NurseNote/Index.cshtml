@@ -1,0 +1,174 @@
+﻿@model IEnumerable<RashidHospital.Models.NurseNoteVM>
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<style>
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width: 1000px;
+    }
+</style>
+<section class="content-header">
+    <h2>Nurse Note</h2>
+    @Html.Raw(ViewBag.PatientInfo)
+</section>
+
+<section class="content">
+
+
+
+
+
+
+
+
+    <div class="box-header">
+        <h3 class="box-title">
+            <a href="@Url.Action("Create", "NurseNote", new { patientID = ViewBag.PatientId } )" class="btn btn-primary">
+                Create new Nurse Note
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </a>
+        </h3>
+    </div>
+    <hr />
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Temperature</th>
+                    <th>Pulse</th>
+                    <th>BP</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>SA</th>
+                    <th>Date</th>
+                 
+                 
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.IsSelected == true)
+                    {
+                        <tr>
+                            <td class="adjustContent">@item.Temperature</td>
+                            <td class="adjustContent">@item.Pulse</td>
+                            <td class="adjustContent">@item.BP</td>
+                            <td class="adjustContent">@item.Weight</td>
+                            <td class="adjustContent">@item.Height</td>
+                            <td class="adjustContent">@item.SA</td>
+                            <td class="adjustContent">@item.Date</td>
+
+                          
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="adjustContent">@item.Temperature</td>
+                            <td class="adjustContent">@item.Pulse</td>
+                            <td class="adjustContent">@item.BP</td>
+                            <td class="adjustContent">@item.Weight</td>
+                            <td class="adjustContent">@item.Height</td>
+                            <td class="adjustContent">@item.SA</td>
+                            <td class="adjustContent">@item.Date</td>
+
+                         
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+<!--Edit Modal-->
+<div class="modal fade" id="TestPopUp" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div id="NoteBody"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+
+
+    <script>
+        function openCreatelModal(Id) {
+            window.location.href = '/ChemoTherapyCyclePackage/Create?Id=' + Id;
+        };
+        function openCreateModel(Id) {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $.ajax({
+    type: "GET",
+    url: "@Url.Action("Create", "ChemoTherapyCyclePackage")",
+    cache: false,
+        data: { Id: Id },
+    success: function (result) {
+    if (result.IsRedirect) {
+    window.location.href = result.RedirectUrl;
+    }
+    else {
+    $("#CreateBody").html(result.Content);
+    $("#CreateModel").modal("show")
+    }
+    },
+    error: function (result) {
+    window.location.href = '@Url.Action("Error404", "Home")';
+    },
+    })
+        }
+
+        function openToxictyModal(cycleID,patientID) {
+            window.location.href = '/ChemoCycleToxicty/Index?Id=' + cycleID + '&pid=' + patientID;
+        }
+
+
+
+                function openTestPopUp(Id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_EditNote", "NurseNote")",
+                cache: false,
+                data: { Id: Id },
+                 success: function (result) {
+                if (result.IsRedirect) {
+                    window.location.href = result.RedirectUrl;
+                }
+                else {
+                    $("#NoteBody").html(result.Content);
+                    $("#TestPopUp").modal("show")
+                }
+            },
+            error: function (result) {
+                window.location.href = '@Url.Action("Error404", "Home")';
+            },
+			})
+        }
+
+
+    </script>
+
+}

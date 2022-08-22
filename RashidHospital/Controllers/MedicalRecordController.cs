@@ -24,7 +24,25 @@ namespace RashidHospital.Controllers
             MedicalRecordVM ObjVm = new MedicalRecordVM();
             List<MedicalRecordVM> _list = ObjVm.SelectAllByPatientId(_patientID).OrderByDescending(a=>a.RecordDate).ToList();
             FillViewBags(_patientID);
-            
+       
+            foreach(var item in _list) {
+
+                if (item.Complain != null) {
+                    item.Complain = item.Complain.Replace(".", ".\n");
+                    item.Edit();
+                }
+                if (item.Diagnose != null)
+                {
+                    item.Diagnose = item.Diagnose.Replace(".", ".\n");
+                    item.Edit();
+                }
+                if (item.Recommendation != null)
+                {
+                    item.Recommendation = item.Recommendation.Replace(".", ".\n");
+                    item.Edit();
+                }
+            }
+        
             return View(_list);
         }
         public string RenderRazorViewToString(string viewName, object model)
@@ -65,9 +83,7 @@ namespace RashidHospital.Controllers
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 vm.DoctorID = userId;
                 vm.RecordDate = DateTime.Now;
-                vm.Complain = vm.Complain.Replace(".", "." + System.Environment.NewLine + "\n");
-                vm.Diagnose = vm.Diagnose.Replace(".", "." + System.Environment.NewLine + "\n");
-                vm.Recommendation = vm.Recommendation.Replace(".", "." + System.Environment.NewLine + "\n");
+                
                 vm.Edit();
                 return "Success"; // succcess
             }
@@ -109,9 +125,7 @@ namespace RashidHospital.Controllers
                     patient.Edit();
 
 
-                    obj.Complain = obj.Complain.Replace(".", ".\n");
-                    obj.Diagnose = obj.Diagnose.Replace(".", ".\n");
-                    obj.Recommendation = obj.Recommendation.Replace(".", ".\n");
+                  
 
 
 

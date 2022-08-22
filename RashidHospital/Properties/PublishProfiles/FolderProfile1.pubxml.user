@@ -7,7 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>E:\GP-Project\RashidHospital\RashidHospital\bin\Release\Publish</_PublishTargetUrl>
-    <History>True|2022-08-21T18:55:22.7300729Z;False|2022-08-14T15:54:07.2677206+02:00;True|2022-08-14T14:55:31.7509399+02:00;True|2022-08-14T14:00:45.3164609+02:00;</History>
+    <History>True|2022-08-22T10:46:54.2831654Z;True|2022-08-21T20:55:22.7300729+02:00;False|2022-08-14T15:54:07.2677206+02:00;True|2022-08-14T14:55:31.7509399+02:00;True|2022-08-14T14:00:45.3164609+02:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -17,10 +17,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/21/2022 20:55:16</publishTime>
+      <publishTime>08/22/2022 12:46:47</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/21/2022 20:55:16</publishTime>
+      <publishTime>08/22/2022 12:46:47</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>
@@ -89,10 +89,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2012 13:00:52</publishTime>
     </File>
     <File Include="bin/RashidHospital.dll">
-      <publishTime>08/21/2022 20:54:47</publishTime>
+      <publishTime>08/22/2022 12:46:25</publishTime>
     </File>
     <File Include="bin/RashidHospital.pdb">
-      <publishTime>08/21/2022 20:54:47</publishTime>
+      <publishTime>08/22/2022 12:46:25</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -356,7 +356,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/24/2022 05:52:32</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/21/2022 20:54:52</publishTime>
+      <publishTime>08/22/2022 12:46:28</publishTime>
     </File>
     <File Include="Scripts/adminlte.min.js">
       <publishTime>01/01/2020 00:34:46</publishTime>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<RashidHospital.Models.ChemoTherapyPreInvestigationsVM>
+
+
+
+@{
+    ViewBag.Title = "PredefinedLab";
+}
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<section class="content-header">
+    <h1>Protocol Predefined Investigations</h1>
+</section>
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">
+
+                        @Html.ActionLink("Add New ", "Create", "ChemoTherapyPreInvestigations", new { templateID = ViewBag.patientID }, null)
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Days</th>
+                                <th>Investigation</th>
+                                <th>Value</th>
+                                <th>Validation rule</th>
+                                <th> Actions</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Days)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Test_Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Value)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Rule_TypeValue)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { Id = item.ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                    </td>
+                                </tr>
+
+                            }
+
+
+                    </table>
+

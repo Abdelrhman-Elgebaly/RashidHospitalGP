@@ -1,0 +1,92 @@
+﻿@model RashidHospital.Models.OrderDetailVM
+
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    #limheight {
+    height: auto; /*your fixed height*/
+    -webkit-column-count: 5;
+       -moz-column-count: 5;
+            column-count: 5; /*3 in those rules is just placeholder -- can be anything*/
+            font-size:12px;
+}
+
+#limheight li {
+    display: inline-block; /*necessary*/
+    padding-right:0px;
+}
+       .columns{
+    float: left;
+    position: relative;
+    margin-right: 41px;
+    background-color: azure;
+    padding-right: 59px;
+  column-count: 2;
+  width:1000px;
+}
+    
+</style>
+
+<style>
+    textarea {
+        width: 400px;
+        height: 200px;
+    }
+
+    .form-control {
+        margin-bottom: 3px;
+    }
+</style>
+@using (Html.BeginForm("Create", "LabRequest", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.LabOrderId)
+    @Html.Hidden("PatientId", (int)ViewBag.PatientId)
+   
+    <div class="modal-header">
+        <h4>
+
+            Add new lab
+        </h4>
+
+
+      @Html.Raw(ViewBag.PatientInfo)
+    </div>
+    <div class="modal-body">
+       
+        <div class="modal-content">
+           
+            <ul id="limheight">
+
+                @foreach (var value in Enum.GetValues(typeof(RashidHospital.Helper.Enum.LabTyps)))
+                {
+                    RashidHospital.Helper.Enum.LabTyps _obj = (RashidHospital.Helper.Enum.LabTyps)value;
+                     var name = EnumHelper<RashidHospital.Helper.Enum.LabTyps>.GetDisplayValue(_obj);
+
+                    <li style="margin: 5px 20px;">
+                        <input type="checkbox" id="selectedTypes'@value'" name="selectedTypes" value="@value" />
+
+                        <label for="selectedTypes'@value'">@name</label>
+                    </li>
+
+                    
+                }
+              
+            </ul>
+            @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control", @style = "height:100px;" } })
+
+
+            <br />
+            <br />
+            <div class="form-group" style="float:right;">
+                <div class="col-md-12">
+                    <button type="submit" value="Create" class="btn btn-default">add more</button>
+                    <button value="Print" class="btn btn-primary" onclick="window.print();">Print</button>
+                    <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "LabRequest",new { @PatientId = (int)ViewBag.PatientId})'" />
+               
+                 </div>
+            </div>
+      
+    </div>
+        </div>
+}

@@ -1,0 +1,126 @@
+﻿
+
+@model RashidHospital.Models.MenstrualHistoryVM
+<link href="~/Content/build/css/intlTelInput.min.css" rel="stylesheet" />
+
+<style>
+    .form-control {
+        margin-bottom: 4px;
+    }
+</style>
+<form id="AddMedicalForm" method="post">
+    @Html.HiddenFor(model => model.PatientId)
+    @Html.HiddenFor(model => model.Id)
+
+
+    <div class="modal-body">
+        <div class="callout callout-success">
+            <b>Menstrual History</b>
+        </div>
+        <div class="box-body">
+            <div class="form-group" style="display:none;" id="duration">
+                @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Perimenopausal, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(model => model.Perimenopausal, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Postmenopausal, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(model => model.Postmenopausal, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Premenopausal, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(model => model.Premenopausal, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+
+        </div>
+        <div class="text-center">
+            <span class="text-danger FinalErrorMsg"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="btnSubmit">Save</button>
+
+        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "MedicalCondition", new { @patientID = (int)ViewBag.PatientId })'">Close</button>
+        <button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
+
+    </div>
+</form>
+
+
+<script>
+    $(document).ready(function () {
+      var checkbox = $('[name="Postmenopausal"]');
+        if (checkbox.is(':checked')) {
+        $('#duration').show();
+    } else {
+        $('#duration').hide();
+    }
+});
+    $('input[type=checkbox]').change(function () {
+            // When any radio button on the page is selected,
+            // then deselect all other radio buttons.
+            if (this.name == "Postmenopausal") {
+                $('#duration').show();
+
+            } else {
+                $('#duration').hide();
+
+            }
+            $('input[type=checkbox]:checked').not(this).prop('checked', false);
+        });
+
+    $("#AddMedicalForm").submit(function (e) {
+		//e.preventDefault();
+		//	$("#btnSubmit").attr("disabled", true).text('Loading...');
+			$.ajax({
+				type: "Post",
+				url: "@Url.Action("EditMenstrual", "MedicalCondition")",
+				cache: false,
+				data: $("#AddMedicalForm").serialize(),
+				success: function (result) {
+					if (result == "Success") {
+					   // $("#MedicalModel").modal("hide");
+						location.reload();
+					}
+					else if (result == "Error500") {
+						window.location.href = '@Url.Action("Error500", "Home")';
+					}
+
+				},
+			})
+
+	});
+</script>
+
+

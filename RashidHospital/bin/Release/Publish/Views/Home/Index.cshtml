@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+
+
+
+
+
+<section class="content-header">
+    <h1>Alexandria Clinical Oncology Department</h1>
+
+
+
+
+
+
+</section>
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Alexandria Clinical Oncology Department</h3>
+                </div>
+                @if (User.IsInAnyRoles("Pharmacist") == false)
+                {
+                    <div class="box-header">
+                        <a class="btn btn-success adjust-actions" title="Patient" onclick="openPendingModal()">
+                            @ViewBag.count Pending ChemoTherapy Cycles
+
+                        </a>
+                    </div>
+                }
+                <div class="box-body">
+
+
+                    <img src="~/Content/img/IMG-20200515-WA0013.jpg" style="width:auto;height:auto;" />
+
+                </div>
+            </div>
+            </div>
+    </div>
+
+
+
+
+</section>
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/intlTelInput.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#loading").fadeOut();
+        });
+    </script>
+
+
+
+    <script>
+        function openPendingModal() {
+            window.location.href = '/ClinicalPharmacy/Pending';
+        }
+        function openFinalAppModal() {
+            window.location.href = '/ClinicalPharmacy/FinalApproved';
+        }
+
+
+    </script>
+
+
+}

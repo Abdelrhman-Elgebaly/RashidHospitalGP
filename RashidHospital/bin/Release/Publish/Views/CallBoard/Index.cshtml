@@ -1,0 +1,347 @@
+﻿@model IEnumerable<RashidHospital.Models.CallBoardVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/fixedHeader.dataTables.min.css" rel="stylesheet" />
+<style>
+    thead input {
+        width: 100%;
+    }
+
+    .columns {
+        float: left;
+        position: relative;
+        margin-right: 41px;
+        background-color: azure;
+        padding-right: 59px;
+        column-count: 2;
+        width:1000px;
+    }
+</style>
+<section class="content-header">
+    <h1>Manage today CallBoard</h1>   
+</section>
+<section class="content-header">
+    @Html.ActionLink(
+    "View All CallBoard",                                                  // linkText
+    "IndexAll",                                    // actionName
+    "CallBoard")
+</section>
+
+<section class="content">
+    <div class="loadingPage" id="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+          
+            <div class="box">
+               
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>  </th>
+                                <th>Name</th>
+                                <th>Id</th>
+                                <th>Diagnose</th>
+                                <th>Unit</th>
+                                <th>Clinic</th>
+                                <th>Time </th>
+                                <th>Calls Count</th>
+                                <th>Called By</th>
+                                <th>Signature</th>
+                                <th class="text-center" width="110px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.IsDeleted == true)
+                                {
+                                    <tr style='color:red;text-decoration:line-through'>
+                                            <td class="adjustContent">@item.PatientNumber</td>
+                                            <td class="adjustContent">@item.PatientName</td>
+                                            <td class="adjustContent">@item.PatientMedicalId</td>
+                                            <td class="adjustContent">@item.Diagnose</td>
+                                            <td class="adjustContent">@item.PatientUnit</td>
+                                            <td class="adjustContent">@item.ClinicName</td>
+                                            <td class="adjustContent">@item.CallTime</td>
+                                            <td class="adjustContent">@item.CallsNo</td>
+                                        <td class="adjustContent">@item.DoctorName</td>
+
+                                            <td class="adjustContent">@item.ModifieByName</td>
+                                        <td class="adjustContent text-center">
+                                          
+                                               
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr >
+                                       @if (item.Done == true)
+                                       {
+                                        <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientNumber</td>
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientName</td>
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientMedicalId</td>
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.Diagnose</td>
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.PatientUnit</td>
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.ClinicName</td>
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.CallTime</td>
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.CallsNo</td>
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.DoctorName</td>
+
+                                            <td class="adjustContent" style="background-color:indianred;color:black;font-weight:bold;">@item.ModifieByName</td>
+                                       }
+                                       else if (item.IsOnCall == true)
+                                       {
+                                        <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientNumber</td>
+                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientName</td>
+                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientMedicalId</td>
+                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.Diagnose</td>
+                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.PatientUnit</td>
+                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.ClinicName</td>
+                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.CallTime</td>
+                                            <td class="adjustContent" style="background-color:darkseagreen; color:black;font-weight:bold;">@item.CallsNo</td>
+                                          <td class="adjustContent" style="background-color:darkseagreen;color:black;font-weight:bold;">@item.DoctorName</td>
+
+                                            <td class="adjustContent" style="background-color:darkseagreen;color:black;font-weight:bold;">@item.ModifieByName</td>
+
+
+                                       }
+                                       else
+                                       {
+
+                                        <td class="adjustContent">@item.PatientNumber</td>
+
+                                            <td class="adjustContent">@item.PatientName</td>
+                                            <td class="adjustContent">@item.PatientMedicalId</td>
+                                            <td class="adjustContent">@item.Diagnose</td>
+                                            <td class="adjustContent">@item.PatientUnit</td>
+                                            <td class="adjustContent">@item.ClinicName</td>
+                                            <td class="adjustContent">@item.CallTime</td>
+                                            <td class="adjustContent">@item.CallsNo</td>
+                                            <td class="adjustContent">@item.ModifieByName</td>
+                                            <td class="adjustContent">@item.DoctorName</td>
+
+                                       }
+                                        
+                                        <td class="adjustContent text-center">
+                                              <a class="btn btn-default banBtn adjust-actions" title="Call" onclick="OpenCallModal(@item.Id)">
+                                                    <i class="fa fa-microphone"></i>
+                                                </a>
+                                            <a class="btn btn-default banBtn adjust-actions" title="UnDo" onclick="OpenUnDoModal(@item.Id)">
+                                                <i class="fa fa-undo"></i>
+                                            </a>
+                                            <a class="btn btn-success adjust-actions" title="OpenFile" target="_blank" href="/Patient/View?patientID=@item.PatientId&CallBoard=@item.Id">
+                                                <i class="fa fa-male"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Deactivate Modal-->
+<div class="modal" id="CallModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to Call this Patient? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="DeactivateBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!--attnedModal-->
+<div class="modal" id="UnDoModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <input hidden id="AccountId" />
+                <img src="~/Content/img/user_disable.png" class="imgStyle" />
+                <br />
+                <h4 class="text-center">Are you sure you want to undo this Patient ? </h4>
+                <p class="text-center text-danger" id="ErrorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="undoBtn">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#example1 thead tr').clone(true).appendTo('#example1 thead');
+            $('#example1 thead tr:eq(1) th').each(function (i) {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+                $('input', this).on('keyup change', function () {
+                    if (table.column(i).search() !== this.value) {
+                        table
+                            .column(i)
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+
+            var table = $('#example1').DataTable({
+                    "orderCellsTop": true,
+                    "fixedHeader": false,
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "scrollX": true,
+                    "orderCellsTop": true,
+                    "stateSave": true
+            });
+        });
+</script>
+
+    <script>
+		$(function () {
+	    	$("#loading").fadeOut();
+		});
+
+		//$('#example1').DataTable({
+		//    "paging": true,
+		//    "lengthChange": false,
+		//    "searching": true,
+		//    "order": [[0, "asc"]],
+		//    "info": true,
+		//    "autoWidth": false,
+		//    "scrollX": true,
+		//    "stateSave": true
+		//});
+		function OpenCallModal(AccountId) {
+		    $("#AccountId").val(AccountId);
+		    $("#CallModal").modal("show");
+		}
+		function OpenUnDoModal(AccountId){
+		    $("#AccountId").val(AccountId);
+		    $("#UnDoModal").modal("show");
+		}
+		function OpenSkipModal(AccountId) {
+		    $("#AccountId").val(AccountId);
+		    $("#SkipModal").modal("show");
+		}
+
+		$("#DeactivateBtn").click(function () {
+		    var AccountId = $("#AccountId").val();
+		    $("#ErrorMsg").html("");
+		    $("#DeactivateBtn").attr("disabled", true).text('Loading...');
+		    $.ajax({
+		        type: "Post",
+		        url: "@Url.Action("CallPatient", "CallBoard")",
+		        cache: false,
+		        data: { CallBoardId: AccountId },
+		    dataType: "json",
+		    success: function (result) {
+		        if (result == 1) {
+		            $("#CallModal").modal("hide");
+		            location.reload();
+
+		        }
+		        else if (result == 6) {
+		            $("#ErrorMsg").html("An error occurred, please try again ");
+		            $("#DeactivateBtn").attr("disabled", false).text('Yes');
+		        }
+		    },
+		    })
+		});
+        //attnedBtn
+        $("#attnedBtn").click(function () {
+            var AccountId = $("#AccountId").val();
+            $("#ErrorMsg").html("");
+            $("#attnedBtn").attr("disabled", true).text('Loading...');
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("SkipCallBoard", "CallBoard")",
+                cache: false,
+                data: { CallBoardId: AccountId },
+                 dataType: "json",
+                 success: function (result) {
+                if (result == 1) {
+                    $("#SkipModal").modal("hide");
+                    location.reload();
+
+                }
+                else if (result == 6) {
+                    $("#ErrorMsg").html("An error occurred, please try again ");
+                    $("#attnedBtn").attr("disabled", false).text('Yes');
+                }
+            },
+            })
+        });
+        $("#undoBtn").click(function(){
+            var AccountId = $("#AccountId").val();
+            $("#ErrorMsg").html("");
+            $("#undoBtn").attr("disabled", true).text('Loading...');
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("UndoAttened", "CallBoard")",
+                cache: false,
+                 data: { CallBoardId: AccountId },
+                 dataType: "json",
+                 success: function (result) {
+                if (result == 1) {
+                    $("#undoModal").modal("hide");
+                    location.reload();
+
+                }
+                else if (result == 6) {
+                    $("#ErrorMsg").html("An error occurred, please try again ");
+                    $("#attnedBtn").attr("disabled", false).text('Yes');
+                }
+            },
+            })
+        })
+    </script>
+}

@@ -1,0 +1,196 @@
+﻿@model RashidHospital.Models.PathologyVM
+@using RashidHospital.Models;
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+    }
+       .columns{
+    float: left;
+    position: relative;
+    margin-right: 41px;
+    background-color: azure;
+    padding-right: 59px;
+  column-count: 2;
+  width:1000px;
+}
+</style>
+
+    <div class="modal-header">
+
+        @Html.Raw(ViewBag.PatientInfo)
+
+
+    </div>
+<div class="modal-body">
+    <div class="box-body">
+        <div class="form-group">
+            @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
+
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Procedure Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProcedureType, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.pT, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.pT, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.pN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.pN, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.pM, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.pM, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Histology", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerHistologyString, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Grade", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerGradeName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Size", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerSize, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerNumber, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tumor Focality", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumorFocalityName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor LVI", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerLVI, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor PNI", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumerPNI, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tumor Margin", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TumorMarginsName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lymphnode Type Of Surgery", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LymphnodeTypeOfsurgery, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lymphnode Positive LN", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LymphnodePositiveLN, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lymphnode Total LN", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LymphnodeTotalLN, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lymphnode ECE", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LymphnodeECE, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="button" class="btn btn-info" value="Back" onclick="location.href='@Url.Action("Index", "Pathology",new { @patientID = (int)ViewBag.PatientId})'" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <hr />
+   
+
+
+        @if (Session[Model.PatientId.ToString()] != null)
+        {
+            <table id="Ihc" style="width:100%;border: 1px solid black;">
+              
+                    <tr>
+                        <th>Test</th>
+                        <th>Result</th>
+                        <th>Note</th>
+                    </tr>
+
+                    @foreach (var ihsc in (List<IHCVM>)Session[Model.PatientId.ToString()])
+                    {
+                        <tr>
+                            <td>@ihsc.TypeName</td>
+                            <td>@ihsc.Result</td>
+                            <td>@ihsc.Value</td>
+                            <td>
+                                <a class="btn btn-danger banbtn adjust-actions" title="delete" onclick="opendeletemodal(@ihsc.Id)">
+                                    <i class="fa fa-ban"></i>
+                                </a>
+                            </td>
+
+
+                        </tr>
+
+                    }
+            </table>
+        }
+
+</div>
+
+<!--Deactivate Modal-->
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
